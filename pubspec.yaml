@@ -41,6 +41,7 @@ dependencies:
   kakao_flutter_sdk: ^0.5.2
   image: ^2.1.18
   iamport_flutter: ^0.9.13
+  in_app_purchase: ^0.3.4+16
   video_player:
     git:
       url: https://github.com/iwanglian/plugins.git
