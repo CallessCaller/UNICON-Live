@@ -146,7 +146,7 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               _searchText == ''
                   ? Padding(
@@ -176,8 +176,8 @@ class _SearchPageState extends State<SearchPage> {
                             child: GridView.count(
                               scrollDirection: Axis.horizontal,
                               crossAxisCount: 2,
-                              mainAxisSpacing: 20,
-                              crossAxisSpacing: 20,
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
                               children: List.generate(
                                 genreTotalList.length,
                                 (index) {
@@ -188,7 +188,7 @@ class _SearchPageState extends State<SearchPage> {
                             ),
                           ),
                           SizedBox(
-                            height: 30.0,
+                            height: 20.0,
                           ),
                           Container(
                             height: 30,
@@ -207,14 +207,15 @@ class _SearchPageState extends State<SearchPage> {
                             height: 10,
                           ),
                           SizedBox(
-                            height: 330,
+                            height: 180,
                             child: GridView.count(
                               scrollDirection: Axis.horizontal,
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 20,
-                              crossAxisSpacing: 20,
+                              crossAxisCount: 3,
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
+                              childAspectRatio: 1 / 3,
                               children: List.generate(
-                                genreTotalList.length,
+                                moodTotalList.length,
                                 (index) {
                                   return _buildMoodCard(
                                       index, musicians, userDB);
@@ -247,7 +248,7 @@ class _SearchPageState extends State<SearchPage> {
             builder: (context) => SearchedArtist(results, userDB)));
       },
       child: CachedNetworkImage(
-        imageUrl: pictures[index],
+        imageUrl: genrePictures[index],
         imageBuilder: (context, imageProvider) => Stack(
           children: [
             Container(
@@ -297,37 +298,31 @@ class _SearchPageState extends State<SearchPage> {
             builder: (context) => SearchedArtist(results, userDB)));
       },
       child: CachedNetworkImage(
-        imageUrl: pictures[index],
-        imageBuilder: (context, imageProvider) => Stack(
-          children: [
-            Container(
-              height: 160,
-              width: 160,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.white.withOpacity(0.2)),
-                borderRadius: BorderRadius.all(Radius.circular(widgetRadius)),
-                image: DecorationImage(
-                  image: imageProvider,
-                  colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(.1),
-                    BlendMode.darken,
-                  ),
-                  fit: BoxFit.cover,
-                ),
+        imageUrl: moodPictures[index],
+        imageBuilder: (context, imageProvider) => Container(
+          height: 50,
+          width: 150,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white.withOpacity(0.2)),
+            borderRadius: BorderRadius.all(Radius.circular(widgetRadius)),
+            image: DecorationImage(
+              image: imageProvider,
+              colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(.1),
+                BlendMode.darken,
+              ),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Center(
+            child: Text(
+              moodTotalList[index],
+              style: TextStyle(
+                fontSize: subtitleFontSize,
+                fontWeight: FontWeight.w600,
               ),
             ),
-            Positioned(
-              child: Center(
-                child: Text(
-                  moodTotalList[index],
-                  style: TextStyle(
-                    fontSize: subtitleFontSize,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

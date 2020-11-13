@@ -50,20 +50,6 @@ Widget slider(BuildContext context, Artist artist, Lives live, UserDB userDB) {
                 width: MediaQuery.of(context).size.width * 0.6,
               ),
               Positioned(
-                bottom: 0,
-                left: 0,
-                width: MediaQuery.of(context).size.width * 0.6,
-                height: 30,
-                child: ClipRect(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                    child: Container(
-                      color: Colors.white.withOpacity(0),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
                 bottom: 0.0,
                 left: 0.0,
                 right: 0.0,

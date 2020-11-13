@@ -9,6 +9,7 @@ import 'package:testing_layout/screen/FeedPage/screen/screen_feed_total.dart';
 import 'package:testing_layout/screen/FeedPage/screen/screen_feed_write_page.dart';
 import 'package:testing_layout/screen/FeedPage/screen/screen_my_feed_page.dart';
 import 'package:testing_layout/screen/FeedPage/widget/widget_feed_box.dart';
+import 'feed_functions.dart';
 import 'package:testing_layout/screen/FeedPage/widget/widget_position_seeking.dart';
 
 class FeedPage extends StatefulWidget {
@@ -172,113 +173,10 @@ class _FeedPageState extends State<FeedPage> {
           ),
           Positioned(
             bottom: 0,
-            child:
-                _assetsAudioPlayer.builderCurrent(builder: (context, playing) {
-              return _assetsAudioPlayer.builderLoopMode(
-                builder: (context, loopMode) {
-                  if (WidgetsBinding.instance.window.viewInsets.bottom > 0.0)
-                    return SizedBox();
-                  return PlayerBuilder.isPlaying(
-                    player: _assetsAudioPlayer,
-                    builder: (context, isPlaying) {
-                      return _assetsAudioPlayer.builderRealtimePlayingInfos(
-                          builder: (context, infos) {
-                        //print("infos: $infos");
-                        if (infos == null || infos.current == null) {
-                          return SizedBox();
-                        }
-                        return Stack(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              color: Colors.black.withOpacity(0.8),
-                              // decoration: BoxDecoration(
-                              //   borderRadius: BorderRadius.all(Radius.circular(5)),
-                              //   color: Color.fromRGBO(57, 57, 57, 0.9),
-                              // ),
-                              height: 40,
-                              width: MediaQuery.of(context).size.width,
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  InkWell(
-                                    onTap: () async {
-                                      await _assetsAudioPlayer.playOrPause();
-                                    },
-                                    child: Container(
-                                      height: 30,
-                                      width: 30,
-                                      child: Icon(
-                                        isPlaying
-                                            ? Icons.pause
-                                            : Icons.play_arrow,
-                                        size: 30,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.04,
-                                  ),
-                                  Container(
-                                    alignment: Alignment.centerLeft,
-                                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                    height: 30,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.7,
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Text(
-                                        infos.current.audio.audio.metas.title,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: widgetFontSize,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                  infos.current.audio.audio.metas.image.path !=
-                                          ''
-                                      ? Container(
-                                          width: 35,
-                                          height: 35,
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: NetworkImage(infos
-                                                      .current
-                                                      .audio
-                                                      .audio
-                                                      .metas
-                                                      .image
-                                                      .path))),
-                                        )
-                                      : SizedBox(),
-                                ],
-                              ),
-                            ),
-                            Positioned(
-                              top: -3,
-                              left: -24,
-                              right: -24,
-                              child: PositionSeekWidget(
-                                currentPosition: infos.currentPosition,
-                                duration: infos.duration,
-                                seekTo: (to) {
-                                  _assetsAudioPlayer.seek(to);
-                                },
-                              ),
-                            )
-                          ],
-                        );
-                      });
-                    },
-                  );
-                },
-              );
-            }),
+            child: AnimatedContainer(
+                duration: Duration(milliseconds: 200),
+                height: 40,
+                child: musicPlayer(_assetsAudioPlayer)),
           ),
         ],
       ),

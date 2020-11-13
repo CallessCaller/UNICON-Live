@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
 final List<String> imgList = [
-  'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/live_header%2Fbanner_person_listening.png?alt=media&token=c073c465-924b-437e-a9e6-f5b644bdfa4d',
-  'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/live_header%2Fbanner_string.png?alt=media&token=c5195ae5-e791-42aa-863e-20c0fce662f0',
+  'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/live_header%2F%EB%B0%B0%EB%84%88_new_02.png?alt=media&token=2eaa607a-dcb4-4aa7-87b3-11a8dcbd0dda',
+  'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/live_header%2F%EB%B0%B0%EB%84%88_new_01.png?alt=media&token=80956098-ceaa-44f7-9908-168d8b57755b',
 ];
 
 class LiveHeader extends StatefulWidget {

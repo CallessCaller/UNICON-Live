@@ -81,13 +81,13 @@ class _LiveBoxState extends State<LiveBox> {
               ),
             ),
             Positioned(
-              bottom: 0,
-              left: 0,
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: 60,
+              bottom: 5,
+              left: 5,
+              width: MediaQuery.of(context).size.width * 0.9 - 12,
+              height: 55,
               child: ClipRRect(
                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(6)),
-                clipBehavior: Clip.hardEdge,
+                clipBehavior: Clip.antiAlias,
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
                   child: Container(
