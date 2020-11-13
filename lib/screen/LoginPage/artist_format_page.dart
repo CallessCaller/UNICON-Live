@@ -212,6 +212,8 @@ class _ArtistFormState extends State<ArtistForm> {
                               _userUploadResult['profile'] = _profileImageURL;
                               // id added to pending
                               _pendingUploadResult['id'] = _user.uid;
+                              _pendingUploadResult['profile'] =
+                                  _profileImageURL;
                               await FirebaseFirestore.instance
                                   .collection('Users')
                                   .doc(_user.uid)
