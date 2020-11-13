@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/providers/stream_of_artist.dart';
@@ -19,6 +20,9 @@ void main() async {
   await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
   KakaoContext.clientId = "70dfdacac39561e5f245a4bd09ef9509";
+
+  InAppPurchaseConnection.enablePendingPurchases();
+
   runApp(
     MyApp(),
   );

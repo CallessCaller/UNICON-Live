@@ -160,13 +160,13 @@ int getPrice(String coinAmount) {
   int coinInt = int.parse(coinAmount);
   int coinPrice = 0;
   if (coinInt < 50) {
-    coinPrice = coinInt * 100;
+    coinPrice = coinInt * 120;
   } else if (coinInt < 100) {
-    coinPrice = coinInt * 98;
+    coinPrice = coinInt * (120 * 0.98).round();
   } else if (coinInt < 500) {
-    coinPrice = coinInt * 95;
+    coinPrice = coinInt * (120 * 0.95).round();
   } else {
-    coinPrice = coinInt * 93;
+    coinPrice = coinInt * (120 * 0.97).round();
   }
   return (coinPrice);
 }
