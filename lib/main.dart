@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
           primaryColor: Colors.black,
           accentColor: Colors.black,
         ),
-        title: 'Testing App',
+        title: 'Unicon',
         // home: LoginPage(),
         initialRoute: _needLogin ? '/login' : '/inapp',
         routes: {
