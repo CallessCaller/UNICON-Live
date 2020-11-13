@@ -51,7 +51,7 @@ class _ChatWidgetState extends State<ChatWidget> {
       stream: widget.live.reference
           .collection('chitchat')
           .orderBy('time', descending: true)
-          .limit(40)
+          .limit(100)
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return CircularProgressIndicator();

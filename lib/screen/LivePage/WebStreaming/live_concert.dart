@@ -149,8 +149,8 @@ class _LiveConcertState extends State<LiveConcert> {
         _showExitDialog();
       });
     }
-    maxwidth = MediaQuery.of(context).size.width;
-    maxheight = MediaQuery.of(context).size.height;
+    double maxwidth = MediaQuery.of(context).size.width;
+    double maxheight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -236,7 +236,7 @@ class _LiveConcertState extends State<LiveConcert> {
                           setState(() {
                             hideChat = !hideChat;
                             chatFocusNode.unfocus();
-                            if (hideChat == true) {
+                            if (hideChat == false) {
                               goDown = true;
                             }
                           });
@@ -270,27 +270,28 @@ class _LiveConcertState extends State<LiveConcert> {
                     VerticalDivider(
                       width: 20,
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          _artist.name,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: subtitleFontSize),
-                        ),
-                        Text(
-                          '라이브 방송중',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              fontSize: subtitleFontSize - 2),
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _artist.name,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: subtitleFontSize),
+                          ),
+                          Text(
+                            '라이브 방송중',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                                fontSize: subtitleFontSize - 2),
+                          ),
+                        ],
+                      ),
                     ),
-                    Expanded(child: Text('')),
                     FlatButton(
                       height: 50,
                       color: appKeyColor,
