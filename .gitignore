@@ -1,9 +1,101 @@
-.vscode
-.packages
+Last login: Thu Nov 12 22:54:28 on ttys003
+jeongjiheon@jeongjiheon-ui-MacBookPro ~ % cd Desktop 
+jeongjiheon@jeongjiheon-ui-MacBookPro Desktop % git clone https://github.com/ComputelessComputer/unicon.git
+Cloning into 'unicon'...
+remote: Enumerating objects: 270, done.
+remote: Counting objects: 100% (270/270), done.
+remote: Compressing objects: 100% (203/203), done.
+remote: Total 270 (delta 49), reused 190 (delta 47), pack-reused 0
+Receiving objects: 100% (270/270), 1.21 MiB | 1.23 MiB/s, done.
+Resolving deltas: 100% (49/49), done.
+jeongjiheon@jeongjiheon-ui-MacBookPro Desktop % 
+  [복원됨 2020. 11. 13. 오전 11:31:05]
+Last login: Fri Nov 13 11:31:02 on console
+jeongjiheon@jeongjiheon-ui-MacBookPro Desktop % 
+  [복원됨 2020. 11. 13. 오전 11:45:25]
+Last login: Fri Nov 13 11:42:22 on console
+jeongjiheon@jeongjiheon-ui-MacBookPro Desktop % clear
+
+
+
+
+
+
+jeongjiheon@jeongjiheon-ui-MacBookPro Desktop % 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  [복원됨 2020. 11. 13. 오후 1:45:19]
+Last login: Fri Nov 13 13:38:03 on console
+jeongjiheon@jeongjiheon-ui-MacBookPro Desktop % cd unicon_admin
+jeongjiheon@jeongjiheon-ui-MacBookPro unicon_admin % clear
+
+jeongjiheon@jeongjiheon-ui-MacBookPro unicon_admin % cd
+jeongjiheon@jeongjiheon-ui-MacBookPro ~ % cd AndroidStudioProjects 
+jeongjiheon@jeongjiheon-ui-MacBookPro AndroidStudioProjects % ls
+testapp1		unicon_administrator
+jeongjiheon@jeongjiheon-ui-MacBookPro AndroidStudioProjects % cd testapp1 
+jeongjiheon@jeongjiheon-ui-MacBookPro testapp1 % ls -lart
+total 72
+drwxr-xr-x   3 jeongjiheon  staff    96 11 12 01:52 test
+-rw-r--r--   1 jeongjiheon  staff   896 11 12 01:52 testapp1.iml
+-rw-r--r--   1 jeongjiheon  staff   732 11 12 01:52 .gitignore
+-rw-r--r--   1 jeongjiheon  staff   305 11 12 01:52 .metadata
+-rw-r--r--   1 jeongjiheon  staff  2885 11 12 01:52 pubspec.yaml
+-rw-r--r--   1 jeongjiheon  staff   538 11 12 01:52 README.md
+drwxr-xr-x   3 jeongjiheon  staff    96 11 12 01:52 lib
+drwxr-xr-x   6 jeongjiheon  staff   192 11 12 01:52 .idea
+-rw-r--r--   1 jeongjiheon  staff  3679 11 12 01:52 pubspec.lock
+-rw-r--r--   1 jeongjiheon  staff  2324 11 12 01:52 .packages
+drwxr-xr-x   5 jeongjiheon  staff   160 11 12 01:52 .dart_tool
+drwxr-xr-x  12 jeongjiheon  staff   384 11 12 01:52 android
+drwxr-xr-x  16 jeongjiheon  staff   512 11 12 01:53 .
+-rw-r--r--@  1 jeongjiheon  staff  6148 11 12 01:53 .DS_Store
+drwxr-xr-x   8 jeongjiheon  staff   256 11 12 01:53 ios
+drwxr-xr-x   5 jeongjiheon  staff   160 11 12 02:08 ..
+jeongjiheon@jeongjiheon-ui-MacBookPro testapp1 % vi .gitignore 
+
+**/doc/api/
+**/ios/Flutter/.last_build_id
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
-pubspec.lock
-.DS_STORE
-build/
-ios/build
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# Web related
+lib/generated_plugin_registrant.dart
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
