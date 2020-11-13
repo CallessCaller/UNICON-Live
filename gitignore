@@ -1,9 +1,0 @@
-.vscode
-.packages
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-pubspec.lock
-.DS_STORE
-build/
-ios/build
