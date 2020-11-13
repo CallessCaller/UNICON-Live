@@ -61,3 +61,75 @@ List<String> moodPictures = [
   'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/search_page%2F%EB%AA%BD%ED%99%98%EC%A0%81%EC%9D%B8%40300x_crop.jpg?alt=media&token=9c674346-f0d3-4b1f-a010-c76b8001b118',
   'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/search_page%2F%EB%A0%88%ED%8A%B8%EB%A1%9C%40300x_crop.jpg?alt=media&token=eaf090fd-5344-407f-994d-b6ba8c28411a',
 ];
+
+// TextStyles used in Unicon
+
+TextStyle headline1 = TextStyle(
+  fontSize: 30,
+  fontWeight: FontWeight.w800,
+);
+
+TextStyle headline2 = TextStyle(
+  fontSize: 24,
+  fontWeight: FontWeight.w800,
+);
+
+TextStyle title1 = TextStyle(
+  fontSize: 24,
+  fontWeight: FontWeight.bold,
+);
+
+TextStyle title2 = TextStyle(
+  fontSize: 22,
+  fontWeight: FontWeight.bold,
+);
+
+TextStyle title3 = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.bold,
+);
+
+TextStyle subtitle1 = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w600,
+);
+
+TextStyle subtitle2 = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.w600,
+);
+
+TextStyle subtitle3 = TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.w600,
+);
+
+TextStyle body1 = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w500,
+);
+
+TextStyle body2 = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.w500,
+);
+
+TextStyle body3 = TextStyle(
+  fontSize: 14,
+  fontWeight: FontWeight.w500,
+);
+
+TextStyle body4 = TextStyle(
+  fontSize: 13,
+  fontWeight: FontWeight.w500,
+);
+
+TextStyle caption1 = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.w300,
+);
+
+TextStyle caption2 = TextStyle(
+  fontSize: 13,
+  fontWeight: FontWeight.w300,
+);
