@@ -439,16 +439,25 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                               (_controller2.text != '')) {
                             for (var i = 0; i < _route.keys.length; i++) {
                               if (_route[_route.keys.toList()[i]]) {
-                                await FirebaseFirestore.instance
-                                    .collection('NewUnionRequest')
-                                    .add(
+                                // Collection 불러오기
+                                CollectionReference newUnionRequestCollection =
+                                    FirebaseFirestore.instance
+                                        .collection('NewUnionRequest');
+
+                                await newUnionRequestCollection.add(
                                   {
                                     'id': widget.userDB.id.trim(),
                                     'name': _controller1.text.trim(),
                                     'route': _route.keys.toList()[i],
                                     'favorite_song': _controller2.text.trim(),
                                   },
-                                );
+                                ).then((value) async {
+                                  String documentID = value.id;
+                                  await newUnionRequestCollection
+                                      .doc(documentID)
+                                      .update({'document_id': documentID});
+                                });
+
                                 Navigator.of(context).pop();
                               }
                             }
