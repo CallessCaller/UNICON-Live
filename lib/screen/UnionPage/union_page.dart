@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
-import 'package:testing_layout/screen/UnionPage/union_page_header/union_page_header.dart';
+import 'package:testing_layout/screen/UnionPage/widget/union_page_header.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/model/users.dart';

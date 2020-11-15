@@ -7,7 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/load_user_db.dart';
-import 'package:testing_layout/screen/LoginPage/artist_or_user.dart';
+import 'package:testing_layout/screen/LoginPage/screen/screen_artist_or_user.dart';
 
 final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();

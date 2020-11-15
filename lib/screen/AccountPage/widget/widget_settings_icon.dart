@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/users.dart';
-import 'package:testing_layout/screen/AccountPage/settings_page/app_settings.dart';
+import 'package:testing_layout/screen/AccountPage/screen/settings_page/app_settings.dart';
 
 class ToAppSettings extends StatelessWidget {
   const ToAppSettings({

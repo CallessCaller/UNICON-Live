@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/users.dart';
-import 'package:testing_layout/screen/FeedPage/feed_functions.dart';
+import 'package:testing_layout/screen/FeedPage/components/feed_functions.dart';
 
 class CommentBox extends StatefulWidget {
   final String ownerId;

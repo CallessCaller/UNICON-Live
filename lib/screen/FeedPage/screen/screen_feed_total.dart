@@ -6,7 +6,7 @@ import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/feed.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/screen/FeedPage/widget/widget_feed_box.dart';
-import 'package:testing_layout/screen/FeedPage/feed_functions.dart';
+import 'package:testing_layout/screen/FeedPage/components/feed_functions.dart';
 
 class FeedTotal extends StatefulWidget {
   final UserDB userDB;

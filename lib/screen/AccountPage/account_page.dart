@@ -4,7 +4,7 @@ import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/screen/AccountPage/widget/widget_account_header.dart';
 import 'package:testing_layout/screen/AccountPage/widget/widget_cs_icon.dart';
-import 'package:testing_layout/screen/AccountPage/widget/widget_myFee_icon.dart';
+import 'package:testing_layout/screen/AccountPage/widget/widget_my_fee_icon.dart';
 import 'package:testing_layout/screen/AccountPage/widget/widget_my_musicians_icon.dart';
 import 'package:testing_layout/screen/AccountPage/widget/widget_new_unions_icon.dart';
 import 'package:testing_layout/screen/AccountPage/widget/widget_settings_icon.dart';

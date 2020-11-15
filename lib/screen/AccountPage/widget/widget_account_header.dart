@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/users.dart';
-import 'package:testing_layout/screen/AccountPage/edit_profile_screen/edit_profile_page.dart';
+import 'package:testing_layout/screen/AccountPage/screen/edit_profile_screen/edit_profile_page.dart';
 
 class AccountHeader extends StatelessWidget {
   final UserDB userDB;

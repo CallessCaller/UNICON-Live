@@ -13,7 +13,7 @@ import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/feed.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:http/http.dart' as http;
-import 'package:testing_layout/screen/FeedPage/feed_functions.dart';
+import 'package:testing_layout/screen/FeedPage/components/feed_functions.dart';
 
 class FeedBox extends StatefulWidget {
   final Feed feed;

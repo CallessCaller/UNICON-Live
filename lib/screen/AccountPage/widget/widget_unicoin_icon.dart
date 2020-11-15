@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/users.dart';
-import 'package:testing_layout/screen/AccountPage/unicoin_screen/unicoin_page.dart';
+import 'package:testing_layout/screen/AccountPage/screen/unicoin_screen/unicoin_page.dart';
 
 class ToMyUnicoinHistory extends StatelessWidget {
   const ToMyUnicoinHistory({

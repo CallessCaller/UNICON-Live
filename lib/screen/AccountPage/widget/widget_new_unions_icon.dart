@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/users.dart';
-import 'package:testing_layout/screen/AccountPage/request_new_musician_page.dart';
+import 'package:testing_layout/screen/AccountPage/screen/union_recommend/request_new_musician_page.dart';
 
 class NewUnionsIcon extends StatelessWidget {
   final UserDB userDB;

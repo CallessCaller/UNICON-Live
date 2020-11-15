@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
-import 'package:testing_layout/screen/AccountPage/review_page/my_unicon_reviews.dart';
+import 'package:testing_layout/screen/AccountPage/screen/review_page/my_unicon_reviews.dart';
 
 class ToMyUniconReviews extends StatelessWidget {
   const ToMyUniconReviews({

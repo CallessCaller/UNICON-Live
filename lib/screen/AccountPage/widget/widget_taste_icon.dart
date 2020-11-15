@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/users.dart';
-import 'package:testing_layout/screen/AccountPage/genre_selection.dart';
+import 'package:testing_layout/screen/AccountPage/screen/my_color/genre_selection.dart';
 
 class TasteIcon extends StatelessWidget {
   final UserDB userDB;

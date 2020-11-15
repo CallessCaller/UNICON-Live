@@ -7,9 +7,9 @@ import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/model/users.dart';
-import 'package:testing_layout/screen/LivePage/live_box.dart';
-import 'package:testing_layout/screen/LivePage/live_header.dart';
-import 'package:testing_layout/screen/LivePage/recommendation/recommendation_sliders.dart';
+import 'package:testing_layout/screen/LivePage/widget/live_box.dart';
+import 'package:testing_layout/screen/LivePage/widget/live_header.dart';
+import 'package:testing_layout/screen/LivePage/widget/recommendation_sliders.dart';
 
 class LivePage extends StatefulWidget {
   LivePage({

@@ -3,10 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
-import 'package:testing_layout/screen/UnionPage/liked_musician_box.dart';
+import 'package:testing_layout/screen/UnionPage/widget/liked_musician_box.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/users.dart';
-import 'package:testing_layout/screen/SearchPage/searched_artists.dart';
+import 'package:testing_layout/screen/SearchPage/screen/searched_artists.dart';
 
 class SearchPage extends StatefulWidget {
   SearchPage({
