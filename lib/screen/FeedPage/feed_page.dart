@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
+import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/feed.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/screen/FeedPage/screen/screen_feed_total.dart';
@@ -40,126 +41,75 @@ class _FeedPageState extends State<FeedPage> {
     var feeds = Provider.of<List<Feed>>(context);
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        centerTitle: false,
+        title: Text(
+          '유니온 피드',
+          style: headline2,
+        ),
+        actions: userDB.isArtist
+            ? [
+                IconButton(
+                  icon: Icon(Icons.explore),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => FeedTotal(
+                          userDB: userDB,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => FeedWritePage(
+                          userDB: userDB,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.sticky_note_2),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => FeedTotal(
+                          userDB: userDB,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ]
+            : [
+                IconButton(
+                  icon: Icon(Icons.explore),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => MyFeedPage(
+                          userDB: userDB,
+                          id: userDB.id,
+                        ),
+                      ),
+                    );
+                  },
+                )
+              ],
+      ),
       body: Stack(
         children: [
           Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-          ),
-          SafeArea(
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  userDB.isArtist
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            FlatButton(
-                              shape: new RoundedRectangleBorder(
-                                borderRadius:
-                                    new BorderRadius.circular(widgetRadius),
-                              ),
-                              height: 30,
-                              minWidth:
-                                  (MediaQuery.of(context).size.width - 60) / 3,
-                              color: appKeyColor,
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => FeedTotal(
-                                      userDB: userDB,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                '전체보기',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: widgetFontSize,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            FlatButton(
-                              shape: new RoundedRectangleBorder(
-                                borderRadius:
-                                    new BorderRadius.circular(widgetRadius),
-                              ),
-                              color: appKeyColor,
-                              height: 30,
-                              minWidth:
-                                  (MediaQuery.of(context).size.width - 60) / 3,
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => FeedWritePage(
-                                      userDB: userDB,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                '새글쓰기',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: widgetFontSize,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            FlatButton(
-                              shape: new RoundedRectangleBorder(
-                                borderRadius:
-                                    new BorderRadius.circular(widgetRadius),
-                              ),
-                              height: 30,
-                              minWidth:
-                                  (MediaQuery.of(context).size.width - 60) / 3,
-                              color: appKeyColor,
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => MyFeedPage(
-                                      userDB: userDB,
-                                      id: userDB.id,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                '내글보기',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: widgetFontSize,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ],
-                        )
-                      : FlatButton(
-                          shape: new RoundedRectangleBorder(
-                            borderRadius:
-                                new BorderRadius.circular(widgetRadius),
-                          ),
-                          height: 30,
-                          minWidth: (MediaQuery.of(context).size.width - 40),
-                          color: appKeyColor,
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => FeedTotal(
-                                  userDB: userDB,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            '전체 보기',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: widgetFontSize,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
                   Column(
                     children: feedBoxes(feeds, userDB),
                   ),

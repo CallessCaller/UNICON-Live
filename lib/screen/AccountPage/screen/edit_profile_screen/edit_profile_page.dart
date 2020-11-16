@@ -94,29 +94,48 @@ class _EditProfilePageState extends State<EditProfilePage> {
               height: 20,
             ),
             Center(
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    _canGo = false;
-                  });
-                  _uploadImageToStorage(ImageSource.gallery);
-                },
-                child: CachedNetworkImage(
-                  imageUrl: _profileImageURL,
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: appKeyColor,
-                        width: 1.5,
+              child: Stack(
+                children: [
+                  CachedNetworkImage(
+                    imageUrl: _profileImageURL,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: appKeyColor,
+                          width: 1.5,
+                        ),
+                      ),
+                      child: CircleAvatar(
+                        backgroundImage: imageProvider,
+                        radius: 80,
                       ),
                     ),
-                    child: CircleAvatar(
-                      backgroundImage: imageProvider,
-                      radius: 80,
-                    ),
                   ),
-                ),
+                  Positioned(
+                    top: 5,
+                    right: 5,
+                    child: IconButton(
+                      icon: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          UniIcon.fix,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _canGo = false;
+                        });
+                        _uploadImageToStorage(ImageSource.gallery);
+                      },
+                    ),
+                  )
+                ],
               ),
             ),
             SizedBox(
@@ -533,29 +552,48 @@ class _EditProfilePageState extends State<EditProfilePage> {
               height: 20,
             ),
             Center(
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    _canGo = false;
-                  });
-                  _uploadImageToStorage(ImageSource.gallery);
-                },
-                child: CachedNetworkImage(
-                  imageUrl: _profileImageURL,
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.white,
-                        width: 1.5,
+              child: Stack(
+                children: [
+                  CachedNetworkImage(
+                    imageUrl: _profileImageURL,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 1.5,
+                        ),
+                      ),
+                      child: CircleAvatar(
+                        backgroundImage: imageProvider,
+                        radius: 80,
                       ),
                     ),
-                    child: CircleAvatar(
-                      backgroundImage: imageProvider,
-                      radius: 80,
-                    ),
                   ),
-                ),
+                  Positioned(
+                    top: 5,
+                    right: 5,
+                    child: IconButton(
+                      icon: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          UniIcon.fix,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _canGo = false;
+                        });
+                        _uploadImageToStorage(ImageSource.gallery);
+                      },
+                    ),
+                  )
+                ],
               ),
             ),
             SizedBox(
@@ -731,13 +769,55 @@ class _EditProfilePageState extends State<EditProfilePage> {
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
           child: Align(
             alignment: Alignment.centerLeft,
-            child: Text(
-              '유니온 도전하기!',
-              style: TextStyle(
-                color: appKeyColor,
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    '유니온 도전하기!',
+                    style: TextStyle(
+                      color: appKeyColor,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                InkWell(
+                  child: Icon(UniIcon.more_info),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          backgroundColor: Colors.black.withOpacity(0.8),
+                          title: Text('유니온이란?'),
+                          content: Text(
+                              '네, 당연하죠! 누구나 뮤지션이 될 수 있는 플랫폼 유니콘에서는 심사 과정을 거쳐서 여러분이 재능과 끼를 발휘할 수 있도록 도와드립니다!'),
+                          actions: [
+                            TextButton(
+                              child: Text(
+                                '도전하기',
+                                style: TextStyle(
+                                  color: appKeyColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              onPressed: () async {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ArtistForm(),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                )
+              ],
             ),
           ),
         ),
