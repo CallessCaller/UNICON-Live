@@ -69,7 +69,7 @@ class _LiveBoxState extends State<LiveBox> {
               child: Row(
                 children: [
                   Icon(
-                    UniIcon.account_box,
+                    UniIcon.profile,
                     size: 20,
                   ),
                   SizedBox(width: 3),

@@ -322,7 +322,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(
-                                  UniIcon.account_box,
+                                  UniIcon.profile,
                                   size: 20,
                                 ),
                                 SizedBox(
@@ -706,7 +706,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(
-                                  UniIcon.account_box,
+                                  UniIcon.profile,
                                   size: 20,
                                 ),
                                 SizedBox(

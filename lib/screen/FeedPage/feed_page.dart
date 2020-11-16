@@ -10,7 +10,6 @@ import 'package:testing_layout/screen/FeedPage/screen/screen_feed_write_page.dar
 import 'package:testing_layout/screen/FeedPage/screen/screen_my_feed_page.dart';
 import 'package:testing_layout/screen/FeedPage/widget/widget_feed_box.dart';
 import 'components/feed_functions.dart';
-import 'package:testing_layout/screen/FeedPage/widget/widget_position_seeking.dart';
 
 class FeedPage extends StatefulWidget {
   FeedPage({
