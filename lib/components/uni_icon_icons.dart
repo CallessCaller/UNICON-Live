@@ -12,14 +12,6 @@
 ///       - asset: fonts/UniIcon.ttf
 ///
 /// 
-/// * Entypo, Copyright (C) 2012 by Daniel Bruce
-///         Author:    Daniel Bruce
-///         License:   SIL (http://scripts.sil.org/OFL)
-///         Homepage:  http://www.entypo.com
-/// * Font Awesome 5, Copyright (C) 2016 by Dave Gandy
-///         Author:    Dave Gandy
-///         License:   SIL (https://github.com/FortAwesome/Font-Awesome/blob/master/LICENSE.txt)
-///         Homepage:  http://fortawesome.github.com/Font-Awesome/
 ///
 import 'package:flutter/widgets.dart';
 
@@ -29,7 +21,6 @@ class UniIcon {
   static const _kFontFam = 'UniIcon';
   static const _kFontPkg = null;
 
-  static const IconData calendar = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData home_enabled = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData my_union = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData settings = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -53,7 +44,8 @@ class UniIcon {
   static const IconData profile = IconData(0xe819, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData more_info_1 = IconData(0xe81a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData unicoin = IconData(0xe81b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData youtube = IconData(0xf167, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData instagram = IconData(0xf16d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData soundcloud = IconData(0xf1be, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData calendar = IconData(0xe81c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData instagram = IconData(0xe81d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData soundcloud = IconData(0xe81e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData youtube = IconData(0xe81f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

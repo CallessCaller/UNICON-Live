@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
+import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/screen/AccountPage/screen/edit_profile_screen/edit_profile_page.dart';
+import 'package:testing_layout/screen/AccountPage/screen/unicoin_screen/unicoin_page.dart';
 
 class AccountHeader extends StatelessWidget {
   final UserDB userDB;
@@ -17,51 +19,110 @@ class AccountHeader extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: 25.0,
         ),
-        CachedNetworkImage(
-          imageUrl: userDB.profile,
-          imageBuilder: (context, imageProvider) => Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: userDB.isArtist ? appKeyColor : Colors.white,
-                width: 1.5,
-              ),
-            ),
-            child: CircleAvatar(
-              backgroundImage: imageProvider,
-              radius: 55,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 10.0,
-        ),
-        Column(
+        Row(
           children: [
-            Container(
-              width: 157,
-              height: 30,
-              child: Center(
-                child: Text(
-                  userDB.name,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: subtitleFontSize,
+            CachedNetworkImage(
+              imageUrl: userDB.profile,
+              imageBuilder: (context, imageProvider) => Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: userDB.isArtist ? appKeyColor : Colors.white,
+                    width: 1.5,
                   ),
+                ),
+                child: CircleAvatar(
+                  backgroundImage: imageProvider,
+                  radius: 45,
                 ),
               ),
             ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 27,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        userDB.name,
+                        style: title2,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 17,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        userDB.email,
+                        style: TextStyle(
+                          color: outlineColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            InkWell(
+              child: Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(
+                    color: outlineColor,
+                    width: 1,
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      UniIcon.unicoin,
+                      size: 30,
+                      color: appKeyColor,
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      userDB.points.toString(),
+                      style: body2,
+                    ),
+                    SizedBox(width: 5),
+                  ],
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => MyUnicoinPage(
+                      userDB: userDB,
+                    ),
+                  ),
+                );
+              },
+            )
           ],
         ),
         SizedBox(
-          height: 10.0,
+          height: 25,
         ),
         FlatButton(
           shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(widgetRadius),
+            side: BorderSide(
+              color: outlineColor,
+              width: 1,
+            ),
           ),
-          color: appKeyColor,
+          color: Colors.transparent,
           height: 30,
           minWidth: MediaQuery.of(context).size.width - defaultPadding * 2,
           onPressed: () {
@@ -74,12 +135,8 @@ class AccountHeader extends StatelessWidget {
             );
           },
           child: Text(
-            '프로필 수정',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: textFontSize,
-              color: Colors.white,
-            ),
+            '프로필 편집',
+            style: body1,
           ),
         ),
         SizedBox(

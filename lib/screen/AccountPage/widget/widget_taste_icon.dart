@@ -24,11 +24,11 @@ class TasteIcon extends StatelessWidget {
           borderRadius: BorderRadius.circular(11.0),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
               UniIcon.my_color,
-              size: 35,
+              size: 45,
             ),
             SizedBox(height: 10),
             Text(

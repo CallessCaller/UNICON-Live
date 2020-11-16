@@ -28,11 +28,11 @@ class ToAppSettings extends StatelessWidget {
           borderRadius: BorderRadius.circular(11.0),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
               UniIcon.settings,
-              size: 35,
+              size: 45,
             ),
             SizedBox(height: 10),
             Text(

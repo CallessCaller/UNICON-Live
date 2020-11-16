@@ -6,6 +6,7 @@ const double widgetRadius = 7.0;
 
 const Color appKeyColor = Color(0xffb63aef);
 const Color appBarColor = Color(0xff1a1a1a);
+const Color outlineColor = Color(0xffa3a3a3);
 
 const double titleFontSize = 36.0;
 const double subtitleFontSize = 16.0;

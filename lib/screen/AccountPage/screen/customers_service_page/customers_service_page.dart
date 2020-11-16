@@ -2,8 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/users.dart';
-import 'package:testing_layout/screen/AccountPage/screen/customers_service_page/screen/screen_event.dart';
-import 'package:testing_layout/screen/AccountPage/screen/customers_service_page/screen/screen_notification.dart';
 import 'package:testing_layout/screen/AccountPage/screen/customers_service_page/widget/widget_dialog.dart';
 import 'package:testing_layout/screen/AccountPage/screen/customers_service_page/widget/widget_faq.dart';
 
@@ -175,52 +173,6 @@ class _CSPageState extends State<CSPage> {
                     // ),
                     SizedBox(
                       height: 20,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => NotificationScreen(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        height: 40,
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            '공지사항',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: subtitleFontSize,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => EventScreen(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        height: 40,
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            '이벤트',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: subtitleFontSize,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                      ),
                     ),
                   ],
                 ),
