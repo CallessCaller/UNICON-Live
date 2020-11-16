@@ -33,7 +33,7 @@ class UniIcon {
   static const IconData home_disabled = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData my_color = IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ticket_price = IconData(0xe80e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData more_info = IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData more_info_1 = IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData mail = IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData like_ena = IconData(0xe811, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData like_dis = IconData(0xe812, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -42,7 +42,7 @@ class UniIcon {
   static const IconData chat_dis = IconData(0xe816, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData chat_ena = IconData(0xe817, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData profile = IconData(0xe819, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData more_info_1 = IconData(0xe81a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData more_info = IconData(0xe81a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData unicoin = IconData(0xe81b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData calendar = IconData(0xe81c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData instagram = IconData(0xe81d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
