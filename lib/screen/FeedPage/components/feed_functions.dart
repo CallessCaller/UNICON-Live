@@ -52,7 +52,9 @@ Widget musicPlayer(AssetsAudioPlayer assetsAudioPlayer) {
                             height: 30,
                             width: 30,
                             child: Icon(
-                              isPlaying ? Icons.pause : Icons.play_arrow,
+                              isPlaying
+                                  ? Icons.pause_rounded
+                                  : Icons.play_arrow_rounded,
                               size: 30,
                             ),
                           ),

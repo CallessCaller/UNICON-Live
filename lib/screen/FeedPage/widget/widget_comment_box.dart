@@ -36,7 +36,7 @@ class _CommentBoxState extends State<CommentBox> {
           children: [
             CircleAvatar(
               backgroundImage: NetworkImage(userDB.profile),
-              radius: 20,
+              radius: 17,
             ),
             SizedBox(
               width: 10,
@@ -49,11 +49,17 @@ class _CommentBoxState extends State<CommentBox> {
                     children: [
                       Container(
                         child: Text(
-                          '${userDB.name} - ' +
-                              showTime(widget.comment.data()['time']),
+                          userDB.name.toString(),
+                          style: body2,
+                        ),
+                      ),
+                      Container(
+                        child: Text(
+                          ' ' + showTime(widget.comment.data()['time']),
                           style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: textFontSize,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w300,
+                            color: outlineColor,
                           ),
                         ),
                       ),
@@ -80,19 +86,14 @@ class _CommentBoxState extends State<CommentBox> {
                   Text(
                     widget.comment.data()['content'],
                     maxLines: 1000,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: textFontSize,
-                    ),
+                    style: body4,
                   ),
+                  SizedBox(height: 14),
                 ],
               ),
             ),
           ],
         ),
-        Divider(
-          color: Colors.white,
-        )
       ],
     );
   }

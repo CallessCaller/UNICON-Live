@@ -50,7 +50,7 @@ class _FeedPageState extends State<FeedPage> {
         actions: userDB.isArtist
             ? [
                 IconButton(
-                  icon: Icon(Icons.explore),
+                  icon: Icon(Icons.explore_outlined),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -62,7 +62,7 @@ class _FeedPageState extends State<FeedPage> {
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.edit),
+                  icon: Icon(Icons.edit_outlined),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -74,7 +74,7 @@ class _FeedPageState extends State<FeedPage> {
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.sticky_note_2),
+                  icon: Icon(Icons.sticky_note_2_outlined),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -88,7 +88,7 @@ class _FeedPageState extends State<FeedPage> {
               ]
             : [
                 IconButton(
-                  icon: Icon(Icons.explore),
+                  icon: Icon(Icons.explore_outlined),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -136,6 +136,11 @@ class _FeedPageState extends State<FeedPage> {
     List<Widget> results = [];
     for (var i = 0; i < feeds.length; i++) {
       if (userDB.follow.contains(feeds[i].id)) {
+        results.add(Divider(
+          height: 5,
+          thickness: 5,
+          color: appBarColor,
+        ));
         results.add(FeedBox(
           feed: feeds[i],
           userDB: userDB,

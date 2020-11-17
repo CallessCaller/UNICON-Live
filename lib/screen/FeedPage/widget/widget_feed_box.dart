@@ -3,11 +3,12 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:testing_layout/components/constant.dart';
+import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/screen/FeedPage/screen/screen_feed_detail.dart';
 import 'package:testing_layout/screen/FeedPage/screen/screen_feed_edit.dart';
+import 'package:testing_layout/screen/FeedPage/widget/widget_content_expand.dart';
 import 'package:testing_layout/screen/UnionPage/union_page.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/feed.dart';
@@ -78,282 +79,272 @@ class _FeedBoxState extends State<FeedBox> {
       elevation: 0,
       color: Colors.black,
       shadowColor: Colors.black,
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-        child: Container(
-          child: Column(
-            children: [
-              Container(
-                height: 50,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      onTap: () async {
-                        var artistSnapshot = await FirebaseFirestore.instance
-                            .collection('Users')
-                            .doc(widget.feed.id)
-                            .get();
-                        Artist artist = Artist.fromSnapshot(artistSnapshot);
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => UnionInfoPage(
-                              artist: artist,
-                              userDB: widget.userDB,
-                            ),
-                          ),
-                        );
-                      },
-                      child: CircleAvatar(
-                        backgroundImage:
-                            NetworkImage(snapshot.data()['profile']),
-                        radius: 25.0,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20.0,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 20,
-                            child: Text(
-                              snapshot.data()['name'],
-                              style: TextStyle(
-                                fontSize: textFontSize,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 2,
-                          ),
-                          widget.feed.isEdited == null ||
-                                  widget.feed.isEdited == false
-                              ? Text(
-                                  showTime(widget.feed.time) +
-                                      '   ' +
-                                      widget.feed.like.length.toString() +
-                                      ' Likes',
-                                  style: TextStyle(
-                                    fontSize: widgetFontSize,
-                                    color: Colors.grey,
-                                  ),
-                                )
-                              : Text(
-                                  showTime(widget.feed.time) +
-                                      '   ' +
-                                      widget.feed.like.length.toString() +
-                                      ' Likes (수정됨)',
-                                  style: TextStyle(
-                                    fontSize: widgetFontSize,
-                                    color: Colors.grey,
-                                  ),
-                                )
-                        ],
-                      ),
-                    ),
-                    widget.feed.progressive != null
-                        ? IconButton(
-                            icon: Icon(
-                              MdiIcons.play,
-                              size: 30,
-                            ),
-                            onPressed: () async {
-                              try {
-                                var response = await http.get(
-                                    '${widget.feed.progressive}?client_id=' +
-                                        _clientId);
-                                String streamURL =
-                                    json.decode(response.body)['url'];
-
-                                await _assetsAudioPlayer.open(
-                                  Audio.network(
-                                    streamURL,
-                                    metas: Metas(
-                                        title: widget.feed.title,
-                                        image: MetasImage.network(
-                                            widget.feed.artwork ?? '')),
-                                  ),
-                                  autoStart: true,
-                                  showNotification: false,
-                                  playInBackground: PlayInBackground.enabled,
-                                  audioFocusStrategy:
-                                      AudioFocusStrategy.request(
-                                          resumeAfterInterruption: true,
-                                          resumeOthersPlayersAfterDone: true),
-                                  headPhoneStrategy:
-                                      HeadPhoneStrategy.pauseOnUnplug,
-                                );
-                              } catch (e) {
-                                print(e);
-                              }
-                            },
-                          )
-                        : SizedBox(),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    widget.feed.id == widget.userDB.id
-                        ? PopupMenuButton(
-                            shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                    color: Colors.white.withOpacity(0.3)),
-                                borderRadius: BorderRadius.circular(11)),
-                            color: Colors.transparent,
-                            icon: Icon(
-                              Icons.more_horiz,
-                              size: 20,
-                            ),
-                            itemBuilder: (BuildContext context) => [
-                              PopupMenuItem(
-                                value: 1,
-                                child: Text(
-                                  '수정',
-                                  style: TextStyle(fontSize: textFontSize),
-                                ),
-                              ),
-                              PopupMenuItem(
-                                value: 2,
-                                child: Text(
-                                  '삭제',
-                                  style: TextStyle(fontSize: textFontSize),
-                                ),
-                              )
-                            ],
-                            onSelected: (value) {
-                              if (value == 1) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        FeedEditPage(feed: widget.feed)));
-                              } else if (value == 2) {
-                                showAlertDialog(context);
-                              }
-                            },
-                          )
-                        : IconButton(
-                            icon: Icon(
-                              widget.feed.like.contains(widget.userDB.id)
-                                  ? MdiIcons.heart
-                                  : MdiIcons.heartOutline,
-                              size: 20,
-                            ),
-                            onPressed: () {
-                              _onLikePressed();
-                            }),
-                  ],
-                ),
-              ),
-              Divider(
-                height: 10,
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => FeedDetail(
-                            feed: widget.feed,
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 47,
+              padding: EdgeInsets.fromLTRB(12, 6, 0, 6),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  InkWell(
+                    onTap: () async {
+                      var artistSnapshot = await FirebaseFirestore.instance
+                          .collection('Users')
+                          .doc(widget.feed.id)
+                          .get();
+                      Artist artist = Artist.fromSnapshot(artistSnapshot);
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => UnionInfoPage(
+                            artist: artist,
                             userDB: widget.userDB,
-                          )));
-                },
-                child: Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.topLeft,
-                      height: 50,
-                      child: Text(
-                        widget.feed.content,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                          ),
+                        ),
+                      );
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(snapshot.data()['profile']),
+                      radius: 17,
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      snapshot.data()['name'],
+                      style: body2,
+                    ),
+                  ),
+                  widget.feed.id == widget.userDB.id
+                      ? PopupMenuButton(
+                          shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                  color: Colors.white.withOpacity(0.3)),
+                              borderRadius: BorderRadius.circular(11)),
+                          color: Colors.transparent,
+                          icon: Icon(
+                            Icons.more_horiz,
+                            size: 20,
+                          ),
+                          itemBuilder: (BuildContext context) => [
+                            PopupMenuItem(
+                              value: 1,
+                              child: Text(
+                                '수정',
+                                style: TextStyle(fontSize: textFontSize),
+                              ),
+                            ),
+                            PopupMenuItem(
+                              value: 2,
+                              child: Text(
+                                '삭제',
+                                style: TextStyle(fontSize: textFontSize),
+                              ),
+                            )
+                          ],
+                          onSelected: (value) {
+                            if (value == 1) {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      FeedEditPage(feed: widget.feed)));
+                            } else if (value == 2) {
+                              showAlertDialog(context);
+                            }
+                          },
+                        )
+                      : SizedBox(),
+                ],
+              ),
+            ),
+            Column(
+              children: [
+                widget.feed.progressive != null
+                    ? Padding(
+                        padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Color(0xff8e00c9),
+                                    Color(0xff160176),
+                                  ],
+                                ),
+                              ),
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.play_arrow_rounded,
+                                  size: 30,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () async {
+                                  try {
+                                    var response = await http.get(
+                                        '${widget.feed.progressive}?client_id=' +
+                                            _clientId);
+                                    String streamURL =
+                                        json.decode(response.body)['url'];
+
+                                    await _assetsAudioPlayer.open(
+                                      Audio.network(
+                                        streamURL,
+                                        metas: Metas(
+                                            title: widget.feed.title,
+                                            image: MetasImage.network(
+                                                widget.feed.artwork ?? '')),
+                                      ),
+                                      autoStart: true,
+                                      showNotification: false,
+                                      playInBackground:
+                                          PlayInBackground.enabled,
+                                      audioFocusStrategy:
+                                          AudioFocusStrategy.request(
+                                              resumeAfterInterruption: true,
+                                              resumeOthersPlayersAfterDone:
+                                                  true),
+                                      headPhoneStrategy:
+                                          HeadPhoneStrategy.pauseOnUnplug,
+                                    );
+                                  } catch (e) {
+                                    print(e);
+                                  }
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 14),
+                            Expanded(
+                              child: Text(
+                                widget.feed.title,
+                                softWrap: true,
+                                style: body3,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : SizedBox(),
+                widget.feed.image != null
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 12),
+                        child: Hero(
+                          tag: widget.feed.feedID,
+                          child: CachedNetworkImage(
+                            imageUrl: widget.feed.image,
+                            imageBuilder: (context, imageProvider) => Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.width * 0.9,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: imageProvider,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : SizedBox(),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 15, 12, 0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: ContentExpandWidget(
+                      text: widget.feed.content.trim(),
+                    ),
+                  ),
+                  SizedBox(width: 43),
+                  Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => FeedDetail(
+                                feed: widget.feed,
+                                userDB: widget.userDB,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Icon(
+                          UniIcon.comment,
                           color: Colors.white,
-                          fontSize: textFontSize,
+                          size: 30,
                         ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    widget.feed.image != null
-                        ? Hero(
-                            tag: widget.feed.feedID,
-                            child: CachedNetworkImage(
-                              imageUrl: widget.feed.image,
-                              imageBuilder: (context, imageProvider) =>
-                                  Container(
-                                alignment: Alignment.centerLeft,
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                height: MediaQuery.of(context).size.width * 0.9,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover, image: imageProvider),
-                                ),
+                      SizedBox(height: 9),
+                      Text(
+                        '###',
+                        style: body3,
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: 20),
+                  Column(
+                    children: [
+                      InkWell(
+                        onTap: _onLikePressed,
+                        child: widget.feed.like.contains(widget.userDB.id)
+                            ? Icon(
+                                UniIcon.like_ena,
+                                color: appKeyColor,
+                                size: 30,
+                              )
+                            : Icon(
+                                UniIcon.like_dis,
+                                color: Colors.white,
+                                size: 30,
                               ),
-                            ),
-                          )
-                        : SizedBox(),
-                  ],
-                ),
+                      ),
+                      SizedBox(height: 9),
+                      Text(
+                        widget.feed.like.length.toString(),
+                        style: body3,
+                      ),
+                    ],
+                  )
+                ],
               ),
-              SizedBox(height: 10),
-              Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(7)),
-                      color: Colors.white),
-                  alignment: Alignment.bottomCenter,
-                  width: MediaQuery.of(context).size.width - 40,
-                  height: 25,
-                  child: Container(
-                    height: 22,
-                    child: TextField(
-                      focusNode: _focusNode,
-                      controller: _controller,
-                      onEditingComplete: () async {
-                        if (_controller.text != '') {
-                          await widget.feed.reference
-                              .collection('comments')
-                              .add({
-                            'id': widget.userDB.id,
-                            'content': _controller.text,
-                            'time': DateTime.now().millisecondsSinceEpoch
-                          });
-                        }
-                        _controller.clear();
-                        _focusNode.unfocus();
-                      },
-                      decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          contentPadding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(7)),
-                            gapPadding: 0,
-                            borderSide: BorderSide(
-                              color: Colors.white,
-                            ),
+            ),
+            Container(
+              alignment: Alignment.centerRight,
+              padding: EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 6,
+              ),
+              child:
+                  widget.feed.isEdited == null || widget.feed.isEdited == false
+                      ? Text(
+                          showTime(widget.feed.time),
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            color: outlineColor,
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(7)),
-                            gapPadding: 0,
-                            borderSide: BorderSide(
-                              color: Colors.white,
-                            ),
+                        )
+                      : Text(
+                          showTime(widget.feed.time) + ' (수정됨)',
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            color: outlineColor,
                           ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(7)),
-                            gapPadding: 0,
-                            borderSide: BorderSide(
-                              color: Colors.white,
-                            ),
-                          ),
-                          hintText: 'Add a comment...',
-                          hintStyle: TextStyle(
-                              fontSize: widgetFontSize, color: Colors.black)),
-                      style: TextStyle(
-                          fontSize: widgetFontSize, color: Colors.black),
-                    ),
-                  ))
-            ],
-          ),
+                        ),
+            )
+          ],
         ),
       ),
     );
