@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class SoundcloudLinkBox extends StatefulWidget {
   final String soundcloudUrl;
@@ -35,9 +36,8 @@ class _SoundcloudLinkBoxState extends State<SoundcloudLinkBox> {
     if (await canLaunch(url)) {
       await launch(
         url,
-        forceWebView: true,
-        forceSafariVC: true,
-        enableJavaScript: true,
+        forceWebView: false,
+        forceSafariVC: false,
         headers: <String, String>{'my_header_key': 'my_header_value'},
       );
     } else {
@@ -49,9 +49,9 @@ class _SoundcloudLinkBoxState extends State<SoundcloudLinkBox> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      iconSize: 50,
       icon: Icon(
         UniIcon.soundcloud,
-        size: 50,
       ),
       onPressed: () {
         _launchSoundcloud(context, widget.soundcloudUrl);

@@ -11,6 +11,11 @@ class InstagramLinkBox extends StatefulWidget {
 }
 
 class _InstagramLinkBoxState extends State<InstagramLinkBox> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   _showMessage(BuildContext context) {
     var _alertDialog = AlertDialog(
       backgroundColor: Colors.transparent,
@@ -34,13 +39,13 @@ class _InstagramLinkBoxState extends State<InstagramLinkBox> {
       _showMessage(context);
       return;
     }
+
     String instagramUrl = 'https://instagram.com/' + instagramID;
     if (await canLaunch(instagramUrl)) {
       await launch(
         instagramUrl,
-        forceWebView: true,
-        forceSafariVC: true,
-        enableJavaScript: true,
+        forceWebView: false,
+        forceSafariVC: false,
         headers: <String, String>{'my_header_key': 'my_header_value'},
       );
     } else {
@@ -52,9 +57,9 @@ class _InstagramLinkBoxState extends State<InstagramLinkBox> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      iconSize: 50,
       icon: Icon(
         UniIcon.instagram,
-        size: 50,
       ),
       onPressed: () {
         _launchInstagram(context, widget.instagramID);

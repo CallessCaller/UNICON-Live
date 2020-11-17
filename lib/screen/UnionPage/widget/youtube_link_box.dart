@@ -35,9 +35,8 @@ class _YoutubeLinkBoxState extends State<YoutubeLinkBox> {
     if (await canLaunch(url)) {
       await launch(
         url,
-        forceWebView: true,
-        forceSafariVC: true,
-        enableJavaScript: true,
+        forceWebView: false,
+        forceSafariVC: false,
         headers: <String, String>{'my_header_key': 'my_header_value'},
       );
     } else {
@@ -49,9 +48,9 @@ class _YoutubeLinkBoxState extends State<YoutubeLinkBox> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      iconSize: 50,
       icon: Icon(
         UniIcon.youtube,
-        size: 50,
       ),
       onPressed: () {
         _launchYoutube(context, widget.youtubeUrl);

@@ -4,19 +4,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:testing_layout/components/constant.dart';
-import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/users.dart';
-import 'package:testing_layout/screen/AccountPage/screen/unicoin_screen/widget/consumable_store.dart';
 
 const bool _kAutoConsume = true;
 
+//  TODO: change sku
+// const List<String> _kProductIds = <String>[
+//   'unicoin10',
+//   'unicoin50',
+//   'unicoin100',
+//   'unicoin500',
+//   'unicoin1000',
+// ];
+
 const List<String> _kProductIds = <String>[
-  'unicoin10',
-  'unicoin20',
-  'unicoin50',
-  'unicoin100',
-  'unicoin500',
-  'unicoin1000',
+  'android.test.purchased',
+  'android.test.purchased',
+  'android.test.canceled',
+  'android.test.refunded',
+  'android.test.item_unavailable',
 ];
 
 class UnicoinPricingList extends StatefulWidget {
@@ -70,6 +76,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
         if (!snapshot.hasData)
           return Center(
             child: CircularProgressIndicator(
+              backgroundColor: Colors.transparent,
               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
             ),
           );
@@ -99,7 +106,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
     if (_purchasePending) {
       stack.add(
         Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(backgroundColor: Colors.transparent),
         ),
       );
     }
@@ -148,7 +155,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
       return Card();
     }
 
-    List<ListTile> productList = <ListTile>[];
+    List<Widget> productList = [];
     if (_notFoundIds.isNotEmpty) {
       productList.add(ListTile(
           title: Text('[${_notFoundIds.join(", ")}] not found',
@@ -183,7 +190,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(widgetRadius)),
       child: Text(
-        productDetails.price + '원',
+        productDetails.price,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.white,
@@ -197,30 +204,21 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
   Widget priceTag(UserDB userDB, ProductDetails productDetails) {
     return Row(
       children: [
-        Icon(
-          UniIcon.unicoin,
-          size: 25,
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Container(
-          width: 40,
-          alignment: Alignment.center,
-          child: Text(
-            productDetails.title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: textFontSize,
-              fontWeight: FontWeight.w600,
+        Expanded(
+          child: Container(
+            width: 40,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              productDetails.title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: textFontSize,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ),
-        Expanded(
-            child: Container(
-          child: Text(''),
-        )),
         priceButton(userDB, productDetails),
       ],
     );
@@ -258,7 +256,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
       });
       return;
     }
-    print(productDetailResponse.notFoundIDs);
+
     if (productDetailResponse.productDetails.isEmpty) {
       setState(() {
         _queryProductError = null;
@@ -284,13 +282,13 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
         verifiedPurchases.add(purchase);
       }
     }
-    List<String> consumables = await ConsumableStore.load();
+    // List<String> consumables = await ConsumableStore.load();
     setState(() {
       _isAvailable = isAvailable;
       _products = productDetailResponse.productDetails;
       _purchases = verifiedPurchases;
       _notFoundIds = productDetailResponse.notFoundIDs;
-      _consumables = consumables;
+      // _consumables = consumables;
       _purchasePending = false;
       _loading = false;
     });
@@ -326,12 +324,36 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
 
   void deliverProduct(PurchaseDetails purchaseDetails) async {
     // IMPORTANT!! Always verify a purchase purchase details before delivering the product.
+    // print('complete!');
+    // await ConsumableStore.save(purchaseDetails.purchaseID);
+    // List<String> consumables = await ConsumableStore.load();
+    int coinAmount = 0;
+    if (purchaseDetails.productID == _kProductIds[0]) {
+      coinAmount = 10;
+    } else if (purchaseDetails.productID == _kProductIds[1]) {
+      coinAmount = 50;
+    } else if (purchaseDetails.productID == _kProductIds[2]) {
+      coinAmount = 100;
+    } else if (purchaseDetails.productID == _kProductIds[3]) {
+      coinAmount = 500;
+    } else if (purchaseDetails.productID == _kProductIds[4]) {
+      coinAmount = 1000;
+    }
 
-    await ConsumableStore.save(purchaseDetails.purchaseID);
-    List<String> consumables = await ConsumableStore.load();
+    DateTime currentTime = DateTime.now();
+    await widget.userDB.reference.collection('unicoin_history').add({
+      'type': 1,
+      'who': 'Y&W Seoul Promotion Inc.',
+      'whoseID': 'Y&W Seoul Promotion Inc.',
+      'amount': coinAmount,
+      'time': currentTime,
+    });
+
+    widget.userDB.points += coinAmount;
+    await widget.userDB.reference.update({'points': widget.userDB.points});
+
     setState(() {
       _purchasePending = false;
-      _consumables = consumables;
     });
   }
 
@@ -342,6 +364,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
   Future<bool> _verifyPurchase(PurchaseDetails purchaseDetails) {
     // IMPORTANT!! Always verify a purchase before delivering the product.
     // For the purpose of an example, we directly return true.
+
     return Future<bool>.value(true);
   }
 
@@ -352,6 +375,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
   }
 
   void handleError(IAPError error) {
+    print(error.message);
     setState(() {
       _purchasePending = false;
     });
