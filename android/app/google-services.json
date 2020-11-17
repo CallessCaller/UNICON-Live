@@ -8,72 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:769625848259:android:85ea18f39183c6e0946576",
-        "android_client_info": {
-          "package_name": "johntopia.toyproject.testing_layout"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "769625848259-ep8k4i09bcbv24i093sujqeq0q8la4f5.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "johntopia.toyproject.testing_layout",
-            "certificate_hash": "1efd62564dd352cccd9c4f9c9d876d1124b42e9f"
-          }
-        },
-        {
-          "client_id": "769625848259-47510lm946l9q3jcojpudimjfgpllquo.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "johntopia.toyproject.testing_layout",
-            "certificate_hash": "e9a23710c9e55e2b4efe57a41882f3981b918d9f"
-          }
-        },
-        {
-          "client_id": "769625848259-q07p6acep11iskeu0p43dioj66jcev6j.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "johntopia.toyproject.testing_layout",
-            "certificate_hash": "1755433ea4cd4619e7eee0bf8e906ab01e61c3b3"
-          }
-        },
-        {
-          "client_id": "769625848259-urf15aneccjevcfrqtt52s1rf19vr8fr.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAIXE49Q13iyO2rYMil6AnnU9AGimTt_h8"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "769625848259-urf15aneccjevcfrqtt52s1rf19vr8fr.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "769625848259-k3m1horolajjb4hkjmorglr09s15mhvv.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "show.unicon.uniconAdminapp"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:769625848259:android:8d1092908eb7fabd946576",
         "android_client_info": {
           "package_name": "show.unicon.unicon_adminapp"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "769625848259-s4hi21iah4uv2trs5rl2ui58v6l9ci91.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "show.unicon.unicon_adminapp",
+            "certificate_hash": "445f09c4cbd5eb4b58130f7d03ae800f7d0ab32d"
+          }
+        },
         {
           "client_id": "769625848259-lh88g58odqqh5v985eoe8561u314mr08.apps.googleusercontent.com",
           "client_type": 1,
@@ -118,6 +66,30 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "769625848259-iqr03nikv6o19vfpbo8pobo133u6nm1j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "show.unicon.uniconapp",
+            "certificate_hash": "445f09c4cbd5eb4b58130f7d03ae800f7d0ab32d"
+          }
+        },
+        {
+          "client_id": "769625848259-2i107r7qde6ha4q33tvr6li3hg9jhcrt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "show.unicon.uniconapp",
+            "certificate_hash": "1efd62564dd352cccd9c4f9c9d876d1124b42e9f"
+          }
+        },
+        {
+          "client_id": "769625848259-cq1tooe6tsm9452lp4clk5eqhplvbo3h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "show.unicon.uniconapp",
+            "certificate_hash": "1755433ea4cd4619e7eee0bf8e906ab01e61c3b3"
+          }
+        },
         {
           "client_id": "769625848259-1apvlr238u5uc14lm9k6uddbogb0ppn5.apps.googleusercontent.com",
           "client_type": 1,
