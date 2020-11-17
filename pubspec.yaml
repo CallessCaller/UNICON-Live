@@ -32,6 +32,8 @@ dependencies:
   firebase_auth: "^0.18.1+2"
   google_sign_in: ^4.5.1
   cloud_functions: "^0.7.0-dev.2"
+  sign_in_with_apple: ^2.5.2
+  crypto: ^2.1.5
 
   # Backend support
   webview_flutter: ^1.0.1

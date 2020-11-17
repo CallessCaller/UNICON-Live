@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -11,9 +10,7 @@ import 'package:testing_layout/screen/AccountPage/screen/unicoin_screen/widget/c
 
 const bool _kAutoConsume = true;
 
-const String _kConsumableId = 'unicoin10';
 const List<String> _kProductIds = <String>[
-  _kConsumableId,
   'unicoin10',
   'unicoin20',
   'unicoin50',
@@ -55,7 +52,6 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
       // handle error here.
     });
     initStoreInfo();
-    super.initState();
   }
 
   @override
@@ -86,6 +82,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
     UserDB _userDB = UserDB.fromSnapshot(snapshot);
 
     List<Widget> stack = [];
+
     if (_queryProductError == null) {
       stack.add(
         Column(
@@ -142,8 +139,10 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
     if (_loading) {
       return Card(
           child: (ListTile(
-              leading: CircularProgressIndicator(),
-              title: Text('Fetching products...'))));
+              leading: CircularProgressIndicator(
+                backgroundColor: Colors.transparent,
+              ),
+              title: Text('상품을 불러오는 중입니다...'))));
     }
     if (!_isAvailable) {
       return Card();
@@ -153,7 +152,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
     if (_notFoundIds.isNotEmpty) {
       productList.add(ListTile(
           title: Text('[${_notFoundIds.join(", ")}] not found',
-              style: TextStyle(color: ThemeData.light().errorColor)),
+              style: TextStyle(color: ThemeData.dark().errorColor)),
           subtitle: Text('error')));
     }
 
@@ -229,6 +228,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
 
   Future<void> initStoreInfo() async {
     final bool isAvailable = await _connection.isAvailable();
+
     if (!isAvailable) {
       setState(() {
         _isAvailable = isAvailable;
@@ -244,6 +244,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
 
     ProductDetailsResponse productDetailResponse =
         await _connection.queryProductDetails(_kProductIds.toSet());
+
     if (productDetailResponse.error != null) {
       setState(() {
         _queryProductError = productDetailResponse.error.message;
@@ -257,7 +258,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
       });
       return;
     }
-
+    print(productDetailResponse.notFoundIDs);
     if (productDetailResponse.productDetails.isEmpty) {
       setState(() {
         _queryProductError = null;

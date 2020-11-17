@@ -14,6 +14,7 @@ class YoutubeLinkBox extends StatefulWidget {
 class _YoutubeLinkBoxState extends State<YoutubeLinkBox> {
   _showMessage(BuildContext context) {
     var _alertDialog = AlertDialog(
+      backgroundColor: Colors.transparent,
       title: Text(
         '해당 유니온이 기입을 완료하지 않았습니다.',
         style: TextStyle(fontSize: textFontSize, fontWeight: FontWeight.bold),
@@ -50,7 +51,7 @@ class _YoutubeLinkBoxState extends State<YoutubeLinkBox> {
     return IconButton(
       icon: Icon(
         UniIcon.youtube,
-        size: 35,
+        size: 50,
       ),
       onPressed: () {
         _launchYoutube(context, widget.youtubeUrl);

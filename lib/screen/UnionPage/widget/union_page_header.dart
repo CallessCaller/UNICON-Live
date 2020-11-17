@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/screen/UnionPage/widget/instagram_link_box.dart';
 import 'package:testing_layout/screen/UnionPage/widget/soundcloud_link_box.dart';
-import 'package:testing_layout/screen/UnionPage/widget/unionfeedtotal.dart';
+import 'package:testing_layout/screen/UnionPage/widget/union_donate.dart';
 import 'package:testing_layout/screen/UnionPage/widget/youtube_link_box.dart';
 import 'package:testing_layout/screen/UnionPage/widget/live_indicator_profile.dart';
 import 'package:testing_layout/model/artists.dart';
@@ -138,7 +138,51 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
           ),
         ),
         SizedBox(
-          height: 30.0,
+          height: 20.0,
+        ),
+        InkWell(
+          onTap: () {
+            _onLikePressed(widget.userDB);
+          },
+          child: widget.artist.myPeople.contains(widget.userDB.id)
+              ? Container(
+                  height: 30,
+                  width: (MediaQuery.of(context).size.width - 60),
+                  decoration: BoxDecoration(
+                    color: appKeyColor,
+                    borderRadius: BorderRadius.circular(widgetRadius),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '팔로잉',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: textFontSize,
+                      ),
+                    ),
+                  ),
+                )
+              : Container(
+                  height: 30,
+                  width: (MediaQuery.of(context).size.width - 60),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(widgetRadius),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '팔로우',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: textFontSize,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+        ),
+        SizedBox(
+          height: 20.0,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -147,78 +191,7 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
             InstagramLinkBox(instagramID: widget.artist.instagramId),
             YoutubeLinkBox(youtubeUrl: widget.artist.youtubeLink),
             SoundcloudLinkBox(soundcloudUrl: widget.artist.soudcloudLink),
-            UnionFeedTotal(userDB: widget.userDB, id: widget.artist.id),
-          ],
-        ),
-        SizedBox(
-          height: 20.0,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            InkWell(
-              onTap: () {
-                _onLikePressed(widget.userDB);
-              },
-              child: widget.artist.myPeople.contains(widget.userDB.id)
-                  ? Container(
-                      height: 30,
-                      width: (MediaQuery.of(context).size.width - 60) / 2,
-                      decoration: BoxDecoration(
-                        color: appKeyColor,
-                        borderRadius: BorderRadius.circular(widgetRadius),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '팔로잉',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: textFontSize,
-                          ),
-                        ),
-                      ),
-                    )
-                  : Container(
-                      height: 30,
-                      width: (MediaQuery.of(context).size.width - 60) / 2,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(widgetRadius),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '팔로우',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: textFontSize,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
-            ),
-            SizedBox(width: 20),
-            InkWell(
-              onTap: () {},
-              child: Container(
-                height: 30,
-                width: (MediaQuery.of(context).size.width - 60) / 2,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(widgetRadius),
-                ),
-                child: Center(
-                  child: Text(
-                    '공유하기',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: textFontSize,
-                      color: appKeyColor,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            UnionDonate(userDB: widget.userDB, artist: widget.artist),
           ],
         ),
       ],

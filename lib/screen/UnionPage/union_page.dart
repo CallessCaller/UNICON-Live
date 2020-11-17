@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/screen/UnionPage/widget/union_page_header.dart';
 import 'package:testing_layout/model/artists.dart';
-import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/model/users.dart';
 
 class UnionInfoPage extends StatefulWidget {
@@ -16,22 +14,8 @@ class UnionInfoPage extends StatefulWidget {
 }
 
 class _UnionInfoPageState extends State<UnionInfoPage> {
-  Lives _findLive(List<Lives> lives) {
-    Lives live;
-    for (int i = 0; i < lives.length; i++) {
-      if (lives[i].id == widget.artist.id) {
-        live = lives[i];
-        break;
-      }
-    }
-    return live;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final lives = Provider.of<List<Lives>>(context);
-    final live = _findLive(lives);
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
@@ -47,7 +31,7 @@ class _UnionInfoPageState extends State<UnionInfoPage> {
           ),
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             children: [
               UnionInfoPageHeader(
@@ -59,7 +43,7 @@ class _UnionInfoPageState extends State<UnionInfoPage> {
                   height: MediaQuery.of(context).size.height * 0.4,
                   width: MediaQuery.of(context).size.width,
                   child: Text(
-                    '라이브 다시보기 기능이 추가 될 예정입니다.',
+                    '피드가 없습니다.',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: subtitleFontSize,

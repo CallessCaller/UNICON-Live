@@ -13,9 +13,13 @@ class InstagramLinkBox extends StatefulWidget {
 class _InstagramLinkBoxState extends State<InstagramLinkBox> {
   _showMessage(BuildContext context) {
     var _alertDialog = AlertDialog(
+      backgroundColor: Colors.transparent,
       title: Text(
         '해당 유니온이 기입을 완료하지 않았습니다.',
-        style: TextStyle(fontSize: textFontSize, fontWeight: FontWeight.bold),
+        style: TextStyle(
+          fontSize: textFontSize,
+          fontWeight: FontWeight.bold,
+        ),
         textAlign: TextAlign.center,
       ),
     );
@@ -50,7 +54,7 @@ class _InstagramLinkBoxState extends State<InstagramLinkBox> {
     return IconButton(
       icon: Icon(
         UniIcon.instagram,
-        size: 35,
+        size: 50,
       ),
       onPressed: () {
         _launchInstagram(context, widget.instagramID);
