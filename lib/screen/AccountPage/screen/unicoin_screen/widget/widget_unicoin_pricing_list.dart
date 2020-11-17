@@ -11,11 +11,15 @@ import 'package:testing_layout/screen/AccountPage/screen/unicoin_screen/widget/c
 
 const bool _kAutoConsume = true;
 
-const String _kConsumableId = 'consumable';
+const String _kConsumableId = 'unicoin10';
 const List<String> _kProductIds = <String>[
   _kConsumableId,
-  'upgrade',
-  'subscription'
+  'unicoin10',
+  'unicoin20',
+  'unicoin50',
+  'unicoin100',
+  'unicoin500',
+  'unicoin1000',
 ];
 
 class UnicoinPricingList extends StatefulWidget {
@@ -169,13 +173,10 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
             productDetails: productDetails,
             applicationUserName: null,
             sandboxTesting: true);
-        if (productDetails.id == _kConsumableId) {
-          _connection.buyConsumable(
-              purchaseParam: purchaseParam,
-              autoConsume: _kAutoConsume || Platform.isIOS);
-        } else {
-          _connection.buyNonConsumable(purchaseParam: purchaseParam);
-        }
+
+        _connection.buyConsumable(
+            purchaseParam: purchaseParam,
+            autoConsume: _kAutoConsume || Platform.isIOS);
       },
       color: appKeyColor,
       minWidth: 110,
@@ -311,10 +312,8 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
           }
         }
         if (Platform.isAndroid) {
-          if (!_kAutoConsume && purchaseDetails.productID == _kConsumableId) {
-            await InAppPurchaseConnection.instance
-                .consumePurchase(purchaseDetails);
-          }
+          await InAppPurchaseConnection.instance
+              .consumePurchase(purchaseDetails);
         }
         if (purchaseDetails.pendingCompletePurchase) {
           await InAppPurchaseConnection.instance
@@ -326,19 +325,13 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
 
   void deliverProduct(PurchaseDetails purchaseDetails) async {
     // IMPORTANT!! Always verify a purchase purchase details before delivering the product.
-    if (purchaseDetails.productID == _kConsumableId) {
-      await ConsumableStore.save(purchaseDetails.purchaseID);
-      List<String> consumables = await ConsumableStore.load();
-      setState(() {
-        _purchasePending = false;
-        _consumables = consumables;
-      });
-    } else {
-      setState(() {
-        _purchases.add(purchaseDetails);
-        _purchasePending = false;
-      });
-    }
+
+    await ConsumableStore.save(purchaseDetails.purchaseID);
+    List<String> consumables = await ConsumableStore.load();
+    setState(() {
+      _purchasePending = false;
+      _consumables = consumables;
+    });
   }
 
   void _handleInvalidPurchase(PurchaseDetails purchaseDetails) {
