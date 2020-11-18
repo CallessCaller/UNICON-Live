@@ -265,7 +265,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ),
                 Container(
                   height: 30,
-                  width: 105,
+                  width: 110,
                   child: Center(
                     child: DropdownButton<String>(
                       style: body2,
@@ -942,7 +942,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               right: 30,
               child: FlatButton(
                 minWidth: MediaQuery.of(context).size.width - 60,
-                height: 60,
+                height: 30,
                 color: appKeyColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14),
@@ -1111,8 +1111,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       }
                     : null,
                 child: Text(
-                  '저장하기',
-                  style: title2,
+                  '저장',
+                  style: subtitle1,
                 ),
               ),
             )

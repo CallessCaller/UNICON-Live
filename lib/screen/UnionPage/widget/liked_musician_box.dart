@@ -157,6 +157,7 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
                       widget.artist.genre != null
                           ? widget.artist.genre.join(' / ')
                           : "",
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: textFontSize,
                         color: Colors.white.withOpacity(0.6),

@@ -16,9 +16,11 @@ class _UnionGenreEditState extends State<UnionGenreEdit> {
 
   _initializeGenreList() {
     for (var i = 0; i < genreTotalList.length; i++) {
-      for (var j = 0; j < widget.userDB.genre.length; j++) {
-        if (genreTotalList[i] == widget.userDB.genre[j]) {
-          _selectedItems.add(i);
+      if (widget.userDB.genre != null) {
+        for (var j = 0; j < widget.userDB.genre.length; j++) {
+          if (genreTotalList[i] == widget.userDB.genre[j]) {
+            _selectedItems.add(i);
+          }
         }
       }
     }

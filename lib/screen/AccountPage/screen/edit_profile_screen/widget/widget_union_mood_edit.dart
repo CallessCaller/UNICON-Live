@@ -16,9 +16,11 @@ class _UnionMoodEditState extends State<UnionMoodEdit> {
 
   _initializeMoodList() {
     for (var i = 0; i < moodTotalList.length; i++) {
-      for (var j = 0; j < widget.userDB.mood.length; j++) {
-        if (moodTotalList[i] == widget.userDB.mood[j]) {
-          _selectedItems.add(i);
+      if (widget.userDB.mood != null) {
+        for (var j = 0; j < widget.userDB.mood.length; j++) {
+          if (moodTotalList[i] == widget.userDB.mood[j]) {
+            _selectedItems.add(i);
+          }
         }
       }
     }

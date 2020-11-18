@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/screen/UnionPage/widget/union_page_body.dart';
 import 'package:testing_layout/screen/UnionPage/widget/union_page_header.dart';
 import 'package:testing_layout/model/artists.dart';
@@ -43,17 +42,6 @@ class _UnionInfoPageState extends State<UnionInfoPage> {
                 height: 20,
               ),
               UnionPageBody(userDB: widget.userDB, artist: widget.artist),
-              // Container(
-              //     alignment: Alignment.center,
-              //     height: MediaQuery.of(context).size.height * 0.4,
-              //     width: MediaQuery.of(context).size.width,
-              //     child: Text(
-              //       '피드가 없습니다.',
-              //       style: TextStyle(
-              //           color: Colors.white,
-              //           fontSize: subtitleFontSize,
-              //           fontWeight: FontWeight.bold),
-              //     ))
             ],
           ),
         ),
