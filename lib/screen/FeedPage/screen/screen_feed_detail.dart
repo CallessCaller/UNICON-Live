@@ -313,9 +313,12 @@ class _FeedDetailState extends State<FeedDetail> {
                   SizedBox(
                     height: 10,
                   ),
-                  CommentBoxes(
-                    feed: widget.feed,
-                    userId: widget.userDB.id,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    child: CommentBoxes(
+                      feed: widget.feed,
+                      userId: widget.userDB.id,
+                    ),
                   ),
                   SizedBox(
                     height: 120,
@@ -340,7 +343,7 @@ class _FeedDetailState extends State<FeedDetail> {
                     Expanded(
                       child: Container(
                         height: 51,
-                        padding: EdgeInsets.all(8),
+                        padding: EdgeInsets.all(3),
                         decoration: BoxDecoration(
                           color: Colors.black,
                           borderRadius: BorderRadius.horizontal(
@@ -360,9 +363,9 @@ class _FeedDetailState extends State<FeedDetail> {
                               radius: 17,
                             ),
                             VerticalDivider(
-                              color: outlineColor,
+                              color: Colors.transparent,
                               thickness: 1,
-                              width: 20,
+                              width: 6,
                             ),
                             Expanded(
                               child: TextField(
@@ -370,7 +373,7 @@ class _FeedDetailState extends State<FeedDetail> {
                                 controller: _controller,
                                 decoration: InputDecoration(
                                   contentPadding:
-                                      EdgeInsets.fromLTRB(0, 0, 15, 0),
+                                      EdgeInsets.fromLTRB(5, 0, 5, 0),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.horizontal(
                                       right: Radius.circular(20),
