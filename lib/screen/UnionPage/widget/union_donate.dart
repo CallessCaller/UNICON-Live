@@ -5,6 +5,7 @@ import 'package:testing_layout/components/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:testing_layout/model/artists.dart';
+import 'package:testing_layout/screen/AccountPage/screen/unicoin_screen/unicoin_page.dart';
 import 'package:testing_layout/screen/LivePage/screen/widget/webConstant.dart';
 
 class UnionDonate extends StatefulWidget {
@@ -22,9 +23,9 @@ class _UnionDonateState extends State<UnionDonate> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      iconSize: 50,
       icon: Icon(
         UniIcon.unicoin,
-        size: 50,
       ),
       onPressed: () {
         showDialog(
@@ -33,7 +34,7 @@ class _UnionDonateState extends State<UnionDonate> {
           builder: (context) {
             return AlertDialog(
               elevation: 0,
-              backgroundColor: Color.fromRGBO(232, 232, 232, 0.8),
+              backgroundColor: Color.fromRGBO(232, 232, 232, 1.0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -60,7 +61,11 @@ class _UnionDonateState extends State<UnionDonate> {
               ),
               actions: <Widget>[
                 FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            MyUnicoinPage(userDB: widget.userDB)));
+                  },
                   child: Center(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,

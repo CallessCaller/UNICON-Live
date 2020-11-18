@@ -8,6 +8,7 @@ import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/model/users.dart';
+import 'package:testing_layout/screen/AccountPage/screen/unicoin_screen/unicoin_page.dart';
 import 'package:testing_layout/screen/LivePage/screen/live_concert.dart';
 import 'package:testing_layout/screen/LivePage/screen/widget/webConstant.dart';
 
@@ -262,7 +263,11 @@ class _ChatWidgetState extends State<ChatWidget> {
           ),
           actions: <Widget>[
             FlatButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        MyUnicoinPage(userDB: widget.userDB)));
+              },
               child: Center(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
