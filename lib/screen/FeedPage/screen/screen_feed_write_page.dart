@@ -53,10 +53,22 @@ class _FeedWritePageState extends State<FeedWritePage> {
           '글 작성하기',
           style: headline2,
         ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_rounded,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         actions: [
           IconButton(
             color: appKeyColor,
-            icon: Icon(MdiIcons.check),
+            icon: Icon(
+              Icons.check,
+              size: 30,
+            ),
             onPressed: _canGo
                 ? () async {
                     scFocus.unfocus();

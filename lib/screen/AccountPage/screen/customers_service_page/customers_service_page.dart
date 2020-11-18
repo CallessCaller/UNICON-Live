@@ -65,16 +65,20 @@ class _CSPageState extends State<CSPage> {
               expandedHeight: 250,
               floating: false,
               pinned: true,
-              centerTitle: true,
+              centerTitle: false,
               title: Text(
                 '고객센터',
                 style: TextStyle(
                   color: isShrink ? Colors.white : Colors.transparent,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
               leading: IconButton(
-                icon: Icon(Icons.arrow_back_ios_rounded),
+                icon: Icon(
+                  Icons.arrow_back_ios_rounded,
+                  size: 30,
+                ),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

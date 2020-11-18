@@ -128,7 +128,7 @@ class _TabPageState extends State<TabPage> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  _selectedIndex == 2 ? Icons.explore : Icons.explore_outlined,
+                  _selectedIndex == 2 ? Icons.article : Icons.article_outlined,
                 ),
                 label: 'Feed',
               ),

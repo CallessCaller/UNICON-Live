@@ -24,7 +24,10 @@ class _UnionInfoPageState extends State<UnionInfoPage> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_rounded),
+            icon: Icon(
+              Icons.arrow_back_ios_rounded,
+              size: 30,
+            ),
             onPressed: () {
               Navigator.of(context).pop();
             },

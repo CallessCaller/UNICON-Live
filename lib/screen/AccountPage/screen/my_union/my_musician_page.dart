@@ -25,8 +25,9 @@ class _MyMusicianPageState extends State<MyMusicianPage> {
       appBar: AppBar(
         title: Text(
           '마이 유니온',
+          style: headline2,
         ),
-        centerTitle: true,
+        centerTitle: false,
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_rounded),

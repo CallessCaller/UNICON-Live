@@ -910,12 +910,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
         elevation: 0,
         title: Text(
           '프로필 수정',
+          style: headline2,
         ),
-        centerTitle: true,
+        centerTitle: false,
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: Icon(Icons.close),
+            icon: Icon(
+              Icons.close,
+              size: 30,
+            ),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -942,7 +946,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               right: 30,
               child: FlatButton(
                 minWidth: MediaQuery.of(context).size.width - 60,
-                height: 30,
+                height: 50,
                 color: appKeyColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14),

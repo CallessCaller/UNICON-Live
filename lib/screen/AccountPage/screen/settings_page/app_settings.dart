@@ -120,10 +120,16 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         elevation: 0,
-        title: Text('환경설정'),
-        centerTitle: true,
+        title: Text(
+          '환경설정',
+          style: headline2,
+        ),
+        centerTitle: false,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_rounded),
+          icon: Icon(
+            Icons.arrow_back_ios_rounded,
+            size: 30,
+          ),
           onPressed: () {
             Navigator.of(context).pop();
           },

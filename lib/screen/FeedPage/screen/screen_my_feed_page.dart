@@ -58,6 +58,15 @@ class _MyFeedPageState extends State<MyFeedPage> {
           '내가 쓴 글',
           style: headline2,
         ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_rounded,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),

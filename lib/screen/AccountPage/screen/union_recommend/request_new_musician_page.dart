@@ -74,16 +74,20 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
               expandedHeight: 250,
               floating: false,
               pinned: true,
-              centerTitle: true,
+              centerTitle: false,
               title: Text(
                 '유니온 추천',
                 style: TextStyle(
                   color: isShrink ? Colors.white : Colors.transparent,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
               leading: IconButton(
-                icon: Icon(Icons.arrow_back_ios_rounded),
+                icon: Icon(
+                  Icons.arrow_back_ios_rounded,
+                  size: 30,
+                ),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -107,385 +111,368 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
             ),
           ];
         },
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
+        body: SafeArea(
+          child: Stack(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    Text(
-                      '추천하고 싶은 뮤지션(밴드) 이름',
-                      style: TextStyle(
-                        fontSize: textFontSize,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Container(
-                      height: 40,
-                      child: TextField(
-                        controller: _controller1,
-                        maxLines: 1,
-                        autocorrect: false,
-                        cursorHeight: 14,
-                        keyboardType: TextInputType.text,
-                        style: TextStyle(
-                          fontSize: textFontSize,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        decoration: InputDecoration(
-                          isDense: true,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(widgetRadius)),
-                            borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1,
+              Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '추천하고 싶은 뮤지션(밴드) 이름',
+                              style: subtitle1,
                             ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(widgetRadius)),
-                            borderSide: BorderSide(
-                              color: appKeyColor,
-                              width: 1,
+                            SizedBox(
+                              height: 10.0,
                             ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    Text(
-                      '뮤지션(밴드)를 어떻게 알게되셨나요?',
-                      style: TextStyle(
-                        fontSize: textFontSize,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 12.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            _selectRoute(0);
-                          },
-                          child: _route[_route.keys.toList()[0]]
-                              ? Container(
-                                  height: 30,
-                                  width: 69,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(widgetRadius),
-                                    border: Border.all(
-                                      width: 1.0,
-                                      color: appKeyColor,
-                                    ),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      _route.keys.toList()[0],
-                                      style: TextStyle(
-                                        fontSize: textFontSize,
-                                        fontWeight: FontWeight.w700,
-                                        color: appKeyColor,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : Container(
-                                  height: 30,
-                                  width: 69,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(widgetRadius),
-                                    border: Border.all(
-                                      width: 1.0,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      _route.keys.toList()[0],
-                                      style: TextStyle(
-                                        fontSize: textFontSize,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
+                            TextField(
+                              controller: _controller1,
+                              maxLines: 1,
+                              autocorrect: false,
+                              cursorHeight: 14,
+                              keyboardType: TextInputType.text,
+                              style: body3,
+                              decoration: InputDecoration(
+                                isDense: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(widgetRadius)),
+                                  borderSide: BorderSide(
+                                    color: Colors.white,
+                                    width: 1,
                                   ),
                                 ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            _selectRoute(1);
-                          },
-                          child: _route[_route.keys.toList()[1]]
-                              ? Container(
-                                  height: 30,
-                                  width: 69,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(widgetRadius),
-                                    border: Border.all(
-                                      width: 1.0,
-                                      color: appKeyColor,
-                                    ),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      _route.keys.toList()[1],
-                                      style: TextStyle(
-                                        fontSize: textFontSize,
-                                        fontWeight: FontWeight.w700,
-                                        color: appKeyColor,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : Container(
-                                  height: 30,
-                                  width: 69,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(widgetRadius),
-                                    border: Border.all(
-                                      width: 1.0,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      _route.keys.toList()[1],
-                                      style: TextStyle(
-                                        fontSize: textFontSize,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(widgetRadius)),
+                                  borderSide: BorderSide(
+                                    color: appKeyColor,
+                                    width: 1,
                                   ),
                                 ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            _selectRoute(2);
-                          },
-                          child: _route[_route.keys.toList()[2]]
-                              ? Container(
-                                  height: 30,
-                                  width: 69,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(widgetRadius),
-                                    border: Border.all(
-                                      width: 1.0,
-                                      color: appKeyColor,
-                                    ),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      _route.keys.toList()[2],
-                                      style: TextStyle(
-                                        fontSize: textFontSize,
-                                        fontWeight: FontWeight.w700,
-                                        color: appKeyColor,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : Container(
-                                  height: 30,
-                                  width: 69,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(widgetRadius),
-                                    border: Border.all(
-                                      width: 1.0,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      _route.keys.toList()[2],
-                                      style: TextStyle(
-                                        fontSize: textFontSize,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            _selectRoute(3);
-                          },
-                          child: _route[_route.keys.toList()[3]]
-                              ? Container(
-                                  height: 30,
-                                  width: 69,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(widgetRadius),
-                                    border: Border.all(
-                                      width: 1.0,
-                                      color: appKeyColor,
-                                    ),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      _route.keys.toList()[3],
-                                      style: TextStyle(
-                                        fontSize: textFontSize,
-                                        fontWeight: FontWeight.w700,
-                                        color: appKeyColor,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : Container(
-                                  height: 30,
-                                  width: 69,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(widgetRadius),
-                                    border: Border.all(
-                                      width: 1.0,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      _route.keys.toList()[3],
-                                      style: TextStyle(
-                                        fontSize: textFontSize,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 29.0,
-                    ),
-                    Text(
-                      '뮤지션(밴드)의 노래중 가장 좋아하는 노래를 추천해주세요!',
-                      softWrap: true,
-                      style: TextStyle(
-                        fontSize: textFontSize,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Container(
-                      height: 40,
-                      child: TextField(
-                        controller: _controller2,
-                        maxLines: 1,
-                        autocorrect: false,
-                        cursorHeight: 14,
-                        keyboardType: TextInputType.text,
-                        style: TextStyle(
-                          fontSize: textFontSize,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        decoration: InputDecoration(
-                          isDense: true,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(widgetRadius)),
-                            borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1,
+                              ),
                             ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(widgetRadius)),
-                            borderSide: BorderSide(
-                              color: appKeyColor,
-                              width: 1,
+                            SizedBox(
+                              height: 30.0,
                             ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 28.0,
-                    ),
-                    Center(
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(widgetRadius),
-                        ),
-                        color: appKeyColor,
-                        onPressed: () async {
-                          if ((_controller1.text != '') &&
-                              (_controller2.text != '')) {
-                            for (var i = 0; i < _route.keys.length; i++) {
-                              if (_route[_route.keys.toList()[i]]) {
-                                // Collection 불러오기
-                                CollectionReference newUnionRequestCollection =
-                                    FirebaseFirestore.instance
-                                        .collection('NewUnionRequest');
-
-                                await newUnionRequestCollection.add(
-                                  {
-                                    'id': widget.userDB.id.trim(),
-                                    'name': _controller1.text.trim(),
-                                    'route': _route.keys.toList()[i],
-                                    'favorite_song': _controller2.text.trim(),
+                            Text(
+                              '뮤지션(밴드)를 어떻게 알게되셨나요?',
+                              style: subtitle1,
+                            ),
+                            SizedBox(
+                              height: 12.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    _selectRoute(0);
                                   },
-                                ).then((value) async {
-                                  String documentID = value.id;
-                                  await newUnionRequestCollection
-                                      .doc(documentID)
-                                      .update({'document_id': documentID});
-                                });
-
-                                Navigator.of(context).pop();
-                              }
-                            }
-                          } else {
-                            Fluttertoast.showToast(
-                              msg: "내용을 입력해주세요",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.grey[700],
-                              textColor: Colors.white,
-                              fontSize: textFontSize,
-                            );
-                          }
-                        },
-                        child: Text(
-                          '추천하기',
-                          style: TextStyle(
-                            fontSize: textFontSize,
-                            fontWeight: FontWeight.w700,
-                          ),
+                                  child: _route[_route.keys.toList()[0]]
+                                      ? Container(
+                                          height: 30,
+                                          width: 69,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                widgetRadius),
+                                            border: Border.all(
+                                              width: 1.0,
+                                              color: appKeyColor,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              _route.keys.toList()[0],
+                                              style: TextStyle(
+                                                fontSize: textFontSize,
+                                                fontWeight: FontWeight.w500,
+                                                color: appKeyColor,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(
+                                          height: 30,
+                                          width: 69,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                widgetRadius),
+                                            border: Border.all(
+                                              width: 1.0,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              _route.keys.toList()[0],
+                                              style: TextStyle(
+                                                fontSize: textFontSize,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    _selectRoute(1);
+                                  },
+                                  child: _route[_route.keys.toList()[1]]
+                                      ? Container(
+                                          height: 30,
+                                          width: 69,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                widgetRadius),
+                                            border: Border.all(
+                                              width: 1.0,
+                                              color: appKeyColor,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              _route.keys.toList()[1],
+                                              style: TextStyle(
+                                                fontSize: textFontSize,
+                                                fontWeight: FontWeight.w500,
+                                                color: appKeyColor,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(
+                                          height: 30,
+                                          width: 69,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                widgetRadius),
+                                            border: Border.all(
+                                              width: 1.0,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              _route.keys.toList()[1],
+                                              style: TextStyle(
+                                                fontSize: textFontSize,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    _selectRoute(2);
+                                  },
+                                  child: _route[_route.keys.toList()[2]]
+                                      ? Container(
+                                          height: 30,
+                                          width: 69,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                widgetRadius),
+                                            border: Border.all(
+                                              width: 1.0,
+                                              color: appKeyColor,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              _route.keys.toList()[2],
+                                              style: TextStyle(
+                                                fontSize: textFontSize,
+                                                fontWeight: FontWeight.w500,
+                                                color: appKeyColor,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(
+                                          height: 30,
+                                          width: 69,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                widgetRadius),
+                                            border: Border.all(
+                                              width: 1.0,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              _route.keys.toList()[2],
+                                              style: TextStyle(
+                                                fontSize: textFontSize,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    _selectRoute(3);
+                                  },
+                                  child: _route[_route.keys.toList()[3]]
+                                      ? Container(
+                                          height: 30,
+                                          width: 69,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                widgetRadius),
+                                            border: Border.all(
+                                              width: 1.0,
+                                              color: appKeyColor,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              _route.keys.toList()[3],
+                                              style: TextStyle(
+                                                fontSize: textFontSize,
+                                                fontWeight: FontWeight.w500,
+                                                color: appKeyColor,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(
+                                          height: 30,
+                                          width: 69,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                widgetRadius),
+                                            border: Border.all(
+                                              width: 1.0,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              _route.keys.toList()[3],
+                                              style: TextStyle(
+                                                fontSize: textFontSize,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 29.0,
+                            ),
+                            Text(
+                              '뮤지션(밴드)의 최애곡을 추천해주세요!',
+                              softWrap: true,
+                              style: subtitle1,
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            TextField(
+                              controller: _controller2,
+                              maxLines: 1,
+                              autocorrect: false,
+                              cursorHeight: 14,
+                              keyboardType: TextInputType.text,
+                              style: body3,
+                              decoration: InputDecoration(
+                                isDense: true,
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(widgetRadius)),
+                                  borderSide: BorderSide(
+                                    color: Colors.white,
+                                    width: 1,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(widgetRadius)),
+                                  borderSide: BorderSide(
+                                    color: appKeyColor,
+                                    width: 1,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
               ),
+              Positioned(
+                bottom: 0,
+                left: 30,
+                right: 30,
+                child: FlatButton(
+                  minWidth: MediaQuery.of(context).size.width - 60,
+                  height: 50,
+                  color: appKeyColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  onPressed: () async {
+                    if ((_controller1.text != '') &&
+                        (_controller2.text != '')) {
+                      for (var i = 0; i < _route.keys.length; i++) {
+                        if (_route[_route.keys.toList()[i]]) {
+                          // Collection 불러오기
+                          CollectionReference newUnionRequestCollection =
+                              FirebaseFirestore.instance
+                                  .collection('NewUnionRequest');
+
+                          await newUnionRequestCollection.add(
+                            {
+                              'id': widget.userDB.id.trim(),
+                              'name': _controller1.text.trim(),
+                              'route': _route.keys.toList()[i],
+                              'favorite_song': _controller2.text.trim(),
+                            },
+                          ).then((value) async {
+                            String documentID = value.id;
+                            await newUnionRequestCollection
+                                .doc(documentID)
+                                .update({'document_id': documentID});
+                          });
+
+                          Navigator.of(context).pop();
+                        }
+                      }
+                    } else {
+                      Fluttertoast.showToast(
+                        msg: "내용을 입력해주세요",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.grey[500],
+                        textColor: Colors.white,
+                        fontSize: textFontSize,
+                      );
+                    }
+                  },
+                  child: Text(
+                    '추천하기',
+                    style: subtitle1,
+                  ),
+                ),
+              )
             ],
           ),
         ),

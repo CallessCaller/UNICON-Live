@@ -49,7 +49,10 @@ class _FeedPageState extends State<FeedPage> {
         actions: userDB.isArtist
             ? [
                 IconButton(
-                  icon: Icon(Icons.explore_outlined),
+                  icon: Icon(
+                    Icons.explore_outlined,
+                    size: 30,
+                  ),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -61,7 +64,10 @@ class _FeedPageState extends State<FeedPage> {
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.edit_outlined),
+                  icon: Icon(
+                    Icons.edit_outlined,
+                    size: 30,
+                  ),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -73,7 +79,10 @@ class _FeedPageState extends State<FeedPage> {
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.sticky_note_2_outlined),
+                  icon: Icon(
+                    Icons.sticky_note_2_outlined,
+                    size: 30,
+                  ),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -88,7 +97,10 @@ class _FeedPageState extends State<FeedPage> {
               ]
             : [
                 IconButton(
-                  icon: Icon(Icons.explore_outlined),
+                  icon: Icon(
+                    Icons.explore_outlined,
+                    size: 30,
+                  ),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(

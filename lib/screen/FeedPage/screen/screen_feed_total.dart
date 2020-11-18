@@ -38,11 +38,23 @@ class _FeedTotalState extends State<FeedTotal> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: false,
         title: Text(
           '전체 보기',
           style: headline2,
         ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.close,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
       ),
       backgroundColor: Colors.black,
       body: SafeArea(

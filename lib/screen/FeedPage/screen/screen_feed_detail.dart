@@ -79,7 +79,6 @@ class _FeedDetailState extends State<FeedDetail> {
     return Scaffold(
       backgroundColor: appBarColor,
       appBar: AppBar(
-        toolbarHeight: 40,
         backgroundColor: Colors.black,
         elevation: 0.0,
         title: Text(
@@ -87,6 +86,15 @@ class _FeedDetailState extends State<FeedDetail> {
           style: headline2,
         ),
         centerTitle: false,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_rounded,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       body: SafeArea(
         child: Stack(

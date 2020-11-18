@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/components/constant.dart';
+import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/screen/UnionPage/union_page.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/users.dart';
@@ -120,11 +121,7 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
                               Text(
                                 widget.artist.name,
                                 softWrap: true,
-                                style: TextStyle(
-                                  fontSize: subtitleFontSize,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                ),
+                                style: subtitle2,
                               ),
                               Container(
                                 padding:
@@ -134,7 +131,8 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
                                     'ON-AIR',
                                     style: TextStyle(
                                       color: appKeyColor,
-                                      fontSize: widgetFontSize,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w300,
                                     ),
                                   ),
                                 ),
@@ -159,29 +157,71 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
                           : "",
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: textFontSize,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
                         color: Colors.white.withOpacity(0.6),
                       ),
                     ),
                   ],
                 ),
               ),
-              IconButton(
-                icon: Icon(
-                  widget.artist.myPeople.contains(widget.userDB.id)
-                      ? MdiIcons.heart
-                      :
-                      // 라이크되면 MdiIcons.heart
-                      MdiIcons.heartOutline,
-                  size: 30,
-                  color: appKeyColor.withOpacity(0.7),
-                ),
-                onPressed: () {
-                  _onLikePressed(widget.userDB);
-                },
-                splashColor: Colors.transparent,
-                splashRadius: 3.0,
-              ),
+              widget.artist.myPeople.contains(widget.userDB.id)
+                  ? FlatButton.icon(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      icon: Icon(
+                        UniIcon.feed_enabled,
+                        color: outlineColor,
+                      ),
+                      label: Text(
+                        '팔로잉',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: outlineColor,
+                        ),
+                      ),
+                      onPressed: () {
+                        _onLikePressed(widget.userDB);
+                      },
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: outlineColor,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    )
+                  : FlatButton.icon(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      icon: Icon(
+                        UniIcon.feed_disabled,
+                      ),
+                      label: Text(
+                        '팔로우',
+                        style: body3,
+                      ),
+                      onPressed: () {
+                        _onLikePressed(widget.userDB);
+                      },
+                      color: appKeyColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+              // IconButton(
+              //   icon: Icon(
+              //     widget.artist.myPeople.contains(widget.userDB.id)
+              //         ? MdiIcons.heart
+              //         : MdiIcons.heartOutline,
+              //     size: 30,
+              //     color: appKeyColor.withOpacity(0.7),
+              //   ),
+              //   onPressed: () {
+              //     _onLikePressed(widget.userDB);
+              //   },
+              //   splashColor: Colors.transparent,
+              //   splashRadius: 3.0,
+              // ),
             ],
           ),
         ),

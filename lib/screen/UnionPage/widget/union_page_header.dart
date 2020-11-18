@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/components/constant.dart';
+import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/screen/UnionPage/widget/instagram_link_box.dart';
 import 'package:testing_layout/screen/UnionPage/widget/soundcloud_link_box.dart';
 import 'package:testing_layout/screen/UnionPage/widget/union_donate.dart';
@@ -114,27 +115,18 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
           height: 10.0,
         ),
         Container(
-          width: 157,
           height: 30,
-          child: Center(
-            child: Text(
-              widget.artist.name,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: subtitleFontSize,
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                width: 2,
+                color: appKeyColor,
               ),
             ),
           ),
-        ),
-        Container(
-          width: 157.0,
-          height: 0.0,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: appKeyColor,
-              width: 1.0,
-            ),
+          child: Text(
+            widget.artist.name,
+            style: title2,
           ),
         ),
         SizedBox(
@@ -149,15 +141,16 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
                   height: 30,
                   width: (MediaQuery.of(context).size.width - 60),
                   decoration: BoxDecoration(
-                    color: appKeyColor,
                     borderRadius: BorderRadius.circular(widgetRadius),
+                    border: Border.all(color: appKeyColor, width: 1.2),
                   ),
                   child: Center(
                     child: Text(
                       '팔로잉',
                       style: TextStyle(
+                        fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        fontSize: textFontSize,
+                        color: appKeyColor,
                       ),
                     ),
                   ),
@@ -166,24 +159,18 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
                   height: 30,
                   width: (MediaQuery.of(context).size.width - 60),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: appKeyColor,
                     borderRadius: BorderRadius.circular(widgetRadius),
                   ),
                   child: Center(
                     child: Text(
                       '팔로우',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: textFontSize,
-                        color: Colors.black,
-                      ),
+                      style: subtitle2,
                     ),
                   ),
                 ),
         ),
-        SizedBox(
-          height: 20.0,
-        ),
+        SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
