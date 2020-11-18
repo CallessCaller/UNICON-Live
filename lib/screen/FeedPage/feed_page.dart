@@ -77,8 +77,9 @@ class _FeedPageState extends State<FeedPage> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => FeedTotal(
+                        builder: (context) => MyFeedPage(
                           userDB: userDB,
+                          id: userDB.id,
                         ),
                       ),
                     );
@@ -91,9 +92,8 @@ class _FeedPageState extends State<FeedPage> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => MyFeedPage(
+                        builder: (context) => FeedTotal(
                           userDB: userDB,
-                          id: userDB.id,
                         ),
                       ),
                     );

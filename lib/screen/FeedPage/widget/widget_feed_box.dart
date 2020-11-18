@@ -30,6 +30,11 @@ class _FeedBoxState extends State<FeedBox> {
   final TextEditingController _controller = TextEditingController(text: '');
   final FocusNode _focusNode = FocusNode();
 
+  String firstHalf;
+  String secondHalf;
+
+  bool flag = true;
+
   @override
   void initState() {
     super.initState();
@@ -74,6 +79,15 @@ class _FeedBoxState extends State<FeedBox> {
   }
 
   Widget _buildBody(BuildContext context, DocumentSnapshot snapshot) {
+    String trimmedContent = widget.feed.content.trim();
+    if (trimmedContent.length > 50) {
+      firstHalf = trimmedContent.substring(0, 50);
+      secondHalf = trimmedContent.substring(50, trimmedContent.length);
+    } else {
+      firstHalf = trimmedContent;
+      secondHalf = "";
+    }
+
     return Card(
       elevation: 0,
       color: Colors.black,
@@ -272,10 +286,14 @@ class _FeedBoxState extends State<FeedBox> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  new Expanded(
-                    child: new ContentExpandWidget(
-                      text: widget.feed.content,
-                    ),
+                  Expanded(
+                    child: secondHalf.isEmpty
+                        ? Text(firstHalf)
+                        : Text(
+                            flag
+                                ? (firstHalf + "...")
+                                : (firstHalf + secondHalf),
+                          ),
                     // child: Text(widget.feed.content,),
                   ),
                   SizedBox(width: 43),
@@ -333,12 +351,34 @@ class _FeedBoxState extends State<FeedBox> {
               ),
             ),
             Container(
-              alignment: Alignment.centerRight,
               padding: EdgeInsets.symmetric(
                 horizontal: 12,
                 vertical: 6,
               ),
-              child:
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  !secondHalf.isEmpty
+                      ? InkWell(
+                          child: Container(
+                            child: Text(
+                              flag ? "더보기" : "줄이기",
+                              style: new TextStyle(
+                                color: outlineColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              flag = !flag;
+                            });
+                          },
+                        )
+                      : Expanded(
+                          child: SizedBox(width: 1),
+                        ),
                   widget.feed.isEdited == null || widget.feed.isEdited == false
                       ? Text(
                           showTime(widget.feed.time),
@@ -356,6 +396,8 @@ class _FeedBoxState extends State<FeedBox> {
                             color: outlineColor,
                           ),
                         ),
+                ],
+              ),
             )
           ],
         ),
