@@ -134,10 +134,8 @@ class _FeedBoxState extends State<FeedBox> {
                   widget.feed.id == widget.userDB.id
                       ? PopupMenuButton(
                           shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                  color: Colors.white.withOpacity(0.3)),
                               borderRadius: BorderRadius.circular(11)),
-                          color: Colors.transparent,
+                          color: Colors.white,
                           icon: Icon(
                             Icons.more_horiz,
                             size: 20,
@@ -147,14 +145,22 @@ class _FeedBoxState extends State<FeedBox> {
                               value: 1,
                               child: Text(
                                 '수정',
-                                style: TextStyle(fontSize: textFontSize),
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w300,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                             PopupMenuItem(
                               value: 2,
                               child: Text(
                                 '삭제',
-                                style: TextStyle(fontSize: textFontSize),
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w300,
+                                  color: Colors.black,
+                                ),
                               ),
                             )
                           ],

@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
+import 'package:testing_layout/screen/FeedPage/screen/screen_feed_edit.dart';
 import 'package:testing_layout/screen/FeedPage/widget/widget_comment.dart';
 import 'package:testing_layout/screen/UnionPage/union_page.dart';
 import 'package:testing_layout/model/artists.dart';
@@ -149,27 +150,52 @@ class _FeedDetailState extends State<FeedDetail> {
                                 ),
                               ),
                               widget.feed.id == widget.userDB.id
-                                  ? IconButton(
+                                  ? PopupMenuButton(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(11)),
+                                      color: Colors.white,
                                       icon: Icon(
                                         Icons.more_horiz,
                                         size: 20,
                                       ),
-                                      onPressed: () {})
-                                  : InkWell(
-                                      onTap: _onLikePressed,
-                                      child: widget.feed.like
-                                              .contains(widget.userDB.id)
-                                          ? Icon(
-                                              UniIcon.like_ena,
-                                              color: appKeyColor,
-                                              size: 30,
-                                            )
-                                          : Icon(
-                                              UniIcon.like_dis,
-                                              color: Colors.white,
-                                              size: 30,
+                                      itemBuilder: (BuildContext context) => [
+                                        PopupMenuItem(
+                                          value: 1,
+                                          child: Text(
+                                            '수정',
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w300,
+                                              color: Colors.black,
                                             ),
-                                    ),
+                                          ),
+                                        ),
+                                        PopupMenuItem(
+                                          value: 2,
+                                          child: Text(
+                                            '삭제',
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w300,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                      onSelected: (value) {
+                                        if (value == 1) {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      FeedEditPage(
+                                                          feed: widget.feed)));
+                                        } else if (value == 2) {
+                                          showAlertDialog(context);
+                                        }
+                                      },
+                                    )
+                                  : SizedBox(),
                             ],
                           ),
                         ),
@@ -415,5 +441,50 @@ class _FeedDetailState extends State<FeedDetail> {
   @override
   Widget build(BuildContext context) {
     return _fetchData(context);
+  }
+
+  void showAlertDialog(BuildContext context) async {
+    await showDialog(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              //side: BorderSide(color: Colors.white.withOpacity(0.3)),
+              borderRadius: BorderRadius.circular(11)),
+          backgroundColor: Colors.black,
+          content: Text(
+            "정말 삭제하시겠습니까?",
+            style: TextStyle(fontSize: textFontSize),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                '삭제',
+                style: TextStyle(fontSize: textFontSize),
+              ),
+              onPressed: () async {
+                await widget.userDB.reference
+                    .collection('my_post')
+                    .doc(widget.feed.feedID)
+                    .delete();
+                await widget.feed.reference.delete();
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text(
+                '취소',
+                style: TextStyle(fontSize: textFontSize),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

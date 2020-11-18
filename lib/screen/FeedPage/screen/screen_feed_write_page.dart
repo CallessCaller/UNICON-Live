@@ -48,8 +48,10 @@ class _FeedWritePageState extends State<FeedWritePage> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         elevation: 0.0,
+        centerTitle: false,
         title: Text(
-          '피드 작성',
+          '글 작성하기',
+          style: headline2,
         ),
         actions: [
           IconButton(
@@ -70,47 +72,82 @@ class _FeedWritePageState extends State<FeedWritePage> {
                         fontSize: textFontSize,
                       );
                     } else {
-                      showCircleIndicator(context);
-                      setState(() {
-                        _canGo = false;
-                      });
-                      final feed = await FirebaseFirestore.instance
-                          .collection('Feed')
-                          .add({
+                      bool check = false;
+
+                      Map<String, dynamic> _uploadResult = {
                         'time': Timestamp.now().millisecondsSinceEpoch,
-                        'content': _content.text,
-                        'soundcloud': _soundcloud.text,
+                        'content': _content.text.trim(),
                         'id': widget.userDB.id,
                         'like': [],
-                      });
+                      };
 
-                      await FirebaseFirestore.instance
-                          .collection('Feed')
-                          .doc(feed.id)
-                          .update({'feedID': feed.id});
-                      if (_image != null) {
-                        await _onlyUploadImage(feed.id);
+                      if (_soundcloud.text != '' &&
+                          _soundcloud.text.contains('soundcloud.com')) {
+                        if (_soundcloud.text.startsWith('https://')) {
+                          _uploadResult['soundcloud'] = _soundcloud.text.trim();
+                        } else {
+                          _uploadResult['soundcloud'] =
+                              'https://' + _soundcloud.text.trim();
+                        }
+
+                        check = true;
+                      } else {
+                        var _alertDialog = AlertDialog(
+                          title: ListBody(children: [
+                            Text(
+                              "사운드클라우드 링크를 정확하게 입력하세요.",
+                              style: TextStyle(
+                                fontSize: textFontSize,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            Text('ex. soundcloud.com/ 형식')
+                          ]),
+                        );
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _alertDialog,
+                        );
+                      }
+
+                      if (check) {
+                        showCircleIndicator(context);
+                        setState(() {
+                          _canGo = false;
+                        });
+                        final feed = await FirebaseFirestore.instance
+                            .collection('Feed')
+                            .add(_uploadResult);
+
                         await FirebaseFirestore.instance
                             .collection('Feed')
                             .doc(feed.id)
-                            .update({
-                          'image': _imageURL,
-                        });
+                            .update({'feedID': feed.id});
+
+                        if (_image != null) {
+                          await _onlyUploadImage(feed.id);
+                          await FirebaseFirestore.instance
+                              .collection('Feed')
+                              .doc(feed.id)
+                              .update({
+                            'image': _imageURL,
+                          });
+                        }
+
+                        await widget.userDB.reference
+                            .collection('my_post')
+                            .doc(feed.id)
+                            .set({'feedID': feed.id});
+
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
                       }
-
-                      await widget.userDB.reference
-                          .collection('my_post')
-                          .doc(feed.id)
-                          .set({'feedID': feed.id});
-
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
                     }
                   }
                 : null,
           )
         ],
-        centerTitle: false,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -120,11 +157,8 @@ class _FeedWritePageState extends State<FeedWritePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '음악 공유하기 (선택)',
-                style: TextStyle(
-                  fontSize: subtitleFontSize,
-                  fontWeight: FontWeight.w700,
-                ),
+                '사운드클라우드 음악 공유하기',
+                style: title3,
               ),
               SizedBox(
                 height: 20.0,
@@ -134,75 +168,75 @@ class _FeedWritePageState extends State<FeedWritePage> {
                 controller: _soundcloud,
                 autocorrect: false,
                 maxLines: 1,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: widgetFontSize,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: body3,
                 decoration: InputDecoration(
-                  hintText:
-                      'SoundCloud URL (ex. https://soundcloud.com/artist/title...)',
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.all(Radius.circular(11))),
+                  hintText: 'https://soundcloud.com/',
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: appKeyColor,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(widgetRadius),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: outlineColor,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(widgetRadius),
+                  ),
                 ),
               ),
               SizedBox(
                 height: 20.0,
               ),
               Text(
-                '사진 공유하기 (선택)',
-                style: TextStyle(
-                  fontSize: subtitleFontSize,
-                  fontWeight: FontWeight.w600,
-                ),
+                '사진 공유하기',
+                style: title3,
               ),
               SizedBox(
                 height: 20.0,
               ),
               InkWell(
-                  onTap: () {
-                    setState(() {
-                      _canGo = false;
-                    });
-                    _uploadImageToStorage(ImageSource.gallery);
-                  },
-                  child: _image == null
-                      ? Center(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(11),
-                              ),
-                              color: Colors.white,
-                            ),
-                            alignment: Alignment.center,
-                            width: 340,
-                            height: 340,
-                            child: Icon(
-                              Icons.image,
-                              color: Colors.black,
-                              size: 50,
-                            ),
+                onTap: () {
+                  setState(() {
+                    _canGo = false;
+                  });
+                  _uploadImageToStorage(ImageSource.gallery);
+                },
+                child: _image == null
+                    ? Center(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(widgetRadius),
+                            color: Colors.white,
                           ),
-                        )
-                      : Center(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(11),
-                              ),
-                              color: Colors.white,
-                              image: DecorationImage(
-                                  image: FileImage(_image), fit: BoxFit.cover),
-                            ),
-                            alignment: Alignment.center,
-                            width: 340,
-                            height: 340,
+                          alignment: Alignment.center,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.width,
+                          child: Icon(
+                            Icons.image,
+                            color: Colors.black,
+                            size: 50,
                           ),
-                        )),
+                        ),
+                      )
+                    : Center(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(widgetRadius),
+                            color: Colors.white,
+                            image: DecorationImage(
+                                image: FileImage(_image), fit: BoxFit.cover),
+                          ),
+                          alignment: Alignment.center,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.width,
+                        ),
+                      ),
+              ),
               SizedBox(
                 height: 20.0,
               ),
@@ -217,24 +251,24 @@ class _FeedWritePageState extends State<FeedWritePage> {
                   child: TextField(
                     focusNode: contentFocus,
                     controller: _content,
-                    maxLines: 7,
+                    maxLines: 1000,
                     autocorrect: false,
-                    style: TextStyle(
-                      fontSize: textFontSize,
-                      color: Colors.white,
-                    ),
+                    style: body3,
                     decoration: InputDecoration(
-                      hintStyle: TextStyle(
-                        fontSize: widgetFontSize,
-                        color: Colors.grey,
-                      ),
-                      hintText: '새 글 쓰기...',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
+                      hintText: '내용 입력...',
                       focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.white.withOpacity(0.6)),
+                        borderSide: BorderSide(
+                          color: appKeyColor,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(widgetRadius),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: outlineColor,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(widgetRadius),
                       ),
                     ),
                   ),

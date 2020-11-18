@@ -51,8 +51,10 @@ class _FeedEditPageState extends State<FeedEditPage> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         elevation: 0.0,
+        centerTitle: false,
         title: Text(
-          '피드 수정',
+          '수정하기',
+          style: headline2,
         ),
         actions: [
           IconButton(
@@ -97,7 +99,6 @@ class _FeedEditPageState extends State<FeedEditPage> {
                 : null,
           )
         ],
-        centerTitle: false,
       ),
       body: SafeArea(
         child: SingleChildScrollView(

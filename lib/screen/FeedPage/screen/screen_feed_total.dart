@@ -38,34 +38,40 @@ class _FeedTotalState extends State<FeedTotal> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        elevation: 0.0,
+        centerTitle: false,
+        title: Text(
+          '전체 보기',
+          style: headline2,
+        ),
       ),
       backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-          ),
-          SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Column(
-                    children: feedBoxes(feeds, widget.userDB),
-                  ),
-                  Container(
-                    height: 40,
-                  )
-                ],
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+            ),
+            SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Column(
+                      children: feedBoxes(feeds, widget.userDB),
+                    ),
+                    Container(
+                      height: 40,
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: musicPlayer(_assetsAudioPlayer),
-          ),
-        ],
+            Positioned(
+              bottom: 0,
+              child: musicPlayer(_assetsAudioPlayer),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -73,6 +79,11 @@ class _FeedTotalState extends State<FeedTotal> {
   List<Widget> feedBoxes(List<Feed> feeds, UserDB userDB) {
     List<Widget> results = [];
     for (var i = 0; i < feeds.length; i++) {
+      results.add(Divider(
+        height: 5,
+        thickness: 5,
+        color: appBarColor,
+      ));
       results.add(FeedBox(
         feed: feeds[i],
         userDB: userDB,

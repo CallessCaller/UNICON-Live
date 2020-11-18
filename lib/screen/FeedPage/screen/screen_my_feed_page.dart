@@ -53,7 +53,11 @@ class _MyFeedPageState extends State<MyFeedPage> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 40,
+        centerTitle: false,
+        title: Text(
+          '내가 쓴 글',
+          style: headline2,
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
