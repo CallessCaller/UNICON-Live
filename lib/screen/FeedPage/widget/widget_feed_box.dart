@@ -263,19 +263,6 @@ class _FeedBoxState extends State<FeedBox> {
                               ),
                             ),
                           ),
-                          // child: Container(
-                          //   width: MediaQuery.of(context).size.width,
-                          //   height: MediaQuery.of(context).size.width * 0.9,
-                          //   child: InteractiveViewer(
-                          //     constrained: false,
-                          //     child: Image.network(
-
-                          //       widget.feed.image,
-                          //       fit: BoxFit.cover,
-
-                          //     ),
-                          //   ),
-                          // ),
                         ),
                       )
                     : SizedBox(),
