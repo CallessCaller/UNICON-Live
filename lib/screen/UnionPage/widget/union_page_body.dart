@@ -21,6 +21,7 @@ class _UnionPageBodyState extends State<UnionPageBody> {
           .collection('Feed')
           .where('id', isEqualTo: widget.artist.id)
           .orderBy('time', descending: true)
+          .limit(60)
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return CircularProgressIndicator();
