@@ -56,12 +56,12 @@ class _InstagramLinkBoxState extends State<InstagramLinkBox> {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      iconSize: 50,
-      icon: Icon(
+    return InkWell(
+      child: Icon(
         UniIcon.instagram,
+        size: 30,
       ),
-      onPressed: () {
+      onTap: () {
         _launchInstagram(context, widget.instagramID);
       },
     );
