@@ -275,15 +275,15 @@ class _FeedWritePageState extends State<FeedWritePage> {
         _canGo = true;
       });
     } else {
-      img.Image imageTmp =
-          img.decodeImage(File(pickedImage.path).readAsBytesSync());
-      img.Image resizedImg = img.copyResize(
-        imageTmp,
-        height: 1200,
-      );
+      // img.Image imageTmp =
+      //     img.decodeImage(File(pickedImage.path).readAsBytesSync());
+      // img.Image resizedImg = img.copyResize(
+      //   imageTmp,
+      //   height: 3400,
+      // );
 
-      File resizedFile = File(pickedImage.path)
-        ..writeAsBytesSync(img.encodeJpg(resizedImg));
+      File resizedFile = File(pickedImage.path);
+      // ..writeAsBytesSync(img.encodeJpg(resizedImg));
       setState(() {
         _image = resizedFile;
         _canGo = true;

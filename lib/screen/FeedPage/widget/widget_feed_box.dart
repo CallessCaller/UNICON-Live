@@ -249,6 +249,19 @@ class _FeedBoxState extends State<FeedBox> {
                               ),
                             ),
                           ),
+                          // child: Container(
+                          //   width: MediaQuery.of(context).size.width,
+                          //   height: MediaQuery.of(context).size.width * 0.9,
+                          //   child: InteractiveViewer(
+                          //     constrained: false,
+                          //     child: Image.network(
+
+                          //       widget.feed.image,
+                          //       fit: BoxFit.cover,
+
+                          //     ),
+                          //   ),
+                          // ),
                         ),
                       )
                     : SizedBox(),
@@ -259,10 +272,11 @@ class _FeedBoxState extends State<FeedBox> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: ContentExpandWidget(
-                      text: widget.feed.content.trim(),
+                  new Expanded(
+                    child: new ContentExpandWidget(
+                      text: widget.feed.content,
                     ),
+                    // child: Text(widget.feed.content,),
                   ),
                   SizedBox(width: 43),
                   Column(

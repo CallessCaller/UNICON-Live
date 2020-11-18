@@ -276,15 +276,8 @@ class _FeedEditPageState extends State<FeedEditPage> {
         _canGo = true;
       });
     } else {
-      img.Image imageTmp =
-          img.decodeImage(File(pickedImage.path).readAsBytesSync());
-      img.Image resizedImg = img.copyResize(
-        imageTmp,
-        height: 1200,
-      );
+      File resizedFile = File(pickedImage.path);
 
-      File resizedFile = File(pickedImage.path)
-        ..writeAsBytesSync(img.encodeJpg(resizedImg));
       setState(() {
         _image = resizedFile;
         _canGo = true;
