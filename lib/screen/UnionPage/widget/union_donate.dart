@@ -151,12 +151,12 @@ class _UnionDonateState extends State<UnionDonate> {
         children: [
           Container(
             height: 30,
-            width: 190,
+            width: (MediaQuery.of(context).size.width - 60) / 2 + 37,
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.white),
+                border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(widgetRadius)),
             child: Center(
-              child: Text('응원하기'),
+              child: Text('  응원하기'),
             ),
           ),
           Positioned(
