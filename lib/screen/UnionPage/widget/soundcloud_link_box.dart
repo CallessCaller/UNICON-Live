@@ -48,12 +48,12 @@ class _SoundcloudLinkBoxState extends State<SoundcloudLinkBox> {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      iconSize: 50,
-      icon: Icon(
+    return InkWell(
+      child: Icon(
         UniIcon.soundcloud,
+        size: 30,
       ),
-      onPressed: () {
+      onTap: () {
         _launchSoundcloud(context, widget.soundcloudUrl);
       },
     );

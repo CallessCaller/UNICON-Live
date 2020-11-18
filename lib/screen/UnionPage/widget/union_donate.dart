@@ -22,12 +22,8 @@ class _UnionDonateState extends State<UnionDonate> {
   final _coinFocus = new FocusNode();
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      iconSize: 50,
-      icon: Icon(
-        UniIcon.unicoin,
-      ),
-      onPressed: () {
+    return InkWell(
+      onTap: () {
         showDialog(
           context: context,
           barrierDismissible: true,
@@ -151,6 +147,28 @@ class _UnionDonateState extends State<UnionDonate> {
           },
         );
       },
+      child: Stack(
+        children: [
+          Container(
+            height: 30,
+            width: 190,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.white),
+                borderRadius: BorderRadius.circular(widgetRadius)),
+            child: Center(
+              child: Text('응원하기'),
+            ),
+          ),
+          Positioned(
+            left: 0,
+            bottom: 0,
+            child: Icon(
+              UniIcon.soundcloud,
+              size: 30,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

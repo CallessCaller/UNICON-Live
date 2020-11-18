@@ -47,8 +47,8 @@ class _UnionPageBodyState extends State<UnionPageBody> {
         : Container(
             alignment: Alignment.topLeft,
             child: Wrap(
-              spacing: 0.0,
-              runSpacing: 0.0,
+              spacing: 7.0,
+              runSpacing: 7.0,
               children: feeds
                   .map((e) => UnionFeedBox(feed: e, userDB: widget.userDB))
                   .toList(),
