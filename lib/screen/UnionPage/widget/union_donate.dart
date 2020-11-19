@@ -71,119 +71,182 @@ class _UnionDonateState extends State<UnionDonate> {
             builder: (context) {
               return AlertDialog(
                 elevation: 0,
-                backgroundColor: Color.fromRGBO(232, 232, 232, 1.0),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(dialogRadius),
                 ),
-                content: SingleChildScrollView(
-                  child: TextField(
-                    onTap: () {
-                      _coinFilter.clear();
-                    },
-                    style: TextStyle(
-                        fontSize: widgetFontSize,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500),
-                    controller: _coinFilter,
-                    focusNode: _coinFocus,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(0),
-                        labelText: '코인 입력',
-                        labelStyle: TextStyle(
-                            fontSize: widgetFontSize,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500)),
+                backgroundColor: dialogColor1,
+                title: Center(
+                  child: Text(
+                    '응원하기!',
+                    style: title1,
                   ),
                 ),
-                actions: <Widget>[
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              MyUnicoinPage(userDB: widget.userDB)));
-                    },
-                    child: Center(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            UniIcon.unicoin,
-                            color: appKeyColor,
-                            size: 25,
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                MyUnicoinPage(userDB: widget.userDB),
                           ),
-                          Text(
-                            widget.userDB.points.toString(),
-                            style: TextStyle(
-                                fontSize: textFontSize,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
+                        );
+                      },
+                      child: Container(
+                        height: 30,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              height: 30,
+                              alignment: Alignment.center,
+                              child: Text(
+                                '보유 유니코인 : ',
+                                style: subtitle1,
+                              ),
+                            ),
+                            Container(
+                              height: 30,
+                              child: Icon(UniIcon.unicoin),
+                            ),
+                            Container(
+                              height: 30,
+                              alignment: Alignment.center,
+                              child: Text(
+                                widget.userDB.points.toString(),
+                                style: subtitle1,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  new FlatButton(
-                      onPressed: () async {
-                        _coinFocus.unfocus();
-                        int coin = int.parse(_coinFilter.text);
-                        int total = 0;
-                        if (coin != 0 && widget.userDB.points - coin >= 0) {
-                          var currentTime = Timestamp.now();
-                          widget.userDB.points = widget.userDB.points - coin;
-                          widget.userDB.reference
-                              .update({'points': widget.userDB.points});
-
-                          await widget.artist.reference.get().then((value) {
-                            total = value.data()['points'];
-                          }).whenComplete(() {
-                            widget.artist.reference
-                                .update({'points': total + coin});
-                          });
-
-                          // Donation
-                          // User -> Union
-                          // type: { 0 : event , 1 : charge , 2 : donated , 3 : donate }
-                          widget.userDB.reference
-                              .collection('unicoin_history')
-                              .add({
-                            'type': 3,
-                            'who': widget.artist.name,
-                            'whoseID': widget.artist.id,
-                            'amount': coin,
-                            'time': currentTime.toDate(),
-                          });
-                          // Union <- User
-                          await FirebaseFirestore.instance
-                              .collection('Users')
-                              .doc(widget.artist.id)
-                              .collection('unicoin_history')
-                              .add({
-                            'type': 2,
-                            'who': widget.userDB.name,
-                            'whoseID': widget.userDB.id,
-                            'amount': coin,
-                            'time': currentTime.toDate(),
-                          });
-
-                          _coinFilter.clear();
-                          Navigator.of(context).pop();
-                        } else {
-                          _coinFilter.text = '코인이 모자랍니다';
-                        }
-                        setState(() {
-                          goDown = true;
-                        });
+                    SizedBox(height: 10),
+                    TextField(
+                      controller: _coinFilter,
+                      onTap: () {
+                        _coinFilter.clear();
                       },
-                      child: Text(
-                        '선물',
-                        style: TextStyle(
-                            fontSize: textFontSize,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500),
-                      )),
-                ],
+                      textAlign: TextAlign.center,
+                      style: subtitle1,
+                      keyboardType: TextInputType.number,
+                      focusNode: _coinFocus,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 3,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: outlineColor,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: appKeyColor,
+                          ),
+                        ),
+                        hintText: '코인 입력',
+                        hintStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        FlatButton(
+                          minWidth: 110,
+                          color: dialogColor3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(widgetRadius),
+                          ),
+                          onPressed: () {
+                            _coinFilter.clear();
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            '취소',
+                            style: TextStyle(
+                              color: dialogColor4,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        FlatButton(
+                          minWidth: 110,
+                          color: appKeyColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(widgetRadius),
+                          ),
+                          onPressed: () async {
+                            _coinFocus.unfocus();
+                            int coin = int.parse(_coinFilter.text);
+                            int total = 0;
+                            if (coin != 0 && widget.userDB.points - coin >= 0) {
+                              var currentTime = Timestamp.now();
+                              widget.userDB.points =
+                                  widget.userDB.points - coin;
+                              widget.userDB.reference
+                                  .update({'points': widget.userDB.points});
+
+                              await widget.artist.reference.get().then((value) {
+                                total = value.data()['points'];
+                              }).whenComplete(() {
+                                widget.artist.reference
+                                    .update({'points': total + coin});
+                              });
+
+                              // Donation
+                              // User -> Union
+                              // type: { 0 : event , 1 : charge , 2 : donated , 3 : donate }
+                              widget.userDB.reference
+                                  .collection('unicoin_history')
+                                  .add({
+                                'type': 3,
+                                'who': widget.artist.name,
+                                'whoseID': widget.artist.id,
+                                'amount': coin,
+                                'time': currentTime.toDate(),
+                              });
+                              // Union <- User
+                              await FirebaseFirestore.instance
+                                  .collection('Users')
+                                  .doc(widget.artist.id)
+                                  .collection('unicoin_history')
+                                  .add({
+                                'type': 2,
+                                'who': widget.userDB.name,
+                                'whoseID': widget.userDB.id,
+                                'amount': coin,
+                                'time': currentTime.toDate(),
+                              });
+
+                              _coinFilter.clear();
+                              Navigator.of(context).pop();
+                            } else {
+                              _coinFilter.text = '코인이 모자랍니다';
+                            }
+                            setState(() {
+                              goDown = true;
+                            });
+                          },
+                          child: Text(
+                            '선물',
+                            style: subtitle3,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               );
             },
           );

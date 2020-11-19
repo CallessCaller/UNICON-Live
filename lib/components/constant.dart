@@ -16,6 +16,7 @@ const double titleFontSize = 36.0;
 const double subtitleFontSize = 16.0;
 const double textFontSize = 14.0;
 const double widgetFontSize = 12.0;
+const double dialogRadius = 11.0;
 
 // title => bold
 // subtitle => w600

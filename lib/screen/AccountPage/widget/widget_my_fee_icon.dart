@@ -13,34 +13,41 @@ class MyFee extends StatelessWidget {
     return InkWell(
       onTap: () {
         showDialog(
+            barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(11)),
+                  borderRadius: BorderRadius.circular(dialogRadius),
+                ),
                 backgroundColor: dialogColor1,
                 title: Center(
                   child: Icon(
-                    UniIcon.unicoin,
+                    UniIcon.ticket_price,
                     color: appKeyColor,
                     size: 100,
                   ),
                 ),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     TextField(
+                      controller: controller,
                       textAlign: TextAlign.center,
                       style: subtitle1,
-                      controller: controller,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 3,
+                        ),
+                        enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: outlineColor,
                           ),
                         ),
-                        focusedBorder: UnderlineInputBorder(
+                        focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: appKeyColor,
                           ),
