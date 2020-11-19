@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                           showAlertDialog(context);
                           auth.UserCredential userCredential =
                               await signInWithApple();
-                          Navigator.pop(context);
+
                           if (userCredential.user.uid ==
                               _auth.currentUser.uid) {
                             FirebaseFirestore.instance
@@ -120,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                     showAlertDialog(context);
                     auth.UserCredential userCredential =
                         await signInWithGoogle();
-                    Navigator.pop(context);
+
                     if (userCredential.user.uid == _auth.currentUser.uid) {
                       FirebaseFirestore.instance
                           .collection('Users')
@@ -179,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () async {
                     showAlertDialog(context);
                     auth.UserCredential userCredential = await kakaoSignIn();
-                    Navigator.pop(context);
+
                     if (userCredential.user.uid == _auth.currentUser.uid) {
                       FirebaseFirestore.instance
                           .collection('Users')
