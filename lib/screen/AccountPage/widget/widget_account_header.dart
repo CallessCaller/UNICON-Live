@@ -45,7 +45,6 @@ class AccountHeader extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    height: 27,
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -55,7 +54,6 @@ class AccountHeader extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    height: 17,
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
