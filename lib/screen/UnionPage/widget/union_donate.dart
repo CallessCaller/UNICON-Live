@@ -67,10 +67,13 @@ class _UnionDonateState extends State<UnionDonate> {
         onPressed: () {
           showDialog(
             context: context,
-            barrierDismissible: true,
+            barrierDismissible: false,
             builder: (context) {
               return AlertDialog(
-                elevation: 0,
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 10,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(dialogRadius),
                 ),
@@ -97,27 +100,35 @@ class _UnionDonateState extends State<UnionDonate> {
                       child: Container(
                         height: 30,
                         child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
                               height: 30,
-                              alignment: Alignment.center,
-                              child: Text(
-                                '보유 유니코인 : ',
-                                style: subtitle1,
+                              child: Icon(
+                                UniIcon.unicoin,
+                                color: appKeyColor,
                               ),
                             ),
-                            Container(
-                              height: 30,
-                              child: Icon(UniIcon.unicoin),
-                            ),
+                            SizedBox(width: 3),
                             Container(
                               height: 30,
                               alignment: Alignment.center,
                               child: Text(
                                 widget.userDB.points.toString(),
-                                style: subtitle1,
+                                style: subtitle2,
+                              ),
+                            ),
+                            Container(
+                              height: 30,
+                              alignment: Alignment.center,
+                              child: Text(
+                                ' (보유 유니코인)',
+                                style: TextStyle(
+                                  color: outlineColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
                           ],

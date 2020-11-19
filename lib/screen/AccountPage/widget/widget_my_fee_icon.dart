@@ -17,6 +17,10 @@ class MyFee extends StatelessWidget {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 10,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(dialogRadius),
                 ),

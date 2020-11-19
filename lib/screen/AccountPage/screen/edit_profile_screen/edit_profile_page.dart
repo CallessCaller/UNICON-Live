@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
@@ -30,6 +31,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   File _image;
   bool _canGo = true;
   String _dropDownEmailDomain;
+  FToast fToast;
 
   final List<String> emails = [
     "gmail.com",
@@ -57,6 +59,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _emailEditingController =
         TextEditingController(text: widget.userDB.email.split('@')[0]);
     _dropDownEmailDomain = emails[0];
+
+    fToast = FToast();
+    fToast.init(context);
 
     if (widget.userDB.isArtist) {
       _instagramEditingController =
@@ -478,42 +483,53 @@ class _EditProfilePageState extends State<EditProfilePage> {
         onTap: () {
           showDialog(
             context: context,
-            barrierDismissible: false,
+            barrierDismissible: true,
             builder: (BuildContext context) {
               return AlertDialog(
-                backgroundColor: Colors.black,
-                title: Text('로그아웃 재확인'),
-                content: Text('로그아웃 하시겠습니까?'),
-                actions: [
-                  TextButton(
-                    child: Text(
-                      'Sign out',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: textFontSize,
-                      ),
-                    ),
-                    onPressed: () async {
-                      if (widget.userDB.id.contains('kakao')) {
-                        await kakaoSignOut(context);
-                      } else {
-                        signOutGoogle(context);
-                      }
-                    },
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 10,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(dialogRadius),
+                ),
+                backgroundColor: dialogColor1,
+                title: Center(
+                  child: Text(
+                    '로그아웃',
+                    style: title1,
                   ),
-                  TextButton(
-                    child: Text(
-                      '취소',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: textFontSize,
+                ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('로그아웃 하시겠습니까?'),
+                    SizedBox(height: 10),
+                    FlatButton(
+                      minWidth: 220,
+                      color: dialogColor3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(widgetRadius),
                       ),
+                      child: Text(
+                        '로그아웃',
+                        style: TextStyle(
+                          color: dialogColor4,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      onPressed: () async {
+                        if (widget.userDB.id.contains('kakao')) {
+                          await kakaoSignOut(context);
+                        } else {
+                          signOutGoogle(context);
+                        }
+                      },
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
+                  ],
+                ),
               );
             },
           );
@@ -987,22 +1003,36 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     }
                                     check1 = true;
                                   } else {
-                                    var _alertDialog = AlertDialog(
-                                      title: Text(
-                                        "사운드클라우드 링크를 정확하게 입력하세요.",
-                                        style: TextStyle(
-                                          fontSize: textFontSize,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        textAlign: TextAlign.center,
+                                    Widget toast = Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24.0,
+                                        vertical: 12.0,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(25.0),
+                                        color: dialogColor1,
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(Icons.warning),
+                                          SizedBox(
+                                            width: 12.0,
+                                          ),
+                                          Text(
+                                            "사운드클라우드 링크를 정확하게 입력하세요.",
+                                            style: caption2,
+                                          ),
+                                        ],
                                       ),
                                     );
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          _alertDialog,
+
+                                    fToast.showToast(
+                                      child: toast,
+                                      gravity: ToastGravity.CENTER,
+                                      toastDuration: Duration(seconds: 2),
                                     );
-                                    check1 = false;
                                   }
                                 }
 
@@ -1022,22 +1052,36 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                                     check2 = true;
                                   } else {
-                                    var _alertDialog = AlertDialog(
-                                      title: Text(
-                                        "유튜브 링크를 정확하게 입력하세요.",
-                                        style: TextStyle(
-                                          fontSize: textFontSize,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        textAlign: TextAlign.center,
+                                    Widget toast = Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24.0,
+                                        vertical: 12.0,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(25.0),
+                                        color: dialogColor1,
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(Icons.warning),
+                                          SizedBox(
+                                            width: 12.0,
+                                          ),
+                                          Text(
+                                            "유튜브 링크를 정확하게 입력하세요.",
+                                            style: caption2,
+                                          ),
+                                        ],
                                       ),
                                     );
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          _alertDialog,
+
+                                    fToast.showToast(
+                                      child: toast,
+                                      gravity: ToastGravity.CENTER,
+                                      toastDuration: Duration(seconds: 2),
                                     );
-                                    check2 = false;
                                   }
                                 }
 
