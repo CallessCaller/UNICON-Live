@@ -236,7 +236,7 @@ class _ChatWidgetState extends State<ChatWidget> {
       builder: (context) {
         return AlertDialog(
           elevation: 0,
-          backgroundColor: Color.fromRGBO(232, 232, 232, 0.8),
+          backgroundColor: Colors.black.withOpacity(0.5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -247,7 +247,7 @@ class _ChatWidgetState extends State<ChatWidget> {
               },
               style: TextStyle(
                   fontSize: widgetFontSize,
-                  color: Colors.black,
+                  color: Colors.white,
                   fontWeight: FontWeight.w500),
               controller: _coinFilter,
               focusNode: _coinFocus,
@@ -257,7 +257,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                   labelText: '코인 입력',
                   labelStyle: TextStyle(
                       fontSize: widgetFontSize,
-                      color: Colors.black,
+                      color: Colors.white,
                       fontWeight: FontWeight.w500)),
             ),
           ),
@@ -282,7 +282,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                       widget.userDB.points.toString(),
                       style: TextStyle(
                           fontSize: textFontSize,
-                          color: Colors.black,
+                          color: Colors.white,
                           fontWeight: FontWeight.w500),
                     ),
                   ],
@@ -290,6 +290,9 @@ class _ChatWidgetState extends State<ChatWidget> {
               ),
             ),
             new FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(7),
+                    side: BorderSide(color: Colors.white)),
                 onPressed: () async {
                   _coinFocus.unfocus();
                   int coin = int.parse(_coinFilter.text);
@@ -350,7 +353,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                   '선물',
                   style: TextStyle(
                       fontSize: textFontSize,
-                      color: Colors.black,
+                      color: Colors.white,
                       fontWeight: FontWeight.w500),
                 )),
           ],
