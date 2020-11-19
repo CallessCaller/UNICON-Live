@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:testing_layout/components/constant.dart';
+import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/screen/LoginPage/screen/artist_format/screen/union_genre_select.dart';
 import 'package:testing_layout/widget/widget_flutter_datetime_picker.dart';
 import 'package:testing_layout/widget/widget_i18n_model.dart';
@@ -516,13 +517,7 @@ class _ArtistFormState extends State<ArtistForm> {
                         width: 1,
                       ),
                     ),
-                    icon: Container(
-                      width: 20,
-                      child: Image.asset(
-                        'assets/soundcloud_icon.png',
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ),
+                    icon: Container(width: 20, child: Icon(UniIcon.soundcloud)),
                   ),
                 ),
               ),
@@ -556,13 +551,7 @@ class _ArtistFormState extends State<ArtistForm> {
                         width: 1,
                       ),
                     ),
-                    icon: Container(
-                      width: 20,
-                      child: Image.asset(
-                        'assets/youtube_icon.png',
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ),
+                    icon: Container(width: 20, child: Icon(UniIcon.youtube)),
                   ),
                 ),
               ),
@@ -596,13 +585,7 @@ class _ArtistFormState extends State<ArtistForm> {
                         width: 1,
                       ),
                     ),
-                    icon: Container(
-                      width: 20,
-                      child: Image.asset(
-                        'assets/instagram_icon.png',
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ),
+                    icon: Container(width: 20, child: Icon(UniIcon.instagram)),
                   ),
                 ),
               ),
