@@ -38,13 +38,20 @@ class AccountPage extends StatelessWidget {
                             spacing: 20.0,
                             runSpacing: 40.0,
                             alignment: WrapAlignment.start,
-                            children: [
-                              ToMyMusicians(),
-                              NewUnionsIcon(userDB: userDB),
-                              TasteIcon(userDB: userDB),
-                              userDB.isArtist ? MyFee() : SizedBox(),
-                              ToAppSettings(),
-                            ],
+                            children: userDB.isArtist
+                                ? [
+                                    ToMyMusicians(),
+                                    NewUnionsIcon(userDB: userDB),
+                                    TasteIcon(userDB: userDB),
+                                    MyFee(),
+                                    ToAppSettings(),
+                                  ]
+                                : [
+                                    ToMyMusicians(),
+                                    NewUnionsIcon(userDB: userDB),
+                                    TasteIcon(userDB: userDB),
+                                    ToAppSettings(),
+                                  ],
                           ),
                         ],
                       ),

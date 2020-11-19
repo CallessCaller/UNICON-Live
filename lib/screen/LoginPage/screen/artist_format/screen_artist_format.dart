@@ -43,7 +43,9 @@ class _ArtistFormState extends State<ArtistForm> {
   @override
   void initState() {
     super.initState();
-    _profileImageURL = _user.photoURL;
+    _profileImageURL = _user.photoURL == null
+        ? 'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/unnamed.png?alt=media&token=5b656cb4-055c-4734-a93b-b3c9c629fc5a'
+        : _user.photoURL;
     _dateTime = DateTime.now();
     _nameEditingController = TextEditingController(text: _user.displayName);
     _emailEditingController = TextEditingController(text: '');

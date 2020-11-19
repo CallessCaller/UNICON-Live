@@ -26,7 +26,10 @@ class _SetUserDataState extends State<SetUserData> {
   TextEditingController _nameEditingController = TextEditingController();
 
   DateTime _dateTime = DateTime.now();
-  String _profileImageURL = FirebaseAuth.instance.currentUser.photoURL;
+
+  String _profileImageURL = FirebaseAuth.instance.currentUser.photoURL == null
+      ? 'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/unnamed.png?alt=media&token=5b656cb4-055c-4734-a93b-b3c9c629fc5a'
+      : FirebaseAuth.instance.currentUser.photoURL;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
   @override
