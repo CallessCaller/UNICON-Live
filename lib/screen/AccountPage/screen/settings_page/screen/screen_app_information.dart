@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import 'package:testing_layout/components/constant.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppInformationPage extends StatefulWidget {
   @override
@@ -12,6 +13,9 @@ class _AppInformationPageState extends State<AppInformationPage> {
   String appID = "";
   String version = "";
   String buildNumber = "";
+
+  // website에 저장된 문서로 이동
+  String privacyPolicyUrl = "https://www.unicon.show/privacy-policy";
 
   @override
   void initState() {
@@ -27,6 +31,19 @@ class _AppInformationPageState extends State<AppInformationPage> {
       version = packageInfo.version;
       buildNumber = packageInfo.buildNumber;
     });
+  }
+
+  _launchUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: true,
+        forceWebView: true,
+        enableJavaScript: true,
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -57,7 +74,7 @@ class _AppInformationPageState extends State<AppInformationPage> {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: defaultPadding),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -110,7 +127,9 @@ class _AppInformationPageState extends State<AppInformationPage> {
                     ),
                     SizedBox(height: 20),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        _launchUrl(privacyPolicyUrl);
+                      },
                       child: Container(
                         child: Align(
                           alignment: Alignment.centerLeft,

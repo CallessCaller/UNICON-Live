@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/users.dart';
-import 'package:testing_layout/screen/AccountPage/screen/settings_page/screen/app_information.dart';
+import 'package:testing_layout/screen/AccountPage/screen/settings_page/screen/screen_app_information.dart';
 
 FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
@@ -145,7 +145,6 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                 height: 10,
               ),
               Container(
-                height: 40,
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -154,13 +153,13 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   ),
                 ),
               ),
+              SizedBox(height: 10),
               SwitchListTile(
                 value: _all,
                 onChanged: _onChanged0,
                 activeColor: appKeyColor,
                 contentPadding: const EdgeInsets.all(0),
                 title: Container(
-                  height: 40,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -174,11 +173,8 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 30),
               Container(
-                height: 40,
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -187,13 +183,13 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   ),
                 ),
               ),
+              SizedBox(height: 10),
               SwitchListTile(
                 value: _live,
                 onChanged: _onChanged4,
                 activeColor: appKeyColor,
                 contentPadding: const EdgeInsets.all(0),
                 title: Container(
-                  height: 40,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -213,7 +209,6 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                 activeColor: appKeyColor,
                 contentPadding: const EdgeInsets.all(0),
                 title: Container(
-                  height: 40,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -228,7 +223,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 30,
               ),
               InkWell(
                 onTap: () {
@@ -239,7 +234,6 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   );
                 },
                 child: Container(
-                  height: 40,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
