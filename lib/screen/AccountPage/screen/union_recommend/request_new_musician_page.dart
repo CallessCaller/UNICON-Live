@@ -418,7 +418,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                 ),
               ),
               Positioned(
-                bottom: 0,
+                bottom: 20,
                 left: 30,
                 right: 30,
                 child: FlatButton(

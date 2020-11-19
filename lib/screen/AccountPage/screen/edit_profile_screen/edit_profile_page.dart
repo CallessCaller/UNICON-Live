@@ -508,7 +508,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         height: 0,
         color: outlineColor,
       ),
-      SizedBox(height: 100),
+      SizedBox(height: 120),
     ];
   }
 
@@ -863,7 +863,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         color: outlineColor,
       ),
       SizedBox(
-        height: 280,
+        height: 300,
       ),
     ];
   }
@@ -967,7 +967,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
             ),
             Positioned(
-              bottom: 0,
+              bottom: 20,
               left: 30,
               right: 30,
               child: FlatButton(

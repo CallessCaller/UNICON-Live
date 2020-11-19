@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:testing_layout/screen/AccountPage/screen/customers_service_page/widget/widget_eventbox.dart';
+import 'package:testing_layout/components/constant.dart';
+import 'package:testing_layout/model/model_event.dart';
 
 class EventScreen extends StatefulWidget {
   @override
@@ -7,45 +9,81 @@ class EventScreen extends StatefulWidget {
 }
 
 class _EventScreenState extends State<EventScreen> {
-  final List events = ['친구와 함께 보기', '나 혼자 보기', '너나 보렴', '재밌게 보렴', '왜 안 보니?'];
+  List<EventModel> eventList;
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _fetchData(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('Events')
+          .orderBy('post_time', descending: false)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return CircularProgressIndicator();
+        return _buildBody(context, snapshot.data.docs);
+      },
+    );
+  }
+
+  Widget _buildBody(BuildContext context, List<DocumentSnapshot> snapshot) {
+    eventList = snapshot.map((e) => EventModel.fromSnapshot(e)).toList();
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
         elevation: 0,
-        title: Text('이벤트'),
-        centerTitle: true,
+        title: Text(
+          '이벤트',
+          style: headline2,
+        ),
+        centerTitle: false,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_rounded),
+          icon: Icon(
+            Icons.arrow_back_ios_rounded,
+            size: 30,
+          ),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: _buildEventList(),
-          ),
-        ),
+      body: ListView.builder(
+        padding: EdgeInsets.symmetric(horizontal: defaultPadding),
+        shrinkWrap: true,
+        itemCount: eventList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ExpansionTile(
+            tilePadding: EdgeInsets.all(0),
+            childrenPadding: EdgeInsets.all(widgetDefaultPadding),
+            title: Text(
+              eventList[index].name,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  eventList[index].content +
+                      '\n게시일자: ${eventList[index].postTime.toDate().year}.${eventList[index].postTime.toDate().month}.${eventList[index].postTime.toDate().day}',
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.65),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              Image.network(eventList[index].image),
+            ],
+          );
+        },
       ),
     );
   }
 
-  List<Widget> _buildEventList() {
-    List<Widget> res = [];
-    for (var i = 0; i < events.length; i++) {
-      res.add(EventBox(
-        name: events[i],
-      ));
-      res.add(SizedBox(
-        height: 40,
-      ));
-    }
-    return res;
+  @override
+  Widget build(BuildContext context) {
+    return _fetchData(context);
   }
 }

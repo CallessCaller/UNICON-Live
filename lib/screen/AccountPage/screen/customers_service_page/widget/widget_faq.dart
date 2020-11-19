@@ -64,11 +64,7 @@ class _FAQWidgetState extends State<FAQWidget> {
           childrenPadding: EdgeInsets.all(widgetDefaultPadding),
           title: Text(
             'Q. ${faqList[index].question}',
-            style: TextStyle(
-              color: Colors.white.withOpacity(0.65),
-              fontSize: textFontSize,
-              fontWeight: FontWeight.w700,
-            ),
+            style: subtitle2,
           ),
           children: [
             Align(
@@ -77,8 +73,8 @@ class _FAQWidgetState extends State<FAQWidget> {
                 'A. ${faqList[index].answer}',
                 style: TextStyle(
                   color: Colors.white.withOpacity(0.65),
-                  fontSize: textFontSize,
-                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),

@@ -68,8 +68,8 @@ class _LiveConcertState extends State<LiveConcert> {
     });
 
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
     ]);
   }
 

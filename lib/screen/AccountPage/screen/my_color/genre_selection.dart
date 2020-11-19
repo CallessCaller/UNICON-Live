@@ -126,7 +126,7 @@ class _GenreSelectionPageState extends State<GenreSelectionPage> {
               ),
             ),
             Positioned(
-              bottom: 0,
+              bottom: 20,
               left: 30,
               right: 30,
               child: FlatButton(

@@ -123,11 +123,7 @@ class _CSPageState extends State<CSPage> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           '문의하기',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: subtitleFontSize,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: subtitle1,
                         ),
                       ),
                     ),
@@ -143,8 +139,8 @@ class _CSPageState extends State<CSPage> {
                             '문의하기',
                             style: TextStyle(
                               color: Colors.white.withOpacity(0.65),
-                              fontSize: textFontSize,
-                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),

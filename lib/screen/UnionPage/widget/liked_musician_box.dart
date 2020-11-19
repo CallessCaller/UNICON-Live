@@ -166,13 +166,9 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
                 ),
               ),
               widget.artist.myPeople.contains(widget.userDB.id)
-                  ? FlatButton.icon(
+                  ? FlatButton(
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      icon: Icon(
-                        UniIcon.feed_enabled,
-                        color: outlineColor,
-                      ),
-                      label: Text(
+                      child: Text(
                         '팔로잉',
                         style: TextStyle(
                           fontSize: 14,
@@ -190,13 +186,12 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
+                      minWidth: 50,
+                      height: 30,
                     )
-                  : FlatButton.icon(
+                  : FlatButton(
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      icon: Icon(
-                        UniIcon.feed_disabled,
-                      ),
-                      label: Text(
+                      child: Text(
                         '팔로우',
                         style: body3,
                       ),
@@ -207,21 +202,9 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
+                      minWidth: 50,
+                      height: 30,
                     ),
-              // IconButton(
-              //   icon: Icon(
-              //     widget.artist.myPeople.contains(widget.userDB.id)
-              //         ? MdiIcons.heart
-              //         : MdiIcons.heartOutline,
-              //     size: 30,
-              //     color: appKeyColor.withOpacity(0.7),
-              //   ),
-              //   onPressed: () {
-              //     _onLikePressed(widget.userDB);
-              //   },
-              //   splashColor: Colors.transparent,
-              //   splashRadius: 3.0,
-              // ),
             ],
           ),
         ),

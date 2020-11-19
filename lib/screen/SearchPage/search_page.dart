@@ -66,7 +66,7 @@ class _SearchPageState extends State<SearchPage> {
           child: LikedMusicianBox(userDB: userDB, artist: musician),
         ),
         Divider(
-          color: Colors.white,
+          color: outlineColor,
           height: 5,
         ),
       ],
