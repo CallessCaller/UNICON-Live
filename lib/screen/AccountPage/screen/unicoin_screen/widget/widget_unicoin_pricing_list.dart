@@ -8,22 +8,21 @@ import 'package:testing_layout/model/users.dart';
 
 const bool _kAutoConsume = true;
 
-//  TODO: change sku
-// const List<String> _kProductIds = <String>[
-//   'unicoin10',
-//   'unicoin50',
-//   'unicoin100',
-//   'unicoin500',
-//   'unicoin1000',
-// ];
-
 const List<String> _kProductIds = <String>[
-  'android.test.purchased',
-  'android.test.purchased',
-  'android.test.canceled',
-  'android.test.refunded',
-  'android.test.item_unavailable',
+  'unicoin10',
+  'unicoin50',
+  'unicoin100',
+  'unicoin500',
+  'unicoin1000',
 ];
+
+// const List<String> _kProductIds = <String>[
+//   'android.test.purchased',
+//   'android.test.purchased',
+//   'android.test.canceled',
+//   'android.test.refunded',
+//   'android.test.item_unavailable',
+// ];
 
 class UnicoinPricingList extends StatefulWidget {
   final UserDB userDB;
