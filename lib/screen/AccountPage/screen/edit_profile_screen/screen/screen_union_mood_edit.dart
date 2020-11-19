@@ -3,22 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/users.dart';
 
-class UnionGenreEdit extends StatefulWidget {
+class UnionMoodEdit extends StatefulWidget {
   final UserDB userDB;
-  const UnionGenreEdit({this.userDB});
+  const UnionMoodEdit({this.userDB});
 
   @override
-  _UnionGenreEditState createState() => _UnionGenreEditState();
+  _UnionMoodEditState createState() => _UnionMoodEditState();
 }
 
-class _UnionGenreEditState extends State<UnionGenreEdit> {
+class _UnionMoodEditState extends State<UnionMoodEdit> {
   List<int> _selectedItems = List<int>();
 
-  _initializeGenreList() {
-    for (var i = 0; i < genreTotalList.length; i++) {
-      if (widget.userDB.genre != null) {
-        for (var j = 0; j < widget.userDB.genre.length; j++) {
-          if (genreTotalList[i] == widget.userDB.genre[j]) {
+  _initializeMoodList() {
+    for (var i = 0; i < moodTotalList.length; i++) {
+      if (widget.userDB.mood != null) {
+        for (var j = 0; j < widget.userDB.mood.length; j++) {
+          if (moodTotalList[i] == widget.userDB.mood[j]) {
             _selectedItems.add(i);
           }
         }
@@ -29,7 +29,7 @@ class _UnionGenreEditState extends State<UnionGenreEdit> {
   @override
   void initState() {
     super.initState();
-    _initializeGenreList();
+    _initializeMoodList();
   }
 
   @override
@@ -37,7 +37,19 @@ class _UnionGenreEditState extends State<UnionGenreEdit> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('당신의 음악 장르는?'),
+        title: Text(
+          '당신의 음악 무드는?',
+          style: headline2,
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.close,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         actions: [
           FlatButton(
             onPressed: () async {
@@ -46,32 +58,35 @@ class _UnionGenreEditState extends State<UnionGenreEdit> {
                   .doc(widget.userDB.id)
                   .update(
                 {
-                  'genre': _makeGenreList(),
+                  'mood': _makeMoodList(),
                 },
               );
               Navigator.of(context).pop();
             },
             child: Text(
               '완료',
-              style: TextStyle(color: appKeyColor),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: appKeyColor,
+              ),
             ),
           )
         ],
       ),
       body: ListView.builder(
-        itemCount: genreTotalList.length,
+        itemCount: moodTotalList.length,
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(
-              genreTotalList[index],
-              style: TextStyle(
-                fontSize: textFontSize,
-              ),
+              moodTotalList[index],
+              style: body1,
             ),
             trailing: (_selectedItems.contains(index))
                 ? Icon(
                     Icons.check,
                     color: appKeyColor,
+                    size: 25,
                   )
                 : null,
             onTap: () {
@@ -91,10 +106,10 @@ class _UnionGenreEditState extends State<UnionGenreEdit> {
     );
   }
 
-  _makeGenreList() {
+  _makeMoodList() {
     List<String> res = [];
     for (var j = 0; j < _selectedItems.length; j++) {
-      res.add(genreTotalList[_selectedItems[j]]);
+      res.add(moodTotalList[_selectedItems[j]]);
     }
     return res;
   }

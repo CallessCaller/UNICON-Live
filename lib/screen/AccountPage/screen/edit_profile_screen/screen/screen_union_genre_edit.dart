@@ -3,22 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/users.dart';
 
-class UnionMoodEdit extends StatefulWidget {
+class UnionGenreEdit extends StatefulWidget {
   final UserDB userDB;
-  const UnionMoodEdit({this.userDB});
+  const UnionGenreEdit({this.userDB});
 
   @override
-  _UnionMoodEditState createState() => _UnionMoodEditState();
+  _UnionGenreEditState createState() => _UnionGenreEditState();
 }
 
-class _UnionMoodEditState extends State<UnionMoodEdit> {
+class _UnionGenreEditState extends State<UnionGenreEdit> {
   List<int> _selectedItems = List<int>();
 
-  _initializeMoodList() {
-    for (var i = 0; i < moodTotalList.length; i++) {
-      if (widget.userDB.mood != null) {
-        for (var j = 0; j < widget.userDB.mood.length; j++) {
-          if (moodTotalList[i] == widget.userDB.mood[j]) {
+  _initializeGenreList() {
+    for (var i = 0; i < genreTotalList.length; i++) {
+      if (widget.userDB.genre != null) {
+        for (var j = 0; j < widget.userDB.genre.length; j++) {
+          if (genreTotalList[i] == widget.userDB.genre[j]) {
             _selectedItems.add(i);
           }
         }
@@ -29,7 +29,7 @@ class _UnionMoodEditState extends State<UnionMoodEdit> {
   @override
   void initState() {
     super.initState();
-    _initializeMoodList();
+    _initializeGenreList();
   }
 
   @override
@@ -37,7 +37,19 @@ class _UnionMoodEditState extends State<UnionMoodEdit> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('당신의 음악 무드는?'),
+        title: Text(
+          '당신의 음악 장르는?',
+          style: headline2,
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.close,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         actions: [
           FlatButton(
             onPressed: () async {
@@ -46,32 +58,35 @@ class _UnionMoodEditState extends State<UnionMoodEdit> {
                   .doc(widget.userDB.id)
                   .update(
                 {
-                  'mood': _makeMoodList(),
+                  'genre': _makeGenreList(),
                 },
               );
               Navigator.of(context).pop();
             },
             child: Text(
               '완료',
-              style: TextStyle(color: appKeyColor),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: appKeyColor,
+              ),
             ),
           )
         ],
       ),
       body: ListView.builder(
-        itemCount: moodTotalList.length,
+        itemCount: genreTotalList.length,
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(
-              moodTotalList[index],
-              style: TextStyle(
-                fontSize: textFontSize,
-              ),
+              genreTotalList[index],
+              style: body1,
             ),
             trailing: (_selectedItems.contains(index))
                 ? Icon(
                     Icons.check,
                     color: appKeyColor,
+                    size: 25,
                   )
                 : null,
             onTap: () {
@@ -91,10 +106,10 @@ class _UnionMoodEditState extends State<UnionMoodEdit> {
     );
   }
 
-  _makeMoodList() {
+  _makeGenreList() {
     List<String> res = [];
     for (var j = 0; j < _selectedItems.length; j++) {
-      res.add(moodTotalList[_selectedItems[j]]);
+      res.add(genreTotalList[_selectedItems[j]]);
     }
     return res;
   }

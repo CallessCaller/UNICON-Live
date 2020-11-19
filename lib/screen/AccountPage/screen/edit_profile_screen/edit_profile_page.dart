@@ -10,8 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/users.dart';
-import 'package:testing_layout/screen/AccountPage/screen/edit_profile_screen/widget/widget_union_genre_edit.dart';
-import 'package:testing_layout/screen/AccountPage/screen/edit_profile_screen/widget/widget_union_mood_edit.dart';
+import 'package:testing_layout/screen/AccountPage/screen/edit_profile_screen/screen/screen_union_genre_edit.dart';
+import 'package:testing_layout/screen/AccountPage/screen/edit_profile_screen/screen/screen_union_mood_edit.dart';
 import 'package:testing_layout/screen/LoginPage/screen/artist_format/screen_artist_format.dart';
 import 'package:testing_layout/screen/LoginPage/login_page.dart';
 import 'package:testing_layout/widget/widget_flutter_datetime_picker.dart';
@@ -269,8 +269,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   width: 10,
                 ),
                 Container(
-                  height: 30,
                   width: 110,
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.white,
+                        width: 1,
+                      ),
+                    ),
+                  ),
                   child: Center(
                     child: DropdownButton<String>(
                       style: body2,
@@ -480,60 +488,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         color: outlineColor,
       ),
       InkWell(
-        onTap: () {
-          showDialog(
-            context: context,
-            barrierDismissible: true,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 10,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(dialogRadius),
-                ),
-                backgroundColor: dialogColor1,
-                title: Center(
-                  child: Text(
-                    '로그아웃',
-                    style: title1,
-                  ),
-                ),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text('로그아웃 하시겠습니까?'),
-                    SizedBox(height: 10),
-                    FlatButton(
-                      minWidth: 220,
-                      color: dialogColor3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(widgetRadius),
-                      ),
-                      child: Text(
-                        '로그아웃',
-                        style: TextStyle(
-                          color: dialogColor4,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      onPressed: () async {
-                        if (widget.userDB.id.contains('kakao')) {
-                          await kakaoSignOut(context);
-                        } else {
-                          signOutGoogle(context);
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
-        },
+        onTap: signoutAccount,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
           child: Align(
@@ -740,6 +695,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 Container(
                   height: 30,
                   width: 105,
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.white,
+                        width: 1,
+                      ),
+                    ),
+                  ),
                   child: Center(
                     child: DropdownButton<String>(
                       style: body2,
@@ -798,36 +762,64 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                 ),
                 InkWell(
-                  child: Icon(UniIcon.more_info),
+                  child: Icon(
+                    UniIcon.more_info,
+                    color: appKeyColor,
+                  ),
                   onTap: () {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          backgroundColor: Colors.black.withOpacity(0.8),
-                          title: Text('유니온이란?'),
-                          content: Text(
-                              '네, 당연하죠! 누구나 뮤지션이 될 수 있는 플랫폼 유니콘에서는 심사 과정을 거쳐서 여러분이 재능과 끼를 발휘할 수 있도록 도와드립니다!'),
-                          actions: [
-                            TextButton(
-                              child: Text(
-                                '도전하기',
-                                style: TextStyle(
-                                  color: appKeyColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              onPressed: () async {
-                                Navigator.of(context).pop();
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => ArtistForm(),
-                                  ),
-                                );
-                              },
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 10,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(dialogRadius),
+                          ),
+                          backgroundColor: dialogColor1,
+                          title: Center(
+                            child: Text(
+                              '유니온이란?',
+                              style: title1,
                             ),
-                          ],
+                          ),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                '네, 당연하죠! 누구나 뮤지션이 될 수 있는 플랫폼 유니콘에서는 심사 과정을 거쳐서 여러분이 재능과 끼를 발휘할 수 있도록 도와드립니다!',
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: FlatButton(
+                                      color: appKeyColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(widgetRadius),
+                                      ),
+                                      onPressed: () async {
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) => ArtistForm(),
+                                          ),
+                                        );
+                                      },
+                                      child: Text(
+                                        '도전하기',
+                                        style: subtitle2,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
                         );
                       },
                     );
@@ -850,49 +842,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         color: outlineColor,
       ),
       InkWell(
-        onTap: () {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                backgroundColor: Colors.black,
-                title: Text('로그아웃 재확인'),
-                content: Text('로그아웃 하시겠습니까?'),
-                actions: [
-                  TextButton(
-                    child: Text(
-                      'Sign out',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: textFontSize,
-                      ),
-                    ),
-                    onPressed: () async {
-                      if (widget.userDB.id.contains('kakao')) {
-                        await kakaoSignOut(context);
-                      } else {
-                        signOutGoogle(context);
-                      }
-                    },
-                  ),
-                  TextButton(
-                    child: Text(
-                      '취소',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: textFontSize,
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
-            },
-          );
-        },
+        onTap: signoutAccount,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
           child: Align(
@@ -916,6 +866,66 @@ class _EditProfilePageState extends State<EditProfilePage> {
         height: 280,
       ),
     ];
+  }
+
+  void signoutAccount() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 10,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(dialogRadius),
+          ),
+          backgroundColor: dialogColor1,
+          title: Center(
+            child: Text(
+              '로그아웃',
+              style: title1,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('로그아웃 하시겠습니까?'),
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: FlatButton(
+                      color: dialogColor3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(widgetRadius),
+                      ),
+                      child: Text(
+                        '로그아웃',
+                        style: TextStyle(
+                          color: dialogColor4,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      onPressed: () async {
+                        if (widget.userDB.id.contains('kakao')) {
+                          await kakaoSignOut(context);
+                        } else {
+                          signOutGoogle(context);
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override

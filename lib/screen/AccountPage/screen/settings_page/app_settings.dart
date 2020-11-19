@@ -150,11 +150,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     '일반',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: subtitleFontSize,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: subtitle1,
                   ),
                 ),
               ),
@@ -171,8 +167,8 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                       '전체 알림',
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.65),
-                        fontSize: textFontSize,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
@@ -187,11 +183,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     '마이 유니온 알림',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: subtitleFontSize,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: subtitle1,
                   ),
                 ),
               ),
@@ -208,8 +200,8 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                       '라이브 알림',
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.65),
-                        fontSize: textFontSize,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
@@ -228,8 +220,8 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                       '새 게시물 알림',
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.65),
-                        fontSize: textFontSize,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
@@ -252,11 +244,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       '앱 정보',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: subtitleFontSize,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: subtitle1,
                     ),
                   ),
                 ),

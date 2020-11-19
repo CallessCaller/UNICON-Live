@@ -70,43 +70,49 @@ class MyFee extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        FlatButton(
-                          minWidth: 110,
-                          color: dialogColor3,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(widgetRadius),
-                          ),
-                          onPressed: () {
-                            controller.clear();
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            '취소',
-                            style: TextStyle(
-                              color: dialogColor4,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
+                        Expanded(
+                          child: FlatButton(
+                            minWidth: 110,
+                            color: dialogColor3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(widgetRadius),
+                            ),
+                            onPressed: () {
+                              controller.clear();
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              '취소',
+                              style: TextStyle(
+                                color: dialogColor4,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         ),
-                        FlatButton(
-                          minWidth: 110,
-                          color: appKeyColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(widgetRadius),
-                          ),
-                          onPressed: () async {
-                            int stringToInt = int.parse(controller.text);
-                            userDB.fee = stringToInt;
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: FlatButton(
+                            minWidth: 110,
+                            color: appKeyColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(widgetRadius),
+                            ),
+                            onPressed: () async {
+                              int stringToInt = int.parse(controller.text);
+                              userDB.fee = stringToInt;
 
-                            await userDB.reference.update({'fee': userDB.fee});
+                              await userDB.reference
+                                  .update({'fee': userDB.fee});
 
-                            controller.clear();
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            '변경',
-                            style: subtitle3,
+                              controller.clear();
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              '변경',
+                              style: subtitle3,
+                            ),
                           ),
                         ),
                       ],
@@ -131,7 +137,7 @@ class MyFee extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              '나의 입장료',
+              '공연 입장료',
               style: TextStyle(
                 fontSize: widgetFontSize,
                 fontWeight: FontWeight.bold,

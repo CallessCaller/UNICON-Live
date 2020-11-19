@@ -172,86 +172,92 @@ class _UnionDonateState extends State<UnionDonate> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        FlatButton(
-                          minWidth: 110,
-                          color: dialogColor3,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(widgetRadius),
-                          ),
-                          onPressed: () {
-                            _coinFilter.clear();
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            '취소',
-                            style: TextStyle(
-                              color: dialogColor4,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
+                        Expanded(
+                          child: FlatButton(
+                            color: dialogColor3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(widgetRadius),
+                            ),
+                            onPressed: () {
+                              _coinFilter.clear();
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              '취소',
+                              style: TextStyle(
+                                color: dialogColor4,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         ),
-                        FlatButton(
-                          minWidth: 110,
-                          color: appKeyColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(widgetRadius),
-                          ),
-                          onPressed: () async {
-                            _coinFocus.unfocus();
-                            int coin = int.parse(_coinFilter.text);
-                            int total = 0;
-                            if (coin != 0 && widget.userDB.points - coin >= 0) {
-                              var currentTime = Timestamp.now();
-                              widget.userDB.points =
-                                  widget.userDB.points - coin;
-                              widget.userDB.reference
-                                  .update({'points': widget.userDB.points});
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: FlatButton(
+                            color: appKeyColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(widgetRadius),
+                            ),
+                            onPressed: () async {
+                              _coinFocus.unfocus();
+                              int coin = int.parse(_coinFilter.text);
+                              int total = 0;
+                              if (coin != 0 &&
+                                  widget.userDB.points - coin >= 0) {
+                                var currentTime = Timestamp.now();
+                                widget.userDB.points =
+                                    widget.userDB.points - coin;
+                                widget.userDB.reference
+                                    .update({'points': widget.userDB.points});
 
-                              await widget.artist.reference.get().then((value) {
-                                total = value.data()['points'];
-                              }).whenComplete(() {
-                                widget.artist.reference
-                                    .update({'points': total + coin});
-                              });
+                                await widget.artist.reference
+                                    .get()
+                                    .then((value) {
+                                  total = value.data()['points'];
+                                }).whenComplete(() {
+                                  widget.artist.reference
+                                      .update({'points': total + coin});
+                                });
 
-                              // Donation
-                              // User -> Union
-                              // type: { 0 : event , 1 : charge , 2 : donated , 3 : donate }
-                              widget.userDB.reference
-                                  .collection('unicoin_history')
-                                  .add({
-                                'type': 3,
-                                'who': widget.artist.name,
-                                'whoseID': widget.artist.id,
-                                'amount': coin,
-                                'time': currentTime.toDate(),
-                              });
-                              // Union <- User
-                              await FirebaseFirestore.instance
-                                  .collection('Users')
-                                  .doc(widget.artist.id)
-                                  .collection('unicoin_history')
-                                  .add({
-                                'type': 2,
-                                'who': widget.userDB.name,
-                                'whoseID': widget.userDB.id,
-                                'amount': coin,
-                                'time': currentTime.toDate(),
-                              });
+                                // Donation
+                                // User -> Union
+                                // type: { 0 : event , 1 : charge , 2 : donated , 3 : donate }
+                                widget.userDB.reference
+                                    .collection('unicoin_history')
+                                    .add({
+                                  'type': 3,
+                                  'who': widget.artist.name,
+                                  'whoseID': widget.artist.id,
+                                  'amount': coin,
+                                  'time': currentTime.toDate(),
+                                });
+                                // Union <- User
+                                await FirebaseFirestore.instance
+                                    .collection('Users')
+                                    .doc(widget.artist.id)
+                                    .collection('unicoin_history')
+                                    .add({
+                                  'type': 2,
+                                  'who': widget.userDB.name,
+                                  'whoseID': widget.userDB.id,
+                                  'amount': coin,
+                                  'time': currentTime.toDate(),
+                                });
 
-                              _coinFilter.clear();
-                              Navigator.of(context).pop();
-                            } else {
-                              _coinFilter.text = '코인이 모자랍니다';
-                            }
-                            setState(() {
-                              goDown = true;
-                            });
-                          },
-                          child: Text(
-                            '선물',
-                            style: subtitle3,
+                                _coinFilter.clear();
+                                Navigator.of(context).pop();
+                              } else {
+                                _coinFilter.text = '코인이 모자랍니다';
+                              }
+                              setState(() {
+                                goDown = true;
+                              });
+                            },
+                            child: Text(
+                              '선물',
+                              style: subtitle3,
+                            ),
                           ),
                         ),
                       ],
