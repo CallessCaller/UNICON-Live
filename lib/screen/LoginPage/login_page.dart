@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -8,6 +10,10 @@ import 'package:kakao_flutter_sdk/all.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/load_user_db.dart';
 import 'package:testing_layout/screen/LoginPage/screen/screen_artist_or_user.dart';
+import 'dart:convert';
+import 'dart:math';
+import 'package:crypto/crypto.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -43,11 +49,78 @@ class _LoginPageState extends State<LoginPage> {
                         fit: BoxFit.contain),
                   ),
                 ),
+                Platform.isIOS
+                    ? FlatButton(
+                        onPressed: () async {
+                          showAlertDialog(context);
+                          auth.UserCredential userCredential =
+                              await signInWithApple();
+                          Navigator.pop(context);
+                          if (userCredential.user.uid ==
+                              _auth.currentUser.uid) {
+                            FirebaseFirestore.instance
+                                .collection('Users')
+                                .doc(_auth.currentUser.uid)
+                                .get()
+                                .then((value) {
+                              if (value.exists == false) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ArtistOrUser()));
+                                LoadUser().onCreate();
+                                // _saveFirst();
+                              } else {
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    '/inapp', (Route<dynamic> route) => false);
+                              }
+                            });
+                          }
+                        },
+                        child: Container(
+                          height: 50,
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              border: Border.all(color: Colors.white),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 30,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/apple_logo.png'))),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  '  애플 로그인',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: subtitleFontSize),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    : SizedBox(),
+                SizedBox(
+                  height: 20,
+                ),
                 FlatButton(
                   onPressed: () async {
                     showAlertDialog(context);
                     auth.UserCredential userCredential =
                         await signInWithGoogle();
+                    Navigator.pop(context);
                     if (userCredential.user.uid == _auth.currentUser.uid) {
                       FirebaseFirestore.instance
                           .collection('Users')
@@ -106,6 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () async {
                     showAlertDialog(context);
                     auth.UserCredential userCredential = await kakaoSignIn();
+                    Navigator.pop(context);
                     if (userCredential.user.uid == _auth.currentUser.uid) {
                       FirebaseFirestore.instance
                           .collection('Users')
@@ -322,4 +396,49 @@ Future<auth.User> linkWith(auth.User user) async {
   } catch (e) {
     return Future.error(e);
   }
+}
+
+/// Generates a cryptographically secure random nonce, to be included in a
+/// credential request.
+String generateNonce([int length = 32]) {
+  final charset =
+      '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+  final random = Random.secure();
+  return List.generate(length, (_) => charset[random.nextInt(charset.length)])
+      .join();
+}
+
+/// Returns the sha256 hash of [input] in hex notation.
+String sha256ofString(String input) {
+  final bytes = utf8.encode(input);
+  final digest = sha256.convert(bytes);
+  return digest.toString();
+}
+
+Future<auth.UserCredential> signInWithApple() async {
+  // To prevent replay attacks with the credential returned from Apple, we
+  // include a nonce in the credential request. When signing in in with
+  // Firebase, the nonce in the id token returned by Apple, is expected to
+  // match the sha256 hash of `rawNonce`.
+  final rawNonce = generateNonce();
+  final nonce = sha256ofString(rawNonce);
+
+  // Request credential for the currently signed in Apple account.
+  final appleCredential = await SignInWithApple.getAppleIDCredential(
+    scopes: [
+      AppleIDAuthorizationScopes.email,
+      AppleIDAuthorizationScopes.fullName,
+    ],
+    nonce: nonce,
+  );
+
+  // Create an `OAuthCredential` from the credential returned by Apple.
+  final oauthCredential = auth.OAuthProvider("apple.com").credential(
+    idToken: appleCredential.identityToken,
+    rawNonce: rawNonce,
+  );
+
+  // Sign in the user with Firebase. If the nonce we generated earlier does
+  // not match the nonce in `appleCredential.identityToken`, sign in will fail.
+  return await auth.FirebaseAuth.instance.signInWithCredential(oauthCredential);
 }
