@@ -9,11 +9,11 @@ import 'package:testing_layout/model/users.dart';
 const bool _kAutoConsume = true;
 
 const List<String> _kProductIds = <String>[
-  'unicoin10',
-  'unicoin50',
-  'unicoin100',
-  'unicoin500',
-  'unicoin1000',
+  'unicon.unicoin10',
+  'unicon.unicoin50',
+  'unicon.unicoin100',
+  'unicon.unicoin500',
+  'unicon.unicoin1000',
 ];
 
 // const List<String> _kProductIds = <String>[
