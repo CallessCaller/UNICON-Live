@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -7,7 +8,6 @@ import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/screen/FeedPage/screen/screen_feed_detail.dart';
 import 'package:testing_layout/screen/FeedPage/screen/screen_feed_edit.dart';
-import 'package:testing_layout/screen/FeedPage/widget/widget_content_expand.dart';
 import 'package:testing_layout/screen/UnionPage/union_page.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/feed.dart';
@@ -35,14 +35,36 @@ class _FeedBoxState extends State<FeedBox> {
 
   bool flag = true;
 
+  Stream<QuerySnapshot> querySnapshot;
+  String comments = '0';
+  StreamSubscription<QuerySnapshot> stream;
+
   @override
   void initState() {
     super.initState();
+    querySnapshot = widget.feed.reference
+        .collection('comments')
+        .snapshots(includeMetadataChanges: true);
+
+    stream = querySnapshot.listen((event) {
+      if (event.size > 10) {
+        comments = '10+';
+      } else {
+        setState(() {
+          comments = event.size.toString();
+        });
+      }
+    });
+
+    if (comments == '10+') {
+      stream.cancel();
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
+    stream.cancel();
     _controller.dispose();
     _focusNode.dispose();
   }
@@ -311,7 +333,7 @@ class _FeedBoxState extends State<FeedBox> {
                       ),
                       SizedBox(height: 9),
                       Text(
-                        '###',
+                        comments,
                         style: body3,
                       ),
                     ],
@@ -351,7 +373,7 @@ class _FeedBoxState extends State<FeedBox> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  !secondHalf.isEmpty
+                  secondHalf.isNotEmpty
                       ? InkWell(
                           child: Container(
                             child: Text(
