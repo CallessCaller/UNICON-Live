@@ -31,29 +31,42 @@ class _UnionPageBodyState extends State<UnionPageBody> {
   }
 
   Widget _buildBody(BuildContext context, List<DocumentSnapshot> snapshot) {
+    var size = MediaQuery.of(context).size;
     List<Feed> feeds = snapshot.map((e) => Feed.fromSnapshot(e)).toList();
-    return feeds.length == 0
-        ? Container(
-            alignment: Alignment.center,
-            height: MediaQuery.of(context).size.height * 0.4,
-            width: MediaQuery.of(context).size.width,
-            child: Text(
-              '피드가 없습니다.',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: subtitleFontSize,
-                  fontWeight: FontWeight.bold),
-            ))
-        : Container(
-            alignment: Alignment.topLeft,
-            child: Wrap(
-              spacing: 7.0,
-              runSpacing: 7.0,
-              children: feeds
-                  .map((e) => UnionFeedBox(feed: e, userDB: widget.userDB))
-                  .toList(),
-            ),
-          );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '피드',
+          style: subtitle1,
+        ),
+        SizedBox(height: 10),
+        feeds.length == 0
+            ? Container(
+                height: size.height * 0.4,
+                width: size.width,
+                child: Center(
+                  child: Text(
+                    '피드가 없습니다.',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: subtitleFontSize,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              )
+            : Container(
+                alignment: Alignment.topLeft,
+                child: Wrap(
+                  spacing: 7.0,
+                  runSpacing: 7.0,
+                  children: feeds
+                      .map((e) => UnionFeedBox(feed: e, userDB: widget.userDB))
+                      .toList(),
+                ),
+              ),
+      ],
+    );
   }
 
   @override

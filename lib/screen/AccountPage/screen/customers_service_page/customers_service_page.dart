@@ -85,8 +85,7 @@ class _CSPageState extends State<CSPage> {
               ),
               flexibleSpace: FlexibleSpaceBar(
                 background: CachedNetworkImage(
-                  imageUrl:
-                      'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/live_header%2Fbanner_person_listening.png?alt=media&token=c073c465-924b-437e-a9e6-f5b644bdfa4d',
+                  imageUrl: customerServiceBanner,
                   imageBuilder: (context, imageProvider) => Container(
                     child: Image(
                       image: imageProvider,
@@ -146,31 +145,6 @@ class _CSPageState extends State<CSPage> {
                         ),
                       ),
                     ),
-                    // InkWell(
-                    //   onTap: () {
-                    //     Navigator.of(context).push(
-                    //       MaterialPageRoute(
-                    //         builder: (context) => MyIssueHistory(
-                    //           userDB: widget.userDB,
-                    //         ),
-                    //       ),
-                    //     );
-                    //   },
-                    //   child: Container(
-                    //     height: 40,
-                    //     child: Align(
-                    //       alignment: Alignment.centerLeft,
-                    //       child: Text(
-                    //         '나의 문의현황',
-                    //         style: TextStyle(
-                    //           color: Colors.white.withOpacity(0.65),
-                    //           fontSize: 14,
-                    //           fontWeight: FontWeight.w700,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     SizedBox(
                       height: 20,
                     ),

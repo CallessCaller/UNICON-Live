@@ -82,29 +82,31 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
           height: 25,
         ),
         widget.artist.liveNow
-            ? LiveIndicatorProfile(artist: widget.artist)
-            : SizedBox(
-                width: 110,
-                height: 110,
-                child: CachedNetworkImage(
-                  imageUrl: widget.artist.profile,
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.white,
-                        width: 2,
-                      ),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
+            ? Center(child: LiveIndicatorProfile(artist: widget.artist))
+            : Center(
+                child: SizedBox(
+                  width: 110,
+                  height: 110,
+                  child: CachedNetworkImage(
+                    imageUrl: widget.artist.profile,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 2,
+                        ),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
@@ -113,24 +115,34 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
         SizedBox(
           height: 10.0,
         ),
-        Container(
-          height: 30,
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                width: 2,
-                color: appKeyColor,
+        Center(
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 2),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  width: 2,
+                  color: appKeyColor,
+                ),
               ),
             ),
-          ),
-          child: Text(
-            widget.artist.name,
-            style: title2,
+            child: Text(
+              widget.artist.name,
+              style: title2,
+            ),
           ),
         ),
-        SizedBox(
-          height: 20.0,
+        SizedBox(height: 7),
+        Center(
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 2),
+            child: Text(
+              '팔로워 ${widget.artist.myPeople.length}명',
+              style: subtitle1,
+            ),
+          ),
         ),
+        SizedBox(height: 10),
         InkWell(
           onTap: () {
             _onLikePressed(widget.userDB);
@@ -180,7 +192,119 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
             UnionDonate(userDB: widget.userDB, artist: widget.artist),
           ],
         ),
+        SizedBox(height: 20),
+        _buildGenreMoodRow(),
       ],
+    );
+  }
+
+  Widget _buildGenreMoodRow() {
+    List<Widget> res = [];
+    print(widget.artist.genre);
+    if (widget.artist.genre != null) {
+      if (widget.artist.genre.length == 0) {
+        res.add(
+          Chip(
+            shape: StadiumBorder(
+              side: BorderSide(
+                color: outlineColor,
+                width: 1,
+              ),
+            ),
+            backgroundColor: Colors.black,
+            label: Text(
+              '장르 X',
+              style: body4,
+            ),
+          ),
+        );
+      } else {
+        for (var i = 0; i < widget.artist.genre.length; i++) {
+          res.add(
+            Chip(
+              shape: StadiumBorder(
+                side: BorderSide(
+                  color: outlineColor,
+                  width: 2,
+                ),
+              ),
+              backgroundColor: Colors.black,
+              label: Text(
+                widget.artist.genre[i],
+                style: body4,
+              ),
+            ),
+          );
+          if (i != widget.artist.genre.length - 1) {
+            res.add(
+              SizedBox(width: 10),
+            );
+          }
+        }
+      }
+    }
+
+    res.add(
+      Container(
+        height: 20,
+        child: VerticalDivider(
+          color: Colors.white,
+          width: 20,
+          thickness: 2,
+        ),
+      ),
+    );
+
+    if (widget.artist.mood != null) {
+      if (widget.artist.mood.length == 0) {
+        res.add(
+          Chip(
+            shape: StadiumBorder(
+              side: BorderSide(
+                color: outlineColor,
+                width: 1,
+              ),
+            ),
+            backgroundColor: Colors.black,
+            label: Text(
+              '무드 X',
+              style: body4,
+            ),
+          ),
+        );
+      } else {
+        for (var i = 0; i < widget.artist.mood.length; i++) {
+          res.add(
+            Chip(
+              shape: StadiumBorder(
+                side: BorderSide(
+                  color: outlineColor,
+                  width: 1,
+                ),
+              ),
+              backgroundColor: Colors.black,
+              label: Text(
+                widget.artist.mood[i],
+                style: body4,
+              ),
+            ),
+          );
+          if (i != widget.artist.mood.length - 1) {
+            res.add(
+              SizedBox(width: 10),
+            );
+          }
+        }
+      }
+    }
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: res,
+      ),
     );
   }
 }

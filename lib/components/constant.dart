@@ -18,9 +18,11 @@ const double textFontSize = 14.0;
 const double widgetFontSize = 12.0;
 const double dialogRadius = 11.0;
 
-// title => bold
-// subtitle => w600
-// text => x
+// Banner images URL
+const String requestUnionBanner =
+    "https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/banner_images%2Frequest_union.png?alt=media&token=cafe7dda-317d-4790-b782-e8e8b1f60939";
+const String customerServiceBanner =
+    "https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/banner_images%2Fcustomer_service.png?alt=media&token=df0763a6-9f8e-429f-8f06-6d7e97f4e1ed";
 
 const List<String> genreTotalList = [
   'Hip-Hop',
@@ -71,71 +73,85 @@ List<String> moodPictures = [
 // TextStyles used in Unicon
 
 TextStyle headline1 = TextStyle(
+  color: Colors.white,
   fontSize: 30,
   fontWeight: FontWeight.w800,
 );
 
 TextStyle headline2 = TextStyle(
+  color: Colors.white,
   fontSize: 24,
   fontWeight: FontWeight.w800,
 );
 
 TextStyle title1 = TextStyle(
+  color: Colors.white,
   fontSize: 24,
   fontWeight: FontWeight.bold,
 );
 
 TextStyle title2 = TextStyle(
+  color: Colors.white,
   fontSize: 22,
   fontWeight: FontWeight.bold,
 );
 
 TextStyle title3 = TextStyle(
+  color: Colors.white,
   fontSize: 20,
   fontWeight: FontWeight.bold,
 );
 
 TextStyle subtitle1 = TextStyle(
+  color: Colors.white,
   fontSize: 18,
   fontWeight: FontWeight.w600,
 );
 
 TextStyle subtitle2 = TextStyle(
+  color: Colors.white,
   fontSize: 16,
   fontWeight: FontWeight.w600,
 );
 
 TextStyle subtitle3 = TextStyle(
+  color: Colors.white,
   fontSize: 14,
   fontWeight: FontWeight.w600,
 );
 
 TextStyle body1 = TextStyle(
+  color: Colors.white,
   fontSize: 18,
   fontWeight: FontWeight.w500,
 );
 
 TextStyle body2 = TextStyle(
+  color: Colors.white,
   fontSize: 16,
   fontWeight: FontWeight.w500,
 );
 
 TextStyle body3 = TextStyle(
+  color: Colors.white,
   fontSize: 14,
   fontWeight: FontWeight.w500,
 );
 
 TextStyle body4 = TextStyle(
+  color: Colors.white,
   fontSize: 13,
   fontWeight: FontWeight.w500,
 );
 
 TextStyle caption1 = TextStyle(
+  color: Colors.white,
   fontSize: 16,
   fontWeight: FontWeight.w300,
 );
 
 TextStyle caption2 = TextStyle(
+  color: Colors.white,
   fontSize: 13,
   fontWeight: FontWeight.w300,
 );

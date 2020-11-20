@@ -94,8 +94,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
               ),
               flexibleSpace: FlexibleSpaceBar(
                 background: CachedNetworkImage(
-                  imageUrl:
-                      'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/live_header%2F%EB%B0%B0%EB%84%88_new_01.png?alt=media&token=80956098-ceaa-44f7-9908-168d8b57755b',
+                  imageUrl: requestUnionBanner,
                   imageBuilder: (context, imageProvider) => Container(
                     child: Image(
                       image: imageProvider,
@@ -180,7 +179,8 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                   },
                                   child: _route[_route.keys.toList()[0]]
                                       ? Container(
-                                          height: 30,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10),
                                           width: 69,
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(
@@ -194,7 +194,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                             child: Text(
                                               _route.keys.toList()[0],
                                               style: TextStyle(
-                                                fontSize: textFontSize,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.w500,
                                                 color: appKeyColor,
                                               ),
@@ -202,7 +202,8 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                           ),
                                         )
                                       : Container(
-                                          height: 30,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10),
                                           width: 69,
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(
@@ -215,10 +216,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                           child: Center(
                                             child: Text(
                                               _route.keys.toList()[0],
-                                              style: TextStyle(
-                                                fontSize: textFontSize,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                              style: body2,
                                             ),
                                           ),
                                         ),
@@ -229,7 +227,8 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                   },
                                   child: _route[_route.keys.toList()[1]]
                                       ? Container(
-                                          height: 30,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10),
                                           width: 69,
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(
@@ -243,7 +242,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                             child: Text(
                                               _route.keys.toList()[1],
                                               style: TextStyle(
-                                                fontSize: textFontSize,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.w500,
                                                 color: appKeyColor,
                                               ),
@@ -251,7 +250,8 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                           ),
                                         )
                                       : Container(
-                                          height: 30,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10),
                                           width: 69,
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(
@@ -264,10 +264,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                           child: Center(
                                             child: Text(
                                               _route.keys.toList()[1],
-                                              style: TextStyle(
-                                                fontSize: textFontSize,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                              style: body2,
                                             ),
                                           ),
                                         ),
@@ -278,7 +275,8 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                   },
                                   child: _route[_route.keys.toList()[2]]
                                       ? Container(
-                                          height: 30,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10),
                                           width: 69,
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(
@@ -292,7 +290,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                             child: Text(
                                               _route.keys.toList()[2],
                                               style: TextStyle(
-                                                fontSize: textFontSize,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.w500,
                                                 color: appKeyColor,
                                               ),
@@ -300,7 +298,8 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                           ),
                                         )
                                       : Container(
-                                          height: 30,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10),
                                           width: 69,
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(
@@ -313,10 +312,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                           child: Center(
                                             child: Text(
                                               _route.keys.toList()[2],
-                                              style: TextStyle(
-                                                fontSize: textFontSize,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                              style: body2,
                                             ),
                                           ),
                                         ),
@@ -327,7 +323,8 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                   },
                                   child: _route[_route.keys.toList()[3]]
                                       ? Container(
-                                          height: 30,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10),
                                           width: 69,
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(
@@ -341,7 +338,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                             child: Text(
                                               _route.keys.toList()[3],
                                               style: TextStyle(
-                                                fontSize: textFontSize,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.w500,
                                                 color: appKeyColor,
                                               ),
@@ -349,7 +346,8 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                           ),
                                         )
                                       : Container(
-                                          height: 30,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10),
                                           width: 69,
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(
@@ -362,10 +360,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                           child: Center(
                                             child: Text(
                                               _route.keys.toList()[3],
-                                              style: TextStyle(
-                                                fontSize: textFontSize,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                              style: body2,
                                             ),
                                           ),
                                         ),

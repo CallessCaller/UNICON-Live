@@ -87,8 +87,8 @@ class _GenreSelectionPageState extends State<GenreSelectionPage> {
                     SizedBox(height: 5),
                     Divider(
                       height: 0,
-                      thickness: 1,
-                      color: Colors.white.withOpacity(0.65),
+                      thickness: 2,
+                      color: outlineColor,
                     ),
                     SizedBox(height: 20),
                     Wrap(
@@ -102,17 +102,14 @@ class _GenreSelectionPageState extends State<GenreSelectionPage> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         '분위기',
-                        style: TextStyle(
-                          fontSize: subtitleFontSize,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: subtitle1,
                       ),
                     ),
                     SizedBox(height: 5),
                     Divider(
                       height: 0,
-                      thickness: 1,
-                      color: Colors.white.withOpacity(0.65),
+                      thickness: 2,
+                      color: outlineColor,
                     ),
                     SizedBox(height: 20),
                     Wrap(
@@ -184,7 +181,8 @@ class _GenreSelectionPageState extends State<GenreSelectionPage> {
                   child: Text(
                     _genreMap.keys.toList()[index],
                     style: TextStyle(
-                      fontSize: textFontSize,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
                       color: appKeyColor,
                     ),
                   ),
@@ -204,7 +202,8 @@ class _GenreSelectionPageState extends State<GenreSelectionPage> {
                   child: Text(
                     _genreMap.keys.toList()[index],
                     style: TextStyle(
-                      fontSize: textFontSize,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
                       color: Colors.grey,
                     ),
                   ),
@@ -239,7 +238,8 @@ class _GenreSelectionPageState extends State<GenreSelectionPage> {
                   child: Text(
                     _moodMap.keys.toList()[index],
                     style: TextStyle(
-                      fontSize: textFontSize,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
                       color: appKeyColor,
                     ),
                   ),
@@ -259,7 +259,8 @@ class _GenreSelectionPageState extends State<GenreSelectionPage> {
                   child: Text(
                     _moodMap.keys.toList()[index],
                     style: TextStyle(
-                      fontSize: textFontSize,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
                       color: Colors.grey,
                     ),
                   ),
