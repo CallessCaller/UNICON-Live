@@ -14,9 +14,6 @@ class _AppInformationPageState extends State<AppInformationPage> {
   String version = "";
   String buildNumber = "";
 
-  // website에 저장된 문서로 이동
-  String privacyPolicyUrl = "https://www.unicon.show/privacy-policy";
-
   @override
   void initState() {
     super.initState();
@@ -142,7 +139,9 @@ class _AppInformationPageState extends State<AppInformationPage> {
                     ),
                     SizedBox(height: 20),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        _launchUrl(openSourceDocUrl);
+                      },
                       child: Container(
                         child: Align(
                           alignment: Alignment.centerLeft,
@@ -184,7 +183,7 @@ class _AppInformationPageState extends State<AppInformationPage> {
               ),
             ),
             Positioned(
-              bottom: 0,
+              bottom: 20,
               left: 1,
               right: 1,
               child: Column(
@@ -193,7 +192,7 @@ class _AppInformationPageState extends State<AppInformationPage> {
                     child: Container(
                       height: 70,
                       child: Image.asset(
-                        'assets/slogan_02.png',
+                        'assets/slogan_01.png',
                         fit: BoxFit.fitHeight,
                       ),
                     ),

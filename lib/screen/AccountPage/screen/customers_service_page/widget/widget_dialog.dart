@@ -42,12 +42,18 @@ class _DialogWidgetState extends State<DialogWidget> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         elevation: 0,
-        title: Text('유니콘 진짜 도와줘!'),
+        title: Text(
+          '유니콘 진짜 도와줘!',
+          style: headline2,
+        ),
         centerTitle: true,
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: Icon(Icons.close),
+            icon: Icon(
+              Icons.close,
+              size: 30,
+            ),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -69,11 +75,7 @@ class _DialogWidgetState extends State<DialogWidget> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     '분류 선택하기 *',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: subtitleFontSize,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: subtitle1,
                   ),
                 ),
               ),
@@ -82,12 +84,16 @@ class _DialogWidgetState extends State<DialogWidget> {
                 child: DropdownButton<String>(
                   isExpanded: true,
                   style: TextStyle(
-                    fontSize: textFontSize,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
                     color: Colors.white.withOpacity(0.65),
-                    fontWeight: FontWeight.w600,
                   ),
                   value: _type,
-                  icon: Icon(Icons.arrow_drop_down),
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: Colors.white.withOpacity(0.65),
+                    size: 25,
+                  ),
                   iconSize: 20,
                   underline: Container(
                     color: Colors.transparent,
@@ -112,11 +118,7 @@ class _DialogWidgetState extends State<DialogWidget> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     '스크린샷',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: subtitleFontSize,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: subtitle1,
                   ),
                 ),
               ),
@@ -173,11 +175,7 @@ class _DialogWidgetState extends State<DialogWidget> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     '본문 *',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: subtitleFontSize,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: subtitle1,
                   ),
                 ),
               ),
@@ -217,6 +215,8 @@ class _DialogWidgetState extends State<DialogWidget> {
               ),
               Center(
                 child: FlatButton(
+                  height: 40,
+                  minWidth: MediaQuery.of(context).size.width,
                   onPressed: _canGo
                       ? () async {
                           if (_controller.text == '') {
@@ -280,13 +280,11 @@ class _DialogWidgetState extends State<DialogWidget> {
                         )
                       : Text(
                           "제출",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: subtitle1,
                         ),
                 ),
               ),
+              SizedBox(height: 20),
             ],
           ),
         ),

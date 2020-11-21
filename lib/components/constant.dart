@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+// document links
+const String privacyPolicyUrl = "https://www.unicon.show/privacy-policy";
+const String openSourceDocUrl = 'https://www.unicon.show/open-source-license';
+
 // screen, widget related properties
 const double defaultPadding = 20.0;
 const double widgetDefaultPadding = 10.0;
