@@ -7,7 +7,7 @@ const double widgetRadius = 7.0;
 const double dialogRadius = 11.0;
 
 // main colors used in unicon
-const Color appKeyColor = Color(0xffb63aef);
+const Color appKeyColor = Color(0xffb63af0);
 const Color appBarColor = Color(0xff1a1a1a);
 const Color outlineColor = Color(0xffa3a3a3);
 
