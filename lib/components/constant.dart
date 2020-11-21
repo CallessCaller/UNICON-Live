@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
+// screen, widget related properties
 const double defaultPadding = 20.0;
 const double widgetDefaultPadding = 10.0;
 const double widgetRadius = 7.0;
+const double dialogRadius = 11.0;
 
+// main colors used in unicon
 const Color appKeyColor = Color(0xffb63aef);
 const Color appBarColor = Color(0xff1a1a1a);
 const Color outlineColor = Color(0xffa3a3a3);
+
+// colors for dialog
 const Color dialogColor1 = Color(0xff1b1b1c);
 const Color dialogColor2 = Color(0xff484849);
 const Color dialogColor3 = Color(0xff545455);
@@ -16,7 +21,25 @@ const double titleFontSize = 36.0;
 const double subtitleFontSize = 16.0;
 const double textFontSize = 14.0;
 const double widgetFontSize = 12.0;
-const double dialogRadius = 11.0;
+
+// App walkthrough related properties
+const List<Map<String, String>> walkthroughList = [
+  {
+    'text': '현재 진행중인 다양한 라이브를 확인하고 실시간으로 시청해보세요!',
+    'image': 'assets/walkthrough/user_guide_01.png',
+    'title': 'LIVE!',
+  },
+  {
+    'text': '좋아하는 뮤지션을 팔로우하고 뮤지션의 추천 음악과 라이브 공연 알림을 받아보세요!!',
+    'image': 'assets/walkthrough/user_guide_02.png',
+    'title': 'SHARE!',
+  },
+  {
+    'text': '뮤지션 추천 기능으로 나만의 특별한 공연을 직접 만들고 응원해보세요!',
+    'image': 'assets/walkthrough/user_guide_03.png',
+    'title': 'ENJOY!',
+  },
+];
 
 // Banner images URL
 const String requestUnionBanner =
@@ -24,6 +47,7 @@ const String requestUnionBanner =
 const String customerServiceBanner =
     "https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/banner_images%2Fcustomer_service.png?alt=media&token=df0763a6-9f8e-429f-8f06-6d7e97f4e1ed";
 
+// genre and mood in unicon
 const List<String> genreTotalList = [
   'Hip-Hop',
   'Rock',
@@ -34,7 +58,6 @@ const List<String> genreTotalList = [
   'EDM',
   'Ballad',
 ];
-
 const List<String> moodTotalList = [
   '#로맨틱한',
   '#신나는',
@@ -47,6 +70,7 @@ const List<String> moodTotalList = [
   '#레트로',
 ];
 
+// genre and mood images in unicon
 List<String> genrePictures = [
   'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/search_page%2Fhiphop_crop.jpg?alt=media&token=c38e1bee-aa77-49a4-af18-4b90970e6375',
   'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/search_page%2Frock_crop.jpg?alt=media&token=18284ee0-22ce-42ed-b116-00a128361bdc',
@@ -57,7 +81,6 @@ List<String> genrePictures = [
   'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/search_page%2FEDM_crop.jpg?alt=media&token=b430ef0a-bda3-49c4-aff8-80c1244e5ec6',
   'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/search_page%2FBALLAD_crop.jpg?alt=media&token=84526985-8d79-4450-8e89-29ea1696b6fd',
 ];
-
 List<String> moodPictures = [
   'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/search_page%2F%EB%A1%9C%EB%A9%98%ED%8B%B1%40300x_crop.jpg?alt=media&token=66bb670d-2f53-4141-bbf5-8721641bd42c',
   'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/search_page%2F%EC%8B%A0%EB%82%98%EB%8A%94%40300x_crop.jpg?alt=media&token=006b48d5-3fdc-4b46-8a7c-230d4808dc93',
@@ -71,7 +94,6 @@ List<String> moodPictures = [
 ];
 
 // TextStyles used in Unicon
-
 TextStyle headline1 = TextStyle(
   color: Colors.white,
   fontSize: 30,
