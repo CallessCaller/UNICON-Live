@@ -1111,20 +1111,34 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   Navigator.of(context).pop();
                                 }
                               } else {
-                                var _alertDialog = AlertDialog(
-                                  title: Text(
-                                    "링크를 적어도 하나 입력하세요.",
-                                    style: TextStyle(
-                                      fontSize: textFontSize,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
+                                Widget toast = Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0,
+                                    vertical: 12.0,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    color: dialogColor1,
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(Icons.warning),
+                                      SizedBox(
+                                        width: 12.0,
+                                      ),
+                                      Text(
+                                        "SNS를 적어도 하나 입력하세요.",
+                                        style: caption2,
+                                      ),
+                                    ],
                                   ),
                                 );
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      _alertDialog,
+
+                                fToast.showToast(
+                                  child: toast,
+                                  gravity: ToastGravity.CENTER,
+                                  toastDuration: Duration(seconds: 2),
                                 );
                               }
                             } else {
@@ -1135,35 +1149,65 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               Navigator.of(context).pop();
                             }
                           } else {
-                            var _alertDialog = AlertDialog(
-                              title: Text(
-                                "이메일 주소를 입력하세요.",
-                                style: TextStyle(
-                                  fontSize: textFontSize,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.center,
+                            Widget toast = Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24.0,
+                                vertical: 12.0,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25.0),
+                                color: dialogColor1,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.warning),
+                                  SizedBox(
+                                    width: 12.0,
+                                  ),
+                                  Text(
+                                    "이메일 주소를 입력하세요.",
+                                    style: caption2,
+                                  ),
+                                ],
                               ),
                             );
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) => _alertDialog,
+
+                            fToast.showToast(
+                              child: toast,
+                              gravity: ToastGravity.CENTER,
+                              toastDuration: Duration(seconds: 2),
                             );
                           }
                         } else {
-                          var _alertDialog = AlertDialog(
-                            title: Text(
-                              "이름이 누락되었습니다.",
-                              style: TextStyle(
-                                fontSize: textFontSize,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
+                          Widget toast = Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24.0,
+                              vertical: 12.0,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25.0),
+                              color: dialogColor1,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.warning),
+                                SizedBox(
+                                  width: 12.0,
+                                ),
+                                Text(
+                                  "이름이 누락되었습니다.",
+                                  style: caption2,
+                                ),
+                              ],
                             ),
                           );
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) => _alertDialog,
+
+                          fToast.showToast(
+                            child: toast,
+                            gravity: ToastGravity.CENTER,
+                            toastDuration: Duration(seconds: 2),
                           );
                         }
                       }

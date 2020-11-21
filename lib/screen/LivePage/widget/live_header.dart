@@ -21,7 +21,7 @@ class _LiveHeaderState extends State<LiveHeader> {
       tmp.add(NetworkImage(imgList[i]));
     }
     return SizedBox(
-      height: 300.0,
+      height: 250,
       width: MediaQuery.of(context).size.width,
       child: Carousel(
         autoplay: true,
@@ -29,10 +29,8 @@ class _LiveHeaderState extends State<LiveHeader> {
         images: tmp,
         dotSize: 4.0,
         dotSpacing: 15.0,
-        // dotColor: Colors.black,
         dotIncreasedColor: Colors.white,
         dotBgColor: Colors.transparent,
-
         indicatorBgPadding: 10.0,
         animationDuration: Duration(milliseconds: 1000),
       ),

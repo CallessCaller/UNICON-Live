@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
@@ -40,6 +41,7 @@ class _ArtistFormState extends State<ArtistForm> {
   TextEditingController _instagramEditingController = TextEditingController();
   TextEditingController _youtubeEditingController = TextEditingController();
   TextEditingController _soundcloudEditingController = TextEditingController();
+  FToast fToast;
 
   @override
   void initState() {
@@ -59,6 +61,8 @@ class _ArtistFormState extends State<ArtistForm> {
         break;
       }
     }
+    fToast = FToast();
+    fToast.init(context);
     _instagramEditingController = TextEditingController(text: '');
     _youtubeEditingController = TextEditingController(text: '');
     _soundcloudEditingController = TextEditingController(text: '');
@@ -81,519 +85,656 @@ class _ArtistFormState extends State<ArtistForm> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(
-          elevation: 0,
-          centerTitle: true,
-          title: Text('뮤지션 정보 등록'),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_rounded),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: false,
+        title: Text(
+          '뮤지션 정보 등록',
+          style: headline2,
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_rounded,
+            size: 30,
           ),
-          actions: [
-            FlatButton(
-              onPressed: _canGo
-                  ? () async {
-                      if (_nameEditingController.text != '') {
-                        if (_emailEditingController.text != '') {
-                          Map<String, dynamic> _userUploadResult = {
-                            'name': _nameEditingController.text.trim(),
-                            'email': _emailEditingController.text.trim() +
-                                '@' +
-                                _dropDownEmailDomain,
-                          };
-                          Map<String, dynamic> _pendingUploadResult = {
-                            'name': _nameEditingController.text.trim(),
-                            'email': _emailEditingController.text.trim() +
-                                '@' +
-                                _dropDownEmailDomain,
-                          };
-                          if (_soundcloudEditingController.text != '' ||
-                              _youtubeEditingController.text != '' ||
-                              _instagramEditingController.text != '') {
-                            bool check1 = false;
-                            bool check2 = false;
-                            bool check3 = false;
-                            if (_soundcloudEditingController.text != '') {
-                              if (_soundcloudEditingController.text
-                                  .contains('soundcloud.com')) {
-                                if (_soundcloudEditingController.text
-                                    .startsWith('https://')) {
-                                  _userUploadResult['soundcloud_link'] =
-                                      _soundcloudEditingController.text.trim();
-                                  _pendingUploadResult['soundcloud_link'] =
-                                      _soundcloudEditingController.text.trim();
-                                } else {
-                                  _userUploadResult['soundcloud_link'] =
-                                      'https://' +
-                                          _soundcloudEditingController.text
-                                              .trim();
-                                  _pendingUploadResult['soundcloud_link'] =
-                                      'https://' +
-                                          _soundcloudEditingController.text
-                                              .trim();
-                                }
-                                check1 = true;
-                              } else {
-                                var _alertDialog = AlertDialog(
-                                  title: Text(
-                                    "사운드클라우드 링크를 정확하게 입력하세요.",
-                                    style: TextStyle(
-                                      fontSize: subtitleFontSize,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                );
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      _alertDialog,
-                                );
-                                check1 = false;
-                              }
-                            }
-
-                            if (_youtubeEditingController.text != '') {
-                              if (_youtubeEditingController.text
-                                  .contains('youtube.com')) {
-                                if (_soundcloudEditingController.text
-                                    .startsWith('https://')) {
-                                  _userUploadResult['youtube_link'] =
-                                      _youtubeEditingController.text.trim();
-                                  _pendingUploadResult['youtube_link'] =
-                                      _youtubeEditingController.text.trim();
-                                } else {
-                                  _userUploadResult['youtube_link'] =
-                                      'https://' +
-                                          _youtubeEditingController.text.trim();
-                                  _pendingUploadResult['youtube_link'] =
-                                      'https://' +
-                                          _youtubeEditingController.text.trim();
-                                }
-
-                                check2 = true;
-                              } else {
-                                var _alertDialog = AlertDialog(
-                                  title: Text(
-                                    "유튜브 링크를 정확하게 입력하세요.",
-                                    style: TextStyle(
-                                      fontSize: subtitleFontSize,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                );
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      _alertDialog,
-                                );
-                                check2 = false;
-                              }
-                            }
-
-                            if (_instagramEditingController.text != '') {
-                              _userUploadResult['instagram_id'] =
-                                  _instagramEditingController.text
-                                      .trim()
-                                      .replaceAll('@', '');
-                              _pendingUploadResult['instagram_id'] =
-                                  _instagramEditingController.text
-                                      .trim()
-                                      .replaceAll('@', '');
-                              check3 = true;
-                            }
-
-                            if (check1 || check2 || check3) {
-                              // birth and profile added to user
-                              _userUploadResult['birth'] = _dateTime;
-                              _userUploadResult['profile'] = _profileImageURL;
-                              // id added to pending
-                              _pendingUploadResult['id'] = _user.uid;
-                              _pendingUploadResult['profile'] =
-                                  _profileImageURL;
-                              await FirebaseFirestore.instance
-                                  .collection('Users')
-                                  .doc(_user.uid)
-                                  .update(_userUploadResult);
-
-                              await FirebaseFirestore.instance
-                                  .collection('Pending')
-                                  .doc(_user.uid)
-                                  .set(_pendingUploadResult);
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => UnionGenreSelection(),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 20,
+                    ),
+                    Center(
+                      child: Stack(
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl: _profileImageURL,
+                            imageBuilder: (context, imageProvider) => Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: appKeyColor,
+                                  width: 1.5,
                                 ),
+                              ),
+                              child: CircleAvatar(
+                                backgroundImage: imageProvider,
+                                radius: 80,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 5,
+                            right: 5,
+                            child: IconButton(
+                              icon: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  UniIcon.fix,
+                                  color: Colors.black,
+                                  size: 30,
+                                ),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _canGo = false;
+                                });
+                                _uploadImageToStorage(ImageSource.gallery);
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          UniIcon.profile,
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            autocorrect: false,
+                            textInputAction: TextInputAction.next,
+                            controller: _nameEditingController,
+                            style: body2,
+                            decoration: InputDecoration(
+                              isDense: true,
+                              hintText: "이름 (Required)",
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: appKeyColor,
+                                  width: 1,
+                                ),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          UniIcon.calendar,
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            onTap: _showDateTimePicker,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 8),
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  '${_dateTime.year} / ${_dateTime.month} / ${_dateTime.day}',
+                                  style: body2,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          UniIcon.mail,
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _emailEditingController,
+                            maxLines: 1,
+                            autocorrect: false,
+                            textInputAction: TextInputAction.next,
+                            style: body2,
+                            decoration: InputDecoration(
+                              isDense: true,
+                              hintText: "이메일 (Required)",
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: appKeyColor,
+                                  width: 1,
+                                ),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          '@',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: textFontSize,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          width: 110,
+                          padding: EdgeInsets.symmetric(vertical: 8),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.white,
+                                width: 1,
+                              ),
+                            ),
+                          ),
+                          child: Center(
+                            child: DropdownButton<String>(
+                              style: body2,
+                              isDense: true,
+                              value: _dropDownEmailDomain,
+                              icon: Icon(Icons.keyboard_arrow_down),
+                              iconSize: 20,
+                              underline: Container(
+                                color: Colors.transparent,
+                              ),
+                              onChanged: (String newValue) {
+                                setState(() {
+                                  _dropDownEmailDomain = newValue;
+                                });
+                              },
+                              items: emails.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: body2,
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          UniIcon.soundcloud,
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            autocorrect: false,
+                            textInputAction: TextInputAction.next,
+                            keyboardType: TextInputType.url,
+                            controller: _soundcloudEditingController,
+                            style: body2,
+                            decoration: InputDecoration(
+                              isDense: true,
+                              hintText: "Soundcloud link",
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: appKeyColor,
+                                  width: 1,
+                                ),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          UniIcon.youtube,
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            autocorrect: false,
+                            textInputAction: TextInputAction.next,
+                            keyboardType: TextInputType.url,
+                            controller: _youtubeEditingController,
+                            style: body2,
+                            decoration: InputDecoration(
+                              isDense: true,
+                              hintText: "Youtube link",
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: appKeyColor,
+                                  width: 1,
+                                ),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          UniIcon.instagram,
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            autocorrect: false,
+                            textInputAction: TextInputAction.done,
+                            controller: _instagramEditingController,
+                            keyboardType: TextInputType.emailAddress,
+                            style: body2,
+                            decoration: InputDecoration(
+                              isDense: true,
+                              hintText: "Instagram ID",
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: appKeyColor,
+                                  width: 1,
+                                ),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 120),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 20,
+              left: 30,
+              right: 30,
+              child: FlatButton(
+                minWidth: MediaQuery.of(context).size.width - 60,
+                height: 50,
+                color: appKeyColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                onPressed: _canGo
+                    ? () async {
+                        if (_nameEditingController.text != '') {
+                          if (_emailEditingController.text != '') {
+                            Map<String, dynamic> _userUploadResult = {
+                              'name': _nameEditingController.text.trim(),
+                              'email': _emailEditingController.text.trim() +
+                                  '@' +
+                                  _dropDownEmailDomain,
+                            };
+                            Map<String, dynamic> _pendingUploadResult = {
+                              'name': _nameEditingController.text.trim(),
+                              'email': _emailEditingController.text.trim() +
+                                  '@' +
+                                  _dropDownEmailDomain,
+                            };
+                            if (_soundcloudEditingController.text != '' ||
+                                _youtubeEditingController.text != '' ||
+                                _instagramEditingController.text != '') {
+                              bool check1 = false;
+                              bool check2 = false;
+                              bool check3 = false;
+                              if (_soundcloudEditingController.text != '') {
+                                if (_soundcloudEditingController.text
+                                    .contains('soundcloud.com')) {
+                                  if (_soundcloudEditingController.text
+                                      .startsWith('https://')) {
+                                    _userUploadResult['soundcloud_link'] =
+                                        _soundcloudEditingController.text
+                                            .trim();
+                                    _pendingUploadResult['soundcloud_link'] =
+                                        _soundcloudEditingController.text
+                                            .trim();
+                                  } else {
+                                    _userUploadResult['soundcloud_link'] =
+                                        'https://' +
+                                            _soundcloudEditingController.text
+                                                .trim();
+                                    _pendingUploadResult['soundcloud_link'] =
+                                        'https://' +
+                                            _soundcloudEditingController.text
+                                                .trim();
+                                  }
+                                  check1 = true;
+                                } else {
+                                  Widget toast = Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 24.0,
+                                      vertical: 12.0,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      color: dialogColor1,
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(Icons.warning),
+                                        SizedBox(
+                                          width: 12.0,
+                                        ),
+                                        Text(
+                                          "사운드클라우드 링크를 정확하게 입력하세요.",
+                                          style: caption2,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+
+                                  fToast.showToast(
+                                    child: toast,
+                                    gravity: ToastGravity.CENTER,
+                                    toastDuration: Duration(seconds: 2),
+                                  );
+                                  check1 = false;
+                                }
+                              }
+
+                              if (_youtubeEditingController.text != '') {
+                                if (_youtubeEditingController.text
+                                    .contains('youtube.com')) {
+                                  if (_soundcloudEditingController.text
+                                      .startsWith('https://')) {
+                                    _userUploadResult['youtube_link'] =
+                                        _youtubeEditingController.text.trim();
+                                    _pendingUploadResult['youtube_link'] =
+                                        _youtubeEditingController.text.trim();
+                                  } else {
+                                    _userUploadResult['youtube_link'] =
+                                        'https://' +
+                                            _youtubeEditingController.text
+                                                .trim();
+                                    _pendingUploadResult['youtube_link'] =
+                                        'https://' +
+                                            _youtubeEditingController.text
+                                                .trim();
+                                  }
+
+                                  check2 = true;
+                                } else {
+                                  Widget toast = Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 24.0,
+                                      vertical: 12.0,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      color: dialogColor1,
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(Icons.warning),
+                                        SizedBox(
+                                          width: 12.0,
+                                        ),
+                                        Text(
+                                          "유튜브 링크를 정확히 입력하세요.",
+                                          style: caption2,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+
+                                  fToast.showToast(
+                                    child: toast,
+                                    gravity: ToastGravity.CENTER,
+                                    toastDuration: Duration(seconds: 2),
+                                  );
+                                  check2 = false;
+                                }
+                              }
+
+                              if (_instagramEditingController.text != '') {
+                                _userUploadResult['instagram_id'] =
+                                    _instagramEditingController.text
+                                        .trim()
+                                        .replaceAll('@', '');
+                                _pendingUploadResult['instagram_id'] =
+                                    _instagramEditingController.text
+                                        .trim()
+                                        .replaceAll('@', '');
+                                check3 = true;
+                              }
+
+                              if (check1 || check2 || check3) {
+                                // birth and profile added to user
+                                _userUploadResult['birth'] = _dateTime;
+                                _userUploadResult['profile'] = _profileImageURL;
+                                // id added to pending
+                                _pendingUploadResult['id'] = _user.uid;
+                                _pendingUploadResult['profile'] =
+                                    _profileImageURL;
+                                await FirebaseFirestore.instance
+                                    .collection('Users')
+                                    .doc(_user.uid)
+                                    .update(_userUploadResult);
+
+                                await FirebaseFirestore.instance
+                                    .collection('Pending')
+                                    .doc(_user.uid)
+                                    .set(_pendingUploadResult);
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => UnionGenreSelection(),
+                                  ),
+                                );
+                              }
+                            } else {
+                              Widget toast = Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 24.0,
+                                  vertical: 12.0,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  color: dialogColor1,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(Icons.warning),
+                                    SizedBox(
+                                      width: 12.0,
+                                    ),
+                                    Text(
+                                      "SNS를 적어도 하나 입력하세요.",
+                                      style: caption2,
+                                    ),
+                                  ],
+                                ),
+                              );
+
+                              fToast.showToast(
+                                child: toast,
+                                gravity: ToastGravity.CENTER,
+                                toastDuration: Duration(seconds: 2),
                               );
                             }
                           } else {
-                            var _alertDialog = AlertDialog(
-                              title: Text(
-                                "링크를 적어도 하나 입력하세요.",
-                                style: TextStyle(
-                                  fontSize: subtitleFontSize,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.center,
+                            Widget toast = Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24.0,
+                                vertical: 12.0,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25.0),
+                                color: dialogColor1,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.warning),
+                                  SizedBox(
+                                    width: 12.0,
+                                  ),
+                                  Text(
+                                    "이메일 주소를 입력하세요.",
+                                    style: caption2,
+                                  ),
+                                ],
                               ),
                             );
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) => _alertDialog,
+
+                            fToast.showToast(
+                              child: toast,
+                              gravity: ToastGravity.CENTER,
+                              toastDuration: Duration(seconds: 2),
                             );
                           }
                         } else {
-                          var _alertDialog = AlertDialog(
-                            title: Text(
-                              "이메일 주소를 입력하세요.",
-                              style: TextStyle(
-                                fontSize: subtitleFontSize,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
+                          Widget toast = Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24.0,
+                              vertical: 12.0,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25.0),
+                              color: dialogColor1,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.warning),
+                                SizedBox(
+                                  width: 12.0,
+                                ),
+                                Text(
+                                  "이름이 누락되었습니다.",
+                                  style: caption2,
+                                ),
+                              ],
                             ),
                           );
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) => _alertDialog,
+
+                          fToast.showToast(
+                            child: toast,
+                            gravity: ToastGravity.CENTER,
+                            toastDuration: Duration(seconds: 2),
                           );
                         }
-                      } else {
-                        var _alertDialog = AlertDialog(
-                          title: Text(
-                            "이름이 누락되었습니다.",
-                            style: TextStyle(
-                              fontSize: subtitleFontSize,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        );
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) => _alertDialog,
-                        );
                       }
-                    }
-                  : null,
-              child: Text(
-                '다음',
-                style: TextStyle(
-                  color: appKeyColor,
+                    : null,
+                child: Text(
+                  '저장',
+                  style: subtitle1,
                 ),
               ),
             ),
           ],
-        ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 20,
-              ),
-              Center(
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      _canGo = false;
-                    });
-                    _uploadImageToStorage(ImageSource.gallery);
-                  },
-                  child: CachedNetworkImage(
-                    imageUrl: _profileImageURL,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 1.5,
-                        ),
-                      ),
-                      child: CircleAvatar(
-                        backgroundImage: imageProvider,
-                        radius: 80,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.person,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    width: 128,
-                    height: 30,
-                    child: TextFormField(
-                      autocorrect: false,
-                      textInputAction: TextInputAction.next,
-                      controller: _nameEditingController,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: textFontSize,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hintText: "이름 (Required)",
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: appKeyColor,
-                            width: 1,
-                          ),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                            width: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      width: 20,
-                    ),
-                  ),
-                  Icon(
-                    Icons.cake,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  InkWell(
-                    onTap: _showDateTimePicker,
-                    child: Container(
-                      width: 128,
-                      height: 30,
-                      child: Center(
-                        child: Text(
-                          '${_dateTime.year}.${_dateTime.month}.${_dateTime.day}',
-                          style: TextStyle(
-                            fontSize: textFontSize,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.email,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    width: 128,
-                    height: 30,
-                    child: TextFormField(
-                      controller: _emailEditingController,
-                      maxLines: 1,
-                      autocorrect: false,
-                      textInputAction: TextInputAction.next,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: textFontSize,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hintText: "이메일 (Required)",
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: appKeyColor,
-                            width: 1,
-                          ),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                            width: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      width: 20,
-                    ),
-                  ),
-                  Container(
-                    width: 17,
-                    height: 30,
-                    child: Center(child: Text('@')),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    height: 30,
-                    width: 128,
-                    child: Center(
-                      child: DropdownButton<String>(
-                        style: TextStyle(
-                          fontSize: textFontSize,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        isDense: true,
-                        value: _dropDownEmailDomain,
-                        icon: Icon(Icons.arrow_drop_down),
-                        iconSize: 20,
-                        underline: Container(
-                          color: Colors.transparent,
-                        ),
-                        onChanged: (String newValue) {
-                          setState(() {
-                            _dropDownEmailDomain = newValue;
-                          });
-                        },
-                        items: emails
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Container(
-                height: 30,
-                child: TextFormField(
-                  autocorrect: false,
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.url,
-                  controller: _soundcloudEditingController,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: textFontSize,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  decoration: InputDecoration(
-                    isDense: true,
-                    hintText: "Soundcloud link",
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: appKeyColor,
-                        width: 1,
-                      ),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.white,
-                        width: 1,
-                      ),
-                    ),
-                    icon: Container(width: 20, child: Icon(UniIcon.soundcloud)),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Container(
-                height: 30,
-                child: TextFormField(
-                  autocorrect: false,
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.url,
-                  controller: _youtubeEditingController,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: textFontSize,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  decoration: InputDecoration(
-                    isDense: true,
-                    hintText: "Youtube link",
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: appKeyColor,
-                        width: 1,
-                      ),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.white,
-                        width: 1,
-                      ),
-                    ),
-                    icon: Container(width: 20, child: Icon(UniIcon.youtube)),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Container(
-                height: 30,
-                child: TextFormField(
-                  autocorrect: false,
-                  textInputAction: TextInputAction.done,
-                  controller: _instagramEditingController,
-                  keyboardType: TextInputType.emailAddress,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: textFontSize,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  decoration: InputDecoration(
-                    isDense: true,
-                    hintText: "Instagram ID",
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: appKeyColor,
-                        width: 1,
-                      ),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.white,
-                        width: 1,
-                      ),
-                    ),
-                    icon: Container(width: 20, child: Icon(UniIcon.instagram)),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-            ],
-          ),
         ),
       ),
     );

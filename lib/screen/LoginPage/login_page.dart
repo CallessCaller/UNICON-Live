@@ -30,211 +30,225 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            // height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.width * 1.2,
-                  width: 200,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/slogan_02.png'),
-                        fit: BoxFit.contain),
-                  ),
-                ),
-                Platform.isIOS
-                    ? FlatButton(
-                        onPressed: () async {
-                          showAlertDialog(context);
-                          auth.UserCredential userCredential =
-                              await signInWithApple();
-
-                          if (userCredential.user.uid ==
-                              _auth.currentUser.uid) {
-                            FirebaseFirestore.instance
-                                .collection('Users')
-                                .doc(_auth.currentUser.uid)
-                                .get()
-                                .then((value) {
-                              if (value.exists == false) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ArtistOrUser()));
-                                LoadUser().onCreate();
-                                // _saveFirst();
-                              } else {
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                    '/inapp', (Route<dynamic> route) => false);
-                              }
-                            });
-                          }
-                        },
-                        child: Container(
-                          height: 50,
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              border: Border.all(color: Colors.white),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 30,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/apple_logo.png'))),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  '  애플 로그인',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: subtitleFontSize),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    : SizedBox(),
-                SizedBox(
-                  height: 20,
-                ),
-                FlatButton(
-                  onPressed: () async {
-                    showAlertDialog(context);
-                    auth.UserCredential userCredential =
-                        await signInWithGoogle();
-
-                    if (userCredential.user.uid == _auth.currentUser.uid) {
-                      FirebaseFirestore.instance
-                          .collection('Users')
-                          .doc(_auth.currentUser.uid)
-                          .get()
-                          .then((value) {
-                        if (value.exists == false) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ArtistOrUser()));
-                          LoadUser().onCreate();
-                          // _saveFirst();
-                        } else {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/inapp', (Route<dynamic> route) => false);
-                        }
-                      });
-                    }
-                  },
-                  child: Container(
-                    height: 50,
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 30,
-                          width: 50,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage('assets/Google_Logo.png'))),
-                        ),
-                        Expanded(
-                          child: Text(
-                            '  구글 로그인',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: subtitleFontSize),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                FlatButton(
-                  onPressed: () async {
-                    showAlertDialog(context);
-                    auth.UserCredential userCredential = await kakaoSignIn();
-
-                    if (userCredential.user.uid == _auth.currentUser.uid) {
-                      FirebaseFirestore.instance
-                          .collection('Users')
-                          .doc(_auth.currentUser.uid)
-                          .get()
-                          .then((value) {
-                        if (value.exists == false) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ArtistOrUser()));
-                          LoadUser().onCreate();
-                          // _saveFirst();
-                        } else {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/inapp', (Route<dynamic> route) => false);
-                        }
-                      });
-                    }
-                  },
-                  child: Container(
-                    height: 50,
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(254, 229, 0, 1),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 50,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage('assets/Kakao_Logo.png'))),
-                        ),
-                        Expanded(
-                          child: Text(
-                            '카카오 로그인',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: subtitleFontSize),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
             ),
-          ),
-        ],
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.2,
+              left: 80,
+              right: 80,
+              child: Container(
+                height: 100,
+                width: 150,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/slogan_02.png'),
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 80,
+              left: 1,
+              right: 1,
+              child: Column(
+                children: [
+                  Platform.isIOS
+                      ? FlatButton(
+                          onPressed: () async {
+                            showAlertDialog(context);
+                            auth.UserCredential userCredential =
+                                await signInWithApple();
+
+                            if (userCredential.user.uid ==
+                                _auth.currentUser.uid) {
+                              FirebaseFirestore.instance
+                                  .collection('Users')
+                                  .doc(_auth.currentUser.uid)
+                                  .get()
+                                  .then((value) {
+                                if (value.exists == false) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ArtistOrUser()));
+                                  LoadUser().onCreate();
+                                  // _saveFirst();
+                                } else {
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      '/inapp',
+                                      (Route<dynamic> route) => false);
+                                }
+                              });
+                            }
+                          },
+                          child: Container(
+                            height: 50,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                border: Border.all(color: Colors.white),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 30,
+                                  width: 50,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/apple_logo.png'))),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    '  애플 로그인',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: subtitleFontSize),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  FlatButton(
+                    onPressed: () async {
+                      showAlertDialog(context);
+                      auth.UserCredential userCredential =
+                          await signInWithGoogle();
+
+                      if (userCredential.user.uid == _auth.currentUser.uid) {
+                        FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(_auth.currentUser.uid)
+                            .get()
+                            .then((value) {
+                          if (value.exists == false) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ArtistOrUser()));
+                            LoadUser().onCreate();
+                            // _saveFirst();
+                          } else {
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                '/inapp', (Route<dynamic> route) => false);
+                          }
+                        });
+                      }
+                    },
+                    child: Container(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 30,
+                            width: 50,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image:
+                                        AssetImage('assets/Google_Logo.png'))),
+                          ),
+                          Expanded(
+                            child: Text(
+                              '  구글 로그인',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: subtitleFontSize),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  FlatButton(
+                    onPressed: () async {
+                      showAlertDialog(context);
+                      auth.UserCredential userCredential = await kakaoSignIn();
+
+                      if (userCredential.user.uid == _auth.currentUser.uid) {
+                        FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(_auth.currentUser.uid)
+                            .get()
+                            .then((value) {
+                          if (value.exists == false) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ArtistOrUser()));
+                            LoadUser().onCreate();
+                            // _saveFirst();
+                          } else {
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                '/inapp', (Route<dynamic> route) => false);
+                          }
+                        });
+                      }
+                    },
+                    child: Container(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(254, 229, 0, 1),
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 40,
+                            width: 50,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image:
+                                        AssetImage('assets/Kakao_Logo.png'))),
+                          ),
+                          Expanded(
+                            child: Text(
+                              '카카오 로그인',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: subtitleFontSize),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

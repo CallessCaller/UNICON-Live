@@ -12,70 +12,72 @@ class _WaitForAuthState extends State<WaitForAuth> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      extendBodyBehindAppBar: true,
-      body: Center(
-        child: Column(
+      body: SafeArea(
+        child: Stack(
           children: [
-            SizedBox(height: 150),
             Container(
-              height: 50,
-              child: Center(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+            ),
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.2,
+              left: 80,
+              right: 80,
+              child: Column(
+                children: [
+                  Container(
+                    child: Center(
+                      child: Text(
+                        '감사합니다!',
+                        style: TextStyle(
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    child: Center(
+                      child: Text(
+                        '유니온 신청이 등록되었습니다.\n확인 후 승인 완료됩니다.',
+                        textAlign: TextAlign.center,
+                        style: title3,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              bottom: 20,
+              left: 30,
+              right: 30,
+              child: FlatButton(
+                minWidth: MediaQuery.of(context).size.width - 60,
+                height: 50,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                color: appKeyColor,
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TabPage(),
+                    ),
+                  );
+                },
                 child: Text(
-                  '감사합니다!',
-                  style: TextStyle(
-                    fontSize: titleFontSize,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
+                  '시작하기',
+                  style: subtitle1,
                 ),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 50,
-              child: Center(
-                child: Text(
-                  '유니온 신청이 등록되었습니다.\n확인 후 승인 완료됩니다.',
-                  style: TextStyle(
-                    fontSize: subtitleFontSize,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white.withOpacity(0.6),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 80,
-            ),
-            RaisedButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(widgetRadius),
-              ),
-              elevation: 0,
-              color: appKeyColor,
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TabPage(),
-                  ),
-                );
-              },
-              child: Container(
-                width: 157,
-                height: 30,
-                child: Center(
-                  child: Text(
-                    '시작하기',
-                    style: TextStyle(
-                        fontSize: subtitleFontSize,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-              ),
-            ),
+            )
           ],
         ),
       ),

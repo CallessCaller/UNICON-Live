@@ -18,7 +18,19 @@ class _UnionMoodSelectionState extends State<UnionMoodSelection> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('당신의 음악 무드는?'),
+        title: Text(
+          '당신의 음악 무드는?',
+          style: headline2,
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_rounded,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         actions: [
           FlatButton(
             onPressed: () async {
