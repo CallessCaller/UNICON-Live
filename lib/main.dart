@@ -9,6 +9,7 @@ import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/providers/stream_of_artist.dart';
 import 'package:testing_layout/providers/stream_of_feed.dart';
 import 'package:testing_layout/providers/stream_of_live.dart';
+import 'package:testing_layout/screen/AppGuide/widget/widget_walkthroughslide.dart';
 import 'package:testing_layout/screen/LoginPage/login_page.dart';
 import 'package:testing_layout/screen/tab_page.dart';
 import 'model/feed.dart';
@@ -64,9 +65,10 @@ class _MyAppState extends State<MyApp> {
           accentColor: Colors.black,
         ),
         title: 'Unicon',
-        // home: LoginPage(),
+        // TODO : check if app is first installed
         initialRoute: _needLogin ? '/login' : '/inapp',
         routes: {
+          '/first-installed': (context) => WalkthroughSlide(),
           '/login': (context) => LoginPage(),
           '/inapp': (context) => TabPage(),
         },
