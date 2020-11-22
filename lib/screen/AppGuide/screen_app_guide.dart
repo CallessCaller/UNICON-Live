@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/size_config.dart';
 import 'package:testing_layout/screen/AppGuide/widget/widget_walkthroughslide.dart';
+import 'package:testing_layout/screen/LoginPage/login_page.dart';
 
 class AppGuideScreen extends StatefulWidget {
   @override
@@ -92,7 +93,9 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                            // TODO
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()));
                           },
                           child: Container(
                             decoration: BoxDecoration(
