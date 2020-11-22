@@ -72,7 +72,6 @@ class MyFee extends StatelessWidget {
                       children: [
                         Expanded(
                           child: FlatButton(
-                            minWidth: 110,
                             color: dialogColor3,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(widgetRadius),
@@ -94,7 +93,6 @@ class MyFee extends StatelessWidget {
                         SizedBox(width: 10),
                         Expanded(
                           child: FlatButton(
-                            minWidth: 110,
                             color: appKeyColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(widgetRadius),

@@ -91,7 +91,9 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            // TODO
+                          },
                           child: Container(
                             decoration: BoxDecoration(
                               border: Border(

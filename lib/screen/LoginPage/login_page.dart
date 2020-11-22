@@ -14,6 +14,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:testing_layout/screen/LoginPage/widget_policy_check.dart';
 
 final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -73,13 +74,11 @@ class _LoginPageState extends State<LoginPage> {
                                   .get()
                                   .then((value) {
                                 if (value.exists == false) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ArtistOrUser()));
-                                  LoadUser().onCreate();
-                                  // _saveFirst();
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => PolicyCheckDialog(),
+                                    ),
+                                  );
                                 } else {
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                       '/inapp',
@@ -139,12 +138,11 @@ class _LoginPageState extends State<LoginPage> {
                             .get()
                             .then((value) {
                           if (value.exists == false) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ArtistOrUser()));
-                            LoadUser().onCreate();
-                            // _saveFirst();
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => PolicyCheckDialog(),
+                              ),
+                            );
                           } else {
                             Navigator.of(context).pushNamedAndRemoveUntil(
                                 '/inapp', (Route<dynamic> route) => false);
@@ -199,12 +197,11 @@ class _LoginPageState extends State<LoginPage> {
                             .get()
                             .then((value) {
                           if (value.exists == false) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ArtistOrUser()));
-                            LoadUser().onCreate();
-                            // _saveFirst();
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => PolicyCheckDialog(),
+                              ),
+                            );
                           } else {
                             Navigator.of(context).pushNamedAndRemoveUntil(
                                 '/inapp', (Route<dynamic> route) => false);

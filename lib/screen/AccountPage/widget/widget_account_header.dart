@@ -37,9 +37,7 @@ class AccountHeader extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              width: 10.0,
-            ),
+            SizedBox(width: 7),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,6 +67,7 @@ class AccountHeader extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(width: 7),
             InkWell(
               child: Container(
                 padding: EdgeInsets.all(5),
