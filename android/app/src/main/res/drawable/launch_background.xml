@@ -10,7 +10,7 @@
         android:gravity="center">
         <bitmap
             android:gravity="fill"
-            android:src="@mipmap/slogan_02" 
+            android:src="@mipmap/slogan_01" 
             android:mipMap="true"/>
     </item> 
 </layer-list>
