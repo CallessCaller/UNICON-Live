@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/artists.dart';
@@ -41,18 +40,19 @@ class _WebStreamingState extends State<WebStreaming> {
   @override
   void dispose() {
     super.dispose();
+    _controller.pause();
     _controller.dispose();
   }
 
-  void takeSnapshot() async {
-    Uint8List bytes = await VideoThumbnail.thumbnailData(
-      video: _url, // Path of that video
-      imageFormat: ImageFormat.PNG,
-      quality: 100,
-      timeMs: _controller.value.position.inMilliseconds,
-    );
-    image = Image.memory(bytes); // Here's your frame
-  }
+  // void takeSnapshot() async {
+  //   Uint8List bytes = await VideoThumbnail.thumbnailData(
+  //     video: _url, // Path of that video
+  //     imageFormat: ImageFormat.PNG,
+  //     quality: 100,
+  //     timeMs: _controller.value.position.inMilliseconds,
+  //   );
+  //   image = Image.memory(bytes); // Here's your frame
+  // }
 
   @override
   Widget build(BuildContext context) {

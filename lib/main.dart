@@ -5,17 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/providers/stream_of_artist.dart';
 import 'package:testing_layout/providers/stream_of_feed.dart';
 import 'package:testing_layout/providers/stream_of_live.dart';
-import 'package:testing_layout/screen/AppGuide/widget/widget_walkthroughslide.dart';
+import 'package:testing_layout/screen/AppGuide/screen_app_guide.dart';
 import 'package:testing_layout/screen/LoginPage/login_page.dart';
 import 'package:testing_layout/screen/tab_page.dart';
 import 'model/feed.dart';
 
 import 'package:kakao_flutter_sdk/all.dart';
 
+bool _isFirst = true;
+bool _needLogin = false;
+bool _exist = false;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -23,6 +27,19 @@ void main() async {
   KakaoContext.clientId = "70dfdacac39561e5f245a4bd09ef9509";
 
   InAppPurchaseConnection.enablePendingPurchases();
+  SharedPreferences _preferences = await SharedPreferences.getInstance();
+
+  _isFirst = (_preferences.getBool('first') ?? true);
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  if (_auth.currentUser == null) {
+    _needLogin = true;
+  } else {
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(_auth.currentUser.uid)
+        .get()
+        .then((value) => {_exist = value.exists});
+  }
 
   runApp(
     MyApp(),
@@ -35,17 +52,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool _needLogin = false;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
   @override
   void initState() {
     super.initState();
-    if (_auth.currentUser == null) {
-      setState(() {
-        _needLogin = true;
-      });
-    }
   }
 
   @override
@@ -65,10 +74,15 @@ class _MyAppState extends State<MyApp> {
           accentColor: Colors.black,
         ),
         title: 'Unicon',
-        // TODO : check if app is first installed
-        initialRoute: _needLogin ? '/login' : '/inapp',
+        initialRoute: _isFirst
+            ? '/first_installed'
+            : _needLogin
+                ? '/login'
+                : _exist
+                    ? '/inapp'
+                    : '/login',
         routes: {
-          '/first-installed': (context) => WalkthroughSlide(),
+          '/first_installed': (context) => AppGuideScreen(),
           '/login': (context) => LoginPage(),
           '/inapp': (context) => TabPage(),
         },

@@ -160,20 +160,24 @@ class BottomProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserDB userDB = Provider.of<UserDB>(context);
-    return CachedNetworkImage(
-      imageUrl: userDB.profile,
-      imageBuilder: (context, imageProvider) => Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: color,
-            width: 2,
+    if (userDB == null) {
+      return Icon(UniIcon.settings);
+    } else {
+      return CachedNetworkImage(
+        imageUrl: userDB.profile,
+        imageBuilder: (context, imageProvider) => Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: color,
+              width: 2,
+            ),
+          ),
+          child: CircleAvatar(
+            backgroundImage: imageProvider,
           ),
         ),
-        child: CircleAvatar(
-          backgroundImage: imageProvider,
-        ),
-      ),
-    );
+      );
+    }
   }
 }

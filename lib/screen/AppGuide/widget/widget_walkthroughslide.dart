@@ -11,14 +11,14 @@ class WalkthroughSlide extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          width: 1,
-          color: outlineColor,
-        ),
-      ),
+      // decoration: BoxDecoration(
+      //   color: Colors.black,
+      //   borderRadius: BorderRadius.circular(20),
+      //   border: Border.all(
+      //     width: 1,
+      //     color: outlineColor,
+      //   ),
+      // ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,8 +41,9 @@ class WalkthroughSlide extends StatelessWidget {
             text,
             textAlign: TextAlign.left,
             style: TextStyle(
+              height: 2,
               color: Colors.white,
-              fontSize: 30,
+              fontSize: 18,
               fontWeight: FontWeight.w400,
             ),
           )

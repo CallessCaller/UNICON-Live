@@ -39,59 +39,77 @@ class _InitialGenreSelectionState extends State<InitialGenreSelection> {
             },
           ),
         ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.all(defaultPadding),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '장르',
-                  style: TextStyle(
-                    fontSize: subtitleFontSize,
-                    fontWeight: FontWeight.w600,
-                  ),
+        body: Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: SingleChildScrollView(
+                padding: EdgeInsets.all(defaultPadding),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '장르',
+                        style: TextStyle(
+                          fontSize: subtitleFontSize,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Divider(
+                      height: 0,
+                      thickness: 1,
+                      color: Colors.white.withOpacity(0.65),
+                    ),
+                    SizedBox(height: 20),
+                    Wrap(
+                      alignment: WrapAlignment.start,
+                      spacing: 20,
+                      runSpacing: 10,
+                      children: _buildGenre(),
+                    ),
+                    SizedBox(height: 50),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '분위기',
+                        style: TextStyle(
+                          fontSize: subtitleFontSize,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Divider(
+                      height: 0,
+                      thickness: 1,
+                      color: Colors.white.withOpacity(0.65),
+                    ),
+                    SizedBox(height: 20),
+                    Wrap(
+                      alignment: WrapAlignment.start,
+                      spacing: 20,
+                      runSpacing: 10,
+                      children: _buildMood(),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(height: 5),
-              Divider(
-                height: 0,
-                thickness: 1,
-                color: Colors.white.withOpacity(0.65),
-              ),
-              SizedBox(height: 20),
-              Wrap(
-                alignment: WrapAlignment.start,
-                spacing: 20,
-                runSpacing: 10,
-                children: _buildGenre(),
-              ),
-              SizedBox(height: 50),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '분위기',
-                  style: TextStyle(
-                    fontSize: subtitleFontSize,
-                    fontWeight: FontWeight.w600,
-                  ),
+            ),
+            Positioned(
+              bottom: 20,
+              left: 30,
+              right: 30,
+              child: FlatButton(
+                minWidth: MediaQuery.of(context).size.width - 60,
+                height: 50,
+                color: appKeyColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
                 ),
-              ),
-              SizedBox(height: 5),
-              Divider(
-                height: 0,
-                thickness: 1,
-                color: Colors.white.withOpacity(0.65),
-              ),
-              SizedBox(height: 20),
-              Wrap(
-                alignment: WrapAlignment.start,
-                spacing: 20,
-                runSpacing: 10,
-                children: _buildMood(),
-              ),
-              SizedBox(height: 50),
-              FlatButton(
                 onPressed: () async {
                   await FirebaseFirestore.instance
                       .collection('Users')
@@ -105,21 +123,13 @@ class _InitialGenreSelectionState extends State<InitialGenreSelection> {
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       '/inapp', (Route<dynamic> route) => false);
                 },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(widgetRadius),
-                ),
-                color: appKeyColor,
                 child: Text(
                   '선택 완료',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: subtitleFontSize,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: subtitle1,
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );

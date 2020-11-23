@@ -7,7 +7,6 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/feed.dart';
 import 'package:testing_layout/model/users.dart';
-import 'package:image/image.dart' as img;
 import 'package:testing_layout/screen/FeedPage/screen/screen_feed_write_page.dart';
 
 class FeedEditPage extends StatefulWidget {

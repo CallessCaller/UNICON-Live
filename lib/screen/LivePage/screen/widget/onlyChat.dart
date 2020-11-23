@@ -56,19 +56,6 @@ class _OnlyChatState extends State<OnlyChat> {
   }
 
   Widget _buildBody(BuildContext context, List<DocumentSnapshot> snapshot) {
-    _scrollToEnd() async {
-      if (goDown) {
-        scrollController.animateTo(
-          scrollController.position.maxScrollExtent,
-          duration: new Duration(milliseconds: 200),
-          curve: Curves.easeOut,
-        );
-        setState(() {
-          goDown = false;
-        });
-      }
-    }
-
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
 
@@ -83,7 +70,6 @@ class _OnlyChatState extends State<OnlyChat> {
       results.add(nameText('UniCon', '방송이 시작되었습니다.', false));
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToEnd());
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -115,12 +101,9 @@ class _OnlyChatState extends State<OnlyChat> {
         height: _height,
         width: _width,
         color: Colors.transparent,
-        child: SingleChildScrollView(
+        child: ListView(
           controller: scrollController,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: results,
-          ),
+          children: results,
         ),
       ),
     );

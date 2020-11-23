@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -62,17 +63,13 @@ class _ChatWidgetState extends State<ChatWidget> {
   }
 
   Widget _buildBody(BuildContext context, List<DocumentSnapshot> snapshot) {
-    _scrollToEnd() async {
-      if (goDown) {
-        scrollController.animateTo(
-          scrollController.position.maxScrollExtent,
-          duration: new Duration(milliseconds: 200),
-          curve: Curves.easeOut,
-        );
-        setState(() {
-          goDown = false;
-        });
-      }
+    void _scrollDown() {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: new Duration(milliseconds: 200),
+        curve: Curves.easeOut,
+      );
+      return;
     }
 
     double _height = MediaQuery.of(context).size.height;
@@ -85,13 +82,15 @@ class _ChatWidgetState extends State<ChatWidget> {
         .reversed
         .toList();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToEnd());
+    if (widget.width != 0) {
+      Timer(Duration(milliseconds: 1000), _scrollDown);
+    }
     return Column(
       children: [
         AnimatedContainer(
           duration: Duration(microseconds: 500),
           padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-          height: chatFocusNode.hasFocus ? _height * 0.35 : _height - 50,
+          height: _height - 50,
           width: widget.width == 0
               ? widget.width
               : chatFocusNode.hasFocus
@@ -100,10 +99,15 @@ class _ChatWidgetState extends State<ChatWidget> {
           decoration: BoxDecoration(
               color: Color.fromRGBO(232, 232, 232, 1),
               borderRadius: BorderRadius.only(topLeft: Radius.circular(15))),
-          child: SingleChildScrollView(
-            controller: scrollController,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          child: InkWell(
+            onTap: () {
+              setState(() {
+                FocusScope.of(context).unfocus();
+                _filter.clear();
+              });
+            },
+            child: ListView(
+              controller: scrollController,
               children: results,
             ),
           ),
@@ -140,6 +144,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                   child: TextField(
                     onTap: () {
                       artistTap = false;
+                      Timer(Duration(milliseconds: 1000), _scrollDown);
                     },
                     autocorrect: false,
                     maxLines: 1,
@@ -150,22 +155,16 @@ class _ChatWidgetState extends State<ChatWidget> {
                           .get()
                           .then((value) => value.data()['live_now']);
                       if (_filter.text.length != 0 && _live == true) {
-                        setState(() {
-                          widget.live.reference.collection('chitchat').add({
-                            'id': widget.userDB.id,
-                            'name': widget.userDB.name,
-                            'is_artist': widget.userDB.isArtist,
-                            'content': _filter.text,
-                            'time': Timestamp.now().millisecondsSinceEpoch,
-                            'gift': false,
-                          });
-                        });
-
-                        setState(() {
-                          goDown = true;
+                        await widget.live.reference.collection('chitchat').add({
+                          'id': widget.userDB.id,
+                          'name': widget.userDB.name,
+                          'is_artist': widget.userDB.isArtist,
+                          'content': _filter.text,
+                          'time': Timestamp.now().millisecondsSinceEpoch,
+                          'gift': false,
                         });
                       }
-                      chatFocusNode.unfocus();
+
                       _filter.clear();
                     },
                     style:
@@ -178,24 +177,38 @@ class _ChatWidgetState extends State<ChatWidget> {
                             ? IconButton(
                                 splashRadius: 0.1,
                                 icon: Icon(
-                                  Icons.cancel,
+                                  Icons.send,
                                   size: 20,
                                   color: Colors.grey,
                                 ),
-                                onPressed: () {
-                                  setState(() {
-                                    FocusScope.of(context).unfocus();
-                                    _filter.clear();
-                                  });
-                                })
-                            : Container(
-                                height: 0,
-                                width: 0,
-                              ),
+                                onPressed: () async {
+                                  bool _live = await FirebaseFirestore.instance
+                                      .collection('Users')
+                                      .doc(widget.artist.id)
+                                      .get()
+                                      .then(
+                                          (value) => value.data()['live_now']);
+                                  if (_filter.text.length != 0 &&
+                                      _live == true) {
+                                    await widget.live.reference
+                                        .collection('chitchat')
+                                        .add({
+                                      'id': widget.userDB.id,
+                                      'name': widget.userDB.name,
+                                      'is_artist': widget.userDB.isArtist,
+                                      'content': _filter.text,
+                                      'time': Timestamp.now()
+                                          .millisecondsSinceEpoch,
+                                      'gift': false,
+                                    });
+                                  }
+
+                                  _filter.clear();
+                                },
+                              )
+                            : SizedBox(),
                         fillColor: Color.fromRGBO(232, 232, 232, 1),
                         filled: true,
-                        // enabledBorder: InputBorder.none,
-                        // focusedBorder: InputBorder.none,
                         border: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color.fromRGBO(232, 232, 232, 1),
@@ -345,9 +358,9 @@ class _ChatWidgetState extends State<ChatWidget> {
                   } else {
                     _coinFilter.text = '코인이 모자랍니다';
                   }
-                  setState(() {
-                    goDown = true;
-                  });
+                  // setState(() {
+                  //   goDown = true;
+                  // });
                 },
                 child: Text(
                   '선물',

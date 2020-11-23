@@ -1,9 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/components/constant.dart';
-import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/screen/UnionPage/union_page.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/users.dart';

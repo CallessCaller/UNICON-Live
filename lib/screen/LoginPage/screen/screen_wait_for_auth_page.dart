@@ -30,7 +30,7 @@ class _WaitForAuthState extends State<WaitForAuth> {
                       child: Text(
                         '감사합니다!',
                         style: TextStyle(
-                          fontSize: 50,
+                          fontSize: 40,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),

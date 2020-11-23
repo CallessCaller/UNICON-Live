@@ -4,10 +4,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/users.dart';
-import 'package:image/image.dart' as img;
 
 class FeedWritePage extends StatefulWidget {
   final UserDB userDB;
@@ -93,34 +91,32 @@ class _FeedWritePageState extends State<FeedWritePage> {
                         'like': [],
                       };
 
-                      if (_soundcloud.text != '' &&
-                          _soundcloud.text.contains('soundcloud.com')) {
-                        if (_soundcloud.text.startsWith('https://')) {
-                          _uploadResult['soundcloud'] = _soundcloud.text.trim();
+                      if (_soundcloud.text != '') {
+                        if (_soundcloud.text.contains('soundcloud.com')) {
+                          if (_soundcloud.text.startsWith('https://')) {
+                            _uploadResult['soundcloud'] =
+                                _soundcloud.text.trim();
+                          } else {
+                            _uploadResult['soundcloud'] =
+                                'https://' + _soundcloud.text.trim();
+                          }
+                          check = true;
                         } else {
-                          _uploadResult['soundcloud'] =
-                              'https://' + _soundcloud.text.trim();
+                          if (_soundcloud.text != '') {
+                            Fluttertoast.showToast(
+                              msg:
+                                  "사운드클라우드 링크를 정확하게 입력하세요.\nex.(m.)soundcloud.com/ 형식",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.grey[700],
+                              textColor: Colors.white,
+                              fontSize: textFontSize,
+                            );
+                          }
                         }
-
-                        check = true;
                       } else {
-                        var _alertDialog = AlertDialog(
-                          title: ListBody(children: [
-                            Text(
-                              "사운드클라우드 링크를 정확하게 입력하세요.",
-                              style: TextStyle(
-                                fontSize: textFontSize,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            Text('ex. soundcloud.com/ 형식')
-                          ]),
-                        );
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) => _alertDialog,
-                        );
+                        check = true;
                       }
 
                       if (check) {

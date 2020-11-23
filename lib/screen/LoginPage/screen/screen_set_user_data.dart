@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -97,20 +96,17 @@ class _SetUserDataState extends State<SetUserData> {
                     Center(
                       child: Stack(
                         children: [
-                          CachedNetworkImage(
-                            imageUrl: _profileImageURL,
-                            imageBuilder: (context, imageProvider) => Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: appKeyColor,
-                                  width: 1.5,
-                                ),
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 1.5,
                               ),
-                              child: CircleAvatar(
-                                backgroundImage: imageProvider,
-                                radius: 80,
-                              ),
+                            ),
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(_profileImageURL),
+                              radius: 80,
                             ),
                           ),
                           Positioned(

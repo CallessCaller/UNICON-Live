@@ -250,9 +250,6 @@ class _UnionDonateState extends State<UnionDonate> {
                               } else {
                                 _coinFilter.text = '코인이 모자랍니다';
                               }
-                              setState(() {
-                                goDown = true;
-                              });
                             },
                             child: Text(
                               '선물',

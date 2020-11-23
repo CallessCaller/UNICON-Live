@@ -1,6 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kakao_flutter_sdk/all.dart';
 import 'package:package_info/package_info.dart';
+import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
+import 'package:testing_layout/model/feed.dart';
+import 'package:testing_layout/screen/LoginPage/login_page.dart';
 import 'package:testing_layout/screen/LoginPage/screen/screen_policy/screen_show-text-file.dart';
 
 class AppInformationPage extends StatefulWidget {
@@ -16,8 +22,7 @@ class _AppInformationPageState extends State<AppInformationPage> {
 
   int _counter = 0;
 
-  void _incrementCounter(BuildContext context) {
-    // 열번 찍어서 안넘어가는 여자 없다더라~
+  void _incrementCounter(BuildContext context, List<Feed> feeds) {
     if (_counter > 8) {
       showDialog(
         context: context,
@@ -60,9 +65,98 @@ class _AppInformationPageState extends State<AppInformationPage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(widgetRadius),
                         ),
-                        onPressed: () {
-                          // TODO
-                          Navigator.of(context).pop();
+                        onPressed: () async {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false, // user must tap button!
+                            builder: (BuildContext context) {
+                              return Dialog(
+                                backgroundColor: Colors.transparent,
+                                child: new Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    new CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+
+                          FirebaseAuth auth = FirebaseAuth.instance;
+
+                          // Comments & Feed
+                          for (int i = 0; i < feeds.length; i++) {
+                            var myComment = await feeds[i]
+                                .reference
+                                .collection('comments')
+                                .where('id', isEqualTo: auth.currentUser.uid)
+                                .get();
+                            myComment.docs.forEach((element) async {
+                              await feeds[i]
+                                  .reference
+                                  .collection('comments')
+                                  .doc(element.id)
+                                  .delete();
+                            });
+
+                            if (feeds[i].id == auth.currentUser.uid) {
+                              feeds[i].reference.delete();
+                            }
+                          }
+
+                          // NewUniconRequest
+                          var myRequest = await FirebaseFirestore.instance
+                              .collection('NewUniconRequest')
+                              .where('id', isEqualTo: auth.currentUser.uid)
+                              .get();
+                          myRequest.docs.forEach((element) async {
+                            await FirebaseFirestore.instance
+                                .collection('NewUniconRequest')
+                                .doc(element.id)
+                                .delete();
+                          });
+
+                          // IssueReports
+                          var myIssue = await FirebaseFirestore.instance
+                              .collection('IssueReports')
+                              .where('id', isEqualTo: auth.currentUser.uid)
+                              .get();
+                          myIssue.docs.forEach((element) async {
+                            await FirebaseFirestore.instance
+                                .collection('IssueReports')
+                                .doc(element.id)
+                                .delete();
+                          });
+
+                          // Pending
+                          var myPending = await FirebaseFirestore.instance
+                              .collection('Pending')
+                              .where('id', isEqualTo: auth.currentUser.uid)
+                              .get();
+                          myPending.docs.forEach((element) async {
+                            await FirebaseFirestore.instance
+                                .collection('Pending')
+                                .doc(element.id)
+                                .delete();
+                          });
+
+                          await FirebaseFirestore.instance
+                              .collection('Users')
+                              .doc(auth.currentUser.uid)
+                              .delete();
+                          if (auth.currentUser.uid.contains('kakao')) {
+                            await AccessTokenStore.instance.clear();
+                          } else {
+                            await googleSignIn.signOut();
+                          }
+
+                          await auth.currentUser.delete();
+
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/login', (Route<dynamic> route) => false);
                         },
                         child: Text(
                           '탈퇴',
@@ -124,6 +218,7 @@ class _AppInformationPageState extends State<AppInformationPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Feed> feeds = Provider.of<List<Feed>>(context);
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -308,7 +403,7 @@ class _AppInformationPageState extends State<AppInformationPage> {
                   Center(
                     child: InkWell(
                       onTap: () {
-                        _incrementCounter(context);
+                        _incrementCounter(context, feeds);
                       },
                       child: Container(
                         height: 70,

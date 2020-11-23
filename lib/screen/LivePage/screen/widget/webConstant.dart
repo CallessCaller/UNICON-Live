@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 
 bool hideChat = true;
-bool goDown = false;
 
 List<Widget> chitchat = [
   //실시간으로 받아서 업데이트

@@ -29,17 +29,17 @@ const double widgetFontSize = 12.0;
 // App walkthrough related properties
 const List<Map<String, String>> walkthroughList = [
   {
-    'text': '현재 진행중인 다양한 라이브를 확인하고 실시간으로 시청해보세요!',
+    'text': '현재 진행중인 다양한 라이브를 확인하고 실시간으로 시청해보세요.',
     'image': 'assets/walkthrough/user_guide_01.png',
     'title': 'LIVE!',
   },
   {
-    'text': '좋아하는 뮤지션을 팔로우하고 뮤지션의 추천 음악과 라이브 공연 알림을 받아보세요!!',
+    'text': '좋아하는 뮤지션을 팔로우하고 뮤지션의 추천 음악과 라이브 공연 알림을 받아보세요.',
     'image': 'assets/walkthrough/user_guide_02.png',
     'title': 'SHARE!',
   },
   {
-    'text': '뮤지션 추천 기능으로 나만의 특별한 공연을 직접 만들고 응원해보세요!',
+    'text': '뮤지션 추천 기능으로 나만의 특별한 공연을 직접 만들고 응원해보세요.',
     'image': 'assets/walkthrough/user_guide_03.png',
     'title': 'ENJOY!',
   },

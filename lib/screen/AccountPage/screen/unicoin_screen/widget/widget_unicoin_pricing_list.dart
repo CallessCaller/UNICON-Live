@@ -15,6 +15,13 @@ const List<String> _kProductIds = <String>[
   'unicon.unicoin500',
   'unicon.unicoin1000',
 ];
+const List<String> _kProductPrices = <String>[
+  '1,200',
+  '6,000',
+  '12,000',
+  '60,000',
+  '120,000',
+];
 
 // const List<String> _kProductIds = <String>[
 //   'android.test.purchased',
@@ -119,7 +126,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
       child: Column(
         children: [
           Text(
-            '유니코인 충전',
+            '유니코인 충전(부가세 별도)',
             style: TextStyle(
               fontSize: subtitleFontSize,
               fontWeight: FontWeight.w600,
@@ -161,7 +168,9 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
               style: TextStyle(color: ThemeData.dark().errorColor)),
           subtitle: Text('error')));
     }
-
+    if (_products.isNotEmpty) {
+      _products.sort((a, b) => a.price.length.compareTo(b.price.length));
+    }
     productList.addAll(_products.map(
       (ProductDetails productDetails) {
         return priceTag(userDB, productDetails);
@@ -172,6 +181,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
   }
 
   Widget priceButton(UserDB userdB, ProductDetails productDetails) {
+    int _index = _kProductIds.indexOf(productDetails.id);
     return FlatButton(
       onPressed: () {
         PurchaseParam purchaseParam = PurchaseParam(
@@ -189,7 +199,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(widgetRadius)),
       child: Text(
-        productDetails.price,
+        productDetails.price.substring(0, 1) + _kProductPrices[_index],
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.white,

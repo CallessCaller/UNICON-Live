@@ -4,8 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/screen/AccountPage/screen/settings_page/screen/screen_app_information.dart';
-import 'package:testing_layout/screen/AppGuide/screen_app_guide.dart';
-import 'package:testing_layout/screen/LoginPage/widget_policy_check.dart';
 
 FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
@@ -240,27 +238,6 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       '앱 정보',
-                      style: subtitle1,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => AppGuideScreen(),
-                    ),
-                  );
-                },
-                child: Container(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      '실험실1',
                       style: subtitle1,
                     ),
                   ),

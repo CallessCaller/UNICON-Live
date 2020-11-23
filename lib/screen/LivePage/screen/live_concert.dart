@@ -236,9 +236,6 @@ class _LiveConcertState extends State<LiveConcert> {
                           setState(() {
                             hideChat = !hideChat;
                             chatFocusNode.unfocus();
-                            if (hideChat == false) {
-                              goDown = true;
-                            }
                           });
                         }),
                   ],

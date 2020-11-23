@@ -26,7 +26,7 @@ class ArtistOrUser extends StatelessWidget {
                       child: Text(
                         '환영합니다!',
                         style: TextStyle(
-                          fontSize: 50,
+                          fontSize: 40,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),

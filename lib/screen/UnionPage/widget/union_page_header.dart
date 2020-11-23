@@ -29,14 +29,14 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
   @override
   void initState() {
     super.initState();
-    _loadFirst();
+    _loadSetting();
   }
 
   SharedPreferences _preferences;
   bool _live = true;
   bool _feed = true;
 
-  void _loadFirst() async {
+  void _loadSetting() async {
     // SharedPreferences의 인스턴스를 필드에 저장
     _preferences = await SharedPreferences.getInstance();
     setState(() {

@@ -38,6 +38,42 @@ class _FeedPageState extends State<FeedPage> {
   Widget build(BuildContext context) {
     var userDB = Provider.of<UserDB>(context);
     var feeds = Provider.of<List<Feed>>(context);
+
+    if (userDB == null) {
+      return Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          centerTitle: false,
+          title: Text(
+            '유니온 피드',
+            style: headline2,
+          ),
+        ),
+        body: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '로그인 후 유니온들의 소식을 둘러보세요!',
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                FlatButton(
+                  color: appKeyColor,
+                  onPressed: () {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/login', (Route<dynamic> route) => false);
+                  },
+                  child: Text('로그인'),
+                ),
+              ],
+            )),
+      );
+    }
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
