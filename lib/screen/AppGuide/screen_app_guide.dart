@@ -160,7 +160,7 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
       height: 12,
       width: currentPage == index ? 20 : 12,
       decoration: BoxDecoration(
-        color: currentPage == index ? appKeyColor : Colors.white,
+        color: currentPage == index ? Colors.white : Colors.grey,
         borderRadius: BorderRadius.circular(20),
       ),
     );
