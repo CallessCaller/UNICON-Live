@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
+import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/screen/FeedPage/screen/screen_feed_edit.dart';
 import 'package:testing_layout/screen/FeedPage/widget/widget_comment.dart';
 import 'package:testing_layout/screen/UnionPage/union_page.dart';
@@ -202,7 +203,21 @@ class _FeedDetailState extends State<FeedDetail> {
                                         }
                                       },
                                     )
-                                  : SizedBox(),
+                                  : InkWell(
+                                      onTap: _onLikePressed,
+                                      child: widget.feed.like
+                                              .contains(widget.userDB.id)
+                                          ? Icon(
+                                              UniIcon.like_ena,
+                                              color: appKeyColor,
+                                              size: 30,
+                                            )
+                                          : Icon(
+                                              UniIcon.like_dis,
+                                              color: Colors.white,
+                                              size: 30,
+                                            ),
+                                    ),
                             ],
                           ),
                         ),
@@ -376,6 +391,7 @@ class _FeedDetailState extends State<FeedDetail> {
                             ),
                             Expanded(
                               child: TextField(
+                                autocorrect: false,
                                 focusNode: _focusNode,
                                 controller: _controller,
                                 decoration: InputDecoration(
