@@ -46,7 +46,7 @@ class _WaitForAuthState extends State<WaitForAuth> {
                       child: Text(
                         '유니온 신청이 등록되었습니다.\n확인 후 승인 완료됩니다.',
                         textAlign: TextAlign.center,
-                        style: title3,
+                        style: body4,
                       ),
                     ),
                   ),

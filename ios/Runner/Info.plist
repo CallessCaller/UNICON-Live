@@ -29,6 +29,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>kakao70dfdacac39561e5f245a4bd09ef9509</string>
 				<string>com.googleusercontent.apps.769625848259-4rc2g21vvbn5s1kdcd42p1up8bshhd3k</string>
 			</array>
 		</dict>
@@ -66,6 +67,8 @@
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>KAKAO_APP_KEY</key>
+	<string>70dfdacac39561e5f245a4bd09ef9509</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIStatusBarStyle</key>
