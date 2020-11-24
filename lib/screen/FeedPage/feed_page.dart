@@ -149,32 +149,25 @@ class _FeedPageState extends State<FeedPage> {
                 )
               ],
       ),
-      body: Stack(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Column(
-                    children: feedBoxes(feeds, userDB),
-                  ),
-                  Container(
-                    height: 40,
-                  )
-                ],
+      body: SafeArea(
+        child: Stack(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: ListView(
+                children: feedBoxes(feeds, userDB),
               ),
             ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: AnimatedContainer(
-                duration: Duration(milliseconds: 200),
-                height: 40,
-                child: musicPlayer(_assetsAudioPlayer)),
-          ),
-        ],
+            Positioned(
+              bottom: 0,
+              child: AnimatedContainer(
+                  duration: Duration(milliseconds: 200),
+                  height: 40,
+                  child: musicPlayer(_assetsAudioPlayer)),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -194,16 +187,20 @@ class _FeedPageState extends State<FeedPage> {
         ));
       }
     }
+
     if (results.length == 0) {
-      results.add(Container(
-        alignment: Alignment.center,
-        height: 300,
-        child: Text(
-          '글이 없습니다.',
-          style: TextStyle(fontSize: textFontSize, fontWeight: FontWeight.w600),
+      results.add(SizedBox(
+        height: MediaQuery.of(context).size.height * 0.7,
+        width: MediaQuery.of(context).size.width,
+        child: Center(
+          child: Text(
+            '유니온들을 팔로우하고 더 많은 소식을 접하세요!',
+            style: body2,
+          ),
         ),
       ));
     }
+
     return results;
   }
 }

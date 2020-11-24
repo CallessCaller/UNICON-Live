@@ -694,8 +694,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   width: 10,
                 ),
                 Container(
-                  height: 30,
-                  width: 105,
+                  width: 110,
                   padding: EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
                     border: Border(
