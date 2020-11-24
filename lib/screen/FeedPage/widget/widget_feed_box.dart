@@ -36,29 +36,12 @@ class _FeedBoxState extends State<FeedBox> {
   bool flag = true;
 
   Stream<QuerySnapshot> querySnapshot;
-  String comments = '0';
+
   StreamSubscription<QuerySnapshot> stream;
 
   @override
   void initState() {
     super.initState();
-    querySnapshot = widget.feed.reference
-        .collection('comments')
-        .snapshots(includeMetadataChanges: true);
-
-    stream = querySnapshot.listen((event) {
-      if (event.size > 10) {
-        comments = '10+';
-      } else {
-        setState(() {
-          comments = event.size.toString();
-        });
-      }
-    });
-
-    if (comments == '10+') {
-      stream.cancel();
-    }
   }
 
   @override
@@ -333,8 +316,8 @@ class _FeedBoxState extends State<FeedBox> {
                       ),
                       SizedBox(height: 9),
                       Text(
-                        comments,
-                        style: body3,
+                        '+',
+                        style: body4,
                       ),
                     ],
                   ),
