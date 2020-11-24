@@ -126,7 +126,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
       child: Column(
         children: [
           Text(
-            '유니코인 충전(부가세 별도)',
+            '유니코인 충전',
             style: TextStyle(
               fontSize: subtitleFontSize,
               fontWeight: FontWeight.w600,
@@ -181,7 +181,6 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
   }
 
   Widget priceButton(UserDB userdB, ProductDetails productDetails) {
-    int _index = _kProductIds.indexOf(productDetails.id);
     return FlatButton(
       onPressed: () {
         PurchaseParam purchaseParam = PurchaseParam(
@@ -199,7 +198,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(widgetRadius)),
       child: Text(
-        productDetails.price.substring(0, 1) + _kProductPrices[_index],
+        productDetails.price,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.white,
