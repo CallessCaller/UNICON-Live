@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -66,6 +67,16 @@ class _LiveConcertState extends State<LiveConcert> {
         viewers = event.data()['viewers'];
       });
     });
+
+    if (Platform.isAndroid) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeLeft,
+      ]);
+    } else {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeRight,
+      ]);
+    }
 
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
