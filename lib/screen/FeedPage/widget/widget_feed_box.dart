@@ -314,9 +314,9 @@ class _FeedBoxState extends State<FeedBox> {
                           size: 30,
                         ),
                       ),
-                      SizedBox(height: 9),
+                      SizedBox(height: 6),
                       Text(
-                        '+',
+                        '댓글',
                         style: body4,
                       ),
                     ],
