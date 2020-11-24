@@ -251,33 +251,31 @@ class _FeedWritePageState extends State<FeedWritePage> {
               Container(
                 height: 120.0,
                 width: MediaQuery.of(context).size.width,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.all(Radius.circular(11)),
-                  ),
-                  child: TextField(
-                    focusNode: contentFocus,
-                    controller: _content,
-                    maxLines: 1000,
-                    autocorrect: false,
-                    style: body3,
-                    decoration: InputDecoration(
-                      hintText: '내용 입력...',
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: appKeyColor,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(widgetRadius),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.all(Radius.circular(11)),
+                ),
+                child: TextField(
+                  focusNode: contentFocus,
+                  controller: _content,
+                  maxLines: 1000,
+                  autocorrect: false,
+                  style: body3,
+                  decoration: InputDecoration(
+                    hintText: '내용 입력...',
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: appKeyColor,
+                        width: 1,
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: outlineColor,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(widgetRadius),
+                      borderRadius: BorderRadius.circular(widgetRadius),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: outlineColor,
+                        width: 1,
                       ),
+                      borderRadius: BorderRadius.circular(widgetRadius),
                     ),
                   ),
                 ),
