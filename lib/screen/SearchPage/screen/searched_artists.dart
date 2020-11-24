@@ -55,9 +55,8 @@ class _SearchedArtistState extends State<SearchedArtist> {
                 controller: _scrollController,
                 scrollDirection: Axis.vertical,
                 crossAxisCount: 2,
-                mainAxisSpacing: 20,
                 crossAxisSpacing: 20,
-                childAspectRatio: 1 / 1.15,
+                childAspectRatio: 1 / 1.3,
                 children: List.generate(
                   widget.artists.length,
                   (index) {

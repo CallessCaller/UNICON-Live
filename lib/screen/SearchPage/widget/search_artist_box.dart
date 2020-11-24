@@ -40,14 +40,13 @@ class _SearchArtistBoxState extends State<SearchArtistBox> {
           ),
         ),
         Container(
-          height: 25,
+          padding: EdgeInsets.only(top: 5),
           alignment: Alignment.bottomCenter,
           child: Text(
             widget.artist.name,
-            style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: textFontSize,
-                color: Colors.white),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: caption1,
           ),
         ),
       ],

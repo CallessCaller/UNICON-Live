@@ -49,11 +49,7 @@ class _FAQWidgetState extends State<FAQWidget> {
               alignment: Alignment.centerLeft,
               child: Text(
                 'FAQ',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: subtitleFontSize,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: subtitle1,
               ),
             ),
           );
