@@ -194,7 +194,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                             child: Text(
                                               _route.keys.toList()[0],
                                               style: TextStyle(
-                                                fontSize: 16,
+                                                fontSize: 14,
                                                 fontWeight: FontWeight.w500,
                                                 color: appKeyColor,
                                               ),
@@ -216,7 +216,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                           child: Center(
                                             child: Text(
                                               _route.keys.toList()[0],
-                                              style: body2,
+                                              style: body3,
                                             ),
                                           ),
                                         ),
@@ -242,7 +242,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                             child: Text(
                                               _route.keys.toList()[1],
                                               style: TextStyle(
-                                                fontSize: 16,
+                                                fontSize: 14,
                                                 fontWeight: FontWeight.w500,
                                                 color: appKeyColor,
                                               ),
@@ -264,7 +264,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                           child: Center(
                                             child: Text(
                                               _route.keys.toList()[1],
-                                              style: body2,
+                                              style: body3,
                                             ),
                                           ),
                                         ),
@@ -290,7 +290,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                             child: Text(
                                               _route.keys.toList()[2],
                                               style: TextStyle(
-                                                fontSize: 16,
+                                                fontSize: 14,
                                                 fontWeight: FontWeight.w500,
                                                 color: appKeyColor,
                                               ),
@@ -312,7 +312,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                           child: Center(
                                             child: Text(
                                               _route.keys.toList()[2],
-                                              style: body2,
+                                              style: body3,
                                             ),
                                           ),
                                         ),
@@ -338,7 +338,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                             child: Text(
                                               _route.keys.toList()[3],
                                               style: TextStyle(
-                                                fontSize: 16,
+                                                fontSize: 14,
                                                 fontWeight: FontWeight.w500,
                                                 color: appKeyColor,
                                               ),
@@ -360,7 +360,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                                           child: Center(
                                             child: Text(
                                               _route.keys.toList()[3],
-                                              style: body2,
+                                              style: body3,
                                             ),
                                           ),
                                         ),

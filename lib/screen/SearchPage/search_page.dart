@@ -245,7 +245,8 @@ class _SearchPageState extends State<SearchPage> {
           }
         });
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => SearchedArtist(results, userDB)));
+            builder: (context) =>
+                SearchedArtist(results, userDB, genreTotalList[index])));
       },
       child: CachedNetworkImage(
         imageUrl: genrePictures[index],
@@ -295,7 +296,8 @@ class _SearchPageState extends State<SearchPage> {
           }
         });
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => SearchedArtist(results, userDB)));
+            builder: (context) =>
+                SearchedArtist(results, userDB, moodTotalList[index])));
       },
       child: CachedNetworkImage(
         imageUrl: moodPictures[index],

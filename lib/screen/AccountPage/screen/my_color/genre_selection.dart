@@ -181,7 +181,7 @@ class _GenreSelectionPageState extends State<GenreSelectionPage> {
                   child: Text(
                     _genreMap.keys.toList()[index],
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: appKeyColor,
                     ),
@@ -202,7 +202,7 @@ class _GenreSelectionPageState extends State<GenreSelectionPage> {
                   child: Text(
                     _genreMap.keys.toList()[index],
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: Colors.grey,
                     ),
@@ -238,7 +238,7 @@ class _GenreSelectionPageState extends State<GenreSelectionPage> {
                   child: Text(
                     _moodMap.keys.toList()[index],
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: appKeyColor,
                     ),
@@ -259,7 +259,7 @@ class _GenreSelectionPageState extends State<GenreSelectionPage> {
                   child: Text(
                     _moodMap.keys.toList()[index],
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: Colors.grey,
                     ),

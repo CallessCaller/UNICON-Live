@@ -7,7 +7,8 @@ import 'package:testing_layout/screen/SearchPage/widget/search_artist_box.dart';
 class SearchedArtist extends StatefulWidget {
   final List<Artist> artists;
   final UserDB userDB;
-  SearchedArtist(this.artists, this.userDB);
+  final String title;
+  SearchedArtist(this.artists, this.userDB, this.title);
   @override
   _SearchedArtistState createState() => _SearchedArtistState();
 }
@@ -20,11 +21,18 @@ class _SearchedArtistState extends State<SearchedArtist> {
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
       appBar: AppBar(
-        toolbarHeight: 40,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black,
         elevation: 0.0,
+        centerTitle: false,
+        title: Text(
+          widget.title,
+          style: headline2,
+        ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_rounded),
+          icon: Icon(
+            Icons.arrow_back_ios_rounded,
+            size: 30,
+          ),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -47,9 +55,8 @@ class _SearchedArtistState extends State<SearchedArtist> {
                 controller: _scrollController,
                 scrollDirection: Axis.vertical,
                 crossAxisCount: 2,
-                mainAxisSpacing: 20,
                 crossAxisSpacing: 20,
-                childAspectRatio: 1 / 1.15,
+                childAspectRatio: 1 / 1.3,
                 children: List.generate(
                   widget.artists.length,
                   (index) {

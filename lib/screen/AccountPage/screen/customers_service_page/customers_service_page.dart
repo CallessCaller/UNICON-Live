@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/users.dart';
-import 'package:testing_layout/screen/AccountPage/screen/customers_service_page/widget/widget_dialog.dart';
+import 'package:testing_layout/screen/AccountPage/screen/customers_service_page/widget/widget_issue_dialog.dart';
 import 'package:testing_layout/screen/AccountPage/screen/customers_service_page/widget/widget_faq.dart';
 
 class CSPage extends StatefulWidget {
@@ -32,7 +32,7 @@ class _CSPageState extends State<CSPage> {
   _showFullScreenDialog(BuildContext context) {
     Navigator.of(context).push(
       new MaterialPageRoute(
-        builder: (context) => DialogWidget(
+        builder: (context) => IssueDialogWidget(
           userDB: widget.userDB,
         ),
         fullscreenDialog: true,

@@ -8,14 +8,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/users.dart';
 
-class DialogWidget extends StatefulWidget {
+class IssueDialogWidget extends StatefulWidget {
   final UserDB userDB;
-  const DialogWidget({this.userDB});
+  const IssueDialogWidget({this.userDB});
   @override
-  _DialogWidgetState createState() => _DialogWidgetState();
+  _IssueDialogWidgetState createState() => _IssueDialogWidgetState();
 }
 
-class _DialogWidgetState extends State<DialogWidget> {
+class _IssueDialogWidgetState extends State<IssueDialogWidget> {
   List<String> reportTypes = [
     '유니콘에게 제안하기',
     '버그 신고하기',
@@ -84,7 +84,7 @@ class _DialogWidgetState extends State<DialogWidget> {
                 child: DropdownButton<String>(
                   isExpanded: true,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: Colors.white.withOpacity(0.65),
                   ),
@@ -107,7 +107,10 @@ class _DialogWidgetState extends State<DialogWidget> {
                       reportTypes.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value),
+                      child: Text(
+                        value,
+                        style: body2,
+                      ),
                     );
                   }).toList(),
                 ),
@@ -185,11 +188,7 @@ class _DialogWidgetState extends State<DialogWidget> {
                 autocorrect: false,
                 cursorHeight: 14,
                 keyboardType: TextInputType.multiline,
-                style: TextStyle(
-                  fontSize: textFontSize,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: body2,
                 decoration: InputDecoration(
                   isDense: true,
                   enabledBorder: OutlineInputBorder(

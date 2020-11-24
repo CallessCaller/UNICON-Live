@@ -52,17 +52,14 @@ class _InitialGenreSelectionState extends State<InitialGenreSelection> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         '장르',
-                        style: TextStyle(
-                          fontSize: subtitleFontSize,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: subtitle1,
                       ),
                     ),
                     SizedBox(height: 5),
                     Divider(
                       height: 0,
-                      thickness: 1,
-                      color: Colors.white.withOpacity(0.65),
+                      thickness: 2,
+                      color: outlineColor,
                     ),
                     SizedBox(height: 20),
                     Wrap(
@@ -76,17 +73,14 @@ class _InitialGenreSelectionState extends State<InitialGenreSelection> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         '분위기',
-                        style: TextStyle(
-                          fontSize: subtitleFontSize,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: subtitle1,
                       ),
                     ),
                     SizedBox(height: 5),
                     Divider(
                       height: 0,
-                      thickness: 1,
-                      color: Colors.white.withOpacity(0.65),
+                      thickness: 2,
+                      color: outlineColor,
                     ),
                     SizedBox(height: 20),
                     Wrap(
@@ -159,6 +153,8 @@ class _InitialGenreSelectionState extends State<InitialGenreSelection> {
                   child: Text(
                     _genreMap.keys.toList()[index],
                     style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
                       color: appKeyColor,
                     ),
                   ),
@@ -175,7 +171,14 @@ class _InitialGenreSelectionState extends State<InitialGenreSelection> {
                     borderRadius: BorderRadius.circular(widgetRadius),
                   ),
                   padding: EdgeInsets.all(widgetDefaultPadding),
-                  child: Text(_genreMap.keys.toList()[index]),
+                  child: Text(
+                    _genreMap.keys.toList()[index],
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ),
         ),
       );
@@ -207,6 +210,8 @@ class _InitialGenreSelectionState extends State<InitialGenreSelection> {
                   child: Text(
                     _moodMap.keys.toList()[index],
                     style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
                       color: appKeyColor,
                     ),
                   ),
@@ -223,7 +228,14 @@ class _InitialGenreSelectionState extends State<InitialGenreSelection> {
                     borderRadius: BorderRadius.circular(widgetRadius),
                   ),
                   padding: EdgeInsets.all(widgetDefaultPadding),
-                  child: Text(_moodMap.keys.toList()[index]),
+                  child: Text(
+                    _moodMap.keys.toList()[index],
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ),
         ),
       );
