@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:testing_layout/providers/stream_of_user.dart';
 import 'package:testing_layout/screen/FeedPage/screen/screen_feed_detail.dart';
 import 'package:testing_layout/model/feed.dart';
 import 'package:testing_layout/model/users.dart';
@@ -40,14 +42,15 @@ class _UnionFeedBoxState extends State<UnionFeedBox> {
   Widget _buildBody(BuildContext context, DocumentSnapshot snapshot) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => FeedDetail(
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => StreamProvider.value(
+            value: StreamOfuser().getUser(widget.userDB.id),
+            child: FeedDetail(
               feed: widget.feed,
               userDB: widget.userDB,
             ),
           ),
-        );
+        ));
       },
       child: Container(
         child: Stack(
