@@ -135,7 +135,7 @@ class _FeedPageState extends State<FeedPage> {
                       );
                     },
                   )
-                : SizedBox,
+                : SizedBox(),
           ]),
       body: SafeArea(
         child: Stack(
