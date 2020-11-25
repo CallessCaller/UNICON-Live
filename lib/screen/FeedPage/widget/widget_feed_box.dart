@@ -182,74 +182,112 @@ class _FeedBoxState extends State<FeedBox> {
 
                               builder: (BuildContext context) {
                                 return AlertDialog(
+                                  contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 15,
+                                    vertical: 10,
+                                  ),
                                   shape: RoundedRectangleBorder(
-                                      //side: BorderSide(color: Colors.white.withOpacity(0.3)),
-                                      borderRadius: BorderRadius.circular(11)),
-                                  backgroundColor: Colors.black,
-                                  title: Text(
-                                    "부적절한 콘텐츠 인가요?",
-                                    style: TextStyle(fontSize: textFontSize),
+                                    borderRadius:
+                                        BorderRadius.circular(dialogRadius),
                                   ),
-                                  content: Text(
-                                    "이 유니온의 콘텐츠를 더이상 표시하지 않습니다.",
-                                    style:
-                                        TextStyle(fontSize: textFontSize - 2),
+                                  backgroundColor: dialogColor1,
+                                  title: Center(
+                                    child: Text(
+                                      "부적절한 콘텐츠 인가요?",
+                                      style: title1,
+                                    ),
                                   ),
-                                  actions: <Widget>[
-                                    FlatButton(
-                                      child: Text(
-                                        '예',
-                                        style: TextStyle(
-                                            fontSize: textFontSize,
-                                            color: Colors.red),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "이 유니온의 콘텐츠를 더이상 표시하지 않습니다.",
                                       ),
-                                      onPressed: () async {
-                                        if (widget.userDB.dislike == null) {
-                                          await widget.userDB.reference
-                                              .update({'dislike': []});
-                                        }
-                                        widget.userDB.dislike
-                                            .add(widget.feed.id);
-                                        if (widget.userDB.follow
-                                            .contains(widget.feed.id)) {
-                                          widget.userDB.follow
-                                              .remove(widget.feed.id);
-                                        }
+                                      SizedBox(height: 10),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: FlatButton(
+                                              color: dialogColor3,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        widgetRadius),
+                                              ),
+                                              child: Text(
+                                                '취소',
+                                                style: TextStyle(
+                                                  color: dialogColor4,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            child: FlatButton(
+                                              color: appKeyColor,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        widgetRadius),
+                                              ),
+                                              child: Text(
+                                                '신고',
+                                                style: subtitle3,
+                                              ),
+                                              onPressed: () async {
+                                                if (widget.userDB.dislike ==
+                                                    null) {
+                                                  await widget.userDB.reference
+                                                      .update({'dislike': []});
+                                                }
+                                                widget.userDB.dislike
+                                                    .add(widget.feed.id);
+                                                if (widget.userDB.follow
+                                                    .contains(widget.feed.id)) {
+                                                  widget.userDB.follow
+                                                      .remove(widget.feed.id);
+                                                }
 
-                                        await widget.userDB.reference.update({
-                                          'dislike': widget.userDB.dislike,
-                                          'follow': widget.userDB.follow
-                                        });
+                                                await widget.userDB.reference
+                                                    .update({
+                                                  'dislike':
+                                                      widget.userDB.dislike,
+                                                  'follow': widget.userDB.follow
+                                                });
 
-                                        var artist = await FirebaseFirestore
-                                            .instance
-                                            .collection('Users')
-                                            .doc(widget.feed.id)
-                                            .get()
-                                            .then((value) =>
-                                                Artist.fromSnapshot(value));
-                                        if (artist.myPeople
-                                            .contains(widget.userDB.id)) {
-                                          artist.myPeople
-                                              .remove(widget.userDB.id);
-                                        }
-                                        await artist.reference.update(
-                                            {'my_people': artist.myPeople});
-
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                    FlatButton(
-                                      child: Text(
-                                        '흐음..',
-                                        style:
-                                            TextStyle(fontSize: textFontSize),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
+                                                var artist =
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection('Users')
+                                                        .doc(widget.feed.id)
+                                                        .get()
+                                                        .then((value) =>
+                                                            Artist.fromSnapshot(
+                                                                value));
+                                                if (artist.myPeople.contains(
+                                                    widget.userDB.id)) {
+                                                  artist.myPeople
+                                                      .remove(widget.userDB.id);
+                                                }
+                                                await artist.reference.update({
+                                                  'my_people': artist.myPeople
+                                                });
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 );
                               },
                             );
