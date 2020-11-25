@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/screen/FeedPage/components/feed_functions.dart';
@@ -28,14 +29,16 @@ class _CommentBoxState extends State<CommentBox> {
   }
 
   Widget _buildBody(BuildContext context, DocumentSnapshot snapshot) {
-    UserDB userDB = UserDB.fromSnapshot(snapshot);
+    UserDB userDB = Provider.of<UserDB>(context);
+    UserDB commentOwner = UserDB.fromSnapshot(snapshot);
+
     return Column(
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage(userDB.profile),
+              backgroundImage: NetworkImage(commentOwner.profile),
               radius: 17,
             ),
             SizedBox(
@@ -49,7 +52,7 @@ class _CommentBoxState extends State<CommentBox> {
                     children: [
                       Container(
                         child: Text(
-                          userDB.name.toString(),
+                          commentOwner.name.toString(),
                           style: body2,
                         ),
                       ),
@@ -80,7 +83,130 @@ class _CommentBoxState extends State<CommentBox> {
                                 ),
                               ),
                             )
-                          : SizedBox()
+                          : InkWell(
+                              onTap: () async {
+                                showDialog(
+                                    context: context,
+                                    barrierDismissible:
+                                        true, // user must tap button!
+
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 15,
+                                          vertical: 10,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              dialogRadius),
+                                        ),
+                                        backgroundColor: dialogColor1,
+                                        title: Center(
+                                          child: Text(
+                                            "신고",
+                                            style: title1,
+                                          ),
+                                        ),
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "부적절한 내용인가요?",
+                                            ),
+                                            SizedBox(height: 10),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: FlatButton(
+                                                    color: dialogColor3,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              widgetRadius),
+                                                    ),
+                                                    child: Text(
+                                                      '아니요',
+                                                      style: TextStyle(
+                                                        color: dialogColor4,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                ),
+                                                SizedBox(width: 10),
+                                                Expanded(
+                                                  child: FlatButton(
+                                                    color: appKeyColor,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              widgetRadius),
+                                                    ),
+                                                    child: Text(
+                                                      '네',
+                                                      style: subtitle3,
+                                                    ),
+                                                    onPressed: () async {
+                                                      if (userDB
+                                                              .dislikeComment ==
+                                                          null) {
+                                                        await userDB.reference
+                                                            .update({
+                                                          'dislikeComment': []
+                                                        });
+                                                      }
+
+                                                      int report =
+                                                          widget.comment.data()[
+                                                                  'report'] +
+                                                              1;
+
+                                                      await widget
+                                                          .comment.reference
+                                                          .update({
+                                                        'report': (report)
+                                                      });
+
+                                                      userDB.dislikeComment.add(
+                                                          widget.comment
+                                                              .reference.id);
+
+                                                      await userDB.reference
+                                                          .update({
+                                                        'dislikeComment': userDB
+                                                            .dislikeComment
+                                                      });
+
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    });
+                              },
+                              child: Container(
+                                child: Icon(
+                                  MdiIcons.alert,
+                                  size: 15,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            )
                     ],
                   ),
                   Text(

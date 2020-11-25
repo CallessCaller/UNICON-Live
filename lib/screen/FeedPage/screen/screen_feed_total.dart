@@ -34,6 +34,7 @@ class _FeedTotalState extends State<FeedTotal> {
 
   @override
   Widget build(BuildContext context) {
+    var userDB = Provider.of<UserDB>(context);
     var feeds = Provider.of<List<Feed>>(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -69,7 +70,7 @@ class _FeedTotalState extends State<FeedTotal> {
                 child: Column(
                   children: [
                     Column(
-                      children: feedBoxes(feeds, widget.userDB),
+                      children: feedBoxes(feeds, userDB),
                     ),
                     Container(
                       height: 40,
@@ -91,8 +92,13 @@ class _FeedTotalState extends State<FeedTotal> {
   List<Widget> feedBoxes(List<Feed> feeds, UserDB userDB) {
     List<Widget> results = [];
     for (var i = 0; i < feeds.length; i++) {
-      if (userDB.dislike != null) {
-        if (userDB.dislike.contains(feeds[i].id)) {
+      if (userDB.dislikePeople != null) {
+        if (userDB.dislikePeople.contains(feeds[i].id)) {
+          continue;
+        }
+      }
+      if (userDB.dislikeFeed != null) {
+        if (userDB.dislikeFeed.contains(feeds[i].feedID)) {
           continue;
         }
       }

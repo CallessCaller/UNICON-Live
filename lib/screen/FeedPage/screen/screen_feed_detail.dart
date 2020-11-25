@@ -3,6 +3,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/screen/FeedPage/screen/screen_feed_edit.dart';
@@ -75,6 +76,7 @@ class _FeedDetailState extends State<FeedDetail> {
 
   Widget _buildBody(BuildContext context, DocumentSnapshot snapshot) {
     double width = MediaQuery.of(context).size.width;
+    var userDB = Provider.of<UserDB>(context);
 
     return Scaffold(
       backgroundColor: appBarColor,
@@ -130,7 +132,7 @@ class _FeedDetailState extends State<FeedDetail> {
                                     MaterialPageRoute(
                                       builder: (context) => UnionInfoPage(
                                         artist: artist,
-                                        userDB: widget.userDB,
+                                        userDB: userDB,
                                       ),
                                     ),
                                   );
@@ -157,7 +159,7 @@ class _FeedDetailState extends State<FeedDetail> {
                                   ),
                                 ),
                               ),
-                              widget.feed.id == widget.userDB.id
+                              widget.feed.id == userDB.id
                                   ? PopupMenuButton(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
@@ -199,24 +201,32 @@ class _FeedDetailState extends State<FeedDetail> {
                                                       FeedEditPage(
                                                           feed: widget.feed)));
                                         } else if (value == 2) {
-                                          showAlertDialog(context);
+                                          showAlertDialog(context, userDB);
                                         }
                                       },
                                     )
-                                  : InkWell(
-                                      onTap: _onLikePressed,
-                                      child: widget.feed.like
-                                              .contains(widget.userDB.id)
-                                          ? Icon(
-                                              UniIcon.like_ena,
-                                              color: appKeyColor,
-                                              size: 30,
-                                            )
-                                          : Icon(
-                                              UniIcon.like_dis,
-                                              color: Colors.white,
-                                              size: 30,
-                                            ),
+                                  : Column(
+                                      children: [
+                                        InkWell(
+                                          onTap: _onLikePressed,
+                                          child: widget.feed.like
+                                                  .contains(userDB.id)
+                                              ? Icon(
+                                                  UniIcon.like_ena,
+                                                  color: appKeyColor,
+                                                  size: 30,
+                                                )
+                                              : Icon(
+                                                  UniIcon.like_dis,
+                                                  color: Colors.white,
+                                                  size: 30,
+                                                ),
+                                        ),
+                                        Text(
+                                          widget.feed.like.length.toString(),
+                                          style: body3,
+                                        ),
+                                      ],
                                     ),
                             ],
                           ),
@@ -339,7 +349,7 @@ class _FeedDetailState extends State<FeedDetail> {
                     padding: EdgeInsets.symmetric(horizontal: 12),
                     child: CommentBoxes(
                       feed: widget.feed,
-                      userId: widget.userDB.id,
+                      userDB: userDB,
                     ),
                   ),
                   SizedBox(
@@ -380,8 +390,7 @@ class _FeedDetailState extends State<FeedDetail> {
                         child: Row(
                           children: [
                             CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage(widget.userDB.profile),
+                              backgroundImage: NetworkImage(userDB.profile),
                               radius: 17,
                             ),
                             VerticalDivider(
@@ -424,7 +433,8 @@ class _FeedDetailState extends State<FeedDetail> {
                           await widget.feed.reference
                               .collection('comments')
                               .add({
-                            'id': widget.userDB.id,
+                            'id': userDB.id,
+                            'report': 0,
                             'content': _controller.text,
                             'time': DateTime.now().millisecondsSinceEpoch
                           });
@@ -469,7 +479,7 @@ class _FeedDetailState extends State<FeedDetail> {
     return _fetchData(context);
   }
 
-  void showAlertDialog(BuildContext context) async {
+  void showAlertDialog(BuildContext context, UserDB userDB) async {
     await showDialog(
       context: context,
       barrierDismissible: true, // user must tap button!
@@ -491,7 +501,7 @@ class _FeedDetailState extends State<FeedDetail> {
                 style: TextStyle(fontSize: textFontSize),
               ),
               onPressed: () async {
-                await widget.userDB.reference
+                await userDB.reference
                     .collection('my_post')
                     .doc(widget.feed.feedID)
                     .delete();

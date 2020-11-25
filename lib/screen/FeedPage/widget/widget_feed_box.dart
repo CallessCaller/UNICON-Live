@@ -3,8 +3,10 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
+import 'package:testing_layout/providers/stream_of_user.dart';
 import 'package:testing_layout/screen/FeedPage/screen/screen_feed_detail.dart';
 import 'package:testing_layout/screen/FeedPage/screen/screen_feed_edit.dart';
 import 'package:testing_layout/screen/UnionPage/union_page.dart';
@@ -175,7 +177,7 @@ class _FeedBoxState extends State<FeedBox> {
                           },
                         )
                       : FlatButton(
-                          onPressed: () async {
+                          onPressed: () {
                             showDialog(
                               context: context,
                               barrierDismissible: true, // user must tap button!
@@ -193,7 +195,7 @@ class _FeedBoxState extends State<FeedBox> {
                                   backgroundColor: dialogColor1,
                                   title: Center(
                                     child: Text(
-                                      "부적절한 콘텐츠 인가요?",
+                                      "신고",
                                       style: title1,
                                     ),
                                   ),
@@ -203,7 +205,7 @@ class _FeedBoxState extends State<FeedBox> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "이 유니온의 콘텐츠를 더이상 표시하지 않습니다.",
+                                        "부적절한 내용인가요?",
                                       ),
                                       SizedBox(height: 10),
                                       Row(
@@ -217,7 +219,7 @@ class _FeedBoxState extends State<FeedBox> {
                                                         widgetRadius),
                                               ),
                                               child: Text(
-                                                '취소',
+                                                '아니요',
                                                 style: TextStyle(
                                                   color: dialogColor4,
                                                   fontSize: 14,
@@ -239,47 +241,30 @@ class _FeedBoxState extends State<FeedBox> {
                                                         widgetRadius),
                                               ),
                                               child: Text(
-                                                '신고',
+                                                '네',
                                                 style: subtitle3,
                                               ),
                                               onPressed: () async {
-                                                if (widget.userDB.dislike ==
+                                                if (widget.userDB.dislikeFeed ==
                                                     null) {
                                                   await widget.userDB.reference
-                                                      .update({'dislike': []});
+                                                      .update(
+                                                          {'dislikeFeed': []});
                                                 }
-                                                widget.userDB.dislike
-                                                    .add(widget.feed.id);
-                                                if (widget.userDB.follow
-                                                    .contains(widget.feed.id)) {
-                                                  widget.userDB.follow
-                                                      .remove(widget.feed.id);
-                                                }
+
+                                                widget.feed.reference.update({
+                                                  'report':
+                                                      widget.feed.report + 1
+                                                });
+                                                widget.userDB.dislikeFeed
+                                                    .add(widget.feed.feedID);
 
                                                 await widget.userDB.reference
                                                     .update({
-                                                  'dislike':
-                                                      widget.userDB.dislike,
-                                                  'follow': widget.userDB.follow
+                                                  'dislikeFeed':
+                                                      widget.userDB.dislikeFeed
                                                 });
 
-                                                var artist =
-                                                    await FirebaseFirestore
-                                                        .instance
-                                                        .collection('Users')
-                                                        .doc(widget.feed.id)
-                                                        .get()
-                                                        .then((value) =>
-                                                            Artist.fromSnapshot(
-                                                                value));
-                                                if (artist.myPeople.contains(
-                                                    widget.userDB.id)) {
-                                                  artist.myPeople
-                                                      .remove(widget.userDB.id);
-                                                }
-                                                await artist.reference.update({
-                                                  'my_people': artist.myPeople
-                                                });
                                                 Navigator.of(context).pop();
                                               },
                                             ),
@@ -416,14 +401,15 @@ class _FeedBoxState extends State<FeedBox> {
                     children: [
                       InkWell(
                         onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => FeedDetail(
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => StreamProvider.value(
+                              value: StreamOfuser().getUser(widget.userDB.id),
+                              child: FeedDetail(
                                 feed: widget.feed,
                                 userDB: widget.userDB,
                               ),
                             ),
-                          );
+                          ));
                         },
                         child: Icon(
                           UniIcon.comment,
