@@ -92,7 +92,7 @@ class _PolicyCheckDialogState extends State<PolicyCheckDialog> {
                 ? Row(
                     children: [
                       Checkbox(
-                          value: check1,
+                          value: check_eula,
                           onChanged: (value) {
                             setState(() {
                               check_eula = value;
