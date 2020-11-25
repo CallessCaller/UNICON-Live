@@ -200,7 +200,6 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
 
   Widget _buildGenreMoodRow() {
     List<Widget> res = [];
-    print(widget.artist.genre);
     if (widget.artist.genre != null) {
       if (widget.artist.genre.length == 0) {
         res.add(

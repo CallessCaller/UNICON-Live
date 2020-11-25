@@ -35,10 +35,6 @@ class _FeedBoxState extends State<FeedBox> {
 
   bool flag = true;
 
-  Stream<QuerySnapshot> querySnapshot;
-
-  StreamSubscription<QuerySnapshot> stream;
-
   @override
   void initState() {
     super.initState();
@@ -47,7 +43,7 @@ class _FeedBoxState extends State<FeedBox> {
   @override
   void dispose() {
     super.dispose();
-    stream.cancel();
+
     _controller.dispose();
     _focusNode.dispose();
   }
@@ -91,6 +87,11 @@ class _FeedBoxState extends State<FeedBox> {
     } else {
       firstHalf = trimmedContent;
       secondHalf = "";
+    }
+    if (widget.userDB.dislike != null) {
+      if (widget.userDB.dislike.contains(widget.feed.id)) {
+        return SizedBox();
+      }
     }
 
     return Card(
@@ -179,7 +180,68 @@ class _FeedBoxState extends State<FeedBox> {
                             }
                           },
                         )
-                      : SizedBox(),
+                      : FlatButton(
+                          onPressed: () async {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: true, // user must tap button!
+
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      //side: BorderSide(color: Colors.white.withOpacity(0.3)),
+                                      borderRadius: BorderRadius.circular(11)),
+                                  backgroundColor: Colors.black,
+                                  title: Text(
+                                    "부적절한 콘텐츠 인가요?",
+                                    style: TextStyle(fontSize: textFontSize),
+                                  ),
+                                  content: Text(
+                                    "이 유니온의 콘텐츠를 더이상 표시하지 않습니다.",
+                                    style:
+                                        TextStyle(fontSize: textFontSize - 2),
+                                  ),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      child: Text(
+                                        '예',
+                                        style: TextStyle(
+                                            fontSize: textFontSize,
+                                            color: Colors.red),
+                                      ),
+                                      onPressed: () async {
+                                        if (widget.userDB.dislike == null) {
+                                          await widget.userDB.reference
+                                              .update({'dislike': []});
+                                        }
+                                        widget.userDB.dislike
+                                            .add(widget.feed.id);
+
+                                        await widget.userDB.reference.update(
+                                            {'dislike': widget.userDB.dislike});
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    FlatButton(
+                                      child: Text(
+                                        '흐음..',
+                                        style:
+                                            TextStyle(fontSize: textFontSize),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: Text(
+                            '신고 및 숨기기',
+                            style: TextStyle(color: Colors.grey, fontSize: 10),
+                          ),
+                        ),
                 ],
               ),
             ),

@@ -163,6 +163,8 @@ class _LiveConcertState extends State<LiveConcert> {
     double maxwidth = MediaQuery.of(context).size.width;
     double maxheight = MediaQuery.of(context).size.height;
 
+    double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+
     return Scaffold(
       backgroundColor: Colors.black,
       extendBodyBehindAppBar: true,
@@ -196,6 +198,7 @@ class _LiveConcertState extends State<LiveConcert> {
           bottom: 0,
           right: 0,
           child: ChatWidget(
+            keyboardHeight: keyboardHeight,
             live: widget.live,
             artist: _artist,
             userDB: widget.userDB,
