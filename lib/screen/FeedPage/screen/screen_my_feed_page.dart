@@ -110,6 +110,11 @@ class _MyFeedPageState extends State<MyFeedPage> {
   List<Widget> myFeedBoxes(List<Feed> feeds, UserDB userDB) {
     List<Widget> results = [];
     for (var i = 0; i < feeds.length; i++) {
+      results.add(Divider(
+        height: 5,
+        thickness: 5,
+        color: appBarColor,
+      ));
       results.add(FeedBox(
         feed: feeds[i],
         userDB: userDB,

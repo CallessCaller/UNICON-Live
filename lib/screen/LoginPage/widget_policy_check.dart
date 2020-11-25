@@ -16,6 +16,7 @@ class _PolicyCheckDialogState extends State<PolicyCheckDialog> {
   bool check2 = false;
   bool check3 = false;
   bool check4 = false;
+  bool check_eula = false;
   bool check_total = false;
 
   @override
@@ -64,6 +65,9 @@ class _PolicyCheckDialogState extends State<PolicyCheckDialog> {
                   value: check_total,
                   onChanged: (value) {
                     setState(() {
+                      if (TargetPlatform.iOS == Theme.of(context).platform) {
+                        check_eula = value;
+                      }
                       check1 = value;
                       check2 = value;
                       check3 = value;
@@ -84,6 +88,40 @@ class _PolicyCheckDialogState extends State<PolicyCheckDialog> {
               color: dialogColor3,
               thickness: 2,
             ),
+            TargetPlatform.iOS == Theme.of(context).platform
+                ? Row(
+                    children: [
+                      Checkbox(
+                          value: check1,
+                          onChanged: (value) {
+                            setState(() {
+                              check_eula = value;
+                            });
+                          }),
+                      Expanded(
+                          child: Text(
+                        'Apple의 표준 사용권 계약',
+                        style: subtitle1,
+                      )),
+                      InkWell(
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 20,
+                        ),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ShowTextFileScreen(
+                                filename: 'eula.txt',
+                                title: 'Apple의 표준 사용권 계약',
+                              ),
+                            ),
+                          );
+                        },
+                      )
+                    ],
+                  )
+                : SizedBox(),
             Row(
               children: [
                 Checkbox(
