@@ -19,7 +19,7 @@ class Unicoin500 extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               '500',
-              style: subtitle2,
+              style: body4,
             ),
           ),
         ],

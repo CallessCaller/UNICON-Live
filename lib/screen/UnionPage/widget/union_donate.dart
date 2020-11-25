@@ -3,7 +3,6 @@ import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/screen/AccountPage/screen/unicoin_screen/unicoin_page.dart';
 import 'package:testing_layout/widget/unicoin/widget_coin_bundle_wrap.dart';
@@ -67,7 +66,7 @@ class _UnionDonateState extends State<UnionDonate> {
         onPressed: () {
           showDialog(
             context: context,
-            barrierDismissible: false,
+            barrierDismissible: true,
             builder: (context) {
               return AlertDialog(
                 contentPadding: EdgeInsets.symmetric(
@@ -136,39 +135,10 @@ class _UnionDonateState extends State<UnionDonate> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    CoinBundle(),
-                    // TextField(
-                    //   controller: _coinFilter,
-                    //   onTap: () {
-                    //     _coinFilter.clear();
-                    //   },
-                    //   textAlign: TextAlign.center,
-                    //   style: subtitle1,
-                    //   keyboardType: TextInputType.number,
-                    //   focusNode: _coinFocus,
-                    //   decoration: InputDecoration(
-                    //     contentPadding: EdgeInsets.symmetric(
-                    //       horizontal: 5,
-                    //       vertical: 3,
-                    //     ),
-                    //     enabledBorder: OutlineInputBorder(
-                    //       borderSide: BorderSide(
-                    //         color: outlineColor,
-                    //       ),
-                    //     ),
-                    //     focusedBorder: OutlineInputBorder(
-                    //       borderSide: BorderSide(
-                    //         color: appKeyColor,
-                    //       ),
-                    //     ),
-                    //     hintText: '코인 입력',
-                    //     hintStyle: TextStyle(
-                    //       color: Colors.grey,
-                    //       fontSize: 18,
-                    //       fontWeight: FontWeight.w600,
-                    //     ),
-                    //   ),
-                    // ),
+                    CoinBundle(
+                      userDB: widget.userDB,
+                      artist: widget.artist,
+                    ),
                     SizedBox(height: 10),
                     Text(
                       '후원하신 상품은 유니온에게 전달되며, 환불 받으실 수 없습니다.',
@@ -180,7 +150,6 @@ class _UnionDonateState extends State<UnionDonate> {
                     ),
                     SizedBox(height: 10),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
                           child: FlatButton(
@@ -202,73 +171,8 @@ class _UnionDonateState extends State<UnionDonate> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: FlatButton(
-                            color: appKeyColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(widgetRadius),
-                            ),
-                            onPressed: () async {
-                              _coinFocus.unfocus();
-                              int coin = int.parse(_coinFilter.text);
-                              int total = 0;
-                              if (coin != 0 &&
-                                  widget.userDB.points - coin >= 0) {
-                                var currentTime = Timestamp.now();
-                                widget.userDB.points =
-                                    widget.userDB.points - coin;
-                                widget.userDB.reference
-                                    .update({'points': widget.userDB.points});
-
-                                await widget.artist.reference
-                                    .get()
-                                    .then((value) {
-                                  total = value.data()['points'];
-                                }).whenComplete(() {
-                                  widget.artist.reference
-                                      .update({'points': total + coin});
-                                });
-
-                                // Donation
-                                // User -> Union
-                                // type: { 0 : event , 1 : charge , 2 : donated , 3 : donate }
-                                widget.userDB.reference
-                                    .collection('unicoin_history')
-                                    .add({
-                                  'type': 3,
-                                  'who': widget.artist.name,
-                                  'whoseID': widget.artist.id,
-                                  'amount': coin,
-                                  'time': currentTime.toDate(),
-                                });
-                                // Union <- User
-                                await FirebaseFirestore.instance
-                                    .collection('Users')
-                                    .doc(widget.artist.id)
-                                    .collection('unicoin_history')
-                                    .add({
-                                  'type': 2,
-                                  'who': widget.userDB.name,
-                                  'whoseID': widget.userDB.id,
-                                  'amount': coin,
-                                  'time': currentTime.toDate(),
-                                });
-
-                                _coinFilter.clear();
-                                Navigator.of(context).pop();
-                              } else {
-                                _coinFilter.text = '코인이 모자랍니다';
-                              }
-                            },
-                            child: Text(
-                              '선물',
-                              style: subtitle3,
-                            ),
-                          ),
-                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               );

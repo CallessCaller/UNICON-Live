@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/coin_transaction.dart';
-import 'package:testing_layout/screen/AccountPage/screen/unicoin_screen/widget/widget_coin_transaction_detail.dart';
+import 'package:testing_layout/screen/AccountPage/screen/unicoin_screen/widget/widget_reciept_dialog.dart';
 
 class CoinRecordBox extends StatelessWidget {
   final CoinTransaction coinTransaction;

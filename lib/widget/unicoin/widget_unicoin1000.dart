@@ -19,7 +19,7 @@ class Unicoin1000 extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               '1000',
-              style: subtitle2,
+              style: body4,
             ),
           ),
         ],
