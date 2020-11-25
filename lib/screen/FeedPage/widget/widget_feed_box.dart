@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -87,11 +86,6 @@ class _FeedBoxState extends State<FeedBox> {
     } else {
       firstHalf = trimmedContent;
       secondHalf = "";
-    }
-    if (widget.userDB.dislike != null) {
-      if (widget.userDB.dislike.contains(widget.feed.id)) {
-        return SizedBox();
-      }
     }
 
     return Card(
@@ -216,9 +210,32 @@ class _FeedBoxState extends State<FeedBox> {
                                         }
                                         widget.userDB.dislike
                                             .add(widget.feed.id);
+                                        if (widget.userDB.follow
+                                            .contains(widget.feed.id)) {
+                                          widget.userDB.follow
+                                              .remove(widget.feed.id);
+                                        }
 
-                                        await widget.userDB.reference.update(
-                                            {'dislike': widget.userDB.dislike});
+                                        await widget.userDB.reference.update({
+                                          'dislike': widget.userDB.dislike,
+                                          'follow': widget.userDB.follow
+                                        });
+
+                                        var artist = await FirebaseFirestore
+                                            .instance
+                                            .collection('Users')
+                                            .doc(widget.feed.id)
+                                            .get()
+                                            .then((value) =>
+                                                Artist.fromSnapshot(value));
+                                        if (artist.myPeople
+                                            .contains(widget.userDB.id)) {
+                                          artist.myPeople
+                                              .remove(widget.userDB.id);
+                                        }
+                                        await artist.reference.update(
+                                            {'my_people': artist.myPeople});
+
                                         Navigator.of(context).pop();
                                       },
                                     ),
