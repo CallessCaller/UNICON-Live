@@ -33,6 +33,7 @@ Widget musicPlayer(AssetsAudioPlayer assetsAudioPlayer) {
                 return SizedBox();
               }
               return Stack(
+                clipBehavior: Clip.none,
                 children: [
                   Container(
                     padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -93,7 +94,7 @@ Widget musicPlayer(AssetsAudioPlayer assetsAudioPlayer) {
                     ),
                   ),
                   Positioned(
-                    top: -3,
+                    top: -5,
                     left: -24,
                     right: -24,
                     child: PositionSeekWidget(
