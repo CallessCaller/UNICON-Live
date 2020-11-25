@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/screen/AccountPage/screen/unicoin_screen/unicoin_page.dart';
-import 'package:testing_layout/screen/LivePage/screen/widget/webConstant.dart';
+import 'package:testing_layout/widget/unicoin/widget_coin_bundle_wrap.dart';
 
 class UnionDonate extends StatefulWidget {
   final UserDB userDB;
@@ -136,36 +136,46 @@ class _UnionDonateState extends State<UnionDonate> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    TextField(
-                      controller: _coinFilter,
-                      onTap: () {
-                        _coinFilter.clear();
-                      },
-                      textAlign: TextAlign.center,
-                      style: subtitle1,
-                      keyboardType: TextInputType.number,
-                      focusNode: _coinFocus,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 3,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: outlineColor,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: appKeyColor,
-                          ),
-                        ),
-                        hintText: '코인 입력',
-                        hintStyle: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    CoinBundle(),
+                    // TextField(
+                    //   controller: _coinFilter,
+                    //   onTap: () {
+                    //     _coinFilter.clear();
+                    //   },
+                    //   textAlign: TextAlign.center,
+                    //   style: subtitle1,
+                    //   keyboardType: TextInputType.number,
+                    //   focusNode: _coinFocus,
+                    //   decoration: InputDecoration(
+                    //     contentPadding: EdgeInsets.symmetric(
+                    //       horizontal: 5,
+                    //       vertical: 3,
+                    //     ),
+                    //     enabledBorder: OutlineInputBorder(
+                    //       borderSide: BorderSide(
+                    //         color: outlineColor,
+                    //       ),
+                    //     ),
+                    //     focusedBorder: OutlineInputBorder(
+                    //       borderSide: BorderSide(
+                    //         color: appKeyColor,
+                    //       ),
+                    //     ),
+                    //     hintText: '코인 입력',
+                    //     hintStyle: TextStyle(
+                    //       color: Colors.grey,
+                    //       fontSize: 18,
+                    //       fontWeight: FontWeight.w600,
+                    //     ),
+                    //   ),
+                    // ),
+                    SizedBox(height: 10),
+                    Text(
+                      '후원하신 상품은 유니온에게 전달되며, 환불 받으실 수 없습니다.',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w300,
                       ),
                     ),
                     SizedBox(height: 10),

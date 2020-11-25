@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/screen/AccountPage/screen/settings_page/screen/screen_app_information.dart';
+import 'package:testing_layout/screen/AccountPage/screen/settings_page/screen/screen_lab.dart';
 
 FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
@@ -243,6 +244,27 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 30,
+              ),
+              // InkWell(
+              //   onTap: () {
+              //     Navigator.of(context).push(
+              //       MaterialPageRoute(
+              //         builder: (context) => LabScreen(),
+              //       ),
+              //     );
+              //   },
+              //   child: Container(
+              //     child: Align(
+              //       alignment: Alignment.centerLeft,
+              //       child: Text(
+              //         '실험실',
+              //         style: subtitle1,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
