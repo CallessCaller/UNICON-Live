@@ -17,6 +17,7 @@ class UserDB {
   final List<dynamic> preferredMood;
   final List<dynamic> genre;
   final List<dynamic> mood;
+  final List<dynamic> dislike;
   int fee;
   final Timestamp createTime;
   final DocumentReference reference;
@@ -39,6 +40,7 @@ class UserDB {
         genre = map['genre'],
         mood = map['mood'],
         fee = map['fee'],
+        dislike = map['dislike'],
         createTime = map['createTime'];
 
   UserDB.fromSnapshot(DocumentSnapshot snapshot)

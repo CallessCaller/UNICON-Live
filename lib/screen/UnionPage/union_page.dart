@@ -52,6 +52,53 @@ class _UnionInfoPageState extends State<UnionInfoPage> {
             )),
       );
     }
+    if (widget.userDB.dislike != null) {
+      if (widget.userDB.dislike.contains(widget.artist.id)) {
+        return Scaffold(
+          backgroundColor: Colors.black,
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios_rounded,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+          body: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '차단된 유니언입니다.',
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  FlatButton(
+                    color: appKeyColor,
+                    onPressed: () async {
+                      widget.userDB.dislike.remove(widget.artist.id);
+                      await widget.userDB.reference
+                          .update({'dislike': widget.userDB.dislike});
+                      setState(() {});
+                    },
+                    child: Text('차단 해제'),
+                  ),
+                ],
+              )),
+        );
+      }
+    }
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,

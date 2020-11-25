@@ -91,6 +91,11 @@ class _FeedTotalState extends State<FeedTotal> {
   List<Widget> feedBoxes(List<Feed> feeds, UserDB userDB) {
     List<Widget> results = [];
     for (var i = 0; i < feeds.length; i++) {
+      if (userDB.dislike != null) {
+        if (userDB.dislike.contains(feeds[i].id)) {
+          continue;
+        }
+      }
       results.add(Divider(
         height: 5,
         thickness: 5,
