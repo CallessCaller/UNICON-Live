@@ -12,6 +12,7 @@ class Feed {
   final bool isEdited;
   final List<dynamic> like;
   final String artwork;
+  int report;
   final DocumentReference reference;
 
   Feed.fromMap(Map<String, dynamic> map, {this.reference})
@@ -25,6 +26,7 @@ class Feed {
         time = map['time'],
         isEdited = map['isEdited'],
         like = map['like'],
+        report = map['report'],
         artwork = map['artwork'];
 
   Feed.fromSnapshot(DocumentSnapshot snapshot)

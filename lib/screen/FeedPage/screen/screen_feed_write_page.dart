@@ -89,6 +89,7 @@ class _FeedWritePageState extends State<FeedWritePage> {
                         'content': _content.text.trim(),
                         'id': widget.userDB.id,
                         'like': [],
+                        'report': 0,
                       };
 
                       if (_soundcloud.text != '') {

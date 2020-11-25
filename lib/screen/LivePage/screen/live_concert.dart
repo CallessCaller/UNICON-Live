@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -56,7 +57,7 @@ class _LiveConcertState extends State<LiveConcert> {
     super.initState();
     hideChat = true;
     _loadFirst();
-
+    cleanDislikeChat();
     documentStream = FirebaseFirestore.instance
         .collection('LiveTmp')
         .doc(widget.live.id)
@@ -346,6 +347,13 @@ class _LiveConcertState extends State<LiveConcert> {
   @override
   Widget build(BuildContext context) {
     return _fetchData(context);
+  }
+
+  void cleanDislikeChat() async {
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(widget.userDB.id)
+        .update({'dislikeChat': []});
   }
 
   void _onLikePressed(UserDB userDB) async {

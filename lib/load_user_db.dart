@@ -31,7 +31,9 @@ class LoadUser {
         'id': _uid,
         'createTime': currentTime,
         'is_artist': false,
-        'profile': _profile,
+        'profile': _profile == null
+            ? 'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/unnamed.png?alt=media&token=5b656cb4-055c-4734-a93b-b3c9c629fc5a'
+            : _profile,
         'name': _displayName,
         'email': _email,
         'birth': currentTime,
@@ -47,7 +49,12 @@ class LoadUser {
         'genre': [],
         'live_now': false,
         'pay_list': [],
+        'dislikePeople': [],
+        'dislikeFeed': [],
+        'dislikeChat': [],
+        'dislikeComment': [],
         'fee': 0,
+        'haters': [],
       });
 
       FirebaseFirestore.instance

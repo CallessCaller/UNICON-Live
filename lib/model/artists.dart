@@ -13,6 +13,7 @@ class Artist {
   final List<dynamic> genre;
   final List<dynamic> mood;
   final int fee;
+  final List<dynamic> haters;
   final DocumentReference reference;
 
   Artist.fromMap(Map<String, dynamic> map, {this.reference})
@@ -27,6 +28,7 @@ class Artist {
         genre = map['genre'],
         mood = map['mood'],
         liveNow = map['live_now'],
+        haters = map['haters'],
         fee = map['fee'];
 
   Artist.fromSnapshot(DocumentSnapshot snapshot)

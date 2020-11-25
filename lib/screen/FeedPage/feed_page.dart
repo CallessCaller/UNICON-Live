@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/feed.dart';
 import 'package:testing_layout/model/users.dart';
+import 'package:testing_layout/providers/stream_of_user.dart';
 import 'package:testing_layout/screen/FeedPage/screen/screen_feed_total.dart';
 import 'package:testing_layout/screen/FeedPage/screen/screen_feed_write_page.dart';
 import 'package:testing_layout/screen/FeedPage/screen/screen_my_feed_page.dart';
@@ -77,78 +78,65 @@ class _FeedPageState extends State<FeedPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        centerTitle: false,
-        title: Text(
-          '유니온 피드',
-          style: headline2,
-        ),
-        actions: userDB.isArtist
-            ? [
-                IconButton(
-                  icon: Icon(
-                    Icons.explore_outlined,
-                    size: 30,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => FeedTotal(
-                          userDB: userDB,
+          centerTitle: false,
+          title: Text(
+            '유니온 피드',
+            style: headline2,
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.explore_outlined,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => StreamProvider.value(
+                            value: StreamOfuser().getUser(userDB.id),
+                            child: FeedTotal(
+                              userDB: userDB,
+                            ),
+                          )),
+                );
+              },
+            ),
+            userDB.isArtist
+                ? IconButton(
+                    icon: Icon(
+                      Icons.edit_outlined,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => FeedWritePage(
+                            userDB: userDB,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.edit_outlined,
-                    size: 30,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => FeedWritePage(
-                          userDB: userDB,
+                      );
+                    },
+                  )
+                : SizedBox(),
+            userDB.isArtist
+                ? IconButton(
+                    icon: Icon(
+                      Icons.sticky_note_2_outlined,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => MyFeedPage(
+                            userDB: userDB,
+                            id: userDB.id,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.sticky_note_2_outlined,
-                    size: 30,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => MyFeedPage(
-                          userDB: userDB,
-                          id: userDB.id,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ]
-            : [
-                IconButton(
-                  icon: Icon(
-                    Icons.explore_outlined,
-                    size: 30,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => FeedTotal(
-                          userDB: userDB,
-                        ),
-                      ),
-                    );
-                  },
-                )
-              ],
-      ),
+                      );
+                    },
+                  )
+                : SizedBox,
+          ]),
       body: SafeArea(
         child: Stack(
           children: [
@@ -175,8 +163,13 @@ class _FeedPageState extends State<FeedPage> {
   List<Widget> feedBoxes(List<Feed> feeds, UserDB userDB) {
     List<Widget> results = [];
     for (var i = 0; i < feeds.length; i++) {
-      if (userDB.dislike != null) {
-        if (userDB.dislike.contains(feeds[i].id)) {
+      if (userDB.dislikePeople != null) {
+        if (userDB.dislikePeople.contains(feeds[i].id)) {
+          continue;
+        }
+      }
+      if (userDB.dislikeFeed != null) {
+        if (userDB.dislikeFeed.contains(feeds[i].feedID)) {
           continue;
         }
       }
