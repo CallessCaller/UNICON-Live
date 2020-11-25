@@ -16,11 +16,13 @@ import 'package:testing_layout/screen/LivePage/screen/widget/webConstant.dart';
 FocusNode chatFocusNode = new FocusNode();
 
 class ChatWidget extends StatefulWidget {
+  final double keyboardHeight;
   final Artist artist;
   final Lives live;
   final UserDB userDB;
   final double width;
-  ChatWidget({this.artist, this.live, this.width, this.userDB});
+  ChatWidget(
+      {this.artist, this.live, this.width, this.userDB, this.keyboardHeight});
   @override
   _ChatWidgetState createState() => _ChatWidgetState();
 }
@@ -85,12 +87,15 @@ class _ChatWidgetState extends State<ChatWidget> {
     if (widget.width != 0) {
       Timer(Duration(milliseconds: 1000), _scrollDown);
     }
+
     return Column(
       children: [
         AnimatedContainer(
           duration: Duration(microseconds: 500),
           padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-          height: _height - 50,
+          height: chatFocusNode.hasFocus
+              ? _height - widget.keyboardHeight - 50
+              : _height - 50,
           width: widget.width == 0
               ? widget.width
               : chatFocusNode.hasFocus

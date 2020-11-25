@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    '  애플 로그인',
+                                    '  애플로 로그인',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w600,
@@ -169,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           Expanded(
                             child: Text(
-                              '  구글 로그인',
+                              '  구글로 로그인',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w600,
@@ -228,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           Expanded(
                             child: Text(
-                              '카카오 로그인',
+                              '카카오로 로그인',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w600,

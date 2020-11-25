@@ -65,13 +65,22 @@ class _WebStreamingState extends State<WebStreaming> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Container(
-          alignment: Alignment.centerLeft,
+          alignment: widget.width == MediaQuery.of(context).size.width
+              ? Alignment.center
+              : Alignment.centerLeft,
           child: _controller.value.initialized
               ? AnimatedContainer(
                   height: chatFocusNode.hasFocus
                       ? _width * 0.5 / _controller.value.aspectRatio
-                      : widget.width / _controller.value.aspectRatio,
-                  width: chatFocusNode.hasFocus ? _width * 0.5 : widget.width,
+                      : (widget.width == MediaQuery.of(context).size.width
+                              ? widget.width - 50
+                              : widget.width) /
+                          _controller.value.aspectRatio,
+                  width: chatFocusNode.hasFocus
+                      ? _width * 0.5
+                      : widget.width == MediaQuery.of(context).size.width
+                          ? widget.width - 50
+                          : widget.width,
                   duration: Duration(milliseconds: 100),
                   child: AspectRatio(
                     aspectRatio: _controller.value.aspectRatio,
@@ -80,6 +89,12 @@ class _WebStreamingState extends State<WebStreaming> {
                     ),
                   ),
                 )
+              // AspectRatio(
+              //     aspectRatio: _controller.value.aspectRatio,
+              //     child: VideoPlayer(
+              //       _controller,
+              //     ),
+              //   )
               : _liveReady
                   ? Container(
                       height: _height,
