@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/components/constant.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/screen/AccountPage/screen/unicoin_screen/unicoin_page.dart';
 import 'package:testing_layout/widget/unicoin/widget_coin_bundle_wrap.dart';
@@ -17,8 +16,6 @@ class UnionDonate extends StatefulWidget {
 }
 
 class _UnionDonateState extends State<UnionDonate> {
-  final _coinFilter = new TextEditingController();
-  final _coinFocus = new FocusNode();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -147,31 +144,6 @@ class _UnionDonateState extends State<UnionDonate> {
                         fontSize: 10,
                         fontWeight: FontWeight.w300,
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: FlatButton(
-                            color: dialogColor3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(widgetRadius),
-                            ),
-                            onPressed: () {
-                              _coinFilter.clear();
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              '취소',
-                              style: TextStyle(
-                                color: dialogColor4,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                   ],
                 ),
