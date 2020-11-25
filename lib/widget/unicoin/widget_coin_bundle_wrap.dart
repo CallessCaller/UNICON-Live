@@ -45,6 +45,7 @@ class _CoinBundleState extends State<CoinBundle> {
 
   @override
   void initState() {
+    super.initState();
     fToast = FToast();
     fToast.init(context);
   }
@@ -67,71 +68,120 @@ class _CoinBundleState extends State<CoinBundle> {
     );
   }
 
+  confirmDialog(BuildContext context, int i) {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 10,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(dialogRadius),
+            ),
+            backgroundColor: dialogColor1,
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('정말 응원하시겠습니까?'),
+                Row(
+                  children: [
+                    Expanded(
+                      child: FlatButton(
+                        color: appKeyColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(widgetRadius),
+                        ),
+                        child: Text(
+                          '확인',
+                          style: subtitle3,
+                        ),
+                        onPressed: () async {
+                          int total = 0;
+
+                          var currentTime = Timestamp.now();
+                          widget.userDB.points =
+                              widget.userDB.points - coinBundlePriceList[i];
+                          widget.userDB.reference
+                              .update({'points': widget.userDB.points});
+                          await widget.artist.reference.get().then((value) {
+                            total = value.data()['points'];
+                          }).whenComplete(() {
+                            widget.artist.reference.update(
+                                {'points': total + coinBundlePriceList[i]});
+                          });
+
+                          // User -> Union
+                          widget.userDB.reference
+                              .collection('unicoin_history')
+                              .add({
+                            'type': 3,
+                            'who': widget.artist.name,
+                            'whoseID': widget.artist.id,
+                            'amount': coinBundlePriceList[i],
+                            'time': currentTime.toDate(),
+                          });
+
+                          // Union <- User
+                          await FirebaseFirestore.instance
+                              .collection('Users')
+                              .doc(widget.artist.id)
+                              .collection('unicoin_history')
+                              .add({
+                            'type': 2,
+                            'who': widget.userDB.name,
+                            'whoseID': widget.userDB.id,
+                            'amount': coinBundlePriceList[i],
+                            'time': currentTime.toDate(),
+                          });
+
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+
+                          Widget toast = Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24.0,
+                              vertical: 12.0,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25.0),
+                              color: dialogColor1,
+                            ),
+                            child: Text(
+                              "${coinBundlePriceList[i]}U 후원하셨습니다.",
+                              textAlign: TextAlign.center,
+                              style: caption2,
+                            ),
+                          );
+
+                          fToast.showToast(
+                            child: toast,
+                            gravity: ToastGravity.CENTER,
+                            toastDuration: Duration(seconds: 2),
+                          );
+                        },
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          );
+        });
+  }
+
   List<Widget> _buildCoinBundle() {
     List<Widget> res = [];
     for (int i = 0; i < coinBundlePriceList.length; i++) {
       res.add(
         InkWell(
           child: coinIconList[i],
-          onTap: () async {
-            int total = 0;
+          onTap: () {
             if (widget.userDB.points - coinBundlePriceList[i] >= 0) {
-              var currentTime = Timestamp.now();
-              widget.userDB.points =
-                  widget.userDB.points - coinBundlePriceList[i];
-              widget.userDB.reference.update({'points': widget.userDB.points});
-              await widget.artist.reference.get().then((value) {
-                total = value.data()['points'];
-              }).whenComplete(() {
-                widget.artist.reference
-                    .update({'points': total + coinBundlePriceList[i]});
-              });
-
-              // User -> Union
-              widget.userDB.reference.collection('unicoin_history').add({
-                'type': 3,
-                'who': widget.artist.name,
-                'whoseID': widget.artist.id,
-                'amount': coinBundlePriceList[i],
-                'time': currentTime.toDate(),
-              });
-
-              // Union <- User
-              await FirebaseFirestore.instance
-                  .collection('Users')
-                  .doc(widget.artist.id)
-                  .collection('unicoin_history')
-                  .add({
-                'type': 2,
-                'who': widget.userDB.name,
-                'whoseID': widget.userDB.id,
-                'amount': coinBundlePriceList[i],
-                'time': currentTime.toDate(),
-              });
-
-              Navigator.of(context).pop();
-
-              Widget toast = Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24.0,
-                  vertical: 12.0,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25.0),
-                  color: dialogColor1,
-                ),
-                child: Text(
-                  "${coinBundlePriceList[i]}U 후원하셨습니다.",
-                  textAlign: TextAlign.center,
-                  style: caption2,
-                ),
-              );
-
-              fToast.showToast(
-                child: toast,
-                gravity: ToastGravity.CENTER,
-                toastDuration: Duration(seconds: 2),
-              );
+              confirmDialog(context, i);
             } else {
               Widget toast = Container(
                 padding: const EdgeInsets.symmetric(
