@@ -13,27 +13,30 @@ class LiveHeader extends StatefulWidget {
   }
 }
 
-class _LiveHeaderState extends State<LiveHeader> {
+class _LiveHeaderState extends State<LiveHeader>
+    with AutomaticKeepAliveClientMixin {
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
-    List tmp = [];
-    for (var i = 0; i < imgList.length; ++i) {
-      tmp.add(NetworkImage(imgList[i]));
-    }
     return SizedBox(
-      height: 250,
+      height: 260,
       width: MediaQuery.of(context).size.width,
       child: Carousel(
         autoplay: true,
+        animationCurve: Curves.easeInOut,
         autoplayDuration: Duration(milliseconds: 7000),
-        images: tmp,
+        images: imgList.map((e) => NetworkImage(e)).toList(),
         dotSize: 4.0,
         dotSpacing: 15.0,
         dotIncreasedColor: Colors.white,
         dotBgColor: Colors.transparent,
         indicatorBgPadding: 10.0,
         animationDuration: Duration(milliseconds: 1000),
+        boxFit: BoxFit.fitWidth,
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

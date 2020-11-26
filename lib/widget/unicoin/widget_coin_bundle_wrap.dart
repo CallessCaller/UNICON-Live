@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/artists.dart';
+import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/widget/unicoin/widget_unicoin10.dart';
 import 'package:testing_layout/widget/unicoin/widget_unicoin100.dart';
@@ -29,11 +30,13 @@ List<Widget> coinIconList = [
 class CoinBundle extends StatefulWidget {
   final UserDB userDB;
   final Artist artist;
+  final Lives live;
 
   const CoinBundle({
     Key key,
     this.userDB,
     this.artist,
+    this.live,
   }) : super(key: key);
 
   @override
@@ -105,17 +108,28 @@ class _CoinBundleState extends State<CoinBundle> {
                           var currentTime = Timestamp.now();
                           widget.userDB.points =
                               widget.userDB.points - coinBundlePriceList[i];
-                          widget.userDB.reference
+                          await widget.userDB.reference
                               .update({'points': widget.userDB.points});
                           await widget.artist.reference.get().then((value) {
                             total = value.data()['points'];
-                          }).whenComplete(() {
-                            widget.artist.reference.update(
+                          }).whenComplete(() async {
+                            await widget.artist.reference.update(
                                 {'points': total + coinBundlePriceList[i]});
+                            if (widget.artist.liveNow == true) {
+                              widget.live.reference.collection('chitchat').add({
+                                'id': widget.userDB.id,
+                                'name': '',
+                                'is_artist': widget.userDB.isArtist,
+                                'content': widget.userDB.name +
+                                    '님이 ${coinBundlePriceList[i]} 코인 후원!',
+                                'time': currentTime.millisecondsSinceEpoch,
+                                'gift': true,
+                              });
+                            }
                           });
 
                           // User -> Union
-                          widget.userDB.reference
+                          await widget.userDB.reference
                               .collection('unicoin_history')
                               .add({
                             'type': 3,
@@ -159,7 +173,7 @@ class _CoinBundleState extends State<CoinBundle> {
 
                           fToast.showToast(
                             child: toast,
-                            gravity: ToastGravity.CENTER,
+                            gravity: ToastGravity.BOTTOM,
                             toastDuration: Duration(seconds: 2),
                           );
                         },
