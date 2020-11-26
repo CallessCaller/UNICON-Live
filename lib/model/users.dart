@@ -5,7 +5,7 @@ class UserDB {
   final String email;
   final String instagramId;
   final String youtubeLink;
-  final String soudcloudLink;
+  final String soundcloudLink;
   final String profile;
   final String id;
   String token;
@@ -30,7 +30,7 @@ class UserDB {
         email = map['email'],
         instagramId = map['instagram_id'],
         youtubeLink = map['youtube_link'],
-        soudcloudLink = map['soundcloud_link'],
+        soundcloudLink = map['soundcloud_link'],
         profile = map['profile'],
         id = map['id'],
         token = map['token'],
