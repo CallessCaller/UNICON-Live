@@ -323,6 +323,7 @@ class _ChatWidgetState extends State<ChatWidget> {
               CoinBundle(
                 userDB: widget.userDB,
                 artist: widget.artist,
+                live: widget.live,
               ),
               SizedBox(height: 10),
               Text(
