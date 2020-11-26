@@ -102,20 +102,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
             Center(
               child: Stack(
                 children: [
-                  CachedNetworkImage(
-                    imageUrl: _profileImageURL,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: appKeyColor,
-                          width: 1.5,
-                        ),
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: appKeyColor,
+                        width: 1.5,
                       ),
-                      child: CircleAvatar(
-                        backgroundImage: imageProvider,
-                        radius: 80,
-                      ),
+                    ),
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(_profileImageURL),
+                      radius: 80,
                     ),
                   ),
                   Positioned(
@@ -526,20 +523,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
             Center(
               child: Stack(
                 children: [
-                  CachedNetworkImage(
-                    imageUrl: _profileImageURL,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 1.5,
-                        ),
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: appKeyColor,
+                        width: 1.5,
                       ),
-                      child: CircleAvatar(
-                        backgroundImage: imageProvider,
-                        radius: 80,
-                      ),
+                    ),
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(_profileImageURL),
+                      radius: 80,
                     ),
                   ),
                   Positioned(
