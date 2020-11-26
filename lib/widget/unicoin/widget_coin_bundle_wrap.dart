@@ -45,12 +45,14 @@ class CoinBundle extends StatefulWidget {
 
 class _CoinBundleState extends State<CoinBundle> {
   FToast fToast;
+  bool _enabled;
 
   @override
   void initState() {
     super.initState();
     fToast = FToast();
     fToast.init(context);
+    _enabled = true;
   }
 
   @override
@@ -193,42 +195,56 @@ class _CoinBundleState extends State<CoinBundle> {
       res.add(
         InkWell(
           child: coinIconList[i],
-          onTap: () {
-            if (widget.userDB.points - coinBundlePriceList[i] >= 0) {
-              confirmDialog(context, i);
-            } else {
-              Widget toast = Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24.0,
-                  vertical: 12.0,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25.0),
-                  color: dialogColor1,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.warning),
-                    SizedBox(
-                      width: 12.0,
-                    ),
-                    Text(
-                      "코인이 모자랍니다.",
-                      textAlign: TextAlign.center,
-                      style: caption2,
-                    ),
-                  ],
-                ),
-              );
+          onTap: _enabled
+              ? () {
+                  if (widget.userDB.points - coinBundlePriceList[i] >= 0) {
+                    confirmDialog(context, i);
+                  } else {
+                    setState(() {
+                      _enabled = false;
+                    });
+                    Widget toast = Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24.0,
+                        vertical: 12.0,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25.0),
+                        color: dialogColor1,
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.warning),
+                          SizedBox(
+                            width: 12.0,
+                          ),
+                          Text(
+                            "코인이 모자랍니다.",
+                            textAlign: TextAlign.center,
+                            style: caption2,
+                          ),
+                        ],
+                      ),
+                    );
 
-              fToast.showToast(
-                child: toast,
-                gravity: ToastGravity.CENTER,
-                toastDuration: Duration(seconds: 2),
-              );
-            }
-          },
+                    fToast.showToast(
+                      child: toast,
+                      gravity: ToastGravity.BOTTOM,
+                      toastDuration: Duration(seconds: 2),
+                    );
+
+                    Future.delayed(
+                      Duration(seconds: 2),
+                      () {
+                        setState(() {
+                          _enabled = true;
+                        });
+                      },
+                    );
+                  }
+                }
+              : null,
         ),
       );
     }

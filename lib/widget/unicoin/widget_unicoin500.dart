@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 
@@ -9,10 +10,13 @@ class Unicoin500 extends StatelessWidget {
       width: 40,
       child: Column(
         children: [
-          Icon(
-            UniIcon.unicoin,
-            color: Colors.yellowAccent[400],
-            size: 40,
+          Shimmer.fromColors(
+            baseColor: Color(0xffd21404),
+            highlightColor: Color(0xffeb6c6b),
+            child: Icon(
+              UniIcon.unicoin,
+              size: 40,
+            ),
           ),
           Container(
             height: 30,
