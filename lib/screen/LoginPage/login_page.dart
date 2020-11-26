@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           child: Container(
                             height: 50,
-                            width: MediaQuery.of(context).size.width * 0.4,
+                            width: MediaQuery.of(context).size.width * 0.5,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 color: Colors.black,
@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    '  애플로 로그인',
+                                    '애플로 로그인',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w600,
@@ -150,7 +150,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Container(
                       height: 50,
-                      width: MediaQuery.of(context).size.width * 0.4,
+                      width: MediaQuery.of(context).size.width * 0.5,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -169,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           Expanded(
                             child: Text(
-                              '  구글로 로그인',
+                              '구글로 로그인',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w600,
@@ -209,7 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Container(
                       height: 50,
-                      width: MediaQuery.of(context).size.width * 0.4,
+                      width: MediaQuery.of(context).size.width * 0.5,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           color: Color.fromRGBO(254, 229, 0, 1),
@@ -300,6 +300,7 @@ void signOutGoogle(BuildContext context) async {
 Future<auth.UserCredential> kakaoSignIn() async {
   try {
     final String token = await _retrieveToken();
+
     final authResult =
         await _auth.signInWithCustomToken(await _verifyToken(token));
 
