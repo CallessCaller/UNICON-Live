@@ -105,19 +105,14 @@ class _CSPageState extends State<CSPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 10,
-              ),
+              SizedBox(height: 10),
               FAQWidget(),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
                 child: Column(
                   children: [
                     Container(
-                      height: 40,
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -126,12 +121,12 @@ class _CSPageState extends State<CSPage> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 25),
                     InkWell(
                       onTap: () {
                         _showFullScreenDialog(context);
                       },
                       child: Container(
-                        height: 40,
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -144,9 +139,6 @@ class _CSPageState extends State<CSPage> {
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
                     ),
                   ],
                 ),

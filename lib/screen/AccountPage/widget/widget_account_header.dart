@@ -37,30 +37,38 @@ class AccountHeader extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 7),
+            SizedBox(width: 10),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        userDB.name,
-                        style: title2,
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      userDB.isArtist ? "유니온" : "리스너",
+                      style: TextStyle(
+                        color: appKeyColor,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  Container(
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        userDB.email,
-                        style: TextStyle(
-                          color: outlineColor,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                        ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      userDB.name,
+                      style: title2,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      userDB.email,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: outlineColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),

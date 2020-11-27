@@ -18,6 +18,7 @@ class _UnionMoodSelectionState extends State<UnionMoodSelection> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        centerTitle: false,
         title: Text(
           '당신의 음악 무드는?',
           style: headline2,

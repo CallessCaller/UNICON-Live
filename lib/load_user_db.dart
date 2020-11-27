@@ -36,7 +36,6 @@ class LoadUser {
             : _profile,
         'name': _displayName,
         'email': _email,
-        'birth': currentTime,
         'points': 1,
         'youtube_link': '',
         'soundcloud_link': '',

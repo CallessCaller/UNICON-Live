@@ -239,7 +239,7 @@ class _LoginPageState extends State<LoginPage> {
 void showAlertDialog(BuildContext context) {
   showDialog(
     context: context,
-    barrierDismissible: false, // user must tap button!
+    barrierDismissible: true, // user must tap button!
     builder: (BuildContext context) {
       return Dialog(
         backgroundColor: Colors.transparent,
