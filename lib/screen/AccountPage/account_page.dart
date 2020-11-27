@@ -122,54 +122,54 @@ class AccountPage extends StatelessWidget {
                       color: outlineColor,
                       height: 0,
                     ),
-                    InkWell(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: defaultPadding, vertical: 15),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            '공지사항',
-                            style: body1,
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => NotificationScreen(),
-                          ),
-                        );
-                      },
-                    ),
-                    Divider(
-                      color: outlineColor,
-                      height: 0,
-                    ),
-                    InkWell(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: defaultPadding, vertical: 15),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            '이벤트',
-                            style: body1,
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => EventScreen(),
-                          ),
-                        );
-                      },
-                    ),
-                    Divider(
-                      color: outlineColor,
-                      height: 0,
-                    ),
+                    // InkWell(
+                    //   child: Container(
+                    //     padding: EdgeInsets.symmetric(
+                    //         horizontal: defaultPadding, vertical: 15),
+                    //     child: Align(
+                    //       alignment: Alignment.centerLeft,
+                    //       child: Text(
+                    //         '공지사항',
+                    //         style: body1,
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   onTap: () {
+                    //     Navigator.of(context).push(
+                    //       MaterialPageRoute(
+                    //         builder: (context) => NotificationScreen(),
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
+                    // Divider(
+                    //   color: outlineColor,
+                    //   height: 0,
+                    // ),
+                    // InkWell(
+                    //   child: Container(
+                    //     padding: EdgeInsets.symmetric(
+                    //         horizontal: defaultPadding, vertical: 15),
+                    //     child: Align(
+                    //       alignment: Alignment.centerLeft,
+                    //       child: Text(
+                    //         '이벤트',
+                    //         style: body1,
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   onTap: () {
+                    //     Navigator.of(context).push(
+                    //       MaterialPageRoute(
+                    //         builder: (context) => EventScreen(),
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
+                    // Divider(
+                    //   color: outlineColor,
+                    //   height: 0,
+                    // ),
                     SizedBox(height: 100),
                   ],
                 ),
