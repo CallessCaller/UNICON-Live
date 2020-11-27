@@ -55,6 +55,9 @@
           </intent-filter>
         </activity>
         <meta-data
+          android:name="com.kakao.sdk.AppKey"
+          android:value="70dfdacac39561e5f245a4bd09ef9509" />
+        <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
