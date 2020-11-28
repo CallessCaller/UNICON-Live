@@ -56,11 +56,11 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Used to demonstrate image picker plugin</string>
+	<string>Unicon would like to access camera for adding images.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Used to capture audio for image picker plugin</string>
+	<string>Unicon would like to access microphone for voice recording.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Used to demonstrate image picker plugin</string>
+	<string>Unicon would like to access image gallery for adding images.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

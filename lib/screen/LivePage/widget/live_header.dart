@@ -13,25 +13,29 @@ class LiveHeader extends StatefulWidget {
   }
 }
 
+// Banner collection에서 불러와야 함
 class _LiveHeaderState extends State<LiveHeader>
     with AutomaticKeepAliveClientMixin {
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 260,
+      height: 270,
       width: MediaQuery.of(context).size.width,
       child: Carousel(
+        onImageTap: (int index) {
+          print(index);
+        },
         autoplay: true,
         animationCurve: Curves.easeInOut,
-        autoplayDuration: Duration(milliseconds: 7000),
+        autoplayDuration: Duration(seconds: 3),
         images: imgList.map((e) => NetworkImage(e)).toList(),
         dotSize: 4.0,
         dotSpacing: 15.0,
         dotIncreasedColor: Colors.white,
         dotBgColor: Colors.transparent,
         indicatorBgPadding: 10.0,
-        animationDuration: Duration(milliseconds: 1000),
+        animationDuration: Duration(milliseconds: 300),
         boxFit: BoxFit.fitWidth,
       ),
     );

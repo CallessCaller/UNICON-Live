@@ -97,6 +97,10 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
                 width: 50,
                 decoration: BoxDecoration(
                   color: Colors.transparent,
+                  border: Border.all(
+                    color: outlineColor,
+                    width: .5,
+                  ),
                   image: DecorationImage(
                     image: NetworkImage(widget.artist.profile),
                     fit: BoxFit.cover,

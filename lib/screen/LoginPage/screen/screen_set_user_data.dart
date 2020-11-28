@@ -9,8 +9,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/screen/LoginPage/screen/screen_initial_genre_selection.dart';
-import 'package:testing_layout/widget/widget_flutter_datetime_picker.dart';
-import 'package:testing_layout/widget/widget_i18n_model.dart';
 import 'package:image/image.dart' as img;
 
 class SetUserData extends StatefulWidget {
@@ -26,8 +24,6 @@ class _SetUserDataState extends State<SetUserData> {
 
   TextEditingController _nameEditingController = TextEditingController();
 
-  DateTime _dateTime = DateTime.now();
-
   String _profileImageURL = FirebaseAuth.instance.currentUser.photoURL == null
       ? 'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/unnamed.png?alt=media&token=5b656cb4-055c-4734-a93b-b3c9c629fc5a'
       : FirebaseAuth.instance.currentUser.photoURL;
@@ -39,21 +35,6 @@ class _SetUserDataState extends State<SetUserData> {
     fToast = FToast();
     fToast.init(context);
     _nameEditingController.text = _user.displayName;
-  }
-
-  void _showDateTimePicker() {
-    DatePicker.showDatePicker(
-      context,
-      minTime: DateTime(1970, 1, 1),
-      maxTime: DateTime.now(),
-      currentTime: _dateTime,
-      locale: LocaleType.ko,
-      onConfirm: (dateTime) {
-        setState(() {
-          _dateTime = dateTime;
-        });
-      },
-    );
   }
 
   @override
@@ -174,43 +155,6 @@ class _SetUserDataState extends State<SetUserData> {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          UniIcon.calendar,
-                          size: 30,
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Expanded(
-                          child: InkWell(
-                            onTap: _showDateTimePicker,
-                            child: Container(
-                              padding: EdgeInsets.symmetric(vertical: 8),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  '${_dateTime.year} / ${_dateTime.month} / ${_dateTime.day}',
-                                  style: body2,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                     SizedBox(height: 150),
                   ],
                 ),
@@ -240,8 +184,8 @@ class _SetUserDataState extends State<SetUserData> {
                               .update(
                             {
                               'name': _nameEditingController.text,
-                              'birth': _dateTime,
-                              'profile': _profileImageURL
+                              'profile': _profileImageURL,
+                              'email': _user.email,
                             },
                           );
                           Navigator.of(context).push(

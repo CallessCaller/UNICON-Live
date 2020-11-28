@@ -54,7 +54,7 @@ class _GenreSelectionPageState extends State<GenreSelectionPage> {
         appBar: AppBar(
           elevation: 0,
           title: Text(
-            '취향 선택하기',
+            '마이 컬러',
             style: headline2,
           ),
           centerTitle: false,

@@ -36,25 +36,11 @@ class _PolicyCheckDialogState extends State<PolicyCheckDialog> {
         borderRadius: BorderRadius.circular(dialogRadius),
       ),
       backgroundColor: dialogColor1,
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Text(
-              '약관 동의',
-              style: title1,
-            ),
-          ),
-          InkWell(
-            child: Icon(
-              Icons.close,
-              color: dialogColor3,
-            ),
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-          )
-        ],
+      title: Center(
+        child: Text(
+          '약관 동의',
+          style: title1,
+        ),
       ),
       content: SingleChildScrollView(
         child: Column(
@@ -79,7 +65,7 @@ class _PolicyCheckDialogState extends State<PolicyCheckDialog> {
                 Expanded(
                     child: Text(
                   '전체 동의',
-                  style: subtitle1,
+                  style: subtitle2,
                 )),
               ],
             ),
@@ -101,7 +87,7 @@ class _PolicyCheckDialogState extends State<PolicyCheckDialog> {
                       Expanded(
                           child: Text(
                         'Apple의 표준 사용권 계약',
-                        style: subtitle1,
+                        style: subtitle2,
                       )),
                       InkWell(
                         child: Icon(
@@ -134,7 +120,7 @@ class _PolicyCheckDialogState extends State<PolicyCheckDialog> {
                 Expanded(
                     child: Text(
                   '서비스 이용약관',
-                  style: subtitle1,
+                  style: subtitle2,
                 )),
                 InkWell(
                   child: Icon(
@@ -167,7 +153,7 @@ class _PolicyCheckDialogState extends State<PolicyCheckDialog> {
                 Expanded(
                     child: Text(
                   '개인정보 처리방침',
-                  style: subtitle1,
+                  style: subtitle2,
                 )),
                 InkWell(
                   child: Icon(
@@ -200,7 +186,7 @@ class _PolicyCheckDialogState extends State<PolicyCheckDialog> {
                 Expanded(
                     child: Text(
                   '커뮤니티 가이드라인',
-                  style: subtitle1,
+                  style: subtitle2,
                 )),
                 InkWell(
                   child: Icon(
@@ -233,7 +219,7 @@ class _PolicyCheckDialogState extends State<PolicyCheckDialog> {
                 Expanded(
                     child: Text(
                   '법적고지',
-                  style: subtitle1,
+                  style: subtitle2,
                 )),
                 InkWell(
                   child: Icon(

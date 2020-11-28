@@ -53,7 +53,7 @@ dependencies:
   image_picker: ^0.6.7+9
   package_info: ^0.4.3
   cached_network_image: ^2.3.3
-  flutter_svg: ^0.19.0
+  flutter_svg: ^0.19.2+1
   http: ^0.12.2
 
   # Icons
@@ -89,6 +89,7 @@ flutter:
      - assets/walkthrough/
      - assets/policy-text/
      - assets/coins/
+     - assets/login_btn/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -102,9 +103,13 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family:  UniIcon
+    - family: UniIcon
       fonts:
         - asset: fonts/UniIcon.ttf
+    - family: Roboto
+      fonts:
+        - asset: fonts/Roboto-Medium.ttf
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -5,6 +5,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 import 'package:testing_layout/components/constant.dart';
@@ -30,35 +31,31 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
-        child: Stack(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-            ),
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.2,
-              left: 80,
-              right: 80,
-              child: Container(
-                height: 100,
-                width: 150,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/slogan_02.png'),
-                    fit: BoxFit.fitWidth,
-                  ),
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.symmetric(vertical: 150),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: Image.asset(
+                  'assets/slogan_01.png',
+                  fit: BoxFit.fitWidth,
                 ),
               ),
-            ),
-            Positioned(
-              bottom: 80,
-              left: 1,
-              right: 1,
-              child: Column(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Platform.isIOS
                       ? FlatButton(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          color: Colors.white,
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          height: 40,
                           onPressed: () async {
                             showAlertDialog(context);
                             auth.UserCredential userCredential =
@@ -85,45 +82,41 @@ class _LoginPageState extends State<LoginPage> {
                               });
                             }
                           },
-                          child: Container(
-                            height: 50,
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                border: Border.all(color: Colors.white),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
+                          child: SizedBox(
+                            width: 250,
+                            height: 40,
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Container(
-                                  height: 30,
-                                  width: 50,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/apple_logo.png'))),
+                                  child: Image.asset(
+                                    'assets/login_btn/a-logo.png',
+                                    fit: BoxFit.fitWidth,
+                                  ),
+                                  width: 18,
                                 ),
-                                Expanded(
-                                  child: Text(
-                                    '애플로 로그인',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: subtitleFontSize),
+                                SizedBox(width: 24),
+                                Text(
+                                  'Sign up with Apple',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 19,
                                   ),
                                 ),
+                                SizedBox(width: 30)
                               ],
                             ),
-                          ),
-                        )
+                          ))
                       : SizedBox(),
                   SizedBox(
                     height: 20,
                   ),
                   FlatButton(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    color: Colors.white,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    height: 40,
                     onPressed: () async {
                       showAlertDialog(context);
                       auth.UserCredential userCredential =
@@ -148,32 +141,27 @@ class _LoginPageState extends State<LoginPage> {
                         });
                       }
                     },
-                    child: Container(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: SizedBox(
+                      height: 40,
+                      width: 250,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
-                            height: 30,
-                            width: 50,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image:
-                                        AssetImage('assets/Google_Logo.png'))),
+                            child: Image.asset(
+                              'assets/login_btn/g-logo.png',
+                              fit: BoxFit.fitWidth,
+                            ),
+                            width: 18,
                           ),
-                          Expanded(
-                            child: Text(
-                              '구글로 로그인',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: subtitleFontSize),
+                          SizedBox(width: 24),
+                          Text(
+                            'Sign up with Google',
+                            style: TextStyle(
+                              fontFamily: 'Roboto',
+                              color: Colors.black.withOpacity(0.54),
+                              fontSize: 19,
                             ),
                           ),
                         ],
@@ -184,6 +172,10 @@ class _LoginPageState extends State<LoginPage> {
                     height: 20,
                   ),
                   FlatButton(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    color: Color.fromRGBO(254, 229, 0, 1),
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    height: 40,
                     onPressed: () async {
                       showAlertDialog(context);
                       auth.UserCredential userCredential = await kakaoSignIn();
@@ -207,42 +199,37 @@ class _LoginPageState extends State<LoginPage> {
                         });
                       }
                     },
-                    child: Container(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(254, 229, 0, 1),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: SizedBox(
+                      height: 40,
+                      width: 250,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
-                            height: 40,
-                            width: 50,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image:
-                                        AssetImage('assets/Kakao_Logo.png'))),
+                            child: Image.asset(
+                              'assets/login_btn/k-logo.png',
+                              fit: BoxFit.fitWidth,
+                            ),
+                            width: 18,
                           ),
-                          Expanded(
-                            child: Text(
-                              '카카오로 로그인',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: subtitleFontSize),
+                          SizedBox(width: 24),
+                          Text(
+                            'Sign up with Kakao',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 19,
                             ),
                           ),
+                          SizedBox(width: 30)
                         ],
                       ),
                     ),
                   ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -252,7 +239,7 @@ class _LoginPageState extends State<LoginPage> {
 void showAlertDialog(BuildContext context) {
   showDialog(
     context: context,
-    barrierDismissible: false, // user must tap button!
+    barrierDismissible: true, // user must tap button!
     builder: (BuildContext context) {
       return Dialog(
         backgroundColor: Colors.transparent,

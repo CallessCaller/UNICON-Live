@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/components/constant.dart';
-import 'package:testing_layout/components/size_config.dart';
 import 'package:testing_layout/screen/AppGuide/widget/widget_walkthroughslide.dart';
 import 'package:testing_layout/screen/LoginPage/login_page.dart';
 
@@ -43,7 +42,6 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -103,7 +101,7 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
                             child: Text(
                               '건너뛰기',
                               style: TextStyle(
-                                fontSize: getProportionalScreenHeight(16),
+                                fontSize: 16,
                                 fontWeight: FontWeight.w500,
                                 color: outlineColor,
                               ),

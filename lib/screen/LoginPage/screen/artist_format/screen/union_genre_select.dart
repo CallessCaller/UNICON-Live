@@ -19,6 +19,7 @@ class _UnionGenreSelectionState extends State<UnionGenreSelection> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        centerTitle: false,
         title: Text(
           '당신의 음악 장르는?',
           style: headline2,
