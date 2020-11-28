@@ -44,31 +44,42 @@ class AccountHeader extends StatelessWidget {
                 children: [
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(
-                      userDB.isArtist ? "유니온" : "리스너",
-                      style: TextStyle(
-                        color: appKeyColor,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        userDB.isArtist
+                            ? Row(
+                                children: [
+                                  Icon(
+                                    Icons.verified,
+                                    color: appKeyColor,
+                                    size: 20,
+                                  ),
+                                  SizedBox(width: 5),
+                                ],
+                              )
+                            : SizedBox(),
+                        Expanded(
+                          child: Text(
+                            userDB.name,
+                            overflow: TextOverflow.ellipsis,
+                            style: title3,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(
-                      userDB.name,
-                      style: title2,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      userDB.email,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: outlineColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                    child: Expanded(
+                      child: Text(
+                        userDB.email,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: outlineColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),

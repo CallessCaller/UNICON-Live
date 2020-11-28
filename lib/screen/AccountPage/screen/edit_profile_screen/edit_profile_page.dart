@@ -470,6 +470,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   child: Icon(
                     UniIcon.more_info,
                     color: appKeyColor,
+                    size: 18,
                   ),
                   onTap: () {
                     showDialog(
