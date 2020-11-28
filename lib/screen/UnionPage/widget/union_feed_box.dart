@@ -128,14 +128,15 @@ class _UnionFeedBoxState extends State<UnionFeedBox> {
                         color: Colors.white,
                       ),
                       onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => FeedDetail(
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => StreamProvider.value(
+                            value: StreamOfuser().getUser(widget.userDB.id),
+                            child: FeedDetail(
                               feed: widget.feed,
                               userDB: widget.userDB,
                             ),
                           ),
-                        );
+                        ));
                       },
                     ),
                   ),
