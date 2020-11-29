@@ -17,10 +17,10 @@ const List<String> _kProductIds = <String>[
 ];
 const List<String> _kProductPrices = <String>[
   '1,200',
-  '6,000',
+  '5,900',
   '12,000',
   '60,000',
-  '120,000',
+  '119,000',
 ];
 
 // const List<String> _kProductIds = <String>[
