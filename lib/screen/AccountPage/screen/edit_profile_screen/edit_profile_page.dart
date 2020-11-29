@@ -129,7 +129,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     style: body2,
                     decoration: InputDecoration(
                       isDense: true,
-                      hintText: "이름 (Required)",
+                      hintText: "이름 (필수)",
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                           color: appKeyColor,
@@ -421,7 +421,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     style: body2,
                     decoration: InputDecoration(
                       isDense: true,
-                      hintText: "이름 (Required)",
+                      hintText: "이름 (필수)",
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                           color: appKeyColor,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/screen/LoginPage/screen/artist_format/screen_artist_format.dart';
-import 'package:testing_layout/screen/LoginPage/screen/screen_set_user_data.dart';
+import 'package:testing_layout/screen/LoginPage/screen/screen_initial_genre_selection.dart';
 
 class ArtistOrUser extends StatelessWidget {
   @override
@@ -33,9 +33,6 @@ class ArtistOrUser extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
                   Container(
                     padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: Center(
@@ -45,7 +42,22 @@ class ArtistOrUser extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(height: 100),
                 ],
+              ),
+            ),
+            Positioned(
+              bottom: 20,
+              left: 30,
+              right: 30,
+              child: Text(
+                "'네'를 선택하시면 뮤지션 등록을 위한 추가 정보가 필요합니다.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: appKeyColor,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
             Positioned(
@@ -98,7 +110,7 @@ class ArtistOrUser extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => SetUserData(),
+                          builder: (context) => InitialGenreSelection(),
                         ),
                       );
                     },

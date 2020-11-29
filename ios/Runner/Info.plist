@@ -56,11 +56,11 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Unicon would like to access camera for adding images.</string>
+	<string>유니콘은 프로필 사진 변경, 피드 작성, 문의하기 등의 기능을 위해 해당 권한이 필요합니다.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Unicon would like to access microphone for voice recording.</string>
+	<string>유니콘은 프로필 사진 변경, 피드 작성, 문의하기 등의 기능을 위해 해당 권한이 필요합니다.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Unicon would like to access image gallery for adding images.</string>
+	<string>유니콘은 프로필 사진 변경, 피드 작성, 문의하기 등의 기능을 위해 해당 권한이 필요합니다.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
