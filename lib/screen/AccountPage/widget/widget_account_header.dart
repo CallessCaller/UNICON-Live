@@ -71,16 +71,22 @@ class AccountHeader extends StatelessWidget {
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Expanded(
-                      child: Text(
-                        userDB.email,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: outlineColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                    child: Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            userDB.email ?? '',
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: outlineColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ],

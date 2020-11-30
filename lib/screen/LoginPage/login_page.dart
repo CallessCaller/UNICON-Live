@@ -221,7 +221,7 @@ class _LoginPageState extends State<LoginPage> {
                               fontSize: 19,
                             ),
                           ),
-                          SizedBox(width: 30)
+                          SizedBox(width: 29)
                         ],
                       ),
                     ),
