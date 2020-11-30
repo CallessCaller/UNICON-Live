@@ -76,7 +76,7 @@ class AccountHeader extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            userDB.email ?? '',
+                            userDB.email ?? 'no email',
                             textAlign: TextAlign.left,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
