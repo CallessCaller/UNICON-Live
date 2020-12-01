@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +29,7 @@ class _ArtistFormState extends State<ArtistForm> {
   TextEditingController _instagramEditingController = TextEditingController();
   TextEditingController _youtubeEditingController = TextEditingController();
   TextEditingController _soundcloudEditingController = TextEditingController();
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   FToast fToast;
 
   @override
@@ -449,6 +451,9 @@ class _ArtistFormState extends State<ArtistForm> {
                                   .collection('Pending')
                                   .doc(_user.uid)
                                   .set(_pendingUploadResult);
+
+                              await _firebaseMessaging
+                                  .subscribeToTopic(_user.uid + 'pending');
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => UnionGenreSelection(),
