@@ -449,104 +449,111 @@ class _EditProfilePageState extends State<EditProfilePage> {
         height: 0,
         color: outlineColor,
       ),
-      InkWell(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    '유니온 도전하기!',
-                    style: TextStyle(
-                      color: appKeyColor,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
+      widget.userDB.isArtist == false
+          ? InkWell(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          '유니온 도전하기!',
+                          style: TextStyle(
+                            color: appKeyColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        child: Icon(
+                          UniIcon.more_info,
+                          color: appKeyColor,
+                          size: 18,
+                        ),
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                  vertical: 10,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(dialogRadius),
+                                ),
+                                backgroundColor: dialogColor1,
+                                title: Center(
+                                  child: Text(
+                                    '유니온이란?',
+                                    style: title1,
+                                  ),
+                                ),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '네, 당연하죠! 누구나 뮤지션이 될 수 있는 플랫폼 유니콘에서는 심사 과정을 거쳐서 여러분이 재능과 끼를 발휘할 수 있도록 도와드립니다!',
+                                    ),
+                                    SizedBox(height: 10),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: FlatButton(
+                                            color: appKeyColor,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      widgetRadius),
+                                            ),
+                                            onPressed: () async {
+                                              Navigator.of(context).pop();
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ArtistForm(),
+                                                ),
+                                              );
+                                            },
+                                            child: Text(
+                                              '도전하기',
+                                              style: subtitle2,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      )
+                    ],
                   ),
                 ),
-                InkWell(
-                  child: Icon(
-                    UniIcon.more_info,
-                    color: appKeyColor,
-                    size: 18,
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ArtistForm(),
                   ),
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 10,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(dialogRadius),
-                          ),
-                          backgroundColor: dialogColor1,
-                          title: Center(
-                            child: Text(
-                              '유니온이란?',
-                              style: title1,
-                            ),
-                          ),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                '네, 당연하죠! 누구나 뮤지션이 될 수 있는 플랫폼 유니콘에서는 심사 과정을 거쳐서 여러분이 재능과 끼를 발휘할 수 있도록 도와드립니다!',
-                              ),
-                              SizedBox(height: 10),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: FlatButton(
-                                      color: appKeyColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(widgetRadius),
-                                      ),
-                                      onPressed: () async {
-                                        Navigator.of(context).pop();
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) => ArtistForm(),
-                                          ),
-                                        );
-                                      },
-                                      child: Text(
-                                        '도전하기',
-                                        style: subtitle2,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  },
-                )
-              ],
-            ),
-          ),
-        ),
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => ArtistForm(),
-            ),
-          );
-        },
-      ),
-      Divider(
-        height: 0,
-        color: outlineColor,
-      ),
+                );
+              },
+            )
+          : SizedBox(),
+      widget.userDB.isArtist == false
+          ? Divider(
+              height: 0,
+              color: outlineColor,
+            )
+          : SizedBox(),
       InkWell(
         onTap: signoutAccount,
         child: Container(

@@ -437,6 +437,7 @@ class _ArtistFormState extends State<ArtistForm> {
                               // birth and profile added to user
                               _userUploadResult['profile'] = _profileImageURL;
                               _userUploadResult['email'] = _user.email;
+
                               // id added to pending
                               _pendingUploadResult['id'] = _user.uid;
                               _pendingUploadResult['profile'] =
