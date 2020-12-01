@@ -42,6 +42,7 @@ class _LiveBoxState extends State<LiveBox> {
     return InkWell(
       onTap: () {
         if (artist.fee == null ||
+            artist.id == userDB.id ||
             artist.fee == 0 ||
             (widget.live.payList != null &&
                 widget.live.payList.contains(userDB.id))) {
@@ -305,8 +306,11 @@ void showAlertDialog(
 
 void notShowAlert(
     BuildContext context, UserDB userDB, Artist artist, Lives live) async {
-  live.viewers.add(userDB.id);
-  await live.reference.update({'viewers': live.viewers});
+  if (userDB.id != artist.id) {
+    live.viewers.add(userDB.id);
+    await live.reference.update({'viewers': live.viewers});
+  }
+
   if (userDB.id == artist.id) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => OnlyChat(

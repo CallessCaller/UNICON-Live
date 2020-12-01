@@ -86,7 +86,7 @@ class _OnlyChatState extends State<OnlyChat> {
             children: [
               Icon(Icons.people),
               Text(
-                '   ' + (viewers.length - 1).toString() + '   ',
+                '   ' + (viewers.length).toString() + '   ',
                 style: TextStyle(
                     fontSize: textFontSize,
                     fontWeight: FontWeight.w600,
