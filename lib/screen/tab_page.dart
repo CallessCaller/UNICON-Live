@@ -165,6 +165,8 @@ class BottomProfile extends StatelessWidget {
     } else {
       return CachedNetworkImage(
         imageUrl: userDB.profile,
+        placeholder: (context, url) => CircularProgressIndicator(),
+        errorWidget: (context, url, error) => Icon(UniIcon.settings),
         imageBuilder: (context, imageProvider) => Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
