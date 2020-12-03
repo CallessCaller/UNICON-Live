@@ -212,28 +212,6 @@ class _FeedBoxState extends State<FeedBox> {
                                         children: [
                                           Expanded(
                                             child: FlatButton(
-                                              color: dialogColor3,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        widgetRadius),
-                                              ),
-                                              child: Text(
-                                                '아니요',
-                                                style: TextStyle(
-                                                  color: dialogColor4,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                          ),
-                                          SizedBox(width: 10),
-                                          Expanded(
-                                            child: FlatButton(
                                               color: appKeyColor,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
@@ -265,6 +243,28 @@ class _FeedBoxState extends State<FeedBox> {
                                                       widget.userDB.dislikeFeed
                                                 });
 
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                            child: FlatButton(
+                                              color: dialogColor3,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        widgetRadius),
+                                              ),
+                                              child: Text(
+                                                '아니요',
+                                                style: TextStyle(
+                                                  color: dialogColor4,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              onPressed: () {
                                                 Navigator.of(context).pop();
                                               },
                                             ),
@@ -518,39 +518,71 @@ class _FeedBoxState extends State<FeedBox> {
 
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(
-              //side: BorderSide(color: Colors.white.withOpacity(0.3)),
-              borderRadius: BorderRadius.circular(11)),
-          backgroundColor: Colors.black,
-          content: Text(
-            "정말 삭제하시겠습니까?",
-            style: TextStyle(fontSize: textFontSize),
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 10,
           ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(
-                '삭제',
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(dialogRadius),
+          ),
+          backgroundColor: dialogColor1,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 10),
+              Text(
+                "정말 삭제하시겠습니까?",
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: textFontSize),
               ),
-              onPressed: () async {
-                await widget.userDB.reference
-                    .collection('my_post')
-                    .doc(widget.feed.feedID)
-                    .delete();
-                await widget.feed.reference.delete();
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              child: Text(
-                '취소',
-                style: TextStyle(fontSize: textFontSize),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: FlatButton(
+                      color: dialogColor3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(widgetRadius),
+                      ),
+                      child: Text(
+                        '삭제',
+                        style: TextStyle(
+                          color: dialogColor4,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      onPressed: () async {
+                        await widget.userDB.reference
+                            .collection('my_post')
+                            .doc(widget.feed.feedID)
+                            .delete();
+                        await widget.feed.reference.delete();
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: FlatButton(
+                      color: appKeyColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(widgetRadius),
+                      ),
+                      child: Text(
+                        '취소',
+                        style: subtitle3,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
         );
       },
     );

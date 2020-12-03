@@ -22,6 +22,7 @@ class _FeedWritePageState extends State<FeedWritePage> {
   TextEditingController _content = TextEditingController();
   FocusNode scFocus = new FocusNode();
   FocusNode contentFocus = new FocusNode();
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -77,7 +78,7 @@ class _FeedWritePageState extends State<FeedWritePage> {
                         toastLength: Toast.LENGTH_SHORT,
                         gravity: ToastGravity.CENTER,
                         timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.grey[700],
+                        backgroundColor: dialogColor1,
                         textColor: Colors.white,
                         fontSize: textFontSize,
                       );
@@ -110,7 +111,7 @@ class _FeedWritePageState extends State<FeedWritePage> {
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.CENTER,
                               timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.grey[700],
+                              backgroundColor: dialogColor1,
                               textColor: Colors.white,
                               fontSize: textFontSize,
                             );
