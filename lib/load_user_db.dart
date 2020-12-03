@@ -36,7 +36,7 @@ class LoadUser {
             : _profile,
         'name': _displayName,
         'email': _email ?? '',
-        'points': 1,
+        'points': 0,
         'youtube_link': '',
         'soundcloud_link': '',
         'instagram_id': '',
