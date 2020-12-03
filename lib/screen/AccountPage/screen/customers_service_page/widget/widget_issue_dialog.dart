@@ -224,7 +224,7 @@ class _IssueDialogWidgetState extends State<IssueDialogWidget> {
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.CENTER,
                               timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black.withOpacity(0.7),
+                              backgroundColor: dialogColor1,
                               textColor: Colors.white,
                               fontSize: textFontSize,
                             );

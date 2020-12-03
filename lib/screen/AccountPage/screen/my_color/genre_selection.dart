@@ -23,6 +23,8 @@ class _GenreSelectionPageState extends State<GenreSelectionPage> {
     value: (element) => false,
   );
 
+  bool _isLoading = false;
+
   _initializeSetting() {
     for (var i = 0; i < _genreMap.length; i++) {
       for (var j = 0; j < widget.userDB.preferredGenre.length; j++) {
@@ -134,6 +136,9 @@ class _GenreSelectionPageState extends State<GenreSelectionPage> {
                   borderRadius: BorderRadius.circular(14),
                 ),
                 onPressed: () async {
+                  setState(() {
+                    _isLoading = true;
+                  });
                   await FirebaseFirestore.instance
                       .collection('Users')
                       .doc(widget.userDB.id)
@@ -145,10 +150,14 @@ class _GenreSelectionPageState extends State<GenreSelectionPage> {
                   );
                   Navigator.of(context).pop();
                 },
-                child: Text(
-                  '선택하기',
-                  style: subtitle1,
-                ),
+                child: _isLoading
+                    ? CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      )
+                    : Text(
+                        '선택하기',
+                        style: subtitle1,
+                      ),
               ),
             )
           ],

@@ -18,6 +18,7 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
   TextEditingController _controller2;
   ScrollController _scrollController;
   bool lastStatus = true;
+  bool _isLoading = false;
   Map<String, bool> _route = {
     "SNS": false,
     "공연": false,
@@ -428,6 +429,9 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                         (_controller2.text != '')) {
                       for (var i = 0; i < _route.keys.length; i++) {
                         if (_route[_route.keys.toList()[i]]) {
+                          setState(() {
+                            _isLoading = true;
+                          });
                           // Collection 불러오기
                           CollectionReference newUnionRequestCollection =
                               FirebaseFirestore.instance
@@ -456,16 +460,21 @@ class _RequestNewMusicianPageState extends State<RequestNewMusicianPage> {
                         toastLength: Toast.LENGTH_SHORT,
                         gravity: ToastGravity.CENTER,
                         timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.grey[500],
+                        backgroundColor: dialogColor1,
                         textColor: Colors.white,
                         fontSize: textFontSize,
                       );
                     }
                   },
-                  child: Text(
-                    '추천하기',
-                    style: subtitle1,
-                  ),
+                  child: _isLoading
+                      ? CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        )
+                      : Text(
+                          '추천하기',
+                          style: subtitle1,
+                        ),
                 ),
               )
             ],

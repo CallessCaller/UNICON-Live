@@ -201,23 +201,7 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
   Widget _buildGenreMoodRow() {
     List<Widget> res = [];
     if (widget.artist.genre != null) {
-      if (widget.artist.genre.length == 0) {
-        res.add(
-          Chip(
-            shape: StadiumBorder(
-              side: BorderSide(
-                color: outlineColor,
-                width: 1,
-              ),
-            ),
-            backgroundColor: Colors.black,
-            label: Text(
-              '장르 X',
-              style: body4,
-            ),
-          ),
-        );
-      } else {
+      if (widget.artist.genre.length != 0) {
         for (var i = 0; i < widget.artist.genre.length; i++) {
           res.add(
             Chip(
@@ -255,23 +239,7 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
     );
 
     if (widget.artist.mood != null) {
-      if (widget.artist.mood.length == 0) {
-        res.add(
-          Chip(
-            shape: StadiumBorder(
-              side: BorderSide(
-                color: outlineColor,
-                width: 1,
-              ),
-            ),
-            backgroundColor: Colors.black,
-            label: Text(
-              '무드 X',
-              style: body4,
-            ),
-          ),
-        );
-      } else {
+      if (widget.artist.mood.length != 0) {
         for (var i = 0; i < widget.artist.mood.length; i++) {
           res.add(
             Chip(
@@ -295,6 +263,10 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
           }
         }
       }
+    }
+
+    if (res.length == 1) {
+      return SizedBox();
     }
 
     return SingleChildScrollView(

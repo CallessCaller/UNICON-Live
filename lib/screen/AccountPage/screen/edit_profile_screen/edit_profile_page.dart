@@ -29,6 +29,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   File _image;
   bool _canGo = true;
   FToast fToast;
+  bool _isLoading = false;
 
   String _profileImageURL;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
@@ -813,6 +814,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               }
 
                               if (check1 || check2 || check3) {
+                                setState(() {
+                                  _canGo = false;
+                                  _isLoading = true;
+                                });
                                 await FirebaseFirestore.instance
                                     .collection('Users')
                                     .doc(widget.userDB.id)
@@ -851,6 +856,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               );
                             }
                           } else {
+                            setState(() {
+                              _canGo = false;
+                              _isLoading = true;
+                            });
                             await FirebaseFirestore.instance
                                 .collection('Users')
                                 .doc(widget.userDB.id)
@@ -890,10 +899,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         }
                       }
                     : null,
-                child: Text(
-                  '저장',
-                  style: subtitle1,
-                ),
+                child: _isLoading
+                    ? CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      )
+                    : Text(
+                        '저장',
+                        style: subtitle1,
+                      ),
               ),
             )
           ],

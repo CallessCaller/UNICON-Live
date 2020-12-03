@@ -51,7 +51,7 @@ class ArtistOrUser extends StatelessWidget {
               left: 30,
               right: 30,
               child: Text(
-                "'네'를 선택하시면 뮤지션 등록을 위한 추가 정보가 필요합니다.",
+                "'네'를 선택하시면 뮤지션 등록을 위한\n추가 정보가 필요합니다.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: appKeyColor,
