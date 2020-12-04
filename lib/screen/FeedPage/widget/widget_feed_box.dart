@@ -285,101 +285,115 @@ class _FeedBoxState extends State<FeedBox> {
                 ],
               ),
             ),
-            Column(
-              children: [
-                widget.feed.progressive != null
-                    ? Padding(
-                        padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Color(0xff8e00c9),
-                                    Color(0xff160176),
-                                  ],
+            InkWell(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => StreamProvider.value(
+                    value: StreamOfuser().getUser(widget.userDB.id),
+                    child: FeedDetail(
+                      feed: widget.feed,
+                      userDB: widget.userDB,
+                    ),
+                  ),
+                ));
+              },
+              child: Column(
+                children: [
+                  widget.feed.progressive != null
+                      ? Padding(
+                          padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color(0xff8e00c9),
+                                      Color(0xff160176),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              child: IconButton(
-                                iconSize: 30,
-                                icon: Icon(
-                                  Icons.play_arrow_rounded,
-                                  color: Colors.white,
-                                ),
-                                onPressed: () async {
-                                  try {
-                                    var response = await http.get(
-                                        '${widget.feed.progressive}?client_id=' +
-                                            _clientId);
-                                    String streamURL =
-                                        json.decode(response.body)['url'];
+                                child: IconButton(
+                                  iconSize: 30,
+                                  icon: Icon(
+                                    Icons.play_arrow_rounded,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () async {
+                                    try {
+                                      var response = await http.get(
+                                          '${widget.feed.progressive}?client_id=' +
+                                              _clientId);
+                                      String streamURL =
+                                          json.decode(response.body)['url'];
 
-                                    await _assetsAudioPlayer.open(
-                                      Audio.network(
-                                        streamURL,
-                                        metas: Metas(
-                                            title: widget.feed.title,
-                                            image: MetasImage.network(
-                                                widget.feed.artwork ?? '')),
-                                      ),
-                                      autoStart: true,
-                                      showNotification: false,
-                                      playInBackground:
-                                          PlayInBackground.enabled,
-                                      audioFocusStrategy:
-                                          AudioFocusStrategy.request(
-                                              resumeAfterInterruption: true,
-                                              resumeOthersPlayersAfterDone:
-                                                  true),
-                                      headPhoneStrategy:
-                                          HeadPhoneStrategy.pauseOnUnplug,
-                                    );
-                                  } catch (e) {
-                                    print(e);
-                                  }
-                                },
+                                      await _assetsAudioPlayer.open(
+                                        Audio.network(
+                                          streamURL,
+                                          metas: Metas(
+                                              title: widget.feed.title,
+                                              image: MetasImage.network(
+                                                  widget.feed.artwork ?? '')),
+                                        ),
+                                        autoStart: true,
+                                        showNotification: false,
+                                        playInBackground:
+                                            PlayInBackground.enabled,
+                                        audioFocusStrategy:
+                                            AudioFocusStrategy.request(
+                                                resumeAfterInterruption: true,
+                                                resumeOthersPlayersAfterDone:
+                                                    true),
+                                        headPhoneStrategy:
+                                            HeadPhoneStrategy.pauseOnUnplug,
+                                      );
+                                    } catch (e) {
+                                      print(e);
+                                    }
+                                  },
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 14),
-                            Expanded(
-                              child: Text(
-                                widget.feed.title,
-                                softWrap: true,
-                                style: body3,
+                              SizedBox(width: 14),
+                              Expanded(
+                                child: Text(
+                                  widget.feed.title,
+                                  softWrap: true,
+                                  style: body3,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : SizedBox(),
-                widget.feed.image != null
-                    ? Padding(
-                        padding: const EdgeInsets.only(top: 12),
-                        child: Hero(
-                          tag: widget.feed.feedID,
-                          child: CachedNetworkImage(
-                            imageUrl: widget.feed.image,
-                            imageBuilder: (context, imageProvider) => Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.width * 0.9,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: imageProvider,
+                            ],
+                          ),
+                        )
+                      : SizedBox(),
+                  widget.feed.image != null
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: Hero(
+                            tag: widget.feed.feedID,
+                            child: CachedNetworkImage(
+                              imageUrl: widget.feed.image,
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.width * 0.9,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: imageProvider,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      )
-                    : SizedBox(),
-              ],
+                        )
+                      : SizedBox(),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 15, 12, 0),
@@ -394,7 +408,6 @@ class _FeedBoxState extends State<FeedBox> {
                                 ? (firstHalf + "...")
                                 : (firstHalf + secondHalf),
                           ),
-                    // child: Text(widget.feed.content,),
                   ),
                   SizedBox(width: 43),
                   Column(
