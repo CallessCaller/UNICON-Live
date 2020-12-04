@@ -22,6 +22,7 @@ class UserDB {
   final List<dynamic> dislikeComment;
   final List<dynamic> dislikeChat;
   int fee;
+  final bool admin;
   final Timestamp createTime;
   final DocumentReference reference;
 
@@ -47,7 +48,8 @@ class UserDB {
         dislikeFeed = map['dislikeFeed'],
         dislikeComment = map['dislikeComment'],
         dislikeChat = map['dislikeChat'],
-        createTime = map['createTime'];
+        createTime = map['createTime'],
+        admin = map['admin'];
 
   UserDB.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data(), reference: snapshot.reference);

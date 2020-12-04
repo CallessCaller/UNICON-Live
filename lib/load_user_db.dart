@@ -34,7 +34,7 @@ class LoadUser {
         'profile': _profile == null
             ? 'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/unnamed.png?alt=media&token=5b656cb4-055c-4734-a93b-b3c9c629fc5a'
             : _profile,
-        'name': _displayName,
+        'name': _displayName ?? '익명',
         'email': _email ?? '',
         'points': 0,
         'youtube_link': '',

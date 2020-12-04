@@ -205,8 +205,6 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
   }
 
   Widget _buildBody(BuildContext context, DocumentSnapshot snapshot) {
-    print(_lastLifecycleState);
-
     Artist _artist = Artist.fromSnapshot(snapshot);
     if (_artist.liveNow == false) {
       Future.delayed(Duration.zero, () async {

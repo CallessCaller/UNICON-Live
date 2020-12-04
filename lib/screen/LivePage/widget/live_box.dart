@@ -38,14 +38,15 @@ class _LiveBoxState extends State<LiveBox> {
 
   Widget _buildBody(BuildContext context, DocumentSnapshot snapshot) {
     Artist artist = Artist.fromSnapshot(snapshot);
-    final userDB = Provider.of<UserDB>(context);
+    var userDB = Provider.of<UserDB>(context);
     return InkWell(
       onTap: () {
         if (artist.fee == null ||
             artist.id == userDB.id ||
             artist.fee == 0 ||
             (widget.live.payList != null &&
-                widget.live.payList.contains(userDB.id))) {
+                widget.live.payList.contains(userDB.id)) ||
+            (userDB.admin != null && userDB.admin)) {
           notShowAlert(context, userDB, artist, widget.live);
         } else {
           showAlertDialog(context, userDB, artist, widget.live);

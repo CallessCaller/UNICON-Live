@@ -79,8 +79,22 @@ class _ChatWidgetState extends State<ChatWidget> {
     double _width = MediaQuery.of(context).size.width;
 
     results = snapshot
-        .map((d) =>
-            nameText(d.data()['name'], d.data()['content'], d.data()['gift']))
+        .map((d) {
+          List<dynamic> haters = d.data()['haters'];
+          if (haters.contains(widget.userDB.id)) {
+            return SizedBox();
+          }
+
+          return nameText(
+              d.reference,
+              context,
+              d.data()['name'],
+              d.data()['content'],
+              d.data()['gift'],
+              d.data()['admin'] ?? false,
+              d.data()['is_artist'] ?? false,
+              widget.userDB.id);
+        })
         .toList()
         .reversed
         .toList();
@@ -168,6 +182,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                           'content': _filter.text,
                           'time': Timestamp.now().millisecondsSinceEpoch,
                           'gift': false,
+                          'haters': []
                         });
                       }
 
