@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,7 +31,8 @@ class LiveConcert extends StatefulWidget {
   _LiveConcertState createState() => _LiveConcertState();
 }
 
-class _LiveConcertState extends State<LiveConcert> {
+class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
+  AppLifecycleState _lastLifecycleState;
   Stream<DocumentSnapshot> documentStream;
   List<dynamic> viewers = [];
 
@@ -55,6 +55,7 @@ class _LiveConcertState extends State<LiveConcert> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     hideChat = true;
     _loadFirst();
     cleanDislikeChat();
@@ -87,9 +88,10 @@ class _LiveConcertState extends State<LiveConcert> {
 
   @override
   void dispose() {
-    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     stream.cancel();
     // chatFocusNode.dispose();
+
     FirebaseFirestore.instance
         .collection('Users')
         .doc(widget.artist.id)
@@ -105,6 +107,54 @@ class _LiveConcertState extends State<LiveConcert> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    super.dispose();
+  }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    switch (state) {
+      // This code is listening for inactive, paused, detached cases
+      // For example when the user presses the home button the state becomes inactive
+      // When the user forces to terminate the process it is assumed to become detached
+      // So in these cases the List viewers must pop the user
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.paused:
+      case AppLifecycleState.detached:
+        await detachedCallBack();
+        break;
+      // If the user accesses the app again when 'inactive',
+      // the state changes to 'resumed'
+      // So in this case the List viewers must add the user
+      case AppLifecycleState.resumed:
+        await resumeCallBack();
+        break;
+    }
+  }
+
+  detachedCallBack() {
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(widget.artist.id)
+        .get()
+        .then((value) {
+      if (value.data()['live_now'] == true) {
+        widget.live.viewers.remove(widget.userDB.id);
+        widget.live.reference.update({'viewers': widget.live.viewers});
+      }
+    });
+  }
+
+  resumeCallBack() {
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(widget.artist.id)
+        .get()
+        .then((value) {
+      if (value.data()['live_now'] == true) {
+        widget.live.viewers.add(widget.userDB.id);
+        widget.live.reference.update({'viewers': widget.live.viewers});
+      }
+    });
   }
 
   void _showExitDialog() {
@@ -155,6 +205,8 @@ class _LiveConcertState extends State<LiveConcert> {
   }
 
   Widget _buildBody(BuildContext context, DocumentSnapshot snapshot) {
+    print(_lastLifecycleState);
+
     Artist _artist = Artist.fromSnapshot(snapshot);
     if (_artist.liveNow == false) {
       Future.delayed(Duration.zero, () async {
