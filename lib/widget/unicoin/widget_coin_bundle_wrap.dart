@@ -144,6 +144,7 @@ class _CoinBundleState extends State<CoinBundle> {
                                       '님이 ${coinBundlePriceList[i]} 코인 후원!',
                                   'time': currentTime.millisecondsSinceEpoch,
                                   'gift': true,
+                                  'haters': [],
                                 });
                               }
                             });
