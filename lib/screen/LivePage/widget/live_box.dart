@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
@@ -39,161 +40,169 @@ class _LiveBoxState extends State<LiveBox> {
   Widget _buildBody(BuildContext context, DocumentSnapshot snapshot) {
     Artist artist = Artist.fromSnapshot(snapshot);
     var userDB = Provider.of<UserDB>(context);
-    return InkWell(
-      onTap: () {
-        if (artist.fee == null ||
-            artist.id == userDB.id ||
-            artist.fee == 0 ||
-            (widget.live.payList != null &&
-                widget.live.payList.contains(userDB.id)) ||
-            (userDB.admin != null && userDB.admin)) {
-          notShowAlert(context, userDB, artist, widget.live);
-        } else {
-          showAlertDialog(context, userDB, artist, widget.live);
-        }
-      },
-      child: Container(
-        height: 200,
-        width: MediaQuery.of(context).size.width * 0.9,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.circular(widgetRadius),
-          image: DecorationImage(
-            image: NetworkImage(artist.profile),
-            fit: BoxFit.cover,
+
+    if (artist.liveNow == false) {
+      return SizedBox();
+    } else {
+      return InkWell(
+        onTap: () {
+          if (artist.fee == null ||
+              artist.id == userDB.id ||
+              artist.fee == 0 ||
+              (widget.live.payList != null &&
+                  widget.live.payList.contains(userDB.id)) ||
+              (userDB.admin != null && userDB.admin)) {
+            notShowAlert(context, userDB, artist, widget.live);
+          } else {
+            showAlertDialog(context, userDB, artist, widget.live);
+          }
+        },
+        child: Container(
+          height: 200,
+          width: MediaQuery.of(context).size.width * 0.9,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+            borderRadius: BorderRadius.circular(widgetRadius),
+            image: DecorationImage(
+              image: NetworkImage(artist.profile),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                top: 5,
+                left: 10,
+                child: Row(
+                  children: [
+                    Icon(
+                      UniIcon.profile,
+                      size: 20,
+                    ),
+                    SizedBox(width: 3),
+                    Text(
+                      widget.live.viewers.length.toString(),
+                      style: TextStyle(
+                          fontSize: widgetFontSize, color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 5,
+                left: 5,
+                width: MediaQuery.of(context).size.width * 0.9 - 12,
+                height: 55,
+                child: ClipRRect(
+                  borderRadius:
+                      BorderRadius.only(bottomLeft: Radius.circular(6)),
+                  clipBehavior: Clip.antiAlias,
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                    child: Container(
+                      color: Colors.black.withOpacity(0),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                child: Column(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.only(bottomLeft: Radius.circular(6)),
+                        color: Colors.black.withOpacity(0.3),
+                      ),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 10,
+                          ),
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundImage: NetworkImage(artist.profile),
+                          ),
+                          VerticalDivider(
+                            width: 10,
+                            color: Colors.transparent,
+                          ),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  artist.name,
+                                  style: TextStyle(
+                                    fontSize: textFontSize,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  '라이브 방송중',
+                                  style: TextStyle(
+                                    fontSize: textFontSize - 2,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              artist.fee != 0
+                  ? Positioned(
+                      top: 5,
+                      right: 10,
+                      child: Row(
+                        children: [
+                          Icon(
+                            UniIcon.unicoin,
+                            color: appKeyColor,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            artist.fee.toString(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: textFontSize,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      ),
+                    )
+                  : SizedBox(),
+              Positioned(
+                bottom: 10,
+                right: 5,
+                child: Text(
+                  (DateTime.now()
+                              .difference(widget.live.time.toDate())
+                              .inMinutes)
+                          .toString() +
+                      '분 전',
+                  style: TextStyle(
+                    fontSize: textFontSize - 2,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-        child: Stack(
-          children: [
-            Positioned(
-              top: 5,
-              left: 10,
-              child: Row(
-                children: [
-                  Icon(
-                    UniIcon.profile,
-                    size: 20,
-                  ),
-                  SizedBox(width: 3),
-                  Text(
-                    widget.live.viewers.length.toString(),
-                    style: TextStyle(
-                        fontSize: widgetFontSize, color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              bottom: 5,
-              left: 5,
-              width: MediaQuery.of(context).size.width * 0.9 - 12,
-              height: 55,
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(6)),
-                clipBehavior: Clip.antiAlias,
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                  child: Container(
-                    color: Colors.black.withOpacity(0),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              child: Column(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.only(bottomLeft: Radius.circular(6)),
-                      color: Colors.black.withOpacity(0.3),
-                    ),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 10,
-                        ),
-                        CircleAvatar(
-                          radius: 20,
-                          backgroundImage: NetworkImage(artist.profile),
-                        ),
-                        VerticalDivider(
-                          width: 10,
-                          color: Colors.transparent,
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                artist.name,
-                                style: TextStyle(
-                                  fontSize: textFontSize,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Text(
-                                '라이브 방송중',
-                                style: TextStyle(
-                                  fontSize: textFontSize - 2,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            artist.fee != 0
-                ? Positioned(
-                    top: 5,
-                    right: 10,
-                    child: Row(
-                      children: [
-                        Icon(
-                          UniIcon.unicoin,
-                          color: appKeyColor,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          artist.fee.toString(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: textFontSize,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    ),
-                  )
-                : SizedBox(),
-            Positioned(
-              bottom: 10,
-              right: 5,
-              child: Text(
-                (DateTime.now().difference(widget.live.time.toDate()).inMinutes)
-                        .toString() +
-                    '분 전',
-                style: TextStyle(
-                  fontSize: textFontSize - 2,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+      );
+    }
   }
 
   @override

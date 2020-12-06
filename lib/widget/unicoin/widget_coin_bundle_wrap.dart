@@ -113,12 +113,27 @@ class _CoinBundleState extends State<CoinBundle> {
                                 widget.userDB.points - coinBundlePriceList[i];
                             await widget.userDB.reference
                                 .update({'points': widget.userDB.points});
-                            await widget.artist.reference.get().then((value) {
+                            await FirebaseFirestore.instance
+                                .collection('Users')
+                                .doc(widget.artist.id)
+                                .get()
+                                .then((value) {
                               total = value.data()['points'];
                             }).whenComplete(() async {
                               await widget.artist.reference.update(
                                   {'points': total + coinBundlePriceList[i]});
-                              if (widget.artist.liveNow == true) {
+
+                              bool liveNow = false;
+
+                              await FirebaseFirestore.instance
+                                  .collection('Users')
+                                  .doc(widget.artist.id)
+                                  .get()
+                                  .then((value) {
+                                liveNow = value.data()['live_now'];
+                              });
+
+                              if (liveNow == true) {
                                 widget.live.reference
                                     .collection('chitchat')
                                     .add({
