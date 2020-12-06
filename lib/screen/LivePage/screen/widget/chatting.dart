@@ -221,6 +221,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                                       'time': Timestamp.now()
                                           .millisecondsSinceEpoch,
                                       'gift': false,
+                                      'haters': [],
                                     });
                                   }
 
