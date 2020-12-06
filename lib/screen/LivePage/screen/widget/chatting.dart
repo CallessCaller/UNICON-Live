@@ -145,14 +145,13 @@ class _ChatWidgetState extends State<ChatWidget> {
           child: Row(
             children: [
               InkWell(
-                  child: Icon(
-                    UniIcon.unicoin,
-                    color: Colors.grey,
-                    size: 30,
-                  ),
-                  onTap: () {
-                    _showDialog();
-                  }),
+                child: Icon(
+                  UniIcon.unicoin,
+                  color: Colors.grey,
+                  size: 30,
+                ),
+                onTap: _showDialog,
+              ),
               SizedBox(
                 width: 10,
               ),
