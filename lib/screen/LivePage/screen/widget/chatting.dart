@@ -80,7 +80,7 @@ class _ChatWidgetState extends State<ChatWidget> {
 
     results = snapshot
         .map((d) {
-          List<dynamic> haters = d.data()['haters'];
+          List<dynamic> haters = d.data()['haters'] ?? [];
           if (haters.contains(widget.userDB.id)) {
             return SizedBox();
           }
