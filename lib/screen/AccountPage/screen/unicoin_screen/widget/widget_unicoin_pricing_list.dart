@@ -3,8 +3,15 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:testing_layout/components/constant.dart';
+import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/users.dart';
+import 'package:testing_layout/widget/unicoin/widget_unicoin10.dart';
+import 'package:testing_layout/widget/unicoin/widget_unicoin100.dart';
+import 'package:testing_layout/widget/unicoin/widget_unicoin1000.dart';
+import 'package:testing_layout/widget/unicoin/widget_unicoin50.dart';
+import 'package:testing_layout/widget/unicoin/widget_unicoin500.dart';
 
 const bool _kAutoConsume = true;
 
@@ -177,12 +184,97 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
       },
     ));
 
-    return Column(children: productList);
+    return Column(
+      children: [
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [productList[0], productList[1], productList[2]]),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [productList[3], productList[4]]),
+      ],
+    );
   }
 
-  Widget priceButton(UserDB userdB, ProductDetails productDetails) {
-    return FlatButton(
-      onPressed: () {
+  // Widget priceButton(UserDB userdB, ProductDetails productDetails) {
+  //   return FlatButton(
+  //     onPressed: () {
+  //       PurchaseParam purchaseParam = PurchaseParam(
+  //           productDetails: productDetails,
+  //           applicationUserName: null,
+  //           sandboxTesting: true);
+
+  //       _connection.buyConsumable(
+  //           purchaseParam: purchaseParam,
+  //           autoConsume: _kAutoConsume || Platform.isIOS);
+  //     },
+  //     color: appKeyColor,
+  //     minWidth: 110,
+  //     height: 30,
+  //     shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(widgetRadius)),
+  //     child: Text(
+  //       productDetails.price,
+  //       textAlign: TextAlign.center,
+  //       style: TextStyle(
+  //         color: Colors.white,
+  //         fontSize: textFontSize,
+  //         fontWeight: FontWeight.w600,
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  Widget priceTag(UserDB userDB, ProductDetails productDetails) {
+    Widget coinTitle = SizedBox();
+    if (productDetails.id == _kProductIds[0]) {
+      coinTitle = Shimmer.fromColors(
+        baseColor: Color(0xffaaa9ad),
+        highlightColor: Color(0xffe2e2e3),
+        child: Icon(
+          UniIcon.unicoin,
+          size: 40,
+        ),
+      );
+    } else if (productDetails.id == _kProductIds[1]) {
+      coinTitle = Shimmer.fromColors(
+        baseColor: Color(0xffe0aa3e),
+        highlightColor: Color(0xfff7ef8a),
+        child: Icon(
+          UniIcon.unicoin,
+          size: 40,
+        ),
+      );
+    } else if (productDetails.id == _kProductIds[2]) {
+      coinTitle = Shimmer.fromColors(
+        baseColor: Color(0xfffe37af),
+        highlightColor: Color(0xfffe81cc),
+        child: Icon(
+          UniIcon.unicoin,
+          size: 40,
+        ),
+      );
+    } else if (productDetails.id == _kProductIds[3]) {
+      coinTitle = Shimmer.fromColors(
+        baseColor: Color(0xffd21404),
+        highlightColor: Color(0xffeb6c6b),
+        child: Icon(
+          UniIcon.unicoin,
+          size: 40,
+        ),
+      );
+    } else if (productDetails.id == _kProductIds[4]) {
+      coinTitle = Shimmer.fromColors(
+        baseColor: Color(0xff7f00ff),
+        highlightColor: Color(0xffe39ff6),
+        child: Icon(
+          UniIcon.unicoin,
+          size: 40,
+        ),
+      );
+    }
+    return InkWell(
+      onTap: () {
         PurchaseParam purchaseParam = PurchaseParam(
             productDetails: productDetails,
             applicationUserName: null,
@@ -192,43 +284,23 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
             purchaseParam: purchaseParam,
             autoConsume: _kAutoConsume || Platform.isIOS);
       },
-      color: appKeyColor,
-      minWidth: 110,
-      height: 30,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(widgetRadius)),
-      child: Text(
-        productDetails.price,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: textFontSize,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    );
-  }
-
-  Widget priceTag(UserDB userDB, ProductDetails productDetails) {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            width: 40,
-            alignment: Alignment.centerLeft,
-            child: Text(
-              productDetails.title,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: textFontSize,
-                fontWeight: FontWeight.w600,
+      child: Container(
+        alignment: Alignment.center,
+        child: Column(
+          children: [
+            coinTitle,
+            Container(
+              height: 30,
+              width: 100,
+              alignment: Alignment.center,
+              child: Text(
+                productDetails.price,
+                style: body4,
               ),
             ),
-          ),
+          ],
         ),
-        priceButton(userDB, productDetails),
-      ],
+      ),
     );
   }
 

@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/components/constant.dart';
+import 'package:testing_layout/screen/SearchPage/screen/searched_artists.dart';
 import 'package:testing_layout/screen/UnionPage/widget/instagram_link_box.dart';
 import 'package:testing_layout/screen/UnionPage/widget/soundcloud_link_box.dart';
 import 'package:testing_layout/screen/UnionPage/widget/union_donate.dart';
@@ -81,6 +84,8 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
 
   @override
   Widget build(BuildContext context) {
+    var artists = Provider.of<QuerySnapshot>(context);
+    final musicians = artists.docs.map((e) => Artist.fromSnapshot(e)).toList();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -193,28 +198,42 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
           ],
         ),
         SizedBox(height: 20),
-        _buildGenreMoodRow(),
+        _buildGenreMoodRow(musicians),
       ],
     );
   }
 
-  Widget _buildGenreMoodRow() {
+  Widget _buildGenreMoodRow(List<Artist> artists) {
     List<Widget> res = [];
     if (widget.artist.genre != null) {
       if (widget.artist.genre.length != 0) {
         for (var i = 0; i < widget.artist.genre.length; i++) {
           res.add(
-            Chip(
-              shape: StadiumBorder(
-                side: BorderSide(
-                  color: outlineColor,
-                  width: 2,
+            InkWell(
+              onTap: () {
+                List<Artist> results = [];
+                artists.forEach((element) {
+                  if (element.genre != null &&
+                      element.genre.contains(widget.artist.genre[i])) {
+                    results.add(element);
+                  }
+                });
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => SearchedArtist(
+                        results, widget.userDB, widget.artist.genre[i])));
+              },
+              child: Chip(
+                shape: StadiumBorder(
+                  side: BorderSide(
+                    color: outlineColor,
+                    width: 2,
+                  ),
                 ),
-              ),
-              backgroundColor: Colors.black,
-              label: Text(
-                widget.artist.genre[i],
-                style: body4,
+                backgroundColor: Colors.black,
+                label: Text(
+                  widget.artist.genre[i],
+                  style: body4,
+                ),
               ),
             ),
           );
@@ -242,17 +261,31 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
       if (widget.artist.mood.length != 0) {
         for (var i = 0; i < widget.artist.mood.length; i++) {
           res.add(
-            Chip(
-              shape: StadiumBorder(
-                side: BorderSide(
-                  color: outlineColor,
-                  width: 1,
+            InkWell(
+              onTap: () {
+                List<Artist> results = [];
+                artists.forEach((element) {
+                  if (element.mood != null &&
+                      element.mood.contains(widget.artist.mood[i])) {
+                    results.add(element);
+                  }
+                });
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => SearchedArtist(
+                        results, widget.userDB, widget.artist.mood[i])));
+              },
+              child: Chip(
+                shape: StadiumBorder(
+                  side: BorderSide(
+                    color: outlineColor,
+                    width: 1,
+                  ),
                 ),
-              ),
-              backgroundColor: Colors.black,
-              label: Text(
-                widget.artist.mood[i],
-                style: body4,
+                backgroundColor: Colors.black,
+                label: Text(
+                  widget.artist.mood[i],
+                  style: body4,
+                ),
               ),
             ),
           );

@@ -5,6 +5,7 @@ import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/model/users.dart';
+import 'package:testing_layout/screen/AccountPage/screen/unicoin_screen/unicoin_page.dart';
 import 'package:testing_layout/widget/unicoin/widget_unicoin10.dart';
 import 'package:testing_layout/widget/unicoin/widget_unicoin100.dart';
 import 'package:testing_layout/widget/unicoin/widget_unicoin1000.dart';
@@ -134,7 +135,9 @@ class _CoinBundleState extends State<CoinBundle> {
                               });
 
                               if (liveNow == true) {
-                                widget.live.reference
+                                await FirebaseFirestore.instance
+                                    .collection('LiveTmp')
+                                    .doc(widget.artist.id)
                                     .collection('chitchat')
                                     .add({
                                   'id': widget.userDB.id,
@@ -223,6 +226,7 @@ class _CoinBundleState extends State<CoinBundle> {
                     setState(() {
                       _enabled = false;
                     });
+
                     Widget toast = Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 24.0,
@@ -252,6 +256,13 @@ class _CoinBundleState extends State<CoinBundle> {
                       child: toast,
                       gravity: ToastGravity.BOTTOM,
                       toastDuration: Duration(seconds: 2),
+                    );
+
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            MyUnicoinPage(userDB: widget.userDB),
+                      ),
                     );
 
                     Future.delayed(

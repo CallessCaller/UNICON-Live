@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -5,6 +6,7 @@ import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/screen/AccountPage/screen/settings_page/screen/screen_app_information.dart';
 import 'package:testing_layout/screen/AccountPage/screen/settings_page/screen/screen_lab.dart';
+import 'package:testing_layout/screen/LoginPage/login_page.dart';
 
 FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
@@ -239,6 +241,82 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       '앱 정보',
+                      style: subtitle1,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              InkWell(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 10,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(dialogRadius),
+                        ),
+                        backgroundColor: dialogColor1,
+                        title: Center(
+                          child: Text(
+                            '로그아웃',
+                            style: title1,
+                          ),
+                        ),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('로그아웃 하시겠습니까?'),
+                            SizedBox(height: 10),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: FlatButton(
+                                    color: dialogColor3,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(widgetRadius),
+                                    ),
+                                    child: Text(
+                                      '로그아웃',
+                                      style: TextStyle(
+                                        color: dialogColor4,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      if (widget.userDB.id.contains('kakao')) {
+                                        await kakaoSignOut(context);
+                                        await FirebaseAuth.instance.signOut();
+                                      } else {
+                                        signOutGoogle(context);
+                                        await FirebaseAuth.instance.signOut();
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Container(
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      '로그아웃',
                       style: subtitle1,
                     ),
                   ),
