@@ -70,6 +70,9 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
       });
     });
 
+    // hide status bar
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+
     if (Platform.isAndroid) {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeLeft,
