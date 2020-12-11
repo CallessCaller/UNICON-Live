@@ -317,7 +317,11 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       '로그아웃',
-                      style: subtitle1,
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),

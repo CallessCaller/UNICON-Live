@@ -106,6 +106,8 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
       }
     });
 
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,

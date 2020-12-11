@@ -260,12 +260,49 @@ class _AppInformationPageState extends State<AppInformationPage> {
                             style: subtitle1,
                           ),
                         ),
-                        Text(
-                          version,
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(0.65),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                        InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 15,
+                                    vertical: 10,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(dialogRadius),
+                                  ),
+                                  backgroundColor: dialogColor1,
+                                  title: Center(
+                                    child: Text(
+                                      '개발자 정보',
+                                      style: title1,
+                                    ),
+                                  ),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                          "Front-end\n정*헌 botsforme@snu.ac.kr"),
+                                      Text("Back-end\n박*태 pht0639@gmail.com"),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: Text(
+                            version,
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.65),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ],

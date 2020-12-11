@@ -103,7 +103,7 @@ class _FeedBoxState extends State<FeedBox> {
               padding: EdgeInsets.fromLTRB(12, 6, 0, 6),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
                     onTap: () async {
@@ -121,16 +121,19 @@ class _FeedBoxState extends State<FeedBox> {
                         ),
                       );
                     },
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(snapshot.data()['profile']),
-                      radius: 17,
-                    ),
-                  ),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      snapshot.data()['name'],
-                      style: body2,
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(snapshot.data()['profile']),
+                          radius: 17,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          snapshot.data()['name'],
+                          style: body2,
+                        ),
+                      ],
                     ),
                   ),
                   widget.feed.id == widget.userDB.id
