@@ -46,15 +46,17 @@ class _LiveBoxState extends State<LiveBox> {
     } else {
       return InkWell(
         onTap: () {
-          if (artist.fee == null ||
-              artist.id == userDB.id ||
-              artist.fee == 0 ||
-              (widget.live.payList != null &&
-                  widget.live.payList.contains(userDB.id)) ||
-              (userDB.admin != null && userDB.admin)) {
-            notShowAlert(context, userDB, artist, widget.live);
-          } else {
-            showAlertDialog(context, userDB, artist, widget.live);
+          if (!widget.live.viewers.contains(userDB.id)) {
+            if (artist.fee == null ||
+                artist.id == userDB.id ||
+                artist.fee == 0 ||
+                (widget.live.payList != null &&
+                    widget.live.payList.contains(userDB.id)) ||
+                (userDB.admin != null && userDB.admin)) {
+              notShowAlert(context, userDB, artist, widget.live);
+            } else {
+              showAlertDialog(context, userDB, artist, widget.live);
+            }
           }
         },
         child: Container(

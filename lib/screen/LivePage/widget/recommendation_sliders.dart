@@ -1,11 +1,56 @@
 import 'dart:ui';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/screen/LivePage/widget/live_box.dart';
+
+class HotLives extends StatefulWidget {
+  final List<Artist> artists;
+  final List<Lives> lives;
+  final UserDB userDB;
+
+  const HotLives({Key key, this.artists, this.lives, this.userDB})
+      : super(key: key);
+  @override
+  _HotLivesState createState() => _HotLivesState();
+}
+
+class _HotLivesState extends State<HotLives> {
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> result = [];
+    widget.lives.sort((a, b) => b.viewers.length.compareTo(a.viewers.length));
+    for (int i = 0; i < widget.lives.length; i++) {
+      if (result.length == 10) break;
+
+      int index = widget.artists
+          .indexWhere((artist) => artist.id.contains(widget.lives[i].id));
+      result.add(slider(
+          context, widget.artists[index], widget.lives[i], widget.userDB));
+    }
+    if (result.length == 0) {
+      result.add(Center(
+        child: Text('현재 라이브가 없습니다.'),
+      ));
+    }
+    return CarouselSlider(
+      options: CarouselOptions(
+        enableInfiniteScroll: true,
+        viewportFraction: 0.5,
+        height: 150,
+        aspectRatio: 2,
+        enlargeCenterPage: true,
+        scrollDirection: Axis.horizontal,
+        autoPlay: false,
+      ),
+      items: result,
+    );
+  }
+}
 
 List<Widget> hotLive(BuildContext context, List<Artist> artists,
     List<Lives> lives, UserDB userDB) {
@@ -30,12 +75,14 @@ Widget slider(BuildContext context, Artist artist, Lives live, UserDB userDB) {
     decoration: BoxDecoration(border: Border.all(color: Colors.black)),
     child: InkWell(
       onTap: () {
-        if (artist.fee == null ||
-            artist.fee == 0 ||
-            (live.payList != null && live.payList.contains(userDB.id))) {
-          notShowAlert(context, userDB, artist, live);
-        } else {
-          showAlertDialog(context, userDB, artist, live);
+        if (!live.viewers.contains(userDB.id)) {
+          if (artist.fee == null ||
+              artist.fee == 0 ||
+              (live.payList != null && live.payList.contains(userDB.id))) {
+            notShowAlert(context, userDB, artist, live);
+          } else {
+            showAlertDialog(context, userDB, artist, live);
+          }
         }
       },
       child: Container(
