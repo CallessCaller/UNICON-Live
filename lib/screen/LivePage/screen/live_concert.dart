@@ -70,9 +70,6 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
       });
     });
 
-    // hide status bar
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
-
     if (Platform.isAndroid) {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeLeft,
@@ -87,6 +84,9 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
+
+    // hide status bar
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
   }
 
   @override
