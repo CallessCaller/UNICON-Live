@@ -144,7 +144,7 @@ class _CoinBundleState extends State<CoinBundle> {
                                   'name': '',
                                   'is_artist': widget.userDB.isArtist,
                                   'content': widget.userDB.name +
-                                      '님이 ${coinBundlePriceList[i]} 코인 후원!',
+                                      '님이 ${coinBundlePriceList[i]} 코인 후원',
                                   'time': currentTime.millisecondsSinceEpoch,
                                   'gift': true,
                                   'haters': [],

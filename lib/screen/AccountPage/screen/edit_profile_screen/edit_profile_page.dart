@@ -760,16 +760,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               if (_youtubeEditingController.text != '') {
                                 if (_youtubeEditingController.text
                                     .contains('youtube.com')) {
-                                  if (_soundcloudEditingController.text
-                                      .startsWith('https://')) {
-                                    _userUploadResult['youtube_link'] =
-                                        _youtubeEditingController.text.trim();
-                                  } else {
-                                    _userUploadResult['youtube_link'] =
-                                        'https://' +
-                                            _youtubeEditingController.text
-                                                .trim();
-                                  }
+                                  _userUploadResult['youtube_link'] =
+                                      _youtubeEditingController.text.trim();
 
                                   check2 = true;
                                 } else {

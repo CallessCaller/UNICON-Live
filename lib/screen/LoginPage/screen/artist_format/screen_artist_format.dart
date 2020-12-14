@@ -318,6 +318,7 @@ class _ArtistFormState extends State<ArtistForm> {
                               if (_soundcloudEditingController.text
                                   .contains('soundcloud.com')) {
                                 if (_soundcloudEditingController.text
+                                    .trim()
                                     .startsWith('https://')) {
                                   _userUploadResult['soundcloud_link'] =
                                       _soundcloudEditingController.text.trim();
@@ -371,20 +372,10 @@ class _ArtistFormState extends State<ArtistForm> {
                             if (_youtubeEditingController.text != '') {
                               if (_youtubeEditingController.text
                                   .contains('youtube.com')) {
-                                if (_soundcloudEditingController.text
-                                    .startsWith('https://')) {
-                                  _userUploadResult['youtube_link'] =
-                                      _youtubeEditingController.text.trim();
-                                  _pendingUploadResult['youtube_link'] =
-                                      _youtubeEditingController.text.trim();
-                                } else {
-                                  _userUploadResult['youtube_link'] =
-                                      'https://' +
-                                          _youtubeEditingController.text.trim();
-                                  _pendingUploadResult['youtube_link'] =
-                                      'https://' +
-                                          _youtubeEditingController.text.trim();
-                                }
+                                _userUploadResult['youtube_link'] =
+                                    _youtubeEditingController.text.trim();
+                                _pendingUploadResult['youtube_link'] =
+                                    _youtubeEditingController.text.trim();
 
                                 check2 = true;
                               } else {

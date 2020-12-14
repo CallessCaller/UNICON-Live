@@ -29,7 +29,7 @@ Widget nameText(DocumentReference reference, BuildContext context, String name,
             TextSpan(
               text: name,
               style: TextStyle(
-                  fontSize: textFontSize - 2,
+                  fontSize: textFontSize,
                   color: artist
                       ? appKeyColor
                       : admin
@@ -123,7 +123,7 @@ Widget nameText(DocumentReference reference, BuildContext context, String name,
                       });
                 },
             ),
-            TextSpan(text: ': ' + content)
+            TextSpan(text: gift ? content : ': ' + content)
           ],
         ),
       ),
