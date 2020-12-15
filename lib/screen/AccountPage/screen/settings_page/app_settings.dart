@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/screen/AccountPage/screen/settings_page/screen/screen_app_information.dart';
-import 'package:testing_layout/screen/AccountPage/screen/settings_page/screen/screen_lab.dart';
 import 'package:testing_layout/screen/LoginPage/login_page.dart';
 
 FirebaseMessaging _firebaseMessaging = FirebaseMessaging();

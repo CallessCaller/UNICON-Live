@@ -3,7 +3,6 @@ import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/screen/LivePage/screen/widget/chatting.dart';
 import 'package:video_player/video_player.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
 
 class WebStreaming extends StatefulWidget {
   final Artist artist;

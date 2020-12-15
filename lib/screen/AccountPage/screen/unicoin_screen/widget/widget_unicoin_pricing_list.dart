@@ -7,11 +7,6 @@ import 'package:shimmer/shimmer.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/users.dart';
-import 'package:testing_layout/widget/unicoin/widget_unicoin10.dart';
-import 'package:testing_layout/widget/unicoin/widget_unicoin100.dart';
-import 'package:testing_layout/widget/unicoin/widget_unicoin1000.dart';
-import 'package:testing_layout/widget/unicoin/widget_unicoin50.dart';
-import 'package:testing_layout/widget/unicoin/widget_unicoin500.dart';
 
 const bool _kAutoConsume = true;
 
@@ -21,13 +16,6 @@ const List<String> _kProductIds = <String>[
   'unicon.unicoin100',
   'unicon.unicoin500',
   'unicon.unicoin1000',
-];
-const List<String> _kProductPrices = <String>[
-  '1,200',
-  '5,900',
-  '12,000',
-  '60,000',
-  '119,000',
 ];
 
 // const List<String> _kProductIds = <String>[

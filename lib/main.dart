@@ -81,6 +81,7 @@ class _MyAppState extends State<MyApp> {
                 : _exist
                     ? '/inapp'
                     : '/login',
+        // initialRoute: '/first_installed',
         routes: {
           '/first_installed': (context) => AppGuideScreen(),
           '/login': (context) => LoginPage(),

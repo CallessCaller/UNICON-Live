@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/screen/UnionPage/widget/union_page_body.dart';

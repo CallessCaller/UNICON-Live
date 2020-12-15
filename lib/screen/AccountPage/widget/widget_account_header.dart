@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/users.dart';
