@@ -427,30 +427,40 @@ class _ArtistFormState extends State<ArtistForm> {
                             if (check1 || check2 || check3) {
                               // birth and profile added to user
                               _userUploadResult['profile'] = _profileImageURL;
-                              _userUploadResult['email'] = _user.email;
 
                               // id added to pending
                               _pendingUploadResult['id'] = _user.uid;
                               _pendingUploadResult['profile'] =
                                   _profileImageURL;
-                              _pendingUploadResult['email'] = _user.email;
-                              await FirebaseFirestore.instance
-                                  .collection('Users')
-                                  .doc(_user.uid)
-                                  .update(_userUploadResult);
 
-                              await FirebaseFirestore.instance
-                                  .collection('Pending')
-                                  .doc(_user.uid)
-                                  .set(_pendingUploadResult);
-
-                              await _firebaseMessaging
-                                  .subscribeToTopic(_user.uid + 'pending');
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => UnionGenreSelection(),
-                                ),
-                              );
+                              if (_user.email == null ||
+                                  _user.email.contains('appleid.com') ||
+                                  _user.email == "") {
+                                await showEmailAlert(context, _userUploadResult,
+                                    _pendingUploadResult, _user);
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => UnionGenreSelection(),
+                                  ),
+                                );
+                              } else {
+                                _userUploadResult['email'] = _user.email;
+                                _pendingUploadResult['email'] = _user.email;
+                                await uploadPending(context, _userUploadResult,
+                                    _pendingUploadResult, _user);
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => UnionGenreSelection(),
+                                  ),
+                                );
+                              }
+                              // await showEmailAlert(context, _userUploadResult,
+                              //     _pendingUploadResult, _user);
+                              // Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //     builder: (context) => UnionGenreSelection(),
+                              //   ),
+                              // );
                             }
                           } else {
                             Widget toast = Container(
@@ -569,4 +579,83 @@ class _ArtistFormState extends State<ArtistForm> {
       });
     }
   }
+}
+
+Future<void> uploadPending(
+    BuildContext context,
+    Map<String, dynamic> userUploadResult,
+    Map<String, dynamic> pendingUploadResult,
+    User user) async {
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+  await FirebaseFirestore.instance
+      .collection('Users')
+      .doc(user.uid)
+      .update(userUploadResult);
+
+  await FirebaseFirestore.instance
+      .collection('Pending')
+      .doc(user.uid)
+      .set(pendingUploadResult);
+
+  await _firebaseMessaging.subscribeToTopic(user.uid + 'pending');
+}
+
+Future<void> showEmailAlert(
+  BuildContext context,
+  Map<String, dynamic> userUploadResult,
+  Map<String, dynamic> pendingUploadResult,
+  User user,
+) async {
+  TextEditingController emailController = new TextEditingController(text: '');
+  await showDialog(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Colors.black.withOpacity(0.6),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "이메일을 입력해주세요.",
+              style: body1,
+            ),
+            TextField(
+              style: body4,
+              controller: emailController,
+              decoration: InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white)),
+                border: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white)),
+                contentPadding: EdgeInsets.all(0),
+                hintText: 'example@example.com',
+                hintStyle: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            )
+          ],
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(
+              '신청',
+              style: TextStyle(color: appKeyColor),
+            ),
+            onPressed: () async {
+              userUploadResult['email'] = emailController.text;
+              pendingUploadResult['email'] = emailController.text;
+              await uploadPending(
+                  context, userUploadResult, pendingUploadResult, user);
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

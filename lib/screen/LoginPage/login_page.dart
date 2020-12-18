@@ -291,7 +291,7 @@ Future<auth.UserCredential> kakaoSignIn() async {
 
     final auth.User firebaseUser = authResult.user;
     final auth.User currentUser = auth.FirebaseAuth.instance.currentUser;
-    print(currentUser.uid);
+
     assert(firebaseUser.uid == currentUser.uid);
 
     await _updateEmailInfo(firebaseUser);

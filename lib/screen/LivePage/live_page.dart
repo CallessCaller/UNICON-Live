@@ -75,7 +75,7 @@ class _LivePageState extends State<LivePage> {
                           scrollDirection: Axis.horizontal,
                           autoPlay: false,
                         ),
-                        items: hotLive(context, artists, lives, userDB),
+                        items: hotLive(context, lives, userDB),
                       ),
                     ),
                   ],
