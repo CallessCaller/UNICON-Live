@@ -86,12 +86,12 @@ class _OnlyChatState extends State<OnlyChat> {
     }
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Color.fromRGBO(232, 232, 232, 1),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -99,20 +99,23 @@ class _OnlyChatState extends State<OnlyChat> {
         actions: [
           Row(
             children: [
-              Icon(Icons.people),
+              Icon(
+                Icons.people,
+                color: Colors.black,
+              ),
               Text(
                 '   ' + (viewers.length).toString() + '   ',
                 style: TextStyle(
                     fontSize: textFontSize,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white),
+                    color: Colors.black),
               ),
             ],
           )
         ],
       ),
       body: Container(
-        padding: EdgeInsets.fromLTRB(50, 5, 20, 5),
+        padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
         height: _height,
         width: _width,
         color: Colors.transparent,
