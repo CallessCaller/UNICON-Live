@@ -95,16 +95,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
     stream.cancel();
     // chatFocusNode.dispose();
 
-    FirebaseFirestore.instance
-        .collection('Users')
-        .doc(widget.artist.id)
-        .get()
-        .then((value) {
-      if (value.data()['live_now'] == true) {
-        widget.live.viewers.remove(widget.userDB.id);
-        widget.live.reference.update({'viewers': widget.live.viewers});
-      }
-    });
+    removeFromViewers();
 
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
 
@@ -113,6 +104,26 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
       DeviceOrientation.portraitDown,
     ]);
     super.dispose();
+  }
+
+  void removeFromViewers() async {
+    DocumentSnapshot artistDoc = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(widget.artist.id)
+        .get();
+    if (artistDoc.data()['live_now'] == true) {
+      DocumentSnapshot liveDoc = await FirebaseFirestore.instance
+          .collection('LiveTmp')
+          .doc(widget.artist.id)
+          .get();
+      List<dynamic> viewers = liveDoc.data()['viewers'];
+      viewers.remove(widget.userDB.id);
+
+      await FirebaseFirestore.instance
+          .collection('LiveTmp')
+          .doc(widget.artist.id)
+          .update({'viewers': viewers});
+    }
   }
 
   @override
@@ -136,30 +147,44 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
     }
   }
 
-  detachedCallBack() {
-    FirebaseFirestore.instance
+  detachedCallBack() async {
+    DocumentSnapshot artistDoc = await FirebaseFirestore.instance
         .collection('Users')
         .doc(widget.artist.id)
-        .get()
-        .then((value) {
-      if (value.data()['live_now'] == true) {
-        widget.live.viewers.remove(widget.userDB.id);
-        widget.live.reference.update({'viewers': widget.live.viewers});
-      }
-    });
+        .get();
+    if (artistDoc.data()['live_now'] == true) {
+      DocumentSnapshot liveDoc = await FirebaseFirestore.instance
+          .collection('LiveTmp')
+          .doc(widget.artist.id)
+          .get();
+      List<dynamic> viewers = liveDoc.data()['viewers'];
+      viewers.remove(widget.userDB.id);
+
+      await FirebaseFirestore.instance
+          .collection('LiveTmp')
+          .doc(widget.artist.id)
+          .update({'viewers': viewers});
+    }
   }
 
-  resumeCallBack() {
-    FirebaseFirestore.instance
+  resumeCallBack() async {
+    DocumentSnapshot artistDoc = await FirebaseFirestore.instance
         .collection('Users')
         .doc(widget.artist.id)
-        .get()
-        .then((value) {
-      if (value.data()['live_now'] == true) {
-        widget.live.viewers.add(widget.userDB.id);
-        widget.live.reference.update({'viewers': widget.live.viewers});
-      }
-    });
+        .get();
+    if (artistDoc.data()['live_now'] == true) {
+      DocumentSnapshot liveDoc = await FirebaseFirestore.instance
+          .collection('LiveTmp')
+          .doc(widget.artist.id)
+          .get();
+      List<dynamic> viewers = liveDoc.data()['viewers'];
+      viewers.remove(widget.userDB.id);
+
+      await FirebaseFirestore.instance
+          .collection('LiveTmp')
+          .doc(widget.artist.id)
+          .update({'viewers': viewers});
+    }
   }
 
   void _showExitDialog() {
@@ -413,10 +438,15 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
 
   void _onLikePressed(UserDB userDB) async {
     FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
+    DocumentSnapshot artistDoc = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(widget.artist.id)
+        .get();
+    List<dynamic> myPeople = artistDoc.data()['my_people'];
     setState(() {
       // Add data to CandidatesDB
-      if (!widget.artist.myPeople.contains(widget.userDB.id)) {
-        widget.artist.myPeople.add(userDB.id);
+      if (!myPeople.contains(widget.userDB.id)) {
+        myPeople.add(userDB.id);
         userDB.follow.add(widget.artist.id);
         if (_live) {
           _firebaseMessaging.subscribeToTopic(widget.artist.id + 'live');
@@ -428,7 +458,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
 
       // Unliked
       else {
-        widget.artist.myPeople.remove(userDB.id);
+        myPeople.remove(userDB.id);
         // Delete data from UsersDB
 
         userDB.follow.remove(widget.artist.id);
@@ -440,7 +470,13 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
         }
       }
     });
-    await widget.artist.reference.update({'my_people': widget.artist.myPeople});
-    await userDB.reference.update({'follow': userDB.follow});
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(widget.artist.id)
+        .update({'my_people': myPeople});
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(userDB.id)
+        .update({'follow': userDB.follow});
   }
 }

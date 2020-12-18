@@ -80,15 +80,20 @@ Widget slider(BuildContext context, Artist artist, Lives live, UserDB userDB) {
   return Container(
     decoration: BoxDecoration(border: Border.all(color: Colors.black)),
     child: InkWell(
-      onTap: () {
-        if (!live.viewers.contains(userDB.id)) {
-          if (artist.fee == null ||
-              artist.fee == 0 ||
-              (live.payList != null && live.payList.contains(userDB.id))) {
-            notShowAlert(context, userDB, artist, live);
-          } else {
-            showAlertDialog(context, userDB, artist, live);
-          }
+      onTap: () async {
+        DocumentSnapshot liveDoc = await FirebaseFirestore.instance
+            .collection('LiveTmp')
+            .doc(artist.id)
+            .get();
+        List<dynamic> payList = liveDoc.data()['payList'];
+        if (artist.fee == null ||
+            artist.id == userDB.id ||
+            artist.fee == 0 ||
+            (payList != null && payList.contains(userDB.id)) ||
+            (userDB.admin != null && userDB.admin)) {
+          notShowAlert(context, userDB, artist, live);
+        } else {
+          showAlertDialog(context, userDB, artist, live);
         }
       },
       child: Container(

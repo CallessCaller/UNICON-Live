@@ -121,10 +121,8 @@ class _ChatWidgetState extends State<ChatWidget> {
               borderRadius: BorderRadius.only(topLeft: Radius.circular(15))),
           child: InkWell(
             onTap: () {
-              setState(() {
-                FocusScope.of(context).unfocus();
-                _filter.clear();
-              });
+              FocusScope.of(context).unfocus();
+              _filter.clear();
             },
             child: ListView(
               controller: scrollController,
@@ -174,7 +172,11 @@ class _ChatWidgetState extends State<ChatWidget> {
                           .get()
                           .then((value) => value.data()['live_now']);
                       if (_filter.text.length != 0 && _live == true) {
-                        await widget.live.reference.collection('chitchat').add({
+                        await FirebaseFirestore.instance
+                            .collection('LiveTmp')
+                            .doc(widget.artist.id)
+                            .collection('chitchat')
+                            .add({
                           'id': widget.userDB.id,
                           'name': widget.userDB.name,
                           'is_artist': widget.userDB.isArtist,

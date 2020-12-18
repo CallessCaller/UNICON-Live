@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
@@ -45,18 +44,20 @@ class _LiveBoxState extends State<LiveBox> {
       return SizedBox();
     } else {
       return InkWell(
-        onTap: () {
-          if (!widget.live.viewers.contains(userDB.id)) {
-            if (artist.fee == null ||
-                artist.id == userDB.id ||
-                artist.fee == 0 ||
-                (widget.live.payList != null &&
-                    widget.live.payList.contains(userDB.id)) ||
-                (userDB.admin != null && userDB.admin)) {
-              notShowAlert(context, userDB, artist, widget.live);
-            } else {
-              showAlertDialog(context, userDB, artist, widget.live);
-            }
+        onTap: () async {
+          DocumentSnapshot liveDoc = await FirebaseFirestore.instance
+              .collection('LiveTmp')
+              .doc(artist.id)
+              .get();
+          List<dynamic> payList = liveDoc.data()['payList'];
+          if (artist.fee == null ||
+              artist.id == userDB.id ||
+              artist.fee == 0 ||
+              (payList != null && payList.contains(userDB.id)) ||
+              (userDB.admin != null && userDB.admin)) {
+            notShowAlert(context, userDB, artist, widget.live);
+          } else {
+            showAlertDialog(context, userDB, artist, widget.live);
           }
         },
         child: Container(
@@ -248,17 +249,32 @@ void showAlertDialog(
               if (userDB.points >= artist.fee) {
                 var currentTime = Timestamp.now();
                 userDB.points = userDB.points - artist.fee;
-                userDB.reference.update({'points': userDB.points});
 
-                await artist.reference.get().then((value) {
+                await FirebaseFirestore.instance
+                    .collection('Users')
+                    .doc(userDB.id)
+                    .update({'points': userDB.points});
+
+                await FirebaseFirestore.instance
+                    .collection('Users')
+                    .doc(artist.id)
+                    .get()
+                    .then((value) {
                   total = value.data()['points'];
                 }).whenComplete(() async {
-                  artist.reference.update({'points': total + artist.fee});
+                  await FirebaseFirestore.instance
+                      .collection('Users')
+                      .doc(artist.id)
+                      .update({'points': total + artist.fee});
 
                   // Donation
                   // User -> Union
                   // type: { 0 : event , 1 : charge , 2 : donated , 3 : donate }
-                  userDB.reference.collection('unicoin_history').add({
+                  await FirebaseFirestore.instance
+                      .collection('Users')
+                      .doc(userDB.id)
+                      .collection('unicoin_history')
+                      .add({
                     'type': 3,
                     'who': artist.name,
                     'whoseID': artist.id,
@@ -279,10 +295,30 @@ void showAlertDialog(
                   });
                 });
 
-                live.payList.add(userDB.id);
-                live.viewers.add(userDB.id);
-                await live.reference.update(
-                    {'viewers': live.viewers, 'pay_list': live.payList});
+                // TODO: 라이브 삭제가 안됨 로직 수정
+
+                DocumentSnapshot liveDoc = await FirebaseFirestore.instance
+                    .collection('LiveTmp')
+                    .doc(artist.id)
+                    .get();
+                List<dynamic> payList = liveDoc.data()['pay_list'];
+                List<dynamic> viewers = liveDoc.data()['viewers'];
+
+                if (!viewers.contains(userDB.id)) {
+                  viewers.add(userDB.id);
+                  await FirebaseFirestore.instance
+                      .collection('LiveTmp')
+                      .doc(artist.id)
+                      .update({'viewers': viewers});
+                }
+                if (!payList.contains(userDB.id)) {
+                  payList.add(userDB.id);
+                  await FirebaseFirestore.instance
+                      .collection('LiveTmp')
+                      .doc(artist.id)
+                      .update({'pay_list': payList});
+                }
+
                 if (userDB.id == artist.id) {
                   Navigator.pop(context);
                   Navigator.of(context).push(MaterialPageRoute(
@@ -319,8 +355,19 @@ void showAlertDialog(
 void notShowAlert(
     BuildContext context, UserDB userDB, Artist artist, Lives live) async {
   if (userDB.id != artist.id) {
-    live.viewers.add(userDB.id);
-    await live.reference.update({'viewers': live.viewers});
+    DocumentSnapshot liveDoc = await FirebaseFirestore.instance
+        .collection('LiveTmp')
+        .doc(artist.id)
+        .get();
+    List<dynamic> viewers = liveDoc.data()['viewers'];
+    if (!viewers.contains(userDB.id)) {
+      viewers.add(userDB.id);
+      // TODO: 라이브 삭제가 안됨 로직 수정
+      await FirebaseFirestore.instance
+          .collection('LiveTmp')
+          .doc(artist.id)
+          .update({'viewers': viewers});
+    }
   }
 
   if (userDB.id == artist.id) {
