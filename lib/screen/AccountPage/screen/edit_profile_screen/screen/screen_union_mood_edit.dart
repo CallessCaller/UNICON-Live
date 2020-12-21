@@ -12,6 +12,7 @@ class UnionMoodEdit extends StatefulWidget {
 }
 
 class _UnionMoodEditState extends State<UnionMoodEdit> {
+  // ignore: deprecated_member_use
   List<int> _selectedItems = List<int>();
 
   _initializeMoodList() {

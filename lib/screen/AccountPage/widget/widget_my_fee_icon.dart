@@ -4,7 +4,12 @@ import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/users.dart';
 
-class MyFee extends StatelessWidget {
+class MyFee extends StatefulWidget {
+  @override
+  _MyFeeState createState() => _MyFeeState();
+}
+
+class _MyFeeState extends State<MyFee> {
   TextEditingController controller = new TextEditingController();
 
   @override
@@ -13,7 +18,7 @@ class MyFee extends StatelessWidget {
     return InkWell(
       onTap: () {
         showDialog(
-            barrierDismissible: false,
+            barrierDismissible: true,
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(

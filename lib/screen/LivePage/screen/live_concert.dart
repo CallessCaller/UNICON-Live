@@ -32,7 +32,8 @@ class LiveConcert extends StatefulWidget {
 }
 
 class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
-  AppLifecycleState _lastLifecycleState;
+  FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
+  //AppLifecycleState _lastLifecycleState;
   Stream<DocumentSnapshot> documentStream;
   List<dynamic> viewers = [];
 
@@ -242,7 +243,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
       });
     }
     double maxwidth = MediaQuery.of(context).size.width;
-    double maxheight = MediaQuery.of(context).size.height;
+    //double maxheight = MediaQuery.of(context).size.height;
 
     double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
 
@@ -388,7 +389,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
                       height: 50,
                       color: appKeyColor,
                       onPressed: () {
-                        _onLikePressed(widget.userDB);
+                        _onLikePressed(_artist);
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(11)),
@@ -436,47 +437,51 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
         .update({'dislikeChat': []});
   }
 
-  void _onLikePressed(UserDB userDB) async {
-    FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
-    DocumentSnapshot artistDoc = await FirebaseFirestore.instance
+  void _onLikePressed(Artist artist) async {
+    var userSnap = await FirebaseFirestore.instance
         .collection('Users')
-        .doc(widget.artist.id)
+        .doc(widget.userDB.id)
         .get();
-    List<dynamic> myPeople = artistDoc.data()['my_people'];
-    setState(() {
-      // Add data to CandidatesDB
-      if (!myPeople.contains(widget.userDB.id)) {
-        myPeople.add(userDB.id);
-        userDB.follow.add(widget.artist.id);
-        if (_live) {
-          _firebaseMessaging.subscribeToTopic(widget.artist.id + 'live');
-        }
-        if (_feed) {
-          _firebaseMessaging.subscribeToTopic(widget.artist.id + 'Feed');
-        }
-      }
+    UserDB userDB = UserDB.fromSnapshot(userSnap);
 
-      // Unliked
-      else {
-        myPeople.remove(userDB.id);
-        // Delete data from UsersDB
+    if (!artist.myPeople.contains(widget.userDB.id)) {
+      artist.myPeople.add(userDB.id);
+      userDB.follow.add(widget.artist.id);
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(artist.id)
+          .update({'my_people': artist.myPeople});
 
-        userDB.follow.remove(widget.artist.id);
-        if (_live) {
-          _firebaseMessaging.unsubscribeFromTopic(widget.artist.id + 'live');
-        }
-        if (_feed) {
-          _firebaseMessaging.unsubscribeFromTopic(widget.artist.id + 'Feed');
-        }
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userDB.id)
+          .update({'follow': userDB.follow});
+
+      if (_live) {
+        await _firebaseMessaging.subscribeToTopic(artist.id + 'live');
       }
-    });
-    await FirebaseFirestore.instance
-        .collection('Users')
-        .doc(widget.artist.id)
-        .update({'my_people': myPeople});
-    await FirebaseFirestore.instance
-        .collection('Users')
-        .doc(userDB.id)
-        .update({'follow': userDB.follow});
+      if (_feed) {
+        await _firebaseMessaging.subscribeToTopic(artist.id + 'Feed');
+      }
+    }
+
+    // Unliked
+    else {
+      artist.myPeople.remove(userDB.id);
+      userDB.follow.remove(artist.id);
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(artist.id)
+          .update({'my_people': artist.myPeople});
+
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userDB.id)
+          .update({'follow': userDB.follow});
+
+      await _firebaseMessaging.unsubscribeFromTopic(artist.id + 'live');
+
+      await _firebaseMessaging.unsubscribeFromTopic(artist.id + 'Feed');
+    }
   }
 }

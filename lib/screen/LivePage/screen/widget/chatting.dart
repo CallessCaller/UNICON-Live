@@ -122,7 +122,6 @@ class _ChatWidgetState extends State<ChatWidget> {
           child: InkWell(
             onTap: () {
               FocusScope.of(context).unfocus();
-              _filter.clear();
             },
             child: ListView(
               controller: scrollController,

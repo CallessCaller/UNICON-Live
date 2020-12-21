@@ -29,6 +29,7 @@ class UnionInfoPageHeader extends StatefulWidget {
 }
 
 class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   @override
   void initState() {
     super.initState();
@@ -49,43 +50,71 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
     });
   }
 
-  void _onLikePressed(UserDB userDB) async {
-    FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
-    setState(() {
-      // Add data to CandidatesDB
-      if (!widget.artist.myPeople.contains(widget.userDB.id)) {
-        widget.artist.myPeople.add(userDB.id);
-        userDB.follow.add(widget.artist.id);
-        if (_live) {
-          _firebaseMessaging.subscribeToTopic(widget.artist.id + 'live');
-        }
-        if (_feed) {
-          _firebaseMessaging.subscribeToTopic(widget.artist.id + 'Feed');
-        }
-      }
+  void _onLikePressed(Artist artist) async {
+    var userSnap = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(widget.userDB.id)
+        .get();
+    UserDB userDB = UserDB.fromSnapshot(userSnap);
 
-      // Unliked
-      else {
-        widget.artist.myPeople.remove(userDB.id);
-        // Delete data from UsersDB
+    if (!artist.myPeople.contains(widget.userDB.id)) {
+      artist.myPeople.add(userDB.id);
+      userDB.follow.add(widget.artist.id);
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(artist.id)
+          .update({'my_people': artist.myPeople});
 
-        userDB.follow.remove(widget.artist.id);
-        if (_live) {
-          _firebaseMessaging.unsubscribeFromTopic(widget.artist.id + 'live');
-        }
-        if (_feed) {
-          _firebaseMessaging.unsubscribeFromTopic(widget.artist.id + 'Feed');
-        }
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userDB.id)
+          .update({'follow': userDB.follow});
+
+      if (_live) {
+        await _firebaseMessaging.subscribeToTopic(artist.id + 'live');
       }
-    });
-    await widget.artist.reference.update({'my_people': widget.artist.myPeople});
-    await userDB.reference.update({'follow': userDB.follow});
+      if (_feed) {
+        await _firebaseMessaging.subscribeToTopic(artist.id + 'Feed');
+      }
+    }
+
+    // Unliked
+    else {
+      artist.myPeople.remove(userDB.id);
+      userDB.follow.remove(artist.id);
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(artist.id)
+          .update({'my_people': artist.myPeople});
+
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userDB.id)
+          .update({'follow': userDB.follow});
+
+      await _firebaseMessaging.unsubscribeFromTopic(artist.id + 'live');
+
+      await _firebaseMessaging.unsubscribeFromTopic(artist.id + 'Feed');
+    }
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _fetchData(BuildContext context) {
+    return StreamBuilder<DocumentSnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('Users')
+          .doc(widget.artist.id)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return CircularProgressIndicator();
+        return _buildBody(context, snapshot.data);
+      },
+    );
+  }
+
+  Widget _buildBody(BuildContext context, DocumentSnapshot snapshot) {
     var artists = Provider.of<QuerySnapshot>(context);
     final musicians = artists.docs.map((e) => Artist.fromSnapshot(e)).toList();
+    Artist artistDB = Artist.fromSnapshot(snapshot);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -93,14 +122,14 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
         SizedBox(
           height: 25,
         ),
-        widget.artist.liveNow
-            ? Center(child: LiveIndicatorProfile(artist: widget.artist))
+        artistDB.liveNow
+            ? Center(child: LiveIndicatorProfile(artist: artistDB))
             : Center(
                 child: SizedBox(
                   width: 110,
                   height: 110,
                   child: CachedNetworkImage(
-                    imageUrl: widget.artist.profile,
+                    imageUrl: artistDB.profile,
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -132,7 +161,7 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
               ),
             ),
             child: Text(
-              widget.artist.name,
+              artistDB.name,
               style: title2,
             ),
           ),
@@ -142,7 +171,7 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 2),
             child: Text(
-              '팔로워 ${widget.artist.myPeople.length}명',
+              '팔로워 ${artistDB.myPeople.length}명',
               style: subtitle1,
             ),
           ),
@@ -150,9 +179,9 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
         SizedBox(height: 10),
         InkWell(
           onTap: () {
-            _onLikePressed(widget.userDB);
+            _onLikePressed(artistDB);
           },
-          child: widget.artist.myPeople.contains(widget.userDB.id)
+          child: artistDB.myPeople.contains(widget.userDB.id)
               ? Container(
                   height: 30,
                   width: (MediaQuery.of(context).size.width - 60),
@@ -191,16 +220,21 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            InstagramLinkBox(instagramID: widget.artist.instagramId),
-            YoutubeLinkBox(youtubeUrl: widget.artist.youtubeLink),
-            SoundcloudLinkBox(soundcloudUrl: widget.artist.soudcloudLink),
-            UnionDonate(userDB: widget.userDB, artist: widget.artist),
+            InstagramLinkBox(instagramID: artistDB.instagramId),
+            YoutubeLinkBox(youtubeUrl: artistDB.youtubeLink),
+            SoundcloudLinkBox(soundcloudUrl: artistDB.soudcloudLink),
+            UnionDonate(userDB: widget.userDB, artist: artistDB),
           ],
         ),
         SizedBox(height: 20),
         _buildGenreMoodRow(musicians),
       ],
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _fetchData(context);
   }
 
   Widget _buildGenreMoodRow(List<Artist> artists) {

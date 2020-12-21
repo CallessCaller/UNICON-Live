@@ -39,7 +39,9 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
   StreamSubscription<List<PurchaseDetails>> _subscription;
   List<String> _notFoundIds = [];
   List<ProductDetails> _products = [];
+  // ignore: unused_field
   List<PurchaseDetails> _purchases = [];
+  // ignore: unused_field
   List<String> _consumables = [];
   bool _isAvailable = false;
   bool _purchasePending = false;

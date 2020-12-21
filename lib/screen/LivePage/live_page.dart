@@ -1,10 +1,8 @@
 import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
-import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/screen/LivePage/widget/live_box.dart';
@@ -36,9 +34,6 @@ class _LivePageState extends State<LivePage> {
 
   @override
   Widget build(BuildContext context) {
-    var artistSnapshot = Provider.of<QuerySnapshot>(context);
-    List<Artist> artists =
-        artistSnapshot.docs.map((e) => Artist.fromSnapshot(e)).toList();
     final lives = Provider.of<List<Lives>>(context);
     final userDB = Provider.of<UserDB>(context);
     // makeToken(userDB);
@@ -48,7 +43,7 @@ class _LivePageState extends State<LivePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-                LiveHeader(),
+                LiveHeader(userDB: userDB),
                 SizedBox(
                   height: 20,
                 ),

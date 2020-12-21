@@ -1,46 +1,81 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
-
-final List<String> imgList = [
-  'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/live_header%2F%EB%B0%B0%EB%84%88_new_02.png?alt=media&token=2eaa607a-dcb4-4aa7-87b3-11a8dcbd0dda',
-  'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/live_header%2F%EB%B0%B0%EB%84%88_new_01.png?alt=media&token=80956098-ceaa-44f7-9908-168d8b57755b',
-];
+import 'package:testing_layout/model/artists.dart';
+import 'package:testing_layout/model/liveHeader.dart';
+import 'package:testing_layout/model/users.dart';
+import 'package:testing_layout/screen/UnionPage/union_page.dart';
 
 class LiveHeader extends StatefulWidget {
+  final UserDB userDB;
+  LiveHeader({this.userDB});
   @override
   State<StatefulWidget> createState() {
     return _LiveHeaderState();
   }
 }
 
-// Banner collection에서 불러와야 함
-class _LiveHeaderState extends State<LiveHeader>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  // ignore: must_call_super
-  Widget build(BuildContext context) {
+class _LiveHeaderState extends State<LiveHeader> {
+  Widget _fetchData(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('LiveHeader').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData)
+          return Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            ),
+          );
+        return _buildBody(context, snapshot.data.docs);
+      },
+    );
+  }
+
+  Widget _buildBody(BuildContext context, List<DocumentSnapshot> snapshot) {
+    List<LiveHeaderModel> liveHeader =
+        snapshot.map((e) => LiveHeaderModel.fromSnapshot(e)).toList();
     return SizedBox(
       height: 270,
       width: MediaQuery.of(context).size.width,
       child: Carousel(
-        onImageTap: (int index) {
-          print(index);
+        onImageTap: (int index) async {
+          if (liveHeader[index].id != null && liveHeader[index].id != '') {
+            var artistSanpshot = await FirebaseFirestore.instance
+                .collection('User')
+                .doc(liveHeader[index].id)
+                .get();
+            Artist artist = Artist.fromSnapshot(artistSanpshot);
+
+            var userSnapshot = await FirebaseFirestore.instance
+                .collection('User')
+                .doc(widget.userDB.id)
+                .get();
+            UserDB userDB = UserDB.fromSnapshot(userSnapshot);
+
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => UnionInfoPage(
+                      artist: artist,
+                      userDB: userDB,
+                    )));
+          }
         },
         autoplay: true,
         animationCurve: Curves.easeInOut,
-        autoplayDuration: Duration(seconds: 3),
-        images: imgList.map((e) => NetworkImage(e)).toList(),
+        autoplayDuration: Duration(seconds: 5),
+        images: liveHeader.map((e) => NetworkImage(e.image)).toList(),
         dotSize: 4.0,
         dotSpacing: 15.0,
         dotIncreasedColor: Colors.white,
         dotBgColor: Colors.transparent,
         indicatorBgPadding: 10.0,
-        animationDuration: Duration(milliseconds: 300),
+        animationDuration: Duration(milliseconds: 500),
         boxFit: BoxFit.fitWidth,
       ),
     );
   }
 
   @override
-  bool get wantKeepAlive => true;
+  Widget build(BuildContext context) {
+    return _fetchData(context);
+  }
 }

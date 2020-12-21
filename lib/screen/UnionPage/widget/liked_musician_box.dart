@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,6 +17,7 @@ class LikedMusicianBox extends StatefulWidget {
 }
 
 class _LikedMusicianBoxState extends State<LikedMusicianBox> {
+  FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
   @override
   void initState() {
     super.initState();
@@ -36,37 +38,58 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
     });
   }
 
-  void _onLikePressed(UserDB userDB) async {
-    FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
-    setState(() {
-      // Add data to CandidatesDB
-      if (!widget.artist.myPeople.contains(widget.userDB.id)) {
-        widget.artist.myPeople.add(userDB.id);
-        userDB.follow.add(widget.artist.id);
-        if (_live) {
-          _firebaseMessaging.subscribeToTopic(widget.artist.id + 'live');
-        }
-        if (_feed) {
-          _firebaseMessaging.subscribeToTopic(widget.artist.id + 'Feed');
-        }
-      }
+  void _onLikePressed() async {
+    var artistSnap = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(widget.artist.id)
+        .get();
+    Artist artist = Artist.fromSnapshot(artistSnap);
 
-      // Unliked
-      else {
-        widget.artist.myPeople.remove(userDB.id);
-        // Delete data from UsersDB
+    var userSnap = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(widget.userDB.id)
+        .get();
+    UserDB userDB = UserDB.fromSnapshot(userSnap);
+    // Add data to CandidatesDB
+    if (!artist.myPeople.contains(widget.userDB.id)) {
+      artist.myPeople.add(userDB.id);
+      userDB.follow.add(widget.artist.id);
 
-        userDB.follow.remove(widget.artist.id);
-        if (_live) {
-          _firebaseMessaging.unsubscribeFromTopic(widget.artist.id + 'live');
-        }
-        if (_feed) {
-          _firebaseMessaging.unsubscribeFromTopic(widget.artist.id + 'Feed');
-        }
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(artist.id)
+          .update({'my_people': artist.myPeople});
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userDB.id)
+          .update({'follow': userDB.follow});
+
+      if (_live) {
+        await _firebaseMessaging.subscribeToTopic(artist.id + 'live');
       }
-    });
-    await widget.artist.reference.update({'my_people': widget.artist.myPeople});
-    await userDB.reference.update({'follow': userDB.follow});
+      if (_feed) {
+        await _firebaseMessaging.subscribeToTopic(artist.id + 'Feed');
+      }
+    }
+
+    // Unliked
+    else {
+      artist.myPeople.remove(userDB.id);
+      userDB.follow.remove(artist.id);
+
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(artist.id)
+          .update({'my_people': artist.myPeople});
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userDB.id)
+          .update({'follow': userDB.follow});
+
+      await _firebaseMessaging.unsubscribeFromTopic(artist.id + 'live');
+
+      await _firebaseMessaging.unsubscribeFromTopic(artist.id + 'Feed');
+    }
   }
 
   @override
@@ -179,7 +202,7 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
                         ),
                       ),
                       onPressed: () {
-                        _onLikePressed(widget.userDB);
+                        _onLikePressed();
                       },
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
@@ -198,7 +221,7 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
                         style: body3,
                       ),
                       onPressed: () {
-                        _onLikePressed(widget.userDB);
+                        _onLikePressed();
                       },
                       color: appKeyColor,
                       shape: RoundedRectangleBorder(

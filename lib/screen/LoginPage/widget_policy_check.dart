@@ -16,11 +16,14 @@ class _PolicyCheckDialogState extends State<PolicyCheckDialog> {
   bool check2 = false;
   bool check3 = false;
   bool check4 = false;
+  // ignore: non_constant_identifier_names
   bool check_eula = false;
+  // ignore: non_constant_identifier_names
   bool check_total = false;
 
   @override
   void initState() {
+    super.initState();
     fToast = FToast();
     fToast.init(context);
   }

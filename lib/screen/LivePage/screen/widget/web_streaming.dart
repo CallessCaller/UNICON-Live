@@ -68,26 +68,27 @@ class _WebStreamingState extends State<WebStreaming> {
               ? Alignment.center
               : Alignment.centerLeft,
           child: _controller.value.initialized
-              ? AnimatedContainer(
-                  height: chatFocusNode.hasFocus
-                      ? _width * 0.5 / _controller.value.aspectRatio
-                      : (widget.width == MediaQuery.of(context).size.width
-                              ? widget.width - 50
-                              : widget.width) /
-                          _controller.value.aspectRatio,
-                  width: chatFocusNode.hasFocus
-                      ? _width * 0.5
-                      : widget.width == MediaQuery.of(context).size.width
-                          ? widget.width - 50
-                          : widget.width,
-                  duration: Duration(milliseconds: 100),
-                  child: AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: VideoPlayer(
-                      _controller,
-                    ),
-                  ),
-                )
+              ? widget.width == MediaQuery.of(context).size.width
+                  ? AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
+                      child: VideoPlayer(
+                        _controller,
+                      ),
+                    )
+                  : AnimatedContainer(
+                      height: chatFocusNode.hasFocus
+                          ? _width * 0.5 / _controller.value.aspectRatio
+                          : widget.width / _controller.value.aspectRatio,
+                      width:
+                          chatFocusNode.hasFocus ? _width * 0.5 : widget.width,
+                      duration: Duration(milliseconds: 100),
+                      child: AspectRatio(
+                        aspectRatio: _controller.value.aspectRatio,
+                        child: VideoPlayer(
+                          _controller,
+                        ),
+                      ),
+                    )
               // AspectRatio(
               //     aspectRatio: _controller.value.aspectRatio,
               //     child: VideoPlayer(

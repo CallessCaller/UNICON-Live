@@ -12,6 +12,7 @@ class UnionGenreEdit extends StatefulWidget {
 }
 
 class _UnionGenreEditState extends State<UnionGenreEdit> {
+  // ignore: deprecated_member_use
   List<int> _selectedItems = List<int>();
 
   _initializeGenreList() {

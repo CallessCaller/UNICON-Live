@@ -29,7 +29,7 @@ class _ArtistFormState extends State<ArtistForm> {
   TextEditingController _instagramEditingController = TextEditingController();
   TextEditingController _youtubeEditingController = TextEditingController();
   TextEditingController _soundcloudEditingController = TextEditingController();
-  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  // FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   FToast fToast;
 
   @override
