@@ -129,7 +129,10 @@ class _UnionInfoPageHeaderState extends State<UnionInfoPageHeader> {
                   width: 110,
                   height: 110,
                   child: CachedNetworkImage(
-                    imageUrl: artistDB.profile,
+                    imageUrl: widget.artist.resizedProfile != null &&
+                            widget.artist.resizedProfile != ''
+                        ? widget.artist.resizedProfile
+                        : widget.artist.profile,
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,

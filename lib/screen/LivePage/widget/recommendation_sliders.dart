@@ -76,6 +76,13 @@ List<Widget> hotLive(BuildContext context, List<Lives> lives, UserDB userDB) {
 }
 
 Widget slider(BuildContext context, Artist artist, Lives live, UserDB userDB) {
+  String backgroundImage = artist.liveImage == null
+      ? artist.resizedProfile != null && artist.resizedProfile != ''
+          ? artist.resizedProfile
+          : artist.profile
+      : artist.resizedLiveImage != null && artist.resizedLiveImage != ''
+          ? artist.resizedLiveImage
+          : artist.liveImage;
   return Container(
     decoration: BoxDecoration(border: Border.all(color: Colors.black)),
     child: InkWell(
@@ -102,7 +109,7 @@ Widget slider(BuildContext context, Artist artist, Lives live, UserDB userDB) {
           child: Stack(
             children: <Widget>[
               Image.network(
-                artist.profile,
+                backgroundImage,
                 fit: BoxFit.cover,
                 width: MediaQuery.of(context).size.width * 0.6,
               ),

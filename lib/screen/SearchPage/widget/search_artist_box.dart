@@ -35,8 +35,12 @@ class _SearchArtistBoxState extends State<SearchArtistBox> {
                 borderRadius: BorderRadius.circular(7),
                 border: Border.all(color: Colors.white.withOpacity(0.2)),
                 image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(widget.artist.profile))),
+                  fit: BoxFit.cover,
+                  image: NetworkImage(widget.artist.resizedProfile != null &&
+                          widget.artist.resizedProfile != ''
+                      ? widget.artist.resizedProfile
+                      : widget.artist.profile),
+                )),
           ),
         ),
         Container(

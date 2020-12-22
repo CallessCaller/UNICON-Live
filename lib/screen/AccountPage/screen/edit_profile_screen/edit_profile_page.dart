@@ -32,6 +32,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   bool _isLoading = false;
 
   String _profileImageURL;
+  String _resizedProfileURL;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   TextEditingController _nameEditingController = TextEditingController();
   TextEditingController _instagramEditingController = TextEditingController();
@@ -700,6 +701,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           Map<String, dynamic> _userUploadResult = {
                             'name': _nameEditingController.text.trim(),
                             'profile': _profileImageURL,
+                            'resizedProfile': _resizedProfileURL,
                           };
 
                           if (widget.userDB.isArtist) {
@@ -940,9 +942,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
       // 업로드한 사진의 URL 획득
       String downloadURL = await storageReference.getDownloadURL();
+      String resizedURL = '';
+      try {
+        resizedURL = await FirebaseStorage.instance
+            .ref('/profile/${widget.userDB.id}_1080x1080')
+            .getDownloadURL();
+      } catch (e) {
+        print(e);
+      }
 
       // 업로드된 사진의 URL을 페이지에 반영
       setState(() {
+        _resizedProfileURL = resizedURL;
         _profileImageURL = downloadURL;
         _canGo = true;
       });

@@ -10,6 +10,7 @@ class UnionGenreSelection extends StatefulWidget {
 }
 
 class _UnionGenreSelectionState extends State<UnionGenreSelection> {
+  // ignore: deprecated_member_use
   List<int> _selectedItems = List<int>();
 
   User _user = FirebaseAuth.instance.currentUser;

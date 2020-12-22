@@ -138,8 +138,15 @@ class _FeedDetailState extends State<FeedDetail> {
                                   );
                                 },
                                 child: CircleAvatar(
-                                  backgroundImage:
-                                      NetworkImage(snapshot.data()['profile']),
+                                  backgroundImage: snapshot
+                                                  .data()['resizedProfile'] !=
+                                              null &&
+                                          snapshot.data()['resizedProfile'] !=
+                                              ''
+                                      ? NetworkImage(
+                                          snapshot.data()['resizedProfile'])
+                                      : NetworkImage(
+                                          snapshot.data()['profile']),
                                   radius: 17,
                                 ),
                               ),
@@ -390,7 +397,11 @@ class _FeedDetailState extends State<FeedDetail> {
                         child: Row(
                           children: [
                             CircleAvatar(
-                              backgroundImage: NetworkImage(userDB.profile),
+                              backgroundImage: NetworkImage(
+                                  userDB.resizedProfile != null &&
+                                          userDB.resizedProfile != ''
+                                      ? userDB.resizedProfile
+                                      : userDB.profile),
                               radius: 17,
                             ),
                             VerticalDivider(

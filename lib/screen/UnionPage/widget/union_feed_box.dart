@@ -52,43 +52,89 @@ class _UnionFeedBoxState extends State<UnionFeedBox> {
           ),
         ));
       },
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey), color: Colors.black),
-            width: (MediaQuery.of(context).size.width - 60 - 7) / 2,
-            height: (MediaQuery.of(context).size.width - 60 - 7) / 2,
-            alignment: Alignment.topLeft,
-            padding: EdgeInsets.all(5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      child: widget.feed.image == null
+          ? Stack(
               children: [
-                Text(
-                  _showTime(widget.feed.time),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      color: Colors.black),
+                  width: (MediaQuery.of(context).size.width - 60 - 7) / 2,
+                  height: (MediaQuery.of(context).size.width - 60 - 7) / 2,
+                  alignment: Alignment.topLeft,
+                  padding: EdgeInsets.all(5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _showTime(widget.feed.time),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(height: 30),
+                      Text(
+                        widget.feed.content.trim(),
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          height: 1.8,
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 30),
-                Text(
-                  widget.feed.content.trim(),
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    height: 1.8,
-                    color: Colors.white,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
+                widget.feed.progressive != null
+                    ? Container(
+                        width: (MediaQuery.of(context).size.width - 60 - 7) / 2,
+                        height:
+                            (MediaQuery.of(context).size.width - 60 - 7) / 2,
+                        alignment: Alignment.topRight,
+                        padding: EdgeInsets.all(10),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xff8e00c9),
+                                Color(0xff160176),
+                              ],
+                            ),
+                          ),
+                          child: IconButton(
+                            iconSize: 30,
+                            icon: Icon(
+                              Icons.play_arrow_rounded,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => StreamProvider.value(
+                                  value:
+                                      StreamOfuser().getUser(widget.userDB.id),
+                                  child: FeedDetail(
+                                    feed: widget.feed,
+                                    userDB: widget.userDB,
+                                  ),
+                                ),
+                              ));
+                            },
+                          ),
+                        ),
+                      )
+                    : SizedBox(),
               ],
-            ),
-          ),
-          widget.feed.image != null
-              ? CachedNetworkImage(
+            )
+          : Stack(
+              children: [
+                CachedNetworkImage(
                   imageUrl: widget.feed.image,
                   imageBuilder: (context, imageProvider) => Container(
                     width: (MediaQuery.of(context).size.width - 60 - 7) / 2,
@@ -101,49 +147,50 @@ class _UnionFeedBoxState extends State<UnionFeedBox> {
                       ),
                     ),
                   ),
-                )
-              : SizedBox(),
-          widget.feed.progressive != null
-              ? Container(
-                  width: (MediaQuery.of(context).size.width - 60 - 7) / 2,
-                  height: (MediaQuery.of(context).size.width - 60 - 7) / 2,
-                  alignment: Alignment.topRight,
-                  padding: EdgeInsets.all(10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Color(0xff8e00c9),
-                          Color(0xff160176),
-                        ],
-                      ),
-                    ),
-                    child: IconButton(
-                      iconSize: 30,
-                      icon: Icon(
-                        Icons.play_arrow_rounded,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => StreamProvider.value(
-                            value: StreamOfuser().getUser(widget.userDB.id),
-                            child: FeedDetail(
-                              feed: widget.feed,
-                              userDB: widget.userDB,
+                ),
+                widget.feed.progressive != null
+                    ? Container(
+                        width: (MediaQuery.of(context).size.width - 60 - 7) / 2,
+                        height:
+                            (MediaQuery.of(context).size.width - 60 - 7) / 2,
+                        alignment: Alignment.topRight,
+                        padding: EdgeInsets.all(10),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xff8e00c9),
+                                Color(0xff160176),
+                              ],
                             ),
                           ),
-                        ));
-                      },
-                    ),
-                  ),
-                )
-              : SizedBox(),
-        ],
-      ),
+                          child: IconButton(
+                            iconSize: 30,
+                            icon: Icon(
+                              Icons.play_arrow_rounded,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => StreamProvider.value(
+                                  value:
+                                      StreamOfuser().getUser(widget.userDB.id),
+                                  child: FeedDetail(
+                                    feed: widget.feed,
+                                    userDB: widget.userDB,
+                                  ),
+                                ),
+                              ));
+                            },
+                          ),
+                        ),
+                      )
+                    : SizedBox(),
+              ],
+            ),
     );
   }
 

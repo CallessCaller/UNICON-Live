@@ -7,7 +7,11 @@ class UserDB {
   final String youtubeLink;
   final String soudcloudLink;
   final String profile;
+  final String resizedProfile;
   final String id;
+  final String liveTitle;
+  final String liveImage;
+  final String resizedLiveImage;
   String token;
   int points;
   final bool isArtist;
@@ -33,6 +37,7 @@ class UserDB {
         youtubeLink = map['youtube_link'],
         soudcloudLink = map['soundcloud_link'],
         profile = map['profile'],
+        resizedProfile = map['resizedProfile'],
         id = map['id'],
         token = map['token'],
         points = map['points'],
@@ -49,7 +54,10 @@ class UserDB {
         dislikeComment = map['dislikeComment'],
         dislikeChat = map['dislikeChat'],
         createTime = map['createTime'],
-        admin = map['admin'];
+        admin = map['admin'],
+        liveTitle = map['liveTitle'],
+        liveImage = map['liveImage'],
+        resizedLiveImage = map['resizedLiveImage'];
 
   UserDB.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data(), reference: snapshot.reference);

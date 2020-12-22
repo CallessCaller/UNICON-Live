@@ -125,7 +125,10 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
                     width: .5,
                   ),
                   image: DecorationImage(
-                    image: NetworkImage(widget.artist.profile),
+                    image: NetworkImage(widget.artist.resizedProfile != null &&
+                            widget.artist.resizedProfile != ''
+                        ? widget.artist.resizedProfile
+                        : widget.artist.profile),
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.circular(widgetRadius),

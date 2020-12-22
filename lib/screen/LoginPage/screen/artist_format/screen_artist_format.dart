@@ -24,6 +24,7 @@ class _ArtistFormState extends State<ArtistForm> {
 
   User _user = FirebaseAuth.instance.currentUser;
   String _profileImageURL;
+  String _resizedProfileURL;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   TextEditingController _nameEditingController = TextEditingController();
   TextEditingController _instagramEditingController = TextEditingController();
@@ -427,6 +428,8 @@ class _ArtistFormState extends State<ArtistForm> {
                             if (check1 || check2 || check3) {
                               // birth and profile added to user
                               _userUploadResult['profile'] = _profileImageURL;
+                              _userUploadResult['resizedProfile'] =
+                                  _resizedProfileURL;
 
                               // id added to pending
                               _pendingUploadResult['id'] = _user.uid;
@@ -454,13 +457,6 @@ class _ArtistFormState extends State<ArtistForm> {
                                   ),
                                 );
                               }
-                              // await showEmailAlert(context, _userUploadResult,
-                              //     _pendingUploadResult, _user);
-                              // Navigator.of(context).push(
-                              //   MaterialPageRoute(
-                              //     builder: (context) => UnionGenreSelection(),
-                              //   ),
-                              // );
                             }
                           } else {
                             Widget toast = Container(
@@ -571,9 +567,18 @@ class _ArtistFormState extends State<ArtistForm> {
 
       // 업로드한 사진의 URL 획득
       String downloadURL = await storageReference.getDownloadURL();
+      String resizedURL = '';
+      try {
+        resizedURL = await FirebaseStorage.instance
+            .ref('/profile/${_user.uid}_1080x1080')
+            .getDownloadURL();
+      } catch (e) {
+        print(e);
+      }
 
       // 업로드된 사진의 URL을 페이지에 반영
       setState(() {
+        _resizedProfileURL = resizedURL;
         _profileImageURL = downloadURL;
         _canGo = true;
       });

@@ -67,7 +67,14 @@ class _LiveBoxState extends State<LiveBox> {
             border: Border.all(color: Colors.black),
             borderRadius: BorderRadius.circular(widgetRadius),
             image: DecorationImage(
-              image: NetworkImage(artist.profile),
+              image: artist.liveImage == null
+                  ? artist.resizedProfile != null && artist.resizedProfile != ''
+                      ? NetworkImage(artist.resizedProfile)
+                      : NetworkImage(artist.profile)
+                  : artist.resizedLiveImage != null &&
+                          artist.resizedLiveImage != ''
+                      ? NetworkImage(artist.resizedLiveImage)
+                      : NetworkImage(artist.liveImage),
               fit: BoxFit.cover,
             ),
           ),
@@ -128,7 +135,10 @@ class _LiveBoxState extends State<LiveBox> {
                           ),
                           CircleAvatar(
                             radius: 20,
-                            backgroundImage: NetworkImage(artist.profile),
+                            backgroundImage: artist.resizedProfile != null &&
+                                    artist.resizedProfile != ''
+                                ? NetworkImage(artist.resizedProfile)
+                                : NetworkImage(artist.profile),
                           ),
                           VerticalDivider(
                             width: 10,
@@ -140,14 +150,20 @@ class _LiveBoxState extends State<LiveBox> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  artist.name,
+                                  artist.liveTitle != null &&
+                                          artist.liveTitle != ''
+                                      ? artist.liveTitle
+                                      : artist.name,
                                   style: TextStyle(
                                     fontSize: textFontSize,
                                     color: Colors.white,
                                   ),
                                 ),
                                 Text(
-                                  '라이브 방송중',
+                                  artist.liveTitle != null &&
+                                          artist.liveTitle != ''
+                                      ? '${artist.name}님의 라이브 방송'
+                                      : '라이브 방송중',
                                   style: TextStyle(
                                     fontSize: textFontSize - 2,
                                     color: Colors.white,
@@ -295,8 +311,6 @@ void showAlertDialog(
                   });
                 });
 
-                // TODO: 라이브 삭제가 안됨 로직 수정
-
                 DocumentSnapshot liveDoc = await FirebaseFirestore.instance
                     .collection('LiveTmp')
                     .doc(artist.id)
@@ -362,7 +376,6 @@ void notShowAlert(
     List<dynamic> viewers = liveDoc.data()['viewers'];
     if (!viewers.contains(userDB.id)) {
       viewers.add(userDB.id);
-      // TODO: 라이브 삭제가 안됨 로직 수정
       await FirebaseFirestore.instance
           .collection('LiveTmp')
           .doc(artist.id)

@@ -124,8 +124,11 @@ class _FeedBoxState extends State<FeedBox> {
                     child: Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage:
-                              NetworkImage(snapshot.data()['profile']),
+                          backgroundImage: snapshot.data()['resizedProfile'] !=
+                                      null &&
+                                  snapshot.data()['resizedProfile'] != ''
+                              ? NetworkImage(snapshot.data()['resizedProfile'])
+                              : NetworkImage(snapshot.data()['profile']),
                           radius: 17,
                         ),
                         SizedBox(width: 8),

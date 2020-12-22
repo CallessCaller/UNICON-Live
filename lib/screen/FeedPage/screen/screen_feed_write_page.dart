@@ -18,11 +18,12 @@ class _FeedWritePageState extends State<FeedWritePage> {
   File _image;
   bool _canGo = true;
   String _imageURL = '';
+  String _resizedURL = '';
   TextEditingController _soundcloud = TextEditingController();
   TextEditingController _content = TextEditingController();
   FocusNode scFocus = new FocusNode();
   FocusNode contentFocus = new FocusNode();
-  bool _isLoading = false;
+  // bool _isLoading = false;
 
   @override
   void initState() {
@@ -142,6 +143,7 @@ class _FeedWritePageState extends State<FeedWritePage> {
                               .doc(feed.id)
                               .update({
                             'image': _imageURL,
+                            'resizedImage': _resizedURL,
                           });
                         }
 
@@ -299,9 +301,18 @@ class _FeedWritePageState extends State<FeedWritePage> {
 
     // 업로드한 사진의 URL 획득
     String downloadURL = await storageReference.getDownloadURL();
+    String resizedURL = '';
+    try {
+      resizedURL = await FirebaseStorage.instance
+          .ref('/feed/${id}_1080x1080')
+          .getDownloadURL();
+    } catch (e) {
+      print(e);
+    }
 
     // 업로드된 사진의 URL을 페이지에 반영
     setState(() {
+      _resizedURL = resizedURL;
       _imageURL = downloadURL;
       _canGo = true;
     });
@@ -317,15 +328,7 @@ class _FeedWritePageState extends State<FeedWritePage> {
         _canGo = true;
       });
     } else {
-      // img.Image imageTmp =
-      //     img.decodeImage(File(pickedImage.path).readAsBytesSync());
-      // img.Image resizedImg = img.copyResize(
-      //   imageTmp,
-      //   height: 3400,
-      // );
-
       File resizedFile = File(pickedImage.path);
-      // ..writeAsBytesSync(img.encodeJpg(resizedImg));
       setState(() {
         _image = resizedFile;
         _canGo = true;

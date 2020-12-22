@@ -4,7 +4,7 @@ import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/screen/AccountPage/screen/customers_service_page/customers_service_page.dart';
 import 'package:testing_layout/screen/AccountPage/widget/widget_account_header.dart';
-import 'package:testing_layout/screen/AccountPage/widget/widget_my_fee_icon.dart';
+import 'package:testing_layout/screen/AccountPage/widget/widget_my_broadcast_icon.dart';
 import 'package:testing_layout/screen/AccountPage/widget/widget_my_musicians_icon.dart';
 import 'package:testing_layout/screen/AccountPage/widget/widget_new_unions_icon.dart';
 import 'package:testing_layout/screen/AccountPage/widget/widget_settings_icon.dart';
@@ -76,7 +76,7 @@ class AccountPage extends StatelessWidget {
                                     ToMyMusicians(),
                                     NewUnionsIcon(userDB: userDB),
                                     TasteIcon(userDB: userDB),
-                                    MyFee(),
+                                    MyBroadcast(),
                                     ToAppSettings(),
                                   ]
                                 : [
