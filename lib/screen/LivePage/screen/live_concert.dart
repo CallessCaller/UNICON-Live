@@ -96,7 +96,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
     stream.cancel();
     // chatFocusNode.dispose();
 
-    removeFromViewers();
+    //removeFromViewers();
 
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
 
@@ -107,86 +107,86 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  void removeFromViewers() async {
-    DocumentSnapshot artistDoc = await FirebaseFirestore.instance
-        .collection('Users')
-        .doc(widget.artist.id)
-        .get();
-    if (artistDoc.data()['live_now'] == true) {
-      DocumentSnapshot liveDoc = await FirebaseFirestore.instance
-          .collection('LiveTmp')
-          .doc(widget.artist.id)
-          .get();
-      List<dynamic> viewers = liveDoc.data()['viewers'];
-      viewers.remove(widget.userDB.id);
+  // void removeFromViewers() async {
+  //   DocumentSnapshot artistDoc = await FirebaseFirestore.instance
+  //       .collection('Users')
+  //       .doc(widget.artist.id)
+  //       .get();
+  //   if (artistDoc.data()['live_now'] == true) {
+  //     DocumentSnapshot liveDoc = await FirebaseFirestore.instance
+  //         .collection('LiveTmp')
+  //         .doc(widget.artist.id)
+  //         .get();
+  //     List<dynamic> viewers = liveDoc.data()['viewers'];
+  //     viewers.remove(widget.userDB.id);
 
-      await FirebaseFirestore.instance
-          .collection('LiveTmp')
-          .doc(widget.artist.id)
-          .update({'viewers': viewers});
-    }
-  }
+  //     await FirebaseFirestore.instance
+  //         .collection('LiveTmp')
+  //         .doc(widget.artist.id)
+  //         .update({'viewers': viewers});
+  //   }
+  // }
 
-  @override
-  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    switch (state) {
-      // This code is listening for inactive, paused, detached cases
-      // For example when the user presses the home button the state becomes inactive
-      // When the user forces to terminate the process it is assumed to become detached
-      // So in these cases the List viewers must pop the user
-      case AppLifecycleState.inactive:
-      case AppLifecycleState.paused:
-      case AppLifecycleState.detached:
-        await detachedCallBack();
-        break;
-      // If the user accesses the app again when 'inactive',
-      // the state changes to 'resumed'
-      // So in this case the List viewers must add the user
-      case AppLifecycleState.resumed:
-        await resumeCallBack();
-        break;
-    }
-  }
+  // @override
+  // Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+  //   switch (state) {
+  //     // This code is listening for inactive, paused, detached cases
+  //     // For example when the user presses the home button the state becomes inactive
+  //     // When the user forces to terminate the process it is assumed to become detached
+  //     // So in these cases the List viewers must pop the user
+  //     case AppLifecycleState.inactive:
+  //     case AppLifecycleState.paused:
+  //     case AppLifecycleState.detached:
+  //       await detachedCallBack();
+  //       break;
+  //     // If the user accesses the app again when 'inactive',
+  //     // the state changes to 'resumed'
+  //     // So in this case the List viewers must add the user
+  //     case AppLifecycleState.resumed:
+  //       await resumeCallBack();
+  //       break;
+  //   }
+  // }
 
-  detachedCallBack() async {
-    DocumentSnapshot artistDoc = await FirebaseFirestore.instance
-        .collection('Users')
-        .doc(widget.artist.id)
-        .get();
-    if (artistDoc.data()['live_now'] == true) {
-      DocumentSnapshot liveDoc = await FirebaseFirestore.instance
-          .collection('LiveTmp')
-          .doc(widget.artist.id)
-          .get();
-      List<dynamic> viewers = liveDoc.data()['viewers'];
-      viewers.remove(widget.userDB.id);
+  // detachedCallBack() async {
+  //   DocumentSnapshot artistDoc = await FirebaseFirestore.instance
+  //       .collection('Users')
+  //       .doc(widget.artist.id)
+  //       .get();
+  //   if (artistDoc.data()['live_now'] == true) {
+  //     DocumentSnapshot liveDoc = await FirebaseFirestore.instance
+  //         .collection('LiveTmp')
+  //         .doc(widget.artist.id)
+  //         .get();
+  //     List<dynamic> viewers = liveDoc.data()['viewers'];
+  //     viewers.remove(widget.userDB.id);
 
-      await FirebaseFirestore.instance
-          .collection('LiveTmp')
-          .doc(widget.artist.id)
-          .update({'viewers': viewers});
-    }
-  }
+  //     await FirebaseFirestore.instance
+  //         .collection('LiveTmp')
+  //         .doc(widget.artist.id)
+  //         .update({'viewers': viewers});
+  //   }
+  // }
 
-  resumeCallBack() async {
-    DocumentSnapshot artistDoc = await FirebaseFirestore.instance
-        .collection('Users')
-        .doc(widget.artist.id)
-        .get();
-    if (artistDoc.data()['live_now'] == true) {
-      DocumentSnapshot liveDoc = await FirebaseFirestore.instance
-          .collection('LiveTmp')
-          .doc(widget.artist.id)
-          .get();
-      List<dynamic> viewers = liveDoc.data()['viewers'];
-      viewers.remove(widget.userDB.id);
+  // resumeCallBack() async {
+  //   DocumentSnapshot artistDoc = await FirebaseFirestore.instance
+  //       .collection('Users')
+  //       .doc(widget.artist.id)
+  //       .get();
+  //   if (artistDoc.data()['live_now'] == true) {
+  //     DocumentSnapshot liveDoc = await FirebaseFirestore.instance
+  //         .collection('LiveTmp')
+  //         .doc(widget.artist.id)
+  //         .get();
+  //     List<dynamic> viewers = liveDoc.data()['viewers'];
+  //     viewers.remove(widget.userDB.id);
 
-      await FirebaseFirestore.instance
-          .collection('LiveTmp')
-          .doc(widget.artist.id)
-          .update({'viewers': viewers});
-    }
-  }
+  //     await FirebaseFirestore.instance
+  //         .collection('LiveTmp')
+  //         .doc(widget.artist.id)
+  //         .update({'viewers': viewers});
+  //   }
+  // }
 
   void _showExitDialog() {
     showDialog(
@@ -314,7 +314,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
                     ),
                     Expanded(
                       child: Text(
-                        viewers.length.toString() + '  명 시청중',
+                        viewers.length.toString() + '  명 시청',
                         style: TextStyle(
                             fontSize: widgetFontSize,
                             fontWeight: FontWeight.w600,
