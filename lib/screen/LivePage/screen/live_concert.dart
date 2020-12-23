@@ -398,7 +398,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Icon(
-                            widget.userDB.follow.contains(_artist.id)
+                            _artist.myPeople.contains(widget.userDB.id)
                                 ? MdiIcons.heart
                                 : MdiIcons.heartOutline,
                             size: 25,
