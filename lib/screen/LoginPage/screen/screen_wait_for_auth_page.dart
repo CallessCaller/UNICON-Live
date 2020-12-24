@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
+import 'package:testing_layout/screen/LoginPage/screen/screen_initial_genre_selection.dart';
 import 'package:testing_layout/screen/tab_page.dart';
 
 class WaitForAuth extends StatefulWidget {
@@ -68,7 +69,7 @@ class _WaitForAuthState extends State<WaitForAuth> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TabPage(),
+                      builder: (context) => InitialGenreSelection(),
                     ),
                   );
                 },

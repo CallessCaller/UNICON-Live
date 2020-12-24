@@ -11,11 +11,15 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:testing_layout/screen/LoginPage/widget_policy_check.dart';
+import 'package:testing_layout/screen/LoginPage/screen/artist_format/artist_login_page.dart';
+import 'package:testing_layout/screen/LoginPage/widget/apple_sign_button.dart';
+import 'package:testing_layout/screen/LoginPage/widget/google_sign_button.dart';
+import 'package:testing_layout/screen/LoginPage/widget/kakao_sign_button.dart';
 
 final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
 
+//TODO: 앱 로그인 화면 수정
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -28,207 +32,100 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: SafeArea(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.symmetric(vertical: 150),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.5,
-                child: Image.asset(
-                  'assets/slogan_01.png',
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Platform.isIOS
-                      ? FlatButton(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
-                          color: Colors.white,
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          height: 40,
-                          onPressed: () async {
-                            showAlertDialog(context);
-                            auth.UserCredential userCredential =
-                                await signInWithApple();
-
-                            if (userCredential.user.uid ==
-                                _auth.currentUser.uid) {
-                              FirebaseFirestore.instance
-                                  .collection('Users')
-                                  .doc(_auth.currentUser.uid)
-                                  .get()
-                                  .then((value) {
-                                if (value.exists == false) {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => PolicyCheckDialog(),
-                                    ),
-                                  );
-                                } else {
-                                  Navigator.of(context).pushNamedAndRemoveUntil(
-                                      '/inapp',
-                                      (Route<dynamic> route) => false);
-                                }
-                              });
-                            }
-                          },
-                          child: SizedBox(
-                            width: 250,
-                            height: 40,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  child: Image.asset(
-                                    'assets/login_btn/a-logo.png',
-                                    fit: BoxFit.fitWidth,
-                                  ),
-                                  width: 18,
-                                ),
-                                SizedBox(width: 24),
-                                Text(
-                                  'Sign up with Apple',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 19,
-                                  ),
-                                ),
-                                SizedBox(width: 30)
-                              ],
-                            ),
-                          ))
-                      : SizedBox(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  FlatButton(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    color: Colors.white,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    height: 40,
-                    onPressed: () async {
-                      showAlertDialog(context);
-                      auth.UserCredential userCredential =
-                          await signInWithGoogle();
-
-                      if (userCredential.user.uid == _auth.currentUser.uid) {
-                        FirebaseFirestore.instance
-                            .collection('Users')
-                            .doc(_auth.currentUser.uid)
-                            .get()
-                            .then((value) {
-                          if (value.exists == false) {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => PolicyCheckDialog(),
-                              ),
-                            );
-                          } else {
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                                '/inapp', (Route<dynamic> route) => false);
-                          }
-                        });
-                      }
-                    },
-                    child: SizedBox(
-                      height: 40,
-                      width: 250,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            child: Image.asset(
-                              'assets/login_btn/g-logo.png',
-                              fit: BoxFit.fitWidth,
-                            ),
-                            width: 18,
-                          ),
-                          SizedBox(width: 24),
-                          Text(
-                            'Sign up with Google',
-                            style: TextStyle(
-                              fontFamily: 'Roboto',
-                              color: Colors.black.withOpacity(0.54),
-                              fontSize: 19,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  FlatButton(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    color: Color.fromRGBO(254, 229, 0, 1),
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    height: 40,
-                    onPressed: () async {
-                      showAlertDialog(context);
-                      auth.UserCredential userCredential = await kakaoSignIn();
-
-                      if (userCredential.user.uid == _auth.currentUser.uid) {
-                        FirebaseFirestore.instance
-                            .collection('Users')
-                            .doc(_auth.currentUser.uid)
-                            .get()
-                            .then((value) {
-                          if (value.exists == false) {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => PolicyCheckDialog(),
-                              ),
-                            );
-                          } else {
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                                '/inapp', (Route<dynamic> route) => false);
-                          }
-                        });
-                      }
-                    },
-                    child: SizedBox(
-                      height: 40,
-                      width: 250,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            child: Image.asset(
-                              'assets/login_btn/k-logo.png',
-                              fit: BoxFit.fitWidth,
-                            ),
-                            width: 18,
-                          ),
-                          SizedBox(width: 24),
-                          Text(
-                            'Sign up with Kakao',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 19,
-                            ),
-                          ),
-                          SizedBox(width: 29)
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            child: Image.asset(
+              'assets/ios_login.png',
+              fit: BoxFit.fitWidth,
+            ),
           ),
-        ),
+          SizedBox(
+            height: 10,
+          ),
+          Divider(
+            color: Colors.white,
+            height: 20,
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+            // decoration: BoxDecoration(
+            //     border: Border.all(color: Color(0xffA3A3A3)),
+            //     borderRadius: BorderRadius.circular(22)),
+            child: Column(
+              children: [
+                Text(
+                  'Sign in with',
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w500),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: Platform.isIOS
+                      ? [
+                          AppleSignButton(
+                            isArtist: false,
+                          ),
+                          GoogleSignButton(
+                            isArtist: false,
+                          ),
+                          KakaoSignButton(
+                            isArtist: false,
+                          )
+                        ]
+                      : [
+                          GoogleSignButton(
+                            isArtist: false,
+                          ),
+                          KakaoSignButton(
+                            isArtist: false,
+                          )
+                        ],
+                ),
+                SizedBox(
+                  height: 45,
+                ),
+                Text(
+                  '당신이 뮤지션이라면?',
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w500),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                FlatButton(
+                  height: 55,
+                  minWidth: 250,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(11.0),
+                  ),
+                  color: Color(0xff3E3E3E),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ArtistLoginPage()));
+                  },
+                  child: Text(
+                    '뮤지션 등록/신청',
+                    style: TextStyle(
+                        fontSize: 21,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

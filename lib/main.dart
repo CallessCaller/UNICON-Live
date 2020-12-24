@@ -74,14 +74,14 @@ class _MyAppState extends State<MyApp> {
           accentColor: Colors.black,
         ),
         title: 'Unicon',
-        initialRoute: _isFirst
-            ? '/first_installed'
-            : _needLogin
-                ? '/login'
-                : _exist
-                    ? '/inapp'
-                    : '/login',
-        // initialRoute: '/first_installed',
+        // initialRoute: _isFirst
+        //     ? '/first_installed'
+        //     : _needLogin
+        //         ? '/login'
+        //         : _exist
+        //             ? '/inapp'
+        //             : '/login',
+        initialRoute: '/first_installed',
         routes: {
           '/first_installed': (context) => AppGuideScreen(),
           '/login': (context) => LoginPage(),
