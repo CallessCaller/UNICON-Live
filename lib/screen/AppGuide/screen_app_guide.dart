@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/screen/LoginPage/login_page.dart';
 
-//TODO: 앱 가이드 화면 수정
 class AppGuideScreen extends StatefulWidget {
   @override
   _AppGuideScreenState createState() => _AppGuideScreenState();

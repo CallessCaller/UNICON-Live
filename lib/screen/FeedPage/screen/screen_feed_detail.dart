@@ -330,15 +330,19 @@ class _FeedDetailState extends State<FeedDetail> {
                   widget.feed.image != null
                       ? Padding(
                           padding: const EdgeInsets.only(top: 12),
-                          child: CachedNetworkImage(
-                            imageUrl: widget.feed.image,
-                            imageBuilder: (context, imageProvider) => Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.width * 0.9,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: imageProvider,
+                          child: Hero(
+                            tag: widget.feed.feedID,
+                            child: CachedNetworkImage(
+                              imageUrl: widget.feed.image,
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.width * 0.9,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: imageProvider,
+                                  ),
                                 ),
                               ),
                             ),

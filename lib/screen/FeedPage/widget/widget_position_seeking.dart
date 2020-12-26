@@ -41,7 +41,7 @@ class _PositionSeekWidgetState extends State<PositionSeekWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 10,
+      height: 15,
       width: MediaQuery.of(context).size.width,
       child: SliderTheme(
         data: SliderTheme.of(context).copyWith(
@@ -49,7 +49,7 @@ class _PositionSeekWidgetState extends State<PositionSeekWidget> {
           thumbShape: RoundSliderThumbShape(
             enabledThumbRadius: 3.0,
           ),
-          trackHeight: 1.0,
+          trackHeight: 3.0,
         ),
         child: Slider(
           activeColor: appKeyColor,

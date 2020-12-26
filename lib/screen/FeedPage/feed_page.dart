@@ -23,6 +23,7 @@ class FeedPage extends StatefulWidget {
 
 class _FeedPageState extends State<FeedPage> {
   AssetsAudioPlayer get _assetsAudioPlayer => AssetsAudioPlayer.withId("music");
+  ScrollController scrollController = new ScrollController();
 
   @override
   void initState() {
@@ -33,6 +34,7 @@ class _FeedPageState extends State<FeedPage> {
   void dispose() {
     _assetsAudioPlayer.dispose();
     super.dispose();
+    scrollController.dispose();
   }
 
   @override
@@ -144,7 +146,8 @@ class _FeedPageState extends State<FeedPage> {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: ListView(
-                children: feedBoxes(feeds, userDB),
+                controller: scrollController,
+                children: [Column(children: feedBoxes(feeds, userDB))],
               ),
             ),
             Positioned(

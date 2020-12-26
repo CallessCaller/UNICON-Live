@@ -14,6 +14,7 @@ import 'package:testing_layout/screen/AccountPage/screen/unicoin_screen/unicoin_
 import 'package:testing_layout/screen/LivePage/screen/live_concert.dart';
 import 'package:testing_layout/screen/LivePage/screen/widget/onlyChat.dart';
 
+// TODO: 라이브 시청자 수 새 필드 생성
 class LiveBox extends StatefulWidget {
   final Lives live;
   const LiveBox({Key key, this.live}) : super(key: key);

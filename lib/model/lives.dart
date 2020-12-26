@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// TODO: 라이브 시청자 수 새 필드 생성
 class Lives {
   final String id;
   final Timestamp time;

@@ -17,6 +17,7 @@ import 'package:testing_layout/screen/LivePage/screen/widget/web_streaming.dart'
 
 bool artistTap = false;
 
+// TODO: 라이브 시청자 수 새 필드 생성
 class LiveConcert extends StatefulWidget {
   final Artist artist;
   final Lives live;

@@ -52,7 +52,7 @@ import 'package:testing_layout/screen/LivePage/widget/live_box.dart';
 //     );
 //   }
 // }
-
+// TODO: 라이브 시청자 수 새 필드 생성
 List<Widget> hotLive(BuildContext context, List<Lives> lives, UserDB userDB) {
   var artistSnapshot = Provider.of<QuerySnapshot>(context);
   final artists =
