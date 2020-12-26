@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/load_user_db.dart';
-import 'package:testing_layout/screen/LoginPage/screen/screen_artist_or_user.dart';
+import 'package:testing_layout/screen/LoginPage/screen/artist_format/screen_artist_format.dart';
+import 'package:testing_layout/screen/LoginPage/screen/screen_initial_genre_selection.dart';
 import 'package:testing_layout/screen/LoginPage/screen/screen_policy/screen_show-text-file.dart';
 
 class PolicyCheckDialog extends StatefulWidget {
+  final bool isArtist;
+  PolicyCheckDialog({this.isArtist});
   @override
   _PolicyCheckDialogState createState() => _PolicyCheckDialogState();
 }
@@ -253,10 +256,16 @@ class _PolicyCheckDialogState extends State<PolicyCheckDialog> {
                     ),
                     onPressed: () {
                       if (check1 && check2 && check3 && check4) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ArtistOrUser()));
+                        widget.isArtist
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ArtistForm()))
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        InitialGenreSelection()));
                         LoadUser().onCreate();
                       } else {
                         Widget toast = Container(
