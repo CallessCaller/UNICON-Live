@@ -17,6 +17,7 @@ import 'package:testing_layout/screen/LivePage/screen/widget/web_streaming.dart'
 
 bool artistTap = false;
 
+// TODO: 라이브 시청자 수 새 필드 생성
 class LiveConcert extends StatefulWidget {
   final Artist artist;
   final Lives live;
@@ -67,7 +68,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
 
     stream = documentStream.listen((event) {
       setState(() {
-        viewers = event.data()['viewers'];
+        viewers = event.data()['viewers2'];
       });
     });
 
@@ -117,13 +118,13 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
   //         .collection('LiveTmp')
   //         .doc(widget.artist.id)
   //         .get();
-  //     List<dynamic> viewers = liveDoc.data()['viewers'];
+  //     List<dynamic> viewers = liveDoc.data()['viewers3'];
   //     viewers.remove(widget.userDB.id);
 
   //     await FirebaseFirestore.instance
   //         .collection('LiveTmp')
   //         .doc(widget.artist.id)
-  //         .update({'viewers': viewers});
+  //         .update({'viewers3': viewers});
   //   }
   // }
 
@@ -158,13 +159,13 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
   //         .collection('LiveTmp')
   //         .doc(widget.artist.id)
   //         .get();
-  //     List<dynamic> viewers = liveDoc.data()['viewers'];
+  //     List<dynamic> viewers = liveDoc.data()['viewers3'];
   //     viewers.remove(widget.userDB.id);
 
   //     await FirebaseFirestore.instance
   //         .collection('LiveTmp')
   //         .doc(widget.artist.id)
-  //         .update({'viewers': viewers});
+  //         .update({'viewers3': viewers});
   //   }
   // }
 
@@ -178,13 +179,13 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
   //         .collection('LiveTmp')
   //         .doc(widget.artist.id)
   //         .get();
-  //     List<dynamic> viewers = liveDoc.data()['viewers'];
+  //     List<dynamic> viewers = liveDoc.data()['viewers3'];
   //     viewers.remove(widget.userDB.id);
 
   //     await FirebaseFirestore.instance
   //         .collection('LiveTmp')
   //         .doc(widget.artist.id)
-  //         .update({'viewers': viewers});
+  //         .update({'viewers3': viewers});
   //   }
   // }
 
@@ -398,7 +399,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Icon(
-                            widget.userDB.follow.contains(_artist.id)
+                            _artist.myPeople.contains(widget.userDB.id)
                                 ? MdiIcons.heart
                                 : MdiIcons.heartOutline,
                             size: 25,

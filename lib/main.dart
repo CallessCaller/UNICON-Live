@@ -11,7 +11,6 @@ import 'package:testing_layout/providers/stream_of_artist.dart';
 import 'package:testing_layout/providers/stream_of_feed.dart';
 import 'package:testing_layout/providers/stream_of_live.dart';
 import 'package:testing_layout/screen/AppGuide/screen_app_guide.dart';
-import 'package:testing_layout/screen/LoginPage/login_page.dart';
 import 'package:testing_layout/screen/tab_page.dart';
 import 'model/feed.dart';
 
@@ -74,17 +73,15 @@ class _MyAppState extends State<MyApp> {
           accentColor: Colors.black,
         ),
         title: 'Unicon',
-        // initialRoute: _isFirst
-        //     ? '/first_installed'
-        //     : _needLogin
-        //         ? '/login'
-        //         : _exist
-        //             ? '/inapp'
-        //             : '/login',
-        initialRoute: '/first_installed',
+        initialRoute: _needLogin
+            ? '/login'
+            : _exist
+                ? '/inapp'
+                : '/login',
+        // initialRoute: '/first_installed',
         routes: {
           '/first_installed': (context) => AppGuideScreen(),
-          '/login': (context) => LoginPage(),
+          '/login': (context) => AppGuideScreen(),
           '/inapp': (context) => TabPage(),
         },
       ),

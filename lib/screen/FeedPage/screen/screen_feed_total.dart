@@ -21,7 +21,7 @@ class FeedTotal extends StatefulWidget {
 
 class _FeedTotalState extends State<FeedTotal> {
   AssetsAudioPlayer get _assetsAudioPlayer => AssetsAudioPlayer.withId("music");
-
+  ScrollController scrollController = new ScrollController();
   @override
   void initState() {
     super.initState();
@@ -30,6 +30,7 @@ class _FeedTotalState extends State<FeedTotal> {
   @override
   void dispose() {
     super.dispose();
+    scrollController.dispose();
   }
 
   @override
@@ -61,27 +62,21 @@ class _FeedTotalState extends State<FeedTotal> {
       body: SafeArea(
         child: Stack(
           children: [
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-            ),
-            SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Column(
-                      children: feedBoxes(feeds, userDB),
-                    ),
-                    Container(
-                      height: 40,
-                    )
-                  ],
-                ),
+              child: ListView(
+                controller: scrollController,
+                addAutomaticKeepAlives: true,
+                children: [Column(children: feedBoxes(feeds, userDB))],
               ),
             ),
             Positioned(
               bottom: 0,
-              child: musicPlayer(_assetsAudioPlayer),
+              child: AnimatedContainer(
+                  duration: Duration(milliseconds: 200),
+                  height: 40,
+                  child: musicPlayer(_assetsAudioPlayer)),
             ),
           ],
         ),

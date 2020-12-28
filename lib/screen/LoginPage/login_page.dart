@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
@@ -19,7 +17,6 @@ import 'package:testing_layout/screen/LoginPage/widget/kakao_sign_button.dart';
 final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
 
-//TODO: 앱 로그인 화면 수정
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -36,26 +33,21 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            child: Image.asset(
-              'assets/ios_login.png',
-              fit: BoxFit.fitWidth,
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Divider(
-            color: Colors.white,
-            height: 20,
-          ),
-          Container(
+          AnimatedContainer(
+            duration: Duration(milliseconds: 200),
             padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-            // decoration: BoxDecoration(
-            //     border: Border.all(color: Color(0xffA3A3A3)),
-            //     borderRadius: BorderRadius.circular(22)),
+            decoration: BoxDecoration(
+                border: Border.all(color: Color(0xffA3A3A3)),
+                borderRadius: BorderRadius.circular(22)),
             child: Column(
               children: [
+                Divider(
+                  color: Colors.white,
+                  height: 20,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 Text(
                   'Sign in with',
                   style: TextStyle(
@@ -67,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 20,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: Platform.isIOS
                       ? [

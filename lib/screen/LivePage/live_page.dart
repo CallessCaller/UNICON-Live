@@ -60,19 +60,22 @@ class _LivePageState extends State<LivePage> {
                       height: 10,
                     ),
                     Container(
-                      child: CarouselSlider(
-                        options: CarouselOptions(
-                          enableInfiniteScroll: true,
-                          viewportFraction: 0.5,
-                          height: 150,
-                          aspectRatio: 2,
-                          enlargeCenterPage: true,
-                          scrollDirection: Axis.horizontal,
-                          autoPlay: false,
+                        child: HotLives(
+                      userDB: userDB,
+                    )
+                        // CarouselSlider(
+                        //   options: CarouselOptions(
+                        //     enableInfiniteScroll: true,
+                        //     viewportFraction: 0.5,
+                        //     height: 150,
+                        //     aspectRatio: 2,
+                        //     enlargeCenterPage: true,
+                        //     scrollDirection: Axis.horizontal,
+                        //     autoPlay: false,
+                        //   ),
+                        //   items: hotLive(context, lives, userDB),
+                        // ),
                         ),
-                        items: hotLive(context, lives, userDB),
-                      ),
-                    ),
                   ],
                 ),
                 Divider(

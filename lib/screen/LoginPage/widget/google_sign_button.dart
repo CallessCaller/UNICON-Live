@@ -44,8 +44,8 @@ class GoogleSignButton extends StatelessWidget {
       color: Colors.white,
       textColor: Colors.white,
       child: Container(
-        height: 50,
-        width: 50,
+        height: 25,
+        width: 25,
         child: Image.asset('assets/login_btn/g-logo.png', fit: BoxFit.fitWidth),
       ),
       padding: EdgeInsets.all(16),

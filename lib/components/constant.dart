@@ -31,13 +31,13 @@ const List<String> iosGuideImage = [
   'assets/walkthrough/ios_1.png',
   'assets/walkthrough/ios_2.png',
   'assets/walkthrough/ios_3.png',
-  'assets/walkthrough/ios_4.png',
+  'assets/walkthrough/intro_logo.png'
 ];
 const List<String> aosGuideImage = [
   'assets/walkthrough/aos_1.png',
   'assets/walkthrough/aos_2.png',
   'assets/walkthrough/aos_3.png',
-  'assets/walkthrough/aos_4.png',
+  'assets/walkthrough/intro_logo.png'
 ];
 
 // Banner images URL

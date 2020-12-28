@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// TODO: 라이브 시청자 수 새 필드 생성
 class Lives {
   final String id;
   final Timestamp time;
@@ -11,7 +12,7 @@ class Lives {
   Lives.fromMap(Map<String, dynamic> map, {this.reference})
       : id = map['id'],
         time = map['time'],
-        viewers = map['viewers'],
+        viewers = map['viewers2'],
         concertID = map['concertID'],
         payList = map['pay_list'];
 
