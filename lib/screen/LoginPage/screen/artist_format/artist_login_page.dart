@@ -11,73 +11,76 @@ class ArtistLoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: Stack(
         children: [
           Container(
             child: Image.asset(
-              'assets/ios_login.png',
+              Platform.isIOS
+                  ? 'assets/walkthrough/intro_ios.png'
+                  : 'assets/walkthrough/intro_aos.png',
               fit: BoxFit.fitWidth,
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-            decoration: BoxDecoration(
-                border: Border.all(color: Color(0xffA3A3A3)),
-                borderRadius: BorderRadius.circular(22)),
-            child: Column(
-              children: [
-                Text(
-                  'Sign in with',
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w500),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: Platform.isIOS
-                      ? [
-                          AppleSignButton(
-                            isArtist: true,
-                          ),
-                          GoogleSignButton(
-                            isArtist: true,
-                          ),
-                          KakaoSignButton(
-                            isArtist: true,
-                          )
-                        ]
-                      : [
-                          GoogleSignButton(
-                            isArtist: true,
-                          ),
-                          KakaoSignButton(
-                            isArtist: true,
-                          )
-                        ],
-                ),
-                SizedBox(
-                  height: 45,
-                ),
-                Text(
-                  '뮤지션 전용 로그인 페이지 입니다.\n\n로그인 하시면 뮤지션 등록을 위한\n추가 정보가 필요합니다.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: appKeyColor,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
+          Positioned(
+            bottom: 20,
+            child: Container(
+              height: 300,
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Color(0xffA3A3A3)),
+                  borderRadius: BorderRadius.circular(22)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Sign in with',
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w500),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: Platform.isIOS
+                        ? [
+                            AppleSignButton(
+                              isArtist: true,
+                            ),
+                            GoogleSignButton(
+                              isArtist: true,
+                            ),
+                            KakaoSignButton(
+                              isArtist: true,
+                            )
+                          ]
+                        : [
+                            GoogleSignButton(
+                              isArtist: true,
+                            ),
+                            KakaoSignButton(
+                              isArtist: true,
+                            )
+                          ],
+                  ),
+                  SizedBox(
+                    height: 45,
+                  ),
+                  Text(
+                    '뮤지션 전용 로그인 페이지 입니다.\n\n로그인 하시면 뮤지션 등록을 위한\n추가 정보가 필요합니다.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: appKeyColor,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

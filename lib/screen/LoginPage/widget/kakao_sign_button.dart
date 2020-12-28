@@ -39,8 +39,8 @@ class KakaoSignButton extends StatelessWidget {
       color: Color.fromRGBO(254, 229, 0, 1),
       textColor: Colors.white,
       child: Container(
-        height: 50,
-        width: 50,
+        height: 25,
+        width: 25,
         child: Image.asset('assets/login_btn/k-logo.png', fit: BoxFit.fitWidth),
       ),
       padding: EdgeInsets.all(16),

@@ -317,14 +317,22 @@ void showAlertDialog(
                     .doc(artist.id)
                     .get();
                 List<dynamic> payList = liveDoc.data()['pay_list'];
-                List<dynamic> viewers = liveDoc.data()['viewers'];
+                List<dynamic> viewers = liveDoc.data()['viewers2'];
+                List<dynamic> viewersTmp = liveDoc.data()['viewers3'];
 
                 if (!viewers.contains(userDB.id)) {
                   viewers.add(userDB.id);
                   await FirebaseFirestore.instance
                       .collection('LiveTmp')
                       .doc(artist.id)
-                      .update({'viewers': viewers});
+                      .update({'viewers2': viewers});
+                }
+                if (!viewersTmp.contains(userDB.id)) {
+                  viewersTmp.add(userDB.id);
+                  await FirebaseFirestore.instance
+                      .collection('LiveTmp')
+                      .doc(artist.id)
+                      .update({'viewers3': viewersTmp});
                 }
                 if (!payList.contains(userDB.id)) {
                   payList.add(userDB.id);
@@ -374,13 +382,21 @@ void notShowAlert(
         .collection('LiveTmp')
         .doc(artist.id)
         .get();
-    List<dynamic> viewers = liveDoc.data()['viewers'];
+    List<dynamic> viewers = liveDoc.data()['viewers2'];
+    List<dynamic> viewersTmp = liveDoc.data()['viewers3'];
     if (!viewers.contains(userDB.id)) {
       viewers.add(userDB.id);
       await FirebaseFirestore.instance
           .collection('LiveTmp')
           .doc(artist.id)
-          .update({'viewers': viewers});
+          .update({'viewers2': viewers});
+    }
+    if (!viewersTmp.contains(userDB.id)) {
+      viewersTmp.add(userDB.id);
+      await FirebaseFirestore.instance
+          .collection('LiveTmp')
+          .doc(artist.id)
+          .update({'viewers3': viewersTmp});
     }
   }
 

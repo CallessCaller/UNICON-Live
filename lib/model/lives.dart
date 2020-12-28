@@ -12,7 +12,7 @@ class Lives {
   Lives.fromMap(Map<String, dynamic> map, {this.reference})
       : id = map['id'],
         time = map['time'],
-        viewers = map['viewers'],
+        viewers = map['viewers2'],
         concertID = map['concertID'],
         payList = map['pay_list'];
 

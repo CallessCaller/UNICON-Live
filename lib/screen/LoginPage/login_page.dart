@@ -30,29 +30,24 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            child: Image.asset(
-              'assets/ios_login.png',
-              fit: BoxFit.fitWidth,
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Divider(
-            color: Colors.white,
-            height: 20,
-          ),
-          Container(
+          AnimatedContainer(
+            duration: Duration(milliseconds: 200),
             padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-            // decoration: BoxDecoration(
-            //     border: Border.all(color: Color(0xffA3A3A3)),
-            //     borderRadius: BorderRadius.circular(22)),
+            decoration: BoxDecoration(
+                border: Border.all(color: Color(0xffA3A3A3)),
+                borderRadius: BorderRadius.circular(22)),
             child: Column(
               children: [
+                Divider(
+                  color: Colors.white,
+                  height: 20,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 Text(
                   'Sign in with',
                   style: TextStyle(
@@ -64,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 20,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: Platform.isIOS
                       ? [

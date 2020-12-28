@@ -68,7 +68,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
 
     stream = documentStream.listen((event) {
       setState(() {
-        viewers = event.data()['viewers'];
+        viewers = event.data()['viewers2'];
       });
     });
 
@@ -118,13 +118,13 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
   //         .collection('LiveTmp')
   //         .doc(widget.artist.id)
   //         .get();
-  //     List<dynamic> viewers = liveDoc.data()['viewers'];
+  //     List<dynamic> viewers = liveDoc.data()['viewers3'];
   //     viewers.remove(widget.userDB.id);
 
   //     await FirebaseFirestore.instance
   //         .collection('LiveTmp')
   //         .doc(widget.artist.id)
-  //         .update({'viewers': viewers});
+  //         .update({'viewers3': viewers});
   //   }
   // }
 
@@ -159,13 +159,13 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
   //         .collection('LiveTmp')
   //         .doc(widget.artist.id)
   //         .get();
-  //     List<dynamic> viewers = liveDoc.data()['viewers'];
+  //     List<dynamic> viewers = liveDoc.data()['viewers3'];
   //     viewers.remove(widget.userDB.id);
 
   //     await FirebaseFirestore.instance
   //         .collection('LiveTmp')
   //         .doc(widget.artist.id)
-  //         .update({'viewers': viewers});
+  //         .update({'viewers3': viewers});
   //   }
   // }
 
@@ -179,13 +179,13 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
   //         .collection('LiveTmp')
   //         .doc(widget.artist.id)
   //         .get();
-  //     List<dynamic> viewers = liveDoc.data()['viewers'];
+  //     List<dynamic> viewers = liveDoc.data()['viewers3'];
   //     viewers.remove(widget.userDB.id);
 
   //     await FirebaseFirestore.instance
   //         .collection('LiveTmp')
   //         .doc(widget.artist.id)
-  //         .update({'viewers': viewers});
+  //         .update({'viewers3': viewers});
   //   }
   // }
 

@@ -30,7 +30,7 @@ class _OnlyChatState extends State<OnlyChat> {
 
     stream = documentStream.listen((event) {
       setState(() {
-        viewers = event.data()['viewers'];
+        viewers = event.data()['viewers2'];
       });
     });
   }
