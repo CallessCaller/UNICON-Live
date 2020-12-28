@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
@@ -60,22 +59,10 @@ class _LivePageState extends State<LivePage> {
                       height: 10,
                     ),
                     Container(
-                        child: HotLives(
-                      userDB: userDB,
-                    )
-                        // CarouselSlider(
-                        //   options: CarouselOptions(
-                        //     enableInfiniteScroll: true,
-                        //     viewportFraction: 0.5,
-                        //     height: 150,
-                        //     aspectRatio: 2,
-                        //     enlargeCenterPage: true,
-                        //     scrollDirection: Axis.horizontal,
-                        //     autoPlay: false,
-                        //   ),
-                        //   items: hotLive(context, lives, userDB),
-                        // ),
-                        ),
+                      child: HotLives(
+                        userDB: userDB,
+                      ),
+                    ),
                   ],
                 ),
                 Divider(
