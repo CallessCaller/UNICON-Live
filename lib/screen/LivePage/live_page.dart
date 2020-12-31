@@ -37,51 +37,76 @@ class _LivePageState extends State<LivePage> {
     final userDB = Provider.of<UserDB>(context);
     // makeToken(userDB);
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-                LiveHeader(userDB: userDB),
-                SizedBox(
-                  height: 20,
-                ),
-                Column(
-                  children: [
-                    Text(
-                      'HOT LIVE',
-                      style: TextStyle(
-                        fontSize: subtitleFontSize,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      child: HotLives(
-                        userDB: userDB,
-                      ),
-                    ),
-                  ],
-                ),
-                Divider(
-                  color: Colors.transparent,
-                  height: 10.0,
-                ),
-                Text(
-                  'ALL LIVE',
-                  style: TextStyle(
-                    fontSize: subtitleFontSize,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-              ] +
-              currentLives(userDB, lives),
+      appBar: AppBar(
+        toolbarHeight: 40,
+        centerTitle: false,
+        title:
+            // Container(
+            //   decoration: BoxDecoration(
+            //       color: Colors.red,
+            //       image:
+            //           DecorationImage(image: AssetImage('assets/slogan_02.png'))),
+            // )
+            Container(
+          height: 40,
+          child: Image.asset(
+            'assets/slogan_02.png',
+            fit: BoxFit.fitHeight,
+          ),
         ),
+      ),
+      backgroundColor: Colors.black,
+      body: RefreshIndicator(
+        backgroundColor: Colors.white,
+        onRefresh: () async {
+          await Future.delayed(Duration(seconds: 1));
+          setState(() {});
+        },
+        child: ListView(children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+                  LiveHeader(userDB: userDB),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'HOT LIVE',
+                        style: TextStyle(
+                          fontSize: subtitleFontSize,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        child: HotLives(
+                          userDB: userDB,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.transparent,
+                    height: 10.0,
+                  ),
+                  Text(
+                    'ALL LIVE',
+                    style: TextStyle(
+                      fontSize: subtitleFontSize,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ] +
+                currentLives(userDB, lives),
+          ),
+        ]),
       ),
     );
   }

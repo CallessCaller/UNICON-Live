@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -30,9 +32,11 @@ class _SearchPageState extends State<SearchPage> {
       });
     });
   }
+
   Widget _buildList(BuildContext context, QuerySnapshot artists) {
     List<DocumentSnapshot> searchResults = [];
-    for (DocumentSnapshot artist in artists.docs) {
+    var shuffledList = shuffle(artists.docs);
+    for (DocumentSnapshot artist in shuffledList) {
       if (searchResults.length >= 30) break;
       if (artist.data().toString().toLowerCase().contains(_searchText)) {
         searchResults.add(artist);
@@ -237,13 +241,17 @@ class _SearchPageState extends State<SearchPage> {
   Widget _buildGenreCard(int index, List<Artist> artists, UserDB userDB) {
     return InkWell(
       onTap: () {
+        var shuffledArtist = shuffle(artists);
         List<Artist> results = [];
-        artists.forEach((element) {
-          if (element.genre != null &&
-              element.genre.contains(genreTotalList[index])) {
-            results.add(element);
+        for (Artist artist in shuffledArtist) {
+          if (artist.genre != null &&
+              artist.genre.contains(genreTotalList[index])) {
+            results.add(artist);
           }
-        });
+          if (results.length == 70) {
+            break;
+          }
+        }
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
                 SearchedArtist(results, userDB, genreTotalList[index])));
@@ -288,13 +296,18 @@ class _SearchPageState extends State<SearchPage> {
   Widget _buildMoodCard(int index, List<Artist> artists, UserDB userDB) {
     return InkWell(
       onTap: () {
+        var shuffledArtist = shuffle(artists);
         List<Artist> results = [];
-        artists.forEach((element) {
-          if (element.mood != null &&
-              element.mood.contains(moodTotalList[index])) {
-            results.add(element);
+        for (Artist artist in shuffledArtist) {
+          if (artist.mood != null &&
+              artist.mood.contains(moodTotalList[index])) {
+            results.add(artist);
           }
-        });
+          if (results.length == 70) {
+            break;
+          }
+        }
+
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
                 SearchedArtist(results, userDB, moodTotalList[index])));
@@ -329,4 +342,20 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
   }
+}
+
+List shuffle(List items) {
+  var random = new Random();
+
+  // Go through all elements.
+  for (var i = items.length - 1; i > 0; i--) {
+    // Pick a pseudorandom number according to the list length
+    var n = random.nextInt(i + 1);
+
+    var temp = items[i];
+    items[i] = items[n];
+    items[n] = temp;
+  }
+
+  return items;
 }
