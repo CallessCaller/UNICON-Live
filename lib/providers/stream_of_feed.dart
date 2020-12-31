@@ -19,4 +19,4 @@ class StreamOfFeed {
         .snapshots()
         .map((list) => list.docs.map((doc) => Feed.fromSnapshot(doc)).toList());
   }
-}dddd
+}

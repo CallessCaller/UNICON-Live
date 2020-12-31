@@ -77,6 +77,7 @@ class _BroadcastSettingState extends State<BroadcastSetting> {
             onPressed: _canGo
                 ? () async {
                     showCircleIndicator(context);
+                    // TODO: 아무것도 입력 안했을 시 0으로 지정
                     if (feeController.text != '') {
                       int stringToInt = int.parse(feeController.text);
                       await widget.userDB.reference
