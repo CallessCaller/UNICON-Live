@@ -6,7 +6,6 @@ import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/screen/LivePage/screen/widget/webConstant.dart';
 
-// TODO: 라이브 시청자 수 새 필드 생성
 class OnlyChat extends StatefulWidget {
   final Lives live;
   OnlyChat({this.live});

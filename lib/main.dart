@@ -16,6 +16,7 @@ import 'model/feed.dart';
 
 import 'package:kakao_flutter_sdk/all.dart';
 
+// ignore: unused_element
 bool _isFirst = true;
 bool _needLogin = false;
 bool _exist = false;

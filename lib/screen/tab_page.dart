@@ -49,6 +49,7 @@ class _TabPageState extends State<TabPage> {
 
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
+        //TODO: 알람 처리하는 로직
         print('on message $message');
       },
       onResume: (Map<String, dynamic> message) async {

@@ -1,9 +1,12 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:ftpconnect/ftpconnect.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/model/users.dart';
+import 'package:testing_layout/screen/LivePage/screen/notification.dart';
 import 'package:testing_layout/screen/LivePage/widget/live_box.dart';
 import 'package:testing_layout/screen/LivePage/widget/live_header.dart';
 import 'package:testing_layout/screen/LivePage/widget/recommendation_sliders.dart';
@@ -40,20 +43,36 @@ class _LivePageState extends State<LivePage> {
       appBar: AppBar(
         toolbarHeight: 40,
         centerTitle: false,
-        title:
-            // Container(
-            //   decoration: BoxDecoration(
-            //       color: Colors.red,
-            //       image:
-            //           DecorationImage(image: AssetImage('assets/slogan_02.png'))),
-            // )
-            Container(
+        title: Container(
           height: 40,
           child: Image.asset(
             'assets/slogan_02.png',
             fit: BoxFit.fitHeight,
           ),
         ),
+        actions: [
+          IconButton(
+              splashRadius: Material.defaultSplashRadius - 7,
+              icon: Icon(MdiIcons.bellOutline),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => NotificationPage()));
+              }),
+          IconButton(
+              splashRadius: Material.defaultSplashRadius - 7,
+              icon: Icon(
+                MdiIcons.tea,
+              ),
+              onPressed: () async {
+                FTPConnect ftpConnect = FTPConnect('ynw.fastedge.net',
+                    user: 'ynw', pass: r"sjh12dnjf30dlf!@#$5");
+                await ftpConnect.connect();
+
+                var fileList = await ftpConnect.listDirectoryContentOnlyNames();
+                fileList.removeWhere((element) => element.contains('test'));
+                print(fileList.toString());
+              })
+        ],
       ),
       backgroundColor: Colors.black,
       body: RefreshIndicator(

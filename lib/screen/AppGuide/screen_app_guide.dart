@@ -41,6 +41,7 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
     }
   }
 
+  // ignore: unused_element
   void _saveFirst() async {
     _preferences = await SharedPreferences.getInstance();
 
