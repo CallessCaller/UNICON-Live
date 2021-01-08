@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:ftpconnect/ftpconnect.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
@@ -58,20 +57,6 @@ class _LivePageState extends State<LivePage> {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => NotificationPage()));
               }),
-          IconButton(
-              splashRadius: Material.defaultSplashRadius - 7,
-              icon: Icon(
-                MdiIcons.tea,
-              ),
-              onPressed: () async {
-                FTPConnect ftpConnect = FTPConnect('ynw.fastedge.net',
-                    user: 'ynw', pass: r"sjh12dnjf30dlf!@#$5");
-                await ftpConnect.connect();
-
-                var fileList = await ftpConnect.listDirectoryContentOnlyNames();
-                fileList.removeWhere((element) => element.contains('test'));
-                print(fileList.toString());
-              })
         ],
       ),
       backgroundColor: Colors.black,

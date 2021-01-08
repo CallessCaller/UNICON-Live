@@ -55,7 +55,6 @@ dependencies:
   cached_network_image: ^2.3.3
   flutter_svg: ^0.19.2+1
   http: ^0.12.2
-  ftpconnect: ^0.2.1
 
   # Icons
   cupertino_icons: ^0.1.3
