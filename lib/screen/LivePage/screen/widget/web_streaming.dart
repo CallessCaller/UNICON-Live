@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/screen/LivePage/screen/widget/chatting.dart';
 import 'package:video_player/video_player.dart';
+
+VideoPlayerController videoController;
 
 class WebStreaming extends StatefulWidget {
   final Artist artist;
@@ -13,7 +17,6 @@ class WebStreaming extends StatefulWidget {
 }
 
 class _WebStreamingState extends State<WebStreaming> {
-  VideoPlayerController _controller;
   String _url;
   Image image;
   bool _liveReady = false;
@@ -26,9 +29,9 @@ class _WebStreamingState extends State<WebStreaming> {
         : 'http://ynw.fastedge.net:1935/ynw/' +
             widget.artist.id +
             '/playlist.m3u8';
-    _controller = VideoPlayerController.network(_url)
+    videoController = VideoPlayerController.network(_url)
       ..initialize().then((_) {
-        _controller.play();
+        videoController.play();
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {
           _liveReady = true;
@@ -39,8 +42,8 @@ class _WebStreamingState extends State<WebStreaming> {
   @override
   void dispose() {
     super.dispose();
-    _controller.pause();
-    _controller.dispose();
+    videoController.pause();
+    videoController.dispose();
   }
 
   // void takeSnapshot() async {
@@ -55,7 +58,7 @@ class _WebStreamingState extends State<WebStreaming> {
 
   @override
   Widget build(BuildContext context) {
-    if (_liveReady == true && _controller.value.initialized == false) {
+    if (_liveReady == true && videoController.value.initialized == false) {
       Navigator.of(context).pop();
     }
 
@@ -63,69 +66,148 @@ class _WebStreamingState extends State<WebStreaming> {
     double _width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Container(
-          alignment: widget.width == MediaQuery.of(context).size.width
-              ? Alignment.center
-              : Alignment.centerLeft,
-          child: _controller.value.initialized
-              ? widget.width == MediaQuery.of(context).size.width
-                  ? AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: VideoPlayer(
-                        _controller,
-                      ),
-                    )
-                  : AnimatedContainer(
-                      height: chatFocusNode.hasFocus
-                          ? _width * 0.5 / _controller.value.aspectRatio
-                          : widget.width / _controller.value.aspectRatio,
-                      width:
-                          chatFocusNode.hasFocus ? _width * 0.5 : widget.width,
-                      duration: Duration(milliseconds: 100),
-                      child: AspectRatio(
-                        aspectRatio: _controller.value.aspectRatio,
-                        child: VideoPlayer(
-                          _controller,
-                        ),
-                      ),
-                    )
-              // AspectRatio(
-              //     aspectRatio: _controller.value.aspectRatio,
-              //     child: VideoPlayer(
-              //       _controller,
-              //     ),
-              //   )
-              : _liveReady
-                  ? Container(
-                      height: _height,
-                      width: _width,
-                      color: Colors.black,
-                      child: Center(
-                        child: Text(
-                          '라이브가 종료되었습니다.',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: textFontSize,
-                            fontWeight: FontWeight.bold,
+      //TODO: 아이폰 상단 높이
+      body: MediaQuery.of(context).orientation == Orientation.portrait
+          ? Column(
+              children: [
+                SizedBox(
+                  height: Platform.isIOS ? 40 : 0,
+                ),
+                Container(
+                    alignment: widget.width == MediaQuery.of(context).size.width
+                        ? Alignment.topCenter
+                        : Alignment.centerLeft,
+                    child: videoController.value.initialized
+                        ? widget.width == MediaQuery.of(context).size.width
+                            ? AspectRatio(
+                                aspectRatio: videoController.value.aspectRatio,
+                                child: VideoPlayer(
+                                  videoController,
+                                ),
+                              )
+                            : AnimatedContainer(
+                                height: chatFocusNode.hasFocus
+                                    ? _width *
+                                        0.5 /
+                                        videoController.value.aspectRatio
+                                    : widget.width /
+                                        videoController.value.aspectRatio,
+                                width: chatFocusNode.hasFocus
+                                    ? _width * 0.5
+                                    : widget.width,
+                                duration: Duration(milliseconds: 100),
+                                child: AspectRatio(
+                                  aspectRatio:
+                                      videoController.value.aspectRatio,
+                                  child: VideoPlayer(
+                                    videoController,
+                                  ),
+                                ),
+                              )
+                        // AspectRatio(
+                        //     aspectRatio: _controller.value.aspectRatio,
+                        //     child: VideoPlayer(
+                        //       _controller,
+                        //     ),
+                        //   )
+                        : _liveReady
+                            ? Container(
+                                height: _height,
+                                width: _width,
+                                color: Colors.black,
+                                child: Center(
+                                  child: Text(
+                                    '라이브가 종료되었습니다.',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: textFontSize,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                height: _height,
+                                width: _width,
+                                color: Colors.black,
+                                child: Center(
+                                  child: Text(
+                                    '라이브가 곧 시작됩니다.',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: textFontSize,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              )),
+              ],
+            )
+          : Container(
+              alignment: widget.width == MediaQuery.of(context).size.width
+                  ? Alignment.topCenter
+                  : Alignment.centerLeft,
+              child: videoController.value.initialized
+                  ? widget.width == MediaQuery.of(context).size.width
+                      ? AspectRatio(
+                          aspectRatio: videoController.value.aspectRatio,
+                          child: VideoPlayer(
+                            videoController,
                           ),
-                        ),
-                      ),
-                    )
-                  : Container(
-                      height: _height,
-                      width: _width,
-                      color: Colors.black,
-                      child: Center(
-                        child: Text(
-                          '라이브가 곧 시작됩니다.',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: textFontSize,
-                            fontWeight: FontWeight.bold,
+                        )
+                      : AnimatedContainer(
+                          height: chatFocusNode.hasFocus
+                              ? _width * 0.5 / videoController.value.aspectRatio
+                              : widget.width /
+                                  videoController.value.aspectRatio,
+                          width: chatFocusNode.hasFocus
+                              ? _width * 0.5
+                              : widget.width,
+                          duration: Duration(milliseconds: 100),
+                          child: AspectRatio(
+                            aspectRatio: videoController.value.aspectRatio,
+                            child: VideoPlayer(
+                              videoController,
+                            ),
                           ),
-                        ),
-                      ),
-                    )),
+                        )
+                  // AspectRatio(
+                  //     aspectRatio: _controller.value.aspectRatio,
+                  //     child: VideoPlayer(
+                  //       _controller,
+                  //     ),
+                  //   )
+                  : _liveReady
+                      ? Container(
+                          height: _height,
+                          width: _width,
+                          color: Colors.black,
+                          child: Center(
+                            child: Text(
+                              '라이브가 종료되었습니다.',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: textFontSize,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container(
+                          height: _height,
+                          width: _width,
+                          color: Colors.black,
+                          child: Center(
+                            child: Text(
+                              '라이브가 곧 시작됩니다.',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: textFontSize,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        )),
     );
   }
 }

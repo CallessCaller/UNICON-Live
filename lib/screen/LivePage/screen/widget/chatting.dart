@@ -14,6 +14,8 @@ import 'package:testing_layout/screen/LivePage/screen/live_concert.dart';
 import 'package:testing_layout/screen/LivePage/screen/widget/webConstant.dart';
 import 'package:testing_layout/widget/unicoin/widget_coin_bundle_wrap.dart';
 
+import 'web_streaming.dart';
+
 FocusNode chatFocusNode = new FocusNode();
 
 class ChatWidget extends StatefulWidget {
@@ -108,17 +110,45 @@ class _ChatWidgetState extends State<ChatWidget> {
         AnimatedContainer(
           duration: Duration(microseconds: 500),
           padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-          height: chatFocusNode.hasFocus
-              ? _height - widget.keyboardHeight - 50
-              : _height - 50,
-          width: widget.width == 0
-              ? widget.width
+          // TODO: 길이 맞춤
+
+          height: MediaQuery.of(context).orientation == Orientation.portrait
+              ? Platform.isIOS
+                  ? chatFocusNode.hasFocus
+                      ? _height -
+                          _width / videoController.value.aspectRatio -
+                          widget.keyboardHeight -
+                          40 -
+                          50
+                      : _height -
+                          (_width / videoController.value.aspectRatio) -
+                          40 -
+                          50
+                  : chatFocusNode.hasFocus
+                      ? _height -
+                          _width / videoController.value.aspectRatio -
+                          widget.keyboardHeight -
+                          50
+                      : _height -
+                          (_width / videoController.value.aspectRatio) -
+                          50
               : chatFocusNode.hasFocus
-                  ? _width * 0.5 - 10
-                  : widget.width,
+                  ? _height - widget.keyboardHeight - 50
+                  : _height - 50,
+          width: MediaQuery.of(context).orientation == Orientation.portrait
+              ? _width
+              : widget.width == 0
+                  ? widget.width
+                  : chatFocusNode.hasFocus
+                      ? _width * 0.5 - 10
+                      : widget.width,
           decoration: BoxDecoration(
               color: Color.fromRGBO(232, 232, 232, 1),
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(15))),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(
+                      MediaQuery.of(context).orientation == Orientation.portrait
+                          ? 0
+                          : 15))),
           child: InkWell(
             onTap: () {
               FocusScope.of(context).unfocus();
@@ -133,11 +163,13 @@ class _ChatWidgetState extends State<ChatWidget> {
           duration: Duration(microseconds: 500),
           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
           height: 50,
-          width: widget.width == 0
-              ? widget.width
-              : chatFocusNode.hasFocus
-                  ? _width * 0.5 - 10
-                  : widget.width,
+          width: MediaQuery.of(context).orientation == Orientation.portrait
+              ? _width
+              : widget.width == 0
+                  ? widget.width
+                  : chatFocusNode.hasFocus
+                      ? _width * 0.5 - 10
+                      : widget.width,
           color: Colors.white,
           child: Row(
             children: [
@@ -156,7 +188,10 @@ class _ChatWidgetState extends State<ChatWidget> {
                 child: Container(
                   alignment: Alignment.centerLeft,
                   height: 40,
-                  width: _width * 0.5,
+                  width:
+                      MediaQuery.of(context).orientation == Orientation.portrait
+                          ? _width * 0.8
+                          : _width * 0.5,
                   child: TextField(
                     onTap: () {
                       artistTap = false;

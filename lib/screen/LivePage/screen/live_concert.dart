@@ -243,7 +243,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
       });
     }
     double maxwidth = MediaQuery.of(context).size.width;
-    //double maxheight = MediaQuery.of(context).size.height;
+    double maxheight = MediaQuery.of(context).size.height;
 
     double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
 
@@ -273,7 +273,11 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
           },
           child: WebStreaming(
             artist: _artist,
-            width: hideChat ? maxwidth : maxwidth * 0.7,
+            width: MediaQuery.of(context).orientation == Orientation.portrait
+                ? maxwidth
+                : hideChat
+                    ? maxwidth
+                    : maxwidth * 0.7,
           ),
         ),
         Positioned(
@@ -288,18 +292,38 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
           ),
         ),
         Positioned(
-          bottom: 0,
+          // TODO: 길이 맞춤
+          bottom: MediaQuery.of(context).orientation == Orientation.portrait
+              ? Platform.isIOS
+                  ? chatFocusNode.hasFocus
+                      ? maxheight -
+                          maxwidth / videoController.value.aspectRatio -
+                          keyboardHeight -
+                          40
+                      : maxheight -
+                          (maxwidth / videoController.value.aspectRatio) -
+                          40
+                  : chatFocusNode.hasFocus
+                      ? maxheight -
+                          maxwidth / videoController.value.aspectRatio -
+                          keyboardHeight
+                      : maxheight -
+                          (maxwidth / videoController.value.aspectRatio)
+              : 0,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AnimatedContainer(
                 duration: Duration(milliseconds: 200),
                 height: 50,
-                width: hideChat
-                    ? maxwidth
-                    : chatFocusNode.hasFocus
-                        ? maxwidth * 0.5
-                        : maxwidth * 0.7,
+                width:
+                    MediaQuery.of(context).orientation == Orientation.portrait
+                        ? maxwidth
+                        : hideChat
+                            ? maxwidth
+                            : chatFocusNode.hasFocus
+                                ? maxwidth * 0.5
+                                : maxwidth * 0.7,
                 child: Row(
                   children: [
                     SizedBox(
@@ -321,18 +345,56 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
                             color: Colors.white),
                       ),
                     ),
+                    MediaQuery.of(context).orientation == Orientation.portrait
+                        ? SizedBox()
+                        : IconButton(
+                            icon: Icon(
+                              hideChat
+                                  ? Icons.chat_bubble_outline
+                                  : Icons.chat_bubble,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                hideChat = !hideChat;
+                                chatFocusNode.unfocus();
+                              });
+                            }),
                     IconButton(
                         icon: Icon(
-                          hideChat
-                              ? Icons.chat_bubble_outline
-                              : Icons.chat_bubble,
+                          Icons.swipe,
                           color: Colors.white,
                         ),
                         onPressed: () {
-                          setState(() {
-                            hideChat = !hideChat;
-                            chatFocusNode.unfocus();
-                          });
+                          if (MediaQuery.of(context).orientation ==
+                              Orientation.landscape) {
+                            SystemChrome.setPreferredOrientations([
+                              DeviceOrientation.portraitUp,
+                            ]);
+
+                            SystemChrome.setPreferredOrientations([
+                              DeviceOrientation.portraitUp,
+                              DeviceOrientation.landscapeRight,
+                              DeviceOrientation.landscapeLeft,
+                            ]);
+                          } else if (MediaQuery.of(context).orientation ==
+                              Orientation.portrait) {
+                            if (Platform.isAndroid) {
+                              SystemChrome.setPreferredOrientations([
+                                DeviceOrientation.landscapeLeft,
+                              ]);
+                            } else {
+                              SystemChrome.setPreferredOrientations([
+                                DeviceOrientation.landscapeRight,
+                              ]);
+                            }
+
+                            SystemChrome.setPreferredOrientations([
+                              DeviceOrientation.portraitUp,
+                              DeviceOrientation.landscapeRight,
+                              DeviceOrientation.landscapeLeft,
+                            ]);
+                          }
                         }),
                   ],
                 ),
@@ -340,11 +402,14 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
               AnimatedContainer(
                 duration: Duration(milliseconds: 200),
                 height: artistTap ? 100 : 0,
-                width: hideChat
-                    ? maxwidth
-                    : chatFocusNode.hasFocus
-                        ? maxwidth * 0.5
-                        : maxwidth * 0.7,
+                width:
+                    MediaQuery.of(context).orientation == Orientation.portrait
+                        ? maxwidth
+                        : hideChat
+                            ? maxwidth
+                            : chatFocusNode.hasFocus
+                                ? maxwidth * 0.5
+                                : maxwidth * 0.7,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
