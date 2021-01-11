@@ -72,7 +72,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
       });
     });
 
-    if (Platform.isAndroid) {
+    /*if (Platform.isAndroid) {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeLeft,
       ]);
@@ -81,6 +81,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
         DeviceOrientation.landscapeRight,
       ]);
     }
+    */
 
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
@@ -375,12 +376,6 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
                             SystemChrome.setPreferredOrientations([
                               DeviceOrientation.portraitUp,
                             ]);
-
-                            SystemChrome.setPreferredOrientations([
-                              DeviceOrientation.portraitUp,
-                              DeviceOrientation.landscapeRight,
-                              DeviceOrientation.landscapeLeft,
-                            ]);
                           } else if (MediaQuery.of(context).orientation ==
                               Orientation.portrait) {
                             if (Platform.isAndroid) {
@@ -394,7 +389,6 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
                             }
 
                             SystemChrome.setPreferredOrientations([
-                              DeviceOrientation.portraitUp,
                               DeviceOrientation.landscapeRight,
                               DeviceOrientation.landscapeLeft,
                             ]);

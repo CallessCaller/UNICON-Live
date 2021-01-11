@@ -154,6 +154,7 @@ class _ChatWidgetState extends State<ChatWidget> {
               FocusScope.of(context).unfocus();
             },
             child: ListView(
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
               controller: scrollController,
               children: results,
             ),
