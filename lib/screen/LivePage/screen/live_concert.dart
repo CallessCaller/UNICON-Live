@@ -32,6 +32,7 @@ class LiveConcert extends StatefulWidget {
 }
 
 class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
+  DateTime currentBackPressTime;
   FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
   //AppLifecycleState _lastLifecycleState;
   Stream<DocumentSnapshot> documentStream;
@@ -87,7 +88,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
     ]);
 
     // hide status bar
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
   }
 
   @override
@@ -247,7 +248,8 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
 
     double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
 
-    return Scaffold(
+    return WillPopScope(onWillPop: () async{bool result = onPressBackButton(); return await Future.value(result);},
+    child:  Scaffold(
       backgroundColor: Colors.black,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -361,8 +363,10 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
                               });
                             }),
                     IconButton(
-                        icon: Icon(
-                          Icons.swipe,
+                        icon: Icon(MediaQuery.of(context).orientation ==
+                              Orientation.portrait?
+
+                          Icons.fullscreen: Icons.close_fullscreen,
                           color: Colors.white,
                         ),
                         onPressed: () {
@@ -487,9 +491,29 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
           ),
         )
       ]),
-    );
+    ));
   }
-
+  bool onPressBackButton(){
+    DateTime now = DateTime.now();
+    if(currentBackPressTime == null ||
+    now.difference(currentBackPressTime) > Duration(milliseconds: 200)){
+      currentBackPressTime = now;
+      setState(() {
+        if (artistTap){
+         artistTap=false;
+       }
+       if(chatFocusNode.hasFocus){
+        chatFocusNode.unfocus();
+       }
+       else if(!hideChat){
+         hideChat = !hideChat;
+       }
+       }
+      );
+      return false;
+    }
+    return true;
+  }
   @override
   Widget build(BuildContext context) {
     return _fetchData(context);
