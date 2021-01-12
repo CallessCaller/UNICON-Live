@@ -67,49 +67,57 @@ class _LivePageState extends State<LivePage> {
           setState(() {});
         },
         child: ListView(children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-                  LiveHeader(userDB: userDB),
-                  SizedBox(
-                    height: 20,
+          Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            LiveHeader(userDB: userDB),
+            SizedBox(
+              height: 20,
+            ),
+            Column(
+              children: [
+                Text(
+                  'HOT LIVE',
+                  style: TextStyle(
+                    fontSize: subtitleFontSize,
+                    fontWeight: FontWeight.w600,
                   ),
-                  Column(
-                    children: [
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  child: HotLives(
+                    userDB: userDB,
+                  ),
+                ),
+              ],
+            ),
+            Divider(
+              color: Color(0xff313131),
+              height: 50.0,
+              thickness: 5.0,
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(22, 0, 0, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                       Text(
-                        'HOT LIVE',
+                        'ALL LIVE',
                         style: TextStyle(
-                          fontSize: subtitleFontSize,
+                          fontSize: subtitleFontSize + 8,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
-                      Container(
-                        child: HotLives(
-                          userDB: userDB,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Divider(
-                    color: Colors.transparent,
-                    height: 10.0,
-                  ),
-                  Text(
-                    'ALL LIVE',
-                    style: TextStyle(
-                      fontSize: subtitleFontSize,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                ] +
-                currentLives(userDB, lives),
-          ),
+                    ] +
+                    currentLives(userDB, lives),
+              ),
+            ),
+          ] //+
+              //currentLives(userDB, lives),
+              ),
         ]),
       ),
     );
@@ -119,7 +127,7 @@ class _LivePageState extends State<LivePage> {
     List<Widget> result = [];
     for (int i = 0; i < lives.length; i++) {
       result.add(LiveBox(live: lives[i]));
-      result.add(Divider());
+      result.add(Divider(height: 20));
     }
     if (result.length == 0) {
       result.add(Center(
