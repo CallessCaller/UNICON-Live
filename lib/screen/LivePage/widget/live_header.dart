@@ -42,13 +42,13 @@ class _LiveHeaderState extends State<LiveHeader> {
         onImageTap: (int index) async {
           if (liveHeader[index].id != null && liveHeader[index].id != '') {
             var artistSanpshot = await FirebaseFirestore.instance
-                .collection('User')
+                .collection('Users')
                 .doc(liveHeader[index].id)
                 .get();
             Artist artist = Artist.fromSnapshot(artistSanpshot);
 
             var userSnapshot = await FirebaseFirestore.instance
-                .collection('User')
+                .collection('Users')
                 .doc(widget.userDB.id)
                 .get();
             UserDB userDB = UserDB.fromSnapshot(userSnapshot);

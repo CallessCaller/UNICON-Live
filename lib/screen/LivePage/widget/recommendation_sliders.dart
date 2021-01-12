@@ -21,8 +21,6 @@ class HotLives extends StatefulWidget {
 class _HotLivesState extends State<HotLives> {
   //Container HotliveList(){return Container();}
 
-
-
   @override
   Widget build(BuildContext context) {
     var artistSnapshot = Provider.of<QuerySnapshot>(context);
@@ -38,8 +36,7 @@ class _HotLivesState extends State<HotLives> {
           artists.indexWhere((artist) => artist.id.contains(lives[i].id));
       if (artists[index].liveNow == true) {
         result.add(slider(context, artists[index], lives[i], widget.userDB));
-        result.add(VerticalDivider(width: 15,color: Colors.transparent));
-        
+        result.add(VerticalDivider(width: 15, color: Colors.transparent));
       }
     }
     if (result.length == 0) {
@@ -62,17 +59,12 @@ class _HotLivesState extends State<HotLives> {
     );*/
     return Container(
       //margin: EdgeInsets.symmetric(horizontal: 20),
-      height: MediaQuery.of(context).size.width*0.6 *(0.5+0.22+0.05),
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          Row(
-            children: 
-              result
-          ,)
-          
-        ]
-      ),
+      height: MediaQuery.of(context).size.width * 0.6 * (0.5 + 0.22 + 0.1),
+      child: ListView(scrollDirection: Axis.horizontal, children: [
+        Row(
+          children: result,
+        )
+      ]),
     );
   }
 }
@@ -126,96 +118,95 @@ Widget slider(BuildContext context, Artist artist, Lives live, UserDB userDB) {
           showAlertDialog(context, userDB, artist, live);
         }
       },
-      child: 
-      Column(
-              children: [Container(
-        height: MediaQuery.of(context).size.width*0.6/2,
-        width: MediaQuery.of(context).size.width*0.6,
-        margin: EdgeInsets.all(5.0),
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(7.0)),
-          child: Stack(
-            children: <Widget>[
-              
-              Image.network(
-                backgroundImage,
-                fit: BoxFit.cover,
-                width: MediaQuery.of(context).size.width * 0.6,
+      child: Column(children: [
+        Container(
+          height: MediaQuery.of(context).size.width * 0.6 / 2,
+          width: MediaQuery.of(context).size.width * 0.6,
+          margin: EdgeInsets.all(5.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(7.0)),
+            child: Stack(
+              children: <Widget>[
+                Image.network(
+                  backgroundImage,
+                  fit: BoxFit.cover,
+                  width: MediaQuery.of(context).size.width * 0.6,
+                ),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Row(
+                    children: [
+                      Icon(
+                        UniIcon.profile,
+                        size: 20,
+                      ),
+                      SizedBox(width: 3),
+                      Text(
+                        live.viewers.length.toString() + '명',
+                        style: body4,
+                        // TextStyle(
+                        //     fontSize: widgetFontSize-1, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width * 0.6,
+          height: MediaQuery.of(context).size.width * 0.6 * 0.22,
+          child: Row(
+            children: [
+              SizedBox(
+                width: 5,
               ),
-              Positioned(
-                top: 0,
-                left: 0,
-                child: Row(
+              VerticalDivider(
+                width: 5,
+                color: Colors.transparent,
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      UniIcon.profile,
-                      size: 20,
-                    ),
-                    SizedBox(width: 3),
                     Text(
-                      live.viewers.length.toString()+'명',
-                      style: body4,
+                      artist.liveTitle != null || artist.liveTitle != ''
+                          ? '${artist.name}님의 라이브 방송'
+                          : '라이브 방송중',
+                      style: caption1,
                       // TextStyle(
-                      //     fontSize: widgetFontSize-1, color: Colors.white),
+                      //   fontSize: textFontSize +4,//- 2,
+                      //   color: Colors.white,
+                      // ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      (artist.liveTitle != null && artist.liveTitle != ''
+                                  ? artist.liveTitle
+                                  : artist.name)
+                              .toString() +
+                          '  |  ' +
+                          (DateTime.now()
+                                  .difference(live.time.toDate())
+                                  .inMinutes)
+                              .toString() +
+                          '분 전',
+                      style: caption2,
+                      // TextStyle(
+                      //   fontSize: textFontSize -2,//+4,
+                      //   color: Colors.white,
+                      // ),
                     ),
                   ],
                 ),
-              ),              
+              ),
             ],
           ),
-        ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width*0.6,
-          height: MediaQuery.of(context).size.width * 0.6 * 0.22,
-          child: Row(children: [
-                    SizedBox(width: 5,),
-                    VerticalDivider(
-                            width: 5,
-                            color: Colors.transparent,
-                          ),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                
-                                Text(
-                                  artist.liveTitle != null ||
-                                          artist.liveTitle != ''
-                                      ? '${artist.name}님의 라이브 방송'
-                                      : '라이브 방송중',
-                                  style: caption1,
-                                  // TextStyle(
-                                  //   fontSize: textFontSize +4,//- 2,
-                                  //   color: Colors.white,
-                                  // ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                Text(
-                                  (artist.liveTitle != null &&
-                                          artist.liveTitle != ''
-                                      ? artist.liveTitle
-                                      : artist.name).toString()+'  |  '+
-                                      (DateTime.now()
-                                      .difference(live.time.toDate())
-                                      .inMinutes)
-                                      .toString() + '분 전',
-                                  style: caption2,
-                                  // TextStyle(
-                                  //   fontSize: textFontSize -2,//+4,
-                                  //   color: Colors.white,
-                                  // ),
-                                ),
-                              ],
-                            ),
-                          ),
-                  ],
-
-                  ),
         )
-        ]
-      ),
+      ]),
     ),
   );
 }
