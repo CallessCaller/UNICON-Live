@@ -461,7 +461,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     children: [
                       Expanded(
                         child: Text(
-                          '유니온 도전하기!',
+                          '유니온 전환',
                           style: TextStyle(
                             color: appKeyColor,
                             fontSize: 18,
@@ -473,7 +473,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         child: Icon(
                           UniIcon.more_info,
                           color: appKeyColor,
-                          size: 18,
+                          size: 21,
                         ),
                         onTap: () {
                           showDialog(
@@ -500,7 +500,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      '네, 당연하죠! 누구나 뮤지션이 될 수 있는 플랫폼 유니콘에서는 심사 과정을 거쳐서 여러분이 재능과 끼를 발휘할 수 있도록 도와드립니다!',
+                                      ' 일반 유저도 별도의 등록 과정을 통해 유니온으로 전환되어 공연을 진행할 수 있습니다.',
                                     ),
                                     SizedBox(height: 10),
                                     Row(
