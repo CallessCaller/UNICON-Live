@@ -81,24 +81,25 @@ class _LivePageState extends State<LivePage> {
             SizedBox(
               height: 20,
             ),
-            Column(
-              children: [
-                Text(
-                  'HOT LIVE',
-                  style: TextStyle(
-                    fontSize: subtitleFontSize,
-                    fontWeight: FontWeight.w600,
+            Padding(
+              padding: EdgeInsets.fromLTRB(22, 0, 0, 0),
+                          child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('HOT LIVE', style: subtitle1),
+                        SizedBox(
+                          height: 20,
+                        ),
+                  SizedBox(
+                    height: 10,
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  child: HotLives(
-                    userDB: userDB,
+                  Container(
+                    child: HotLives(
+                      userDB: userDB,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Divider(
               color: Color(0xff313131),

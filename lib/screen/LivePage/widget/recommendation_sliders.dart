@@ -8,6 +8,7 @@ import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/screen/LivePage/widget/live_box.dart';
+import 'package:testing_layout/components/uni_icon_icons.dart';
 
 class HotLives extends StatefulWidget {
   final UserDB userDB;
@@ -18,6 +19,10 @@ class HotLives extends StatefulWidget {
 }
 
 class _HotLivesState extends State<HotLives> {
+  //Container HotliveList(){return Container();}
+
+
+
   @override
   Widget build(BuildContext context) {
     var artistSnapshot = Provider.of<QuerySnapshot>(context);
@@ -33,6 +38,8 @@ class _HotLivesState extends State<HotLives> {
           artists.indexWhere((artist) => artist.id.contains(lives[i].id));
       if (artists[index].liveNow == true) {
         result.add(slider(context, artists[index], lives[i], widget.userDB));
+        result.add(VerticalDivider(width: 15,color: Colors.transparent));
+        
       }
     }
     if (result.length == 0) {
@@ -40,6 +47,7 @@ class _HotLivesState extends State<HotLives> {
         child: Text('현재 라이브가 없습니다.'),
       ));
     }
+    /*
     return CarouselSlider(
       options: CarouselOptions(
         enableInfiniteScroll: true,
@@ -51,6 +59,20 @@ class _HotLivesState extends State<HotLives> {
         autoPlay: false,
       ),
       items: result,
+    );*/
+    return Container(
+      //margin: EdgeInsets.symmetric(horizontal: 20),
+      height: MediaQuery.of(context).size.width*0.6 *(0.5+0.22+0.05),
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          Row(
+            children: 
+              result
+          ,)
+          
+        ]
+      ),
     );
   }
 }
@@ -86,7 +108,7 @@ Widget slider(BuildContext context, Artist artist, Lives live, UserDB userDB) {
           ? artist.resizedLiveImage
           : artist.liveImage;
   return Container(
-    decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+    decoration: BoxDecoration(border: Border.all(color: Colors.transparent)),
     child: InkWell(
       onTap: () async {
         DocumentSnapshot liveDoc = await FirebaseFirestore.instance
@@ -104,45 +126,95 @@ Widget slider(BuildContext context, Artist artist, Lives live, UserDB userDB) {
           showAlertDialog(context, userDB, artist, live);
         }
       },
-      child: Container(
+      child: 
+      Column(
+              children: [Container(
+        height: MediaQuery.of(context).size.width*0.6/2,
+        width: MediaQuery.of(context).size.width*0.6,
         margin: EdgeInsets.all(5.0),
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(7.0)),
           child: Stack(
             children: <Widget>[
+              
               Image.network(
                 backgroundImage,
                 fit: BoxFit.cover,
                 width: MediaQuery.of(context).size.width * 0.6,
               ),
               Positioned(
-                bottom: 0.0,
-                left: 0.0,
-                right: 0.0,
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                  alignment: Alignment.centerLeft,
-                  height: 30,
-                  decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.only(bottomLeft: Radius.circular(8)),
-                      color: Colors.black.withOpacity(0.3)),
-                  child: Text(
-                    artist.name +
-                        ' - ' +
-                        live.viewers.length.toString() +
-                        '명 시청중',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: widgetFontSize,
-                      fontWeight: FontWeight.w400,
+                top: 0,
+                left: 0,
+                child: Row(
+                  children: [
+                    Icon(
+                      UniIcon.profile,
+                      size: 20,
                     ),
-                  ),
+                    SizedBox(width: 3),
+                    Text(
+                      live.viewers.length.toString()+'명',
+                      style: body4,
+                      // TextStyle(
+                      //     fontSize: widgetFontSize-1, color: Colors.white),
+                    ),
+                  ],
                 ),
-              ),
+              ),              
             ],
           ),
         ),
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width*0.6,
+          height: MediaQuery.of(context).size.width * 0.6 * 0.22,
+          child: Row(children: [
+                    SizedBox(width: 5,),
+                    VerticalDivider(
+                            width: 5,
+                            color: Colors.transparent,
+                          ),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                
+                                Text(
+                                  artist.liveTitle != null ||
+                                          artist.liveTitle != ''
+                                      ? '${artist.name}님의 라이브 방송'
+                                      : '라이브 방송중',
+                                  style: caption1,
+                                  // TextStyle(
+                                  //   fontSize: textFontSize +4,//- 2,
+                                  //   color: Colors.white,
+                                  // ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  (artist.liveTitle != null &&
+                                          artist.liveTitle != ''
+                                      ? artist.liveTitle
+                                      : artist.name).toString()+'  |  '+
+                                      (DateTime.now()
+                                      .difference(live.time.toDate())
+                                      .inMinutes)
+                                      .toString() + '분 전',
+                                  style: caption2,
+                                  // TextStyle(
+                                  //   fontSize: textFontSize -2,//+4,
+                                  //   color: Colors.white,
+                                  // ),
+                                ),
+                              ],
+                            ),
+                          ),
+                  ],
+
+                  ),
+        )
+        ]
       ),
     ),
   );
