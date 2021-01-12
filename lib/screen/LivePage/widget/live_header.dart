@@ -35,8 +35,8 @@ class _LiveHeaderState extends State<LiveHeader> {
     List<LiveHeaderModel> liveHeader =
         snapshot.map((e) => LiveHeaderModel.fromSnapshot(e)).toList();
     return SizedBox(
-      // HEADER 비율: width / height -> 3:2
-      height: MediaQuery.of(context).size.width / 3 * 2,
+      // HEADER 비율: width / height -> 2:1
+      height: MediaQuery.of(context).size.width / 2 * 1,
       width: MediaQuery.of(context).size.width,
       child: Carousel(
         onImageTap: (int index) async {

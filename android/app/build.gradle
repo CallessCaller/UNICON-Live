@@ -52,16 +52,16 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
-        versionCode 26
-        versionName '1.0.3'
+        versionCode 25
+        versionName '1.0.2'
     }
 
     signingConfigs {
        release {
            keyAlias keystoreProperties['keyAlias']
            keyPassword keystoreProperties['keyPassword']
-           storeFile file(keystoreProperties['storeFile'])
-           storePassword keystoreProperties['storePassword']
+           //storeFile file(keystoreProperties['storeFile'])
+           //storePassword keystoreProperties['storePassword']
        }
     }
 

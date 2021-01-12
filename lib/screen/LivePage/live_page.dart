@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/model/users.dart';
+import 'package:testing_layout/screen/AccountPage/screen/my_broadcast_screen/broadcast_setting.dart';
 import 'package:testing_layout/screen/LivePage/screen/notification.dart';
 import 'package:testing_layout/screen/LivePage/widget/live_box.dart';
 import 'package:testing_layout/screen/LivePage/widget/live_header.dart';
@@ -50,13 +51,18 @@ class _LivePageState extends State<LivePage> {
           ),
         ),
         actions: [
-          IconButton(
-              splashRadius: Material.defaultSplashRadius - 7,
-              icon: Icon(MdiIcons.bellOutline),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => NotificationPage()));
-              }),
+          userDB.isArtist
+              ? IconButton(
+                  splashRadius: Material.defaultSplashRadius - 7,
+                  icon: Icon(MdiIcons.videoCheck),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => BroadcastSetting(userDB: userDB),
+                      ),
+                    );
+                  })
+              : SizedBox(),
         ],
       ),
       backgroundColor: Colors.black,

@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/users.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:testing_layout/screen/FeedPage/screen/screen_feed_write_page.dart';
 
 class BroadcastSetting extends StatefulWidget {
@@ -396,7 +397,40 @@ class _BroadcastSettingState extends State<BroadcastSetting> {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              Divider(
+                height: 30,
+                color: Colors.white,
+              ),
+              InkWell(
+                onTap: () async {
+                  String instagramUrl = 'https://www.unicon.show/for-musician';
+                  if (await canLaunch(instagramUrl)) {
+                    await launch(
+                      instagramUrl,
+                      forceWebView: false,
+                      forceSafariVC: false,
+                      headers: <String, String>{
+                        'my_header_key': 'my_header_value'
+                      },
+                    );
+                  } else {
+                    print('Error');
+                    throw 'Could not launch $instagramUrl';
+                  }
+                },
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Text('방송 세팅 방법',
+                            style: TextStyle(
+                              color: appKeyColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            textAlign: TextAlign.left)),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
