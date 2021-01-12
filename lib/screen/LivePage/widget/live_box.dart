@@ -45,28 +45,28 @@ class _LiveBoxState extends State<LiveBox> {
     if (artist.liveNow == false) {
       return SizedBox();
     } else {
-      return Row(
-        children: [
-          InkWell(
-            onTap: () async {
-              DocumentSnapshot liveDoc = await FirebaseFirestore.instance
-                  .collection('LiveTmp')
-                  .doc(artist.id)
-                  .get();
-              List<dynamic> payList = liveDoc.data()['payList'];
-              if (artist.fee == null ||
-                  artist.id == userDB.id ||
-                  artist.fee == 0 ||
-                  (payList != null && payList.contains(userDB.id)) ||
-                  (userDB.admin != null && userDB.admin)) {
-                notShowAlert(context, userDB, artist, widget.live);
-              } else {
-                showAlertDialog(context, userDB, artist, widget.live);
-              }
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.35,
-              height: (MediaQuery.of(context).size.width * 0.35 * 9) / 16,
+      return InkWell(
+        onTap: () async {
+          DocumentSnapshot liveDoc = await FirebaseFirestore.instance
+              .collection('LiveTmp')
+              .doc(artist.id)
+              .get();
+          List<dynamic> payList = liveDoc.data()['payList'];
+          if (artist.fee == null ||
+              artist.id == userDB.id ||
+              artist.fee == 0 ||
+              (payList != null && payList.contains(userDB.id)) ||
+              (userDB.admin != null && userDB.admin)) {
+            notShowAlert(context, userDB, artist, widget.live);
+          } else {
+            showAlertDialog(context, userDB, artist, widget.live);
+          }
+        },
+        child: Row(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width * 0.4,
+              height: (MediaQuery.of(context).size.width * 0.4) / 1.7,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black),
                 borderRadius:
@@ -84,229 +84,105 @@ class _LiveBoxState extends State<LiveBox> {
                   fit: BoxFit.cover,
                 ),
               ),
+            ),
+            SizedBox(width: 20),
+            Container(
+              color: Colors.transparent,
+              height: (MediaQuery.of(context).size.width * 0.4) / 1.7,
+              width: MediaQuery.of(context).size.width * 0.6 - 22 - 20 - 20,
               child: Stack(
                 children: [
-                  // Positioned(
-                  //   top: 5,
-                  //   left: 10,
-                  //   child: Row(
-                  //     children: [
-                  //       Icon(
-                  //         UniIcon.profile,
-                  //         size: 20,
-                  //       ),
-                  //       SizedBox(width: 3),
-                  //       Text(
-                  //         widget.live.viewers.length.toString(),
-                  //         style: TextStyle(
-                  //             fontSize: widgetFontSize, color: Colors.white),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  // Positioned(
-                  //   bottom: 5,
-                  //   left: 5,
-                  //   width: MediaQuery.of(context).size.width * 0.9 - 12,
-                  //   height: 55,
-                  //   child: ClipRRect(
-                  //     borderRadius:
-                  //         BorderRadius.only(bottomLeft: Radius.circular(6)),
-                  //     clipBehavior: Clip.antiAlias,
-                  //     child: BackdropFilter(
-                  //       filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                  //       child: Container(
-                  //         color: Colors.black.withOpacity(0),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  // Positioned(
-                  //   bottom: 0,
-                  //   left: 0,
-                  //   child: Column(
-                  //     children: [
-                  //       Container(
-                  //         width: MediaQuery.of(context).size.width * 0.9,
-                  //         height: 60,
-                  //         decoration: BoxDecoration(
-                  //           borderRadius:
-                  //               BorderRadius.only(bottomLeft: Radius.circular(6)),
-                  //           color: Colors.black.withOpacity(0.3),
-                  //         ),
-                  //         child: Row(
-                  //           children: [
-                  //             SizedBox(
-                  //               width: 10,
-                  //             ),
-                  //             CircleAvatar(
-                  //               radius: 20,
-                  //               backgroundImage: artist.resizedProfile != null &&
-                  //                       artist.resizedProfile != ''
-                  //                   ? NetworkImage(artist.resizedProfile)
-                  //                   : NetworkImage(artist.profile),
-                  //             ),
-                  //             VerticalDivider(
-                  //               width: 10,
-                  //               color: Colors.transparent,
-                  //             ),
-                  //             Expanded(
-                  //               child: Column(
-                  //                 mainAxisAlignment: MainAxisAlignment.center,
-                  //                 crossAxisAlignment: CrossAxisAlignment.start,
-                  //                 children: [
-                  //                   Text(
-                  //                     artist.liveTitle != null &&
-                  //                             artist.liveTitle != ''
-                  //                         ? artist.liveTitle
-                  //                         : artist.name,
-                  //                     style: TextStyle(
-                  //                       fontSize: textFontSize,
-                  //                       color: Colors.white,
-                  //                     ),
-                  //                   ),
-                  //                   Text(
-                  //                     artist.liveTitle != null &&
-                  //                             artist.liveTitle != ''
-                  //                         ? '${artist.name}님의 라이브 방송'
-                  //                         : '라이브 방송중',
-                  //                     style: TextStyle(
-                  //                       fontSize: textFontSize - 2,
-                  //                       color: Colors.white,
-                  //                     ),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       )
-                  //     ],
-                  //   ),
-                  // ),
-                  // artist.fee != 0
-                  //     ? Positioned(
-                  //         top: 5,
-                  //         right: 10,
-                  //         child: Row(
-                  //           children: [
-                  //             Icon(
-                  //               UniIcon.unicoin,
-                  //               color: appKeyColor,
-                  //             ),
-                  //             SizedBox(
-                  //               width: 5,
-                  //             ),
-                  //             Text(
-                  //               artist.fee.toString(),
-                  //               style: TextStyle(
-                  //                   color: Colors.white,
-                  //                   fontSize: textFontSize,
-                  //                   fontWeight: FontWeight.w600),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       )
-                  //     : SizedBox(),
-                  // Positioned(
-                  //   bottom: 10,
-                  //   right: 5,
-                  //   child: Text(
-                  //     (DateTime.now()
-                  //                 .difference(widget.live.time.toDate())
-                  //                 .inMinutes)
-                  //             .toString() +
-                  //         '분 전',
-                  //     style: TextStyle(
-                  //       fontSize: textFontSize - 2,
-                  //       color: Colors.white,
-                  //     ),
-                  //   ),
-                  // ),
+                  Positioned(
+                    top: 9,
+                    child: Text(
+                      artist.liveTitle != null && artist.liveTitle != ''
+                          ? artist.liveTitle
+                          : artist.name,
+                      style: subtitle3,
+                    ),
+                  ),
+                  Positioned(
+                    top: 34,
+                    child: Text(
+                      artist.liveTitle != null && artist.liveTitle != ''
+                          ? '${artist.name}님의 라이브 방송'
+                          : '라이브 방송중',
+                      style: TextStyle(
+                        fontSize: widgetFontSize,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 53,
+                    left: -4,
+                    child: Row(
+                      children: [
+                        Icon(
+                          UniIcon.profile,
+                          size: 20,
+                          color: Color(0xffB5B5B5),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          (widget.live.viewers.length.toString() + '명'),
+                          style: TextStyle(
+                            fontSize: widgetFontSize,
+                            color: Color(0xffB5B5B5),
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text('∙',
+                            style: TextStyle(
+                              color: Color(0xffB5B5B5),
+                            )),
+                        SizedBox(width: 5),
+                        Text(
+                          (DateTime.now()
+                                      .difference(widget.live.time.toDate())
+                                      .inMinutes)
+                                  .toString() +
+                              '분 전',
+                          style: TextStyle(
+                            fontSize: widgetFontSize - 1,
+                            color: Color(0xffB5B5B5),
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        artist.fee != 0
+                            ? Row(
+                                children: [
+                                  Text('∙',
+                                      style: TextStyle(
+                                        color: Color(0xffB5B5B5),
+                                      )),
+                                  SizedBox(width: 5),
+                                  Icon(
+                                    UniIcon.unicoin,
+                                    color: appKeyColor,
+                                    size: 20,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    artist.fee.toString(),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: textFontSize,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              )
+                            : SizedBox(),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
-          ),
-          SizedBox(width: 20),
-          Container(
-            color: Colors.transparent,
-            height: (MediaQuery.of(context).size.width * 0.35 * 9) / 16,
-            width: MediaQuery.of(context).size.width * 0.65 - 22 - 20 - 20,
-            child: Stack(
-              children: [
-                Positioned(
-                  top: 9,
-                  child: Text(
-                    artist.liveTitle != null && artist.liveTitle != ''
-                        ? artist.liveTitle
-                        : artist.name,
-                    style: subtitle3,
-                  ),
-                ),
-                // Positioned(
-                //   top: -7,
-                //   right: -20,
-                //   child: IconButton(
-                //     icon: Icon(Icons.more_vert),
-                //     iconSize: 25, onPressed: () {
-                //       d
-                //     },
-                //   ),
-                // ),
-                Positioned(
-                  top: 34,
-                  child: Text(
-                    artist.liveTitle != null && artist.liveTitle != ''
-                        ? '${artist.name}님의 라이브 방송'
-                        : '라이브 방송중',
-                    style: TextStyle(
-                      fontSize: widgetFontSize,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 53,
-                  left: -4,
-                  child: Row(
-                    children: [
-                      Icon(
-                        UniIcon.profile,
-                        size: 20,
-                        color: Color(0xffB5B5B5),
-                      ),
-                      SizedBox(width: 3),
-                      Text(
-                        (widget.live.viewers.length.toString() + '명'),
-                        style: TextStyle(
-                          fontSize: widgetFontSize,
-                          color: Color(0xffB5B5B5),
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text('∙',
-                          style: TextStyle(
-                            color: Color(0xffB5B5B5),
-                          )),
-                      SizedBox(width: 5),
-                      Text(
-                        (DateTime.now()
-                                    .difference(widget.live.time.toDate())
-                                    .inMinutes)
-                                .toString() +
-                            '분 전',
-                        style: TextStyle(
-                          fontSize: widgetFontSize - 1,
-                          color: Color(0xffB5B5B5),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       );
     }
   }

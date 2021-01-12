@@ -46,16 +46,6 @@ class _WebStreamingState extends State<WebStreaming> {
     videoController.dispose();
   }
 
-  // void takeSnapshot() async {
-  //   Uint8List bytes = await VideoThumbnail.thumbnailData(
-  //     video: _url, // Path of that video
-  //     imageFormat: ImageFormat.PNG,
-  //     quality: 100,
-  //     timeMs: _controller.value.position.inMilliseconds,
-  //   );
-  //   image = Image.memory(bytes); // Here's your frame
-  // }
-
   @override
   Widget build(BuildContext context) {
     if (_liveReady == true && videoController.value.initialized == false) {

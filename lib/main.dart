@@ -7,9 +7,11 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/model/lives.dart';
+import 'package:testing_layout/model/records.dart';
 import 'package:testing_layout/providers/stream_of_artist.dart';
 import 'package:testing_layout/providers/stream_of_feed.dart';
 import 'package:testing_layout/providers/stream_of_live.dart';
+import 'package:testing_layout/providers/stream_of_records.dart';
 import 'package:testing_layout/screen/AppGuide/screen_app_guide.dart';
 import 'package:testing_layout/screen/tab_page.dart';
 import 'model/feed.dart';
@@ -65,6 +67,8 @@ class _MyAppState extends State<MyApp> {
             value: StreamOfArtist().getArtists()),
         StreamProvider<List<Lives>>.value(value: StreamOfLive().getLives()),
         StreamProvider<List<Feed>>.value(value: StreamOfFeed().getFeeds()),
+        StreamProvider<List<Records>>.value(
+            value: StreamOfRecords().getRecords()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
