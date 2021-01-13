@@ -28,16 +28,16 @@ const double widgetFontSize = 12.0;
 
 // App walkthrough related properties
 const List<String> iosGuideImage = [
-  'assets/walkthrough/ios_1.png',
-  'assets/walkthrough/ios_2.png',
-  'assets/walkthrough/ios_3.png',
-  'assets/walkthrough/intro_logo.png'
+  'assets/walkthrough/ios_1_resized.png',
+  'assets/walkthrough/ios_2_resized.png',
+  'assets/walkthrough/ios_3_resized.png',
+  'assets/walkthrough/intro_logo_resized.png'
 ];
 const List<String> aosGuideImage = [
-  'assets/walkthrough/aos_1.png',
-  'assets/walkthrough/aos_2.png',
-  'assets/walkthrough/aos_3.png',
-  'assets/walkthrough/intro_logo.png'
+  'assets/walkthrough/aos_1_resized.png',
+  'assets/walkthrough/aos_2_resized.png',
+  'assets/walkthrough/aos_3_resized.png',
+  'assets/walkthrough/intro_logo_resized.png'
 ];
 
 // Banner images URL
