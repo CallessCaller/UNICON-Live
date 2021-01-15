@@ -587,8 +587,7 @@ void showToast(String message){
 }
 void showAlertDialog(BuildContext context) async{
   String result = await showDialog(
-    context: context,
-    //barrierDismissible: false,
+    context: context,    
     builder: (context) {
       return AlertDialog(
         shape: RoundedRectangleBorder(
@@ -597,12 +596,12 @@ void showAlertDialog(BuildContext context) async{
         backgroundColor: Colors.black87,
         //buttonPadding: ,
         title: Text('나가기',
-          style: title3//TextStyle(fontSize: subtitleFontSize, fontWeight: FontWeight.bold,)
+          style: title3
         ),
         content: Expanded(
                   child: Text('라이브 공연을 나가시겠습니까?',
                   textAlign: TextAlign.center,
-                style: subtitle2,//TextStyle(fontSize: textFontSize, fontWeight: FontWeight.w600,),
+                style: subtitle2,
                 ),
         ),
         actions: [
