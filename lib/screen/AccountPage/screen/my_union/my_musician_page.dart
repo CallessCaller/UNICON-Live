@@ -28,12 +28,21 @@ class _MyMusicianPageState extends State<MyMusicianPage> {
   }
 
   Widget _buildList(BuildContext context, List<Widget> artist) {
-    List<LikedMusicianBox> searchResults = [];
+    for (int i = 1; i < artist.length; i++) {
+      artist.removeAt(i);
+    }
+    List<Widget> searchResults = [];
     // var shuffledList = shuffle(artists.docs);
     for (LikedMusicianBox select in artist) {
       if (searchResults.length >= 30) break;
       if (select.artist.name.toString().toLowerCase().contains(_searchText)) {
         searchResults.add(select);
+        searchResults.add(
+          Divider(
+            color: Colors.white,
+            height: 5,
+          ),
+        );
       }
     }
 
@@ -171,12 +180,12 @@ class _MyMusicianPageState extends State<MyMusicianPage> {
     for (int i = 0; i < artists.length; i++) {
       if (userDB.follow.contains(artists[i].id)) {
         result.add(LikedMusicianBox(userDB: userDB, artist: artists[i]));
-        // result.add(
-        //   Divider(
-        //     color: Colors.white,
-        //     height: 5,
-        //   ),
-        // );
+        result.add(
+          Divider(
+            color: Colors.white,
+            height: 5,
+          ),
+        );
       }
     }
     return result;
