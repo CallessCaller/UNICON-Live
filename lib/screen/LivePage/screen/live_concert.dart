@@ -15,6 +15,8 @@ import 'package:testing_layout/screen/LivePage/screen/widget/chatting.dart';
 import 'package:testing_layout/screen/LivePage/screen/widget/webConstant.dart';
 import 'package:testing_layout/screen/LivePage/screen/widget/web_streaming.dart';
 
+import 'package:fluttertoast/fluttertoast.dart';
+import '../../../components/constant.dart';
 bool artistTap = false;
 
 class LiveConcert extends StatefulWidget {
@@ -493,14 +495,20 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
     now.difference(currentBackPressTime) > Duration(milliseconds: 200)){
       currentBackPressTime = now;
       setState(() {
-        if (artistTap){
-         artistTap=false;
+       if(artistTap && !hideChat){
+        artistTap=false;
+        hideChat = !hideChat;
        }
-       if(chatFocusNode.hasFocus){
+       else if (artistTap||chatFocusNode.hasFocus){
         chatFocusNode.unfocus();
+        artistTap=false;        
        }
        else if(!hideChat){
          hideChat = !hideChat;
+       }
+       else if(!artistTap && !chatFocusNode.hasFocus && hideChat){
+         //showToast("'뒤로' 버튼을 한번 더 누르시면 종료됩니다.");
+         showAlertDialog(context);
        }
        }
       );
@@ -567,4 +575,52 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
       await _firebaseMessaging.unsubscribeFromTopic(artist.id + 'Feed');
     }
   }
+}
+void showToast(String message){
+  Fluttertoast.showToast(msg: message,
+    //timeInSecForIosWeb: 1,
+    backgroundColor: Colors.grey,
+    webShowClose: true,
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM
+  );
+}
+void showAlertDialog(BuildContext context) async{
+  String result = await showDialog(
+    context: context,
+    //barrierDismissible: false,
+    builder: (context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25))
+        ),
+        backgroundColor: Colors.black87,
+        //buttonPadding: ,
+        title: Text('나가기',
+          style: title3//TextStyle(fontSize: subtitleFontSize, fontWeight: FontWeight.bold,)
+        ),
+        content: Expanded(
+                  child: Text('라이브 공연을 나가시겠습니까?',
+                  textAlign: TextAlign.center,
+                style: subtitle2,//TextStyle(fontSize: textFontSize, fontWeight: FontWeight.w600,),
+                ),
+        ),
+        actions: [
+          FlatButton(
+            child: Text('확인', style: body4,),
+            onPressed: (){
+              Navigator.pop(context);
+              Navigator.of(context).pop();
+            },
+          ),
+          FlatButton(
+            child: Text('취소', style: body4,),
+            onPressed: (){
+              Navigator.pop(context);
+            },
+          )
+        ],
+      );
+    },
+  );
 }
