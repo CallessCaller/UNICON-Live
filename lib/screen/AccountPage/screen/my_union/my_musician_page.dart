@@ -15,7 +15,45 @@ class MyMusicianPage extends StatefulWidget {
 }
 
 class _MyMusicianPageState extends State<MyMusicianPage> {
+  final TextEditingController _filter = TextEditingController();
+  FocusNode focusNode = FocusNode();
+  String _searchText = "";
   @override
+  _MyMusicianPageState() {
+    _filter.addListener(() {
+      setState(() {
+        _searchText = _filter.text.toLowerCase();
+      });
+    });
+  }
+
+  Widget _buildList(BuildContext context, List<Widget> artist) {
+    List<LikedMusicianBox> searchResults = [];
+    // var shuffledList = shuffle(artists.docs);
+    for (LikedMusicianBox select in artist) {
+      if (searchResults.length >= 30) break;
+      if (select.artist.name.toString().toLowerCase().contains(_searchText)) {
+        searchResults.add(select);
+      }
+    }
+
+    if (searchResults.length != 0) {
+      return SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: searchResults,
+        ),
+      );
+    } else {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * 0.4,
+        alignment: Alignment.center,
+        child: Text('검색 결과가 없습니다.'),
+      );
+    }
+  }
+
   Widget build(BuildContext context) {
     var artistSnapshot = Provider.of<QuerySnapshot>(context);
     List<Artist> artists =
@@ -44,20 +82,83 @@ class _MyMusicianPageState extends State<MyMusicianPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Divider(),
-                    SingleChildScrollView(
-                      child: Column(
-                        children: _musicianBoxes(widget.userDB, artists),
+              Container(
+                color: Colors.transparent,
+                padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                child: Container(
+                  height: 50,
+                  child: TextField(
+                    autocorrect: false,
+                    focusNode: focusNode,
+                    style:
+                        TextStyle(color: Colors.white, fontSize: textFontSize),
+                    controller: _filter,
+                    decoration: InputDecoration(
+                      suffixIcon: focusNode.hasFocus
+                          ? Padding(
+                              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.cancel,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _filter.clear();
+                                    _searchText = "";
+                                    focusNode.unfocus();
+                                  });
+                                },
+                              ),
+                            )
+                          : Container(
+                              height: 0,
+                              width: 0,
+                            ),
+                      contentPadding: EdgeInsets.all(10.0),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.3),
+                      hintText: ' 검색',
+                      hintStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: textFontSize,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.transparent),
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(widgetRadius)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.transparent),
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(widgetRadius)),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.transparent),
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(widgetRadius)),
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
+              _searchText == ''
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: defaultPadding),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Divider(),
+                          SingleChildScrollView(
+                            child: Column(
+                              children: _musicianBoxes(widget.userDB, artists),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : _buildList(context, _musicianBoxes(widget.userDB, artists)),
             ],
           ),
         ),
@@ -70,12 +171,12 @@ class _MyMusicianPageState extends State<MyMusicianPage> {
     for (int i = 0; i < artists.length; i++) {
       if (userDB.follow.contains(artists[i].id)) {
         result.add(LikedMusicianBox(userDB: userDB, artist: artists[i]));
-        result.add(
-          Divider(
-            color: Colors.white,
-            height: 5,
-          ),
-        );
+        // result.add(
+        //   Divider(
+        //     color: Colors.white,
+        //     height: 5,
+        //   ),
+        // );
       }
     }
     return result;

@@ -83,13 +83,13 @@ class _LivePageState extends State<LivePage> {
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(22, 0, 0, 0),
-                          child: Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('HOT LIVE', style: subtitle1),
-                        SizedBox(
-                          height: 20,
-                        ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   SizedBox(
                     height: 10,
                   ),
@@ -111,7 +111,22 @@ class _LivePageState extends State<LivePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                      Text('VIDEO', style: subtitle1),
+                      Container(
+                          height: 20,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('VIDEO', style: subtitle1),
+                              FlatButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    '전체보기',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ))
+                            ],
+                          )),
                       SizedBox(
                         height: 20,
                       ),
