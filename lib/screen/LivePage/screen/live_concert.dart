@@ -576,48 +576,84 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
     }
   }
 }
-void showToast(String message){
-  Fluttertoast.showToast(msg: message,
-    //timeInSecForIosWeb: 1,
-    backgroundColor: Colors.grey,
-    webShowClose: true,
-    toastLength: Toast.LENGTH_SHORT,
-    gravity: ToastGravity.BOTTOM
-  );
-}
+// void showToast(String message){
+//   Fluttertoast.showToast(msg: message,
+//     //timeInSecForIosWeb: 1,
+//     backgroundColor: Colors.grey,
+//     webShowClose: true,
+//     toastLength: Toast.LENGTH_SHORT,
+//     gravity: ToastGravity.BOTTOM
+//   );
+// }
 void showAlertDialog(BuildContext context) async{
   String result = await showDialog(
     context: context,    
     builder: (context) {
       return AlertDialog(
+        titlePadding: EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 15,
+            ),
+        contentPadding: EdgeInsets.symmetric(
+              horizontal: 15,
+              //vertical: 20,
+            ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25))
+          borderRadius: BorderRadius.all(Radius.circular(dialogRadius))
         ),
-        backgroundColor: Colors.black87,
-        //buttonPadding: ,
-        title: Text('나가기',
-          style: title3
+        backgroundColor: dialogColor1,        
+        title: Container(          
+          child: 
+            Row(children: [
+              SizedBox(
+                height: 25,
+                width: 25,
+                child: Image.network('https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/exit_image.png?alt=media&token=9f9106c2-7c68-493e-91d1-94723472960c')
+                ),
+              SizedBox(width: 10,),
+              Text('나가기',
+                style: title3
+              ),
+            ],),
         ),
         content: Expanded(
                   child: Text('라이브 공연을 나가시겠습니까?',
-                  textAlign: TextAlign.center,
-                style: subtitle2,
+                  textAlign: TextAlign.left,
+               // style: subtitle2,
                 ),
         ),
         actions: [
+          
           FlatButton(
+            
+            child: Text('취소', style: body4,),
+            shape:
+             RoundedRectangleBorder(side: BorderSide(
+              color: appKeyColor,
+              width: 1,
+              style: BorderStyle.solid
+            ), 
+            borderRadius: BorderRadius.circular(widgetRadius)),
+            onPressed: (){
+              Navigator.pop(context);
+            },
+          ),
+          FlatButton(
+            color: appKeyColor,
             child: Text('확인', style: body4,),
+            shape:
+              
+              RoundedRectangleBorder(side: BorderSide(
+              color: appKeyColor,
+              width: 1,
+              style: BorderStyle.solid
+            ), 
+            borderRadius: BorderRadius.circular(widgetRadius)),
             onPressed: (){
               Navigator.pop(context);
               Navigator.of(context).pop();
             },
           ),
-          FlatButton(
-            child: Text('취소', style: body4,),
-            onPressed: (){
-              Navigator.pop(context);
-            },
-          )
         ],
       );
     },
