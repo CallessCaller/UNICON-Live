@@ -75,7 +75,7 @@ class _RecordBoxState extends State<RecordBox> {
             width: MediaQuery.of(context).size.width * 0.4,
             height: (MediaQuery.of(context).size.width * 0.4) / 1.7,
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
+              border: Border.all(color: Color(0xff707070), width: 0.5),
               borderRadius: BorderRadius.only(bottomRight: Radius.circular(10)),
               image: DecorationImage(
                 image: artist.liveImage == null

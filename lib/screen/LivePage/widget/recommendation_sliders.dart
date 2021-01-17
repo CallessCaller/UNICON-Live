@@ -122,9 +122,9 @@ Widget slider(BuildContext context, Artist artist, Lives live, UserDB userDB) {
         Container(
           height: MediaQuery.of(context).size.width * 0.6 / 2,
           width: MediaQuery.of(context).size.width * 0.6,
-          margin: EdgeInsets.all(5.0),
+          margin: EdgeInsets.fromLTRB(5, 5, 5, 0),
           child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(7.0)),
+            // borderRadius: BorderRadius.all(Radius.circular(7.0)),
             child: Stack(
               children: <Widget>[
                 Image.network(
@@ -156,6 +156,10 @@ Widget slider(BuildContext context, Artist artist, Lives live, UserDB userDB) {
           ),
         ),
         Container(
+          decoration: BoxDecoration(
+              color: Color(0xff313131),
+              borderRadius:
+                  BorderRadius.only(bottomRight: Radius.circular(10.0))),
           width: MediaQuery.of(context).size.width * 0.6,
           height: MediaQuery.of(context).size.width * 0.6 * 0.22,
           child: Row(

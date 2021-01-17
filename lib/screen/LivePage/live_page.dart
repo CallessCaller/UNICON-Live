@@ -122,7 +122,8 @@ class _LivePageState extends State<LivePage> {
                                   child: Text(
                                     '전체보기',
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: Color(0xffb5b5b5),
+                                      fontSize: widgetFontSize,
                                     ),
                                   ))
                             ],

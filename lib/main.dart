@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:provider/provider.dart';
+import 'package:screen/screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/model/records.dart';
@@ -23,6 +24,7 @@ bool _isFirst = true;
 bool _needLogin = false;
 bool _exist = false;
 void main() async {
+  //Screen.keepOn(true);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);

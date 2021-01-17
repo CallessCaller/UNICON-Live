@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:screen/screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ import 'package:testing_layout/screen/LivePage/screen/widget/web_streaming.dart'
 
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../components/constant.dart';
+
 bool artistTap = false;
 
 class LiveConcert extends StatefulWidget {
@@ -251,271 +253,277 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
 
     double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
 
-    return WillPopScope(onWillPop: () async{bool result = onPressBackButton(); return await Future.value(result);},
-    child:  Scaffold(
-      backgroundColor: Colors.black,
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
-      body: Stack(children: [
-        InkWell(
-          onTap: () {
-            setState(() {
-              if (chatFocusNode.hasFocus) {
-                chatFocusNode.unfocus();
-              } else {
-                artistTap = !artistTap;
-              }
-            });
-          },
-          child: WebStreaming(
-            artist: _artist,
-            width: MediaQuery.of(context).orientation == Orientation.portrait
-                ? maxwidth
-                : hideChat
-                    ? maxwidth
-                    : maxwidth * 0.7,
+    return WillPopScope(
+        onWillPop: () async {
+          bool result = onPressBackButton();
+          return await Future.value(result);
+        },
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
           ),
-        ),
-        Positioned(
-          bottom: 0,
-          right: 0,
-          child: ChatWidget(
-            keyboardHeight: keyboardHeight,
-            live: widget.live,
-            artist: _artist,
-            userDB: widget.userDB,
-            width: hideChat ? maxwidth - maxwidth : maxwidth - maxwidth * 0.7,
-          ),
-        ),
-        Positioned(
-          // TODO: 길이 맞춤
-          bottom: MediaQuery.of(context).orientation == Orientation.portrait
-              ? Platform.isIOS
-                  ? chatFocusNode.hasFocus
-                      ? maxheight -
-                          maxwidth / videoController.value.aspectRatio -
-                          keyboardHeight -
-                          40
-                      : maxheight -
-                          (maxwidth / videoController.value.aspectRatio) -
-                          40
-                  : chatFocusNode.hasFocus
-                      ? maxheight -
-                          maxwidth / videoController.value.aspectRatio -
-                          keyboardHeight
-                      : maxheight -
-                          (maxwidth / videoController.value.aspectRatio)
-              : 0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AnimatedContainer(
-                duration: Duration(milliseconds: 200),
-                height: 50,
+          body: Stack(children: [
+            InkWell(
+              onTap: () {
+                setState(() {
+                  if (chatFocusNode.hasFocus) {
+                    chatFocusNode.unfocus();
+                  } else {
+                    artistTap = !artistTap;
+                  }
+                });
+              },
+              child: WebStreaming(
+                artist: _artist,
                 width:
                     MediaQuery.of(context).orientation == Orientation.portrait
+                        ? maxwidth
+                        : hideChat
+                            ? maxwidth
+                            : maxwidth * 0.7,
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: ChatWidget(
+                keyboardHeight: keyboardHeight,
+                live: widget.live,
+                artist: _artist,
+                userDB: widget.userDB,
+                width:
+                    hideChat ? maxwidth - maxwidth : maxwidth - maxwidth * 0.7,
+              ),
+            ),
+            Positioned(
+              // TODO: 길이 맞춤
+              bottom: MediaQuery.of(context).orientation == Orientation.portrait
+                  ? Platform.isIOS
+                      ? chatFocusNode.hasFocus
+                          ? maxheight -
+                              maxwidth / videoController.value.aspectRatio -
+                              keyboardHeight -
+                              40
+                          : maxheight -
+                              (maxwidth / videoController.value.aspectRatio) -
+                              40
+                      : chatFocusNode.hasFocus
+                          ? maxheight -
+                              maxwidth / videoController.value.aspectRatio -
+                              keyboardHeight
+                          : maxheight -
+                              (maxwidth / videoController.value.aspectRatio)
+                  : 0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 200),
+                    height: 50,
+                    width: MediaQuery.of(context).orientation ==
+                            Orientation.portrait
                         ? maxwidth
                         : hideChat
                             ? maxwidth
                             : chatFocusNode.hasFocus
                                 ? maxwidth * 0.5
                                 : maxwidth * 0.7,
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 10,
-                    ),
-                    CircleAvatar(
-                      backgroundColor: appKeyColor,
-                      radius: 8,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: Text(
-                        viewers.length.toString() + '  명 시청',
-                        style: TextStyle(
-                            fontSize: widgetFontSize,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
-                      ),
-                    ),
-                    MediaQuery.of(context).orientation == Orientation.portrait
-                        ? SizedBox()
-                        : IconButton(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        CircleAvatar(
+                          backgroundColor: appKeyColor,
+                          radius: 8,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Text(
+                            viewers.length.toString() + '  명 시청',
+                            style: TextStyle(
+                                fontSize: widgetFontSize,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                          ),
+                        ),
+                        MediaQuery.of(context).orientation ==
+                                Orientation.portrait
+                            ? SizedBox()
+                            : IconButton(
+                                icon: Icon(
+                                  hideChat
+                                      ? Icons.chat_bubble_outline
+                                      : Icons.chat_bubble,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    hideChat = !hideChat;
+                                    chatFocusNode.unfocus();
+                                  });
+                                }),
+                        IconButton(
                             icon: Icon(
-                              hideChat
-                                  ? Icons.chat_bubble_outline
-                                  : Icons.chat_bubble,
+                              MediaQuery.of(context).orientation ==
+                                      Orientation.portrait
+                                  ? Icons.fullscreen
+                                  : Icons.close_fullscreen,
                               color: Colors.white,
                             ),
                             onPressed: () {
-                              setState(() {
-                                hideChat = !hideChat;
-                                chatFocusNode.unfocus();
-                              });
+                              if (MediaQuery.of(context).orientation ==
+                                  Orientation.landscape) {
+                                SystemChrome.setPreferredOrientations([
+                                  DeviceOrientation.portraitUp,
+                                ]);
+                              } else if (MediaQuery.of(context).orientation ==
+                                  Orientation.portrait) {
+                                if (Platform.isAndroid) {
+                                  SystemChrome.setPreferredOrientations([
+                                    DeviceOrientation.landscapeLeft,
+                                  ]);
+                                } else {
+                                  SystemChrome.setPreferredOrientations([
+                                    DeviceOrientation.landscapeRight,
+                                  ]);
+                                }
+
+                                SystemChrome.setPreferredOrientations([
+                                  DeviceOrientation.landscapeRight,
+                                  DeviceOrientation.landscapeLeft,
+                                ]);
+                              }
                             }),
-                    IconButton(
-                        icon: Icon(MediaQuery.of(context).orientation ==
-                              Orientation.portrait?
-
-                          Icons.fullscreen: Icons.close_fullscreen,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          if (MediaQuery.of(context).orientation ==
-                              Orientation.landscape) {
-                            SystemChrome.setPreferredOrientations([
-                              DeviceOrientation.portraitUp,
-                            ]);
-                          } else if (MediaQuery.of(context).orientation ==
-                              Orientation.portrait) {
-                            if (Platform.isAndroid) {
-                              SystemChrome.setPreferredOrientations([
-                                DeviceOrientation.landscapeLeft,
-                              ]);
-                            } else {
-                              SystemChrome.setPreferredOrientations([
-                                DeviceOrientation.landscapeRight,
-                              ]);
-                            }
-
-                            SystemChrome.setPreferredOrientations([
-                              DeviceOrientation.landscapeRight,
-                              DeviceOrientation.landscapeLeft,
-                            ]);
-                          }
-                        }),
-                  ],
-                ),
-              ),
-              AnimatedContainer(
-                duration: Duration(milliseconds: 200),
-                height: artistTap ? 100 : 0,
-                width:
-                    MediaQuery.of(context).orientation == Orientation.portrait
+                      ],
+                    ),
+                  ),
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 200),
+                    height: artistTap ? 100 : 0,
+                    width: MediaQuery.of(context).orientation ==
+                            Orientation.portrait
                         ? maxwidth
                         : hideChat
                             ? maxwidth
                             : chatFocusNode.hasFocus
                                 ? maxwidth * 0.5
                                 : maxwidth * 0.7,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(11),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(11),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        VerticalDivider(
+                          width: 20,
+                        ),
+                        CircleAvatar(
+                          radius: 35,
+                          backgroundImage: NetworkImage(_artist.profile),
+                        ),
+                        VerticalDivider(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _artist.name,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: subtitleFontSize),
+                              ),
+                              Text(
+                                '라이브 방송중',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: subtitleFontSize - 2),
+                              ),
+                            ],
+                          ),
+                        ),
+                        FlatButton(
+                          height: 50,
+                          color: appKeyColor,
+                          onPressed: () {
+                            _onLikePressed(_artist);
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(11)),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Icon(
+                                _artist.myPeople.contains(widget.userDB.id)
+                                    ? MdiIcons.heart
+                                    : MdiIcons.heartOutline,
+                                size: 25,
+                              ),
+                              Text(
+                                ' Follow',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: subtitleFontSize),
+                              )
+                            ],
+                          ),
+                        ),
+                        VerticalDivider(
+                          width: 20,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                child: Row(
-                  children: [
-                    VerticalDivider(
-                      width: 20,
-                    ),
-                    CircleAvatar(
-                      radius: 35,
-                      backgroundImage: NetworkImage(_artist.profile),
-                    ),
-                    VerticalDivider(
-                      width: 20,
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _artist.name,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: subtitleFontSize),
-                          ),
-                          Text(
-                            '라이브 방송중',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
-                                fontSize: subtitleFontSize - 2),
-                          ),
-                        ],
-                      ),
-                    ),
-                    FlatButton(
-                      height: 50,
-                      color: appKeyColor,
-                      onPressed: () {
-                        _onLikePressed(_artist);
-                      },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(11)),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Icon(
-                            _artist.myPeople.contains(widget.userDB.id)
-                                ? MdiIcons.heart
-                                : MdiIcons.heartOutline,
-                            size: 25,
-                          ),
-                          Text(
-                            ' Follow',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: subtitleFontSize),
-                          )
-                        ],
-                      ),
-                    ),
-                    VerticalDivider(
-                      width: 20,
-                    ),
-                  ],
-                ),
+                ],
               ),
-            ],
-          ),
-        )
-      ]),
-    ));
+            )
+          ]),
+        ));
   }
-  bool onPressBackButton(){
+
+  bool onPressBackButton() {
     DateTime now = DateTime.now();
-    if(currentBackPressTime == null ||
-    now.difference(currentBackPressTime) > Duration(milliseconds: 200)){
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime) > Duration(milliseconds: 200)) {
       currentBackPressTime = now;
       setState(() {
-       if(artistTap && !hideChat){
-        artistTap=false;
-        hideChat = !hideChat;
-       }
-       else if (artistTap||chatFocusNode.hasFocus){
-        chatFocusNode.unfocus();
-        artistTap=false;        
-       }
-       else if(!hideChat){
-         hideChat = !hideChat;
-       }
-       else if(!artistTap && !chatFocusNode.hasFocus && hideChat){
-         //showToast("'뒤로' 버튼을 한번 더 누르시면 종료됩니다.");
-         showAlertDialog(context);
-       }
-       }
-      );
+        if (artistTap && !hideChat) {
+          artistTap = false;
+          hideChat = !hideChat;
+        } else if (artistTap || chatFocusNode.hasFocus) {
+          chatFocusNode.unfocus();
+          artistTap = false;
+        } else if (!hideChat) {
+          hideChat = !hideChat;
+        } else if (!artistTap && !chatFocusNode.hasFocus && hideChat) {
+          //showToast("'뒤로' 버튼을 한번 더 누르시면 종료됩니다.");
+          showAlertDialog(context);
+        }
+      });
       return false;
     }
     return true;
   }
+
   @override
   Widget build(BuildContext context) {
     return _fetchData(context);
@@ -576,6 +584,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
     }
   }
 }
+
 // void showToast(String message){
 //   Fluttertoast.showToast(msg: message,
 //     //timeInSecForIosWeb: 1,
@@ -585,71 +594,69 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
 //     gravity: ToastGravity.BOTTOM
 //   );
 // }
-void showAlertDialog(BuildContext context) async{
+void showAlertDialog(BuildContext context) async {
   String result = await showDialog(
-    context: context,    
+    context: context,
     builder: (context) {
       return AlertDialog(
         titlePadding: EdgeInsets.symmetric(
-              horizontal: 15,
-              vertical: 15,
-            ),
-        contentPadding: EdgeInsets.symmetric(
-              horizontal: 15,
-              //vertical: 20,
-            ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(dialogRadius))
+          horizontal: 15,
+          vertical: 15,
         ),
-        backgroundColor: dialogColor1,        
-        title: Container(          
-          child: 
-            Row(children: [
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 15,
+          //vertical: 20,
+        ),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(dialogRadius))),
+        backgroundColor: dialogColor1,
+        title: Container(
+          child: Row(
+            children: [
               SizedBox(
-                height: 25,
-                width: 25,
-                child: Image.network('https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/exit_image.png?alt=media&token=9f9106c2-7c68-493e-91d1-94723472960c')
-                ),
-              SizedBox(width: 10,),
-              Text('나가기',
-                style: title3
+                  height: 25,
+                  width: 25,
+                  child: Image.network(
+                      'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/exit_image.png?alt=media&token=9f9106c2-7c68-493e-91d1-94723472960c')),
+              SizedBox(
+                width: 10,
               ),
-            ],),
+              Text('나가기', style: title3),
+            ],
+          ),
         ),
         content: Expanded(
-                  child: Text('라이브 공연을 나가시겠습니까?',
-                  textAlign: TextAlign.left,
-               // style: subtitle2,
-                ),
+          child: Text(
+            '라이브 공연을 나가시겠습니까?',
+            textAlign: TextAlign.left,
+            // style: subtitle2,
+          ),
         ),
         actions: [
-          
           FlatButton(
-            
-            child: Text('취소', style: body4,),
-            shape:
-             RoundedRectangleBorder(side: BorderSide(
-              color: appKeyColor,
-              width: 1,
-              style: BorderStyle.solid
-            ), 
-            borderRadius: BorderRadius.circular(widgetRadius)),
-            onPressed: (){
+            child: Text(
+              '취소',
+              style: body4,
+            ),
+            shape: RoundedRectangleBorder(
+                side: BorderSide(
+                    color: appKeyColor, width: 1, style: BorderStyle.solid),
+                borderRadius: BorderRadius.circular(widgetRadius)),
+            onPressed: () {
               Navigator.pop(context);
             },
           ),
           FlatButton(
             color: appKeyColor,
-            child: Text('확인', style: body4,),
-            shape:
-              
-              RoundedRectangleBorder(side: BorderSide(
-              color: appKeyColor,
-              width: 1,
-              style: BorderStyle.solid
-            ), 
-            borderRadius: BorderRadius.circular(widgetRadius)),
-            onPressed: (){
+            child: Text(
+              '확인',
+              style: body4,
+            ),
+            shape: RoundedRectangleBorder(
+                side: BorderSide(
+                    color: appKeyColor, width: 1, style: BorderStyle.solid),
+                borderRadius: BorderRadius.circular(widgetRadius)),
+            onPressed: () {
               Navigator.pop(context);
               Navigator.of(context).pop();
             },

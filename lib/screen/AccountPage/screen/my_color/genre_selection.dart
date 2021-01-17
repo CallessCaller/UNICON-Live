@@ -103,7 +103,7 @@ class _GenreSelectionPageState extends State<GenreSelectionPage> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        '분위기',
+                        '무드',
                         style: subtitle1,
                       ),
                     ),

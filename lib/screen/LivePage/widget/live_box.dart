@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:screen/screen.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/artists.dart';
@@ -39,6 +40,7 @@ class _LiveBoxState extends State<LiveBox> {
   }
 
   Widget _buildBody(BuildContext context, DocumentSnapshot snapshot) {
+    Screen.keepOn(true);
     Artist artist = Artist.fromSnapshot(snapshot);
     var userDB = Provider.of<UserDB>(context);
 
@@ -68,7 +70,7 @@ class _LiveBoxState extends State<LiveBox> {
               width: MediaQuery.of(context).size.width * 0.4,
               height: (MediaQuery.of(context).size.width * 0.4) / 1.7,
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
+                border: Border.all(color: Color(0xff707070), width: 0.5),
                 borderRadius:
                     BorderRadius.only(bottomRight: Radius.circular(10)),
                 image: DecorationImage(
