@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:screen/screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:screen/screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/artists.dart';
@@ -220,6 +220,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
+                Screen.keepOn(false);
               },
             ),
           ],
@@ -242,6 +243,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
   }
 
   Widget _buildBody(BuildContext context, DocumentSnapshot snapshot) {
+    Screen.keepOn(true);
     Artist _artist = Artist.fromSnapshot(snapshot);
     if (_artist.liveNow == false) {
       Future.delayed(Duration.zero, () async {
@@ -268,6 +270,7 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
               icon: Icon(Icons.arrow_back_ios, color: Colors.white),
               onPressed: () {
                 Navigator.of(context).pop();
+                Screen.keepOn(false);
               },
             ),
           ),
@@ -659,6 +662,7 @@ void showAlertDialog(BuildContext context) async {
             onPressed: () {
               Navigator.pop(context);
               Navigator.of(context).pop();
+              Screen.keepOn(false);
             },
           ),
         ],

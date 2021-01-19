@@ -24,7 +24,6 @@ bool _isFirst = true;
 bool _needLogin = false;
 bool _exist = false;
 void main() async {
-  //Screen.keepOn(true);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
@@ -63,6 +62,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    Screen.keepOn(false);
     return MultiProvider(
       providers: [
         StreamProvider<QuerySnapshot>.value(

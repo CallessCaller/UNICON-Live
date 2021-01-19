@@ -40,7 +40,6 @@ class _LiveBoxState extends State<LiveBox> {
   }
 
   Widget _buildBody(BuildContext context, DocumentSnapshot snapshot) {
-    Screen.keepOn(true);
     Artist artist = Artist.fromSnapshot(snapshot);
     var userDB = Provider.of<UserDB>(context);
 
