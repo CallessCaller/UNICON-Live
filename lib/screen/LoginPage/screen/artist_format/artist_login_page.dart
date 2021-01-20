@@ -16,8 +16,8 @@ class ArtistLoginPage extends StatelessWidget {
           Container(
             child: Image.asset(
               Platform.isIOS
-                  ? 'assets/walkthrough/intro_ios.png'
-                  : 'assets/walkthrough/intro_aos.png',
+                  ? 'assets/walkthrough/intro_ios_resized.png'
+                  : 'assets/walkthrough/intro_aos_resized.png',
               fit: BoxFit.fitWidth,
             ),
             width: MediaQuery.of(context).size.width,
