@@ -20,13 +20,14 @@ class ArtistLoginPage extends StatelessWidget {
                   : 'assets/walkthrough/intro_aos.png',
               fit: BoxFit.fitWidth,
             ),
+            width: MediaQuery.of(context).size.width,
           ),
           Positioned(
             bottom: 20,
             child: Container(
               height: 300,
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+              padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
               decoration: BoxDecoration(
                   border: Border.all(color: Color(0xffA3A3A3)),
                   borderRadius: BorderRadius.circular(22)),
@@ -68,7 +69,7 @@ class ArtistLoginPage extends StatelessWidget {
                           ],
                   ),
                   SizedBox(
-                    height: 45,
+                    height: 25,
                   ),
                   Text(
                     '뮤지션 전용 로그인 페이지 입니다.\n\n로그인 하시면 뮤지션 등록을 위한\n추가 정보가 필요합니다.',
@@ -79,6 +80,27 @@ class ArtistLoginPage extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  FlatButton(
+                    height: 45,
+                    minWidth: 140,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(11.0),
+                    ),
+                    color: Color(0xff3E3E3E),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      '돌아가기',
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  )
                 ],
               ),
             ),
