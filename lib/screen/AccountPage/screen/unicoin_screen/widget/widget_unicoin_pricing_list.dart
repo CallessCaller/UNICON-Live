@@ -281,7 +281,7 @@ class _UnicoinPricingListState extends State<UnicoinPricingList> {
             coinTitle,
             Container(
               height: 30,
-              width: 100,
+              width: 90,
               alignment: Alignment.center,
               child: Text(
                 productDetails.price,
