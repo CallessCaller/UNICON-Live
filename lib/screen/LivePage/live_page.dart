@@ -6,8 +6,10 @@ import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/model/records.dart';
 import 'package:testing_layout/model/users.dart';
+import 'package:testing_layout/providers/stream_of_user.dart';
 import 'package:testing_layout/screen/AccountPage/screen/my_broadcast_screen/broadcast_setting.dart';
 import 'package:testing_layout/screen/LivePage/screen/notification.dart';
+import 'package:testing_layout/screen/LivePage/screen/record_page.dart';
 import 'package:testing_layout/screen/LivePage/widget/live_box.dart';
 import 'package:testing_layout/screen/LivePage/widget/live_header.dart';
 import 'package:testing_layout/screen/LivePage/widget/recommendation_sliders.dart';
@@ -73,7 +75,9 @@ class _LivePageState extends State<LivePage> {
         backgroundColor: Colors.white,
         onRefresh: () async {
           await Future.delayed(Duration(seconds: 1));
-          setState(() {});
+          setState(() {
+            return LivePage();
+          });
         },
         child: ListView(children: [
           Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -117,8 +121,20 @@ class _LivePageState extends State<LivePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('VIDEO', style: subtitle1),
+                              // ignore: deprecated_member_use
                               FlatButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            StreamProvider.value(
+                                                value: StreamOfuser()
+                                                    .getUser(userDB.id),
+                                                child: RecordPage()),
+                                      ),
+                                    );
+                                  },
                                   child: Text(
                                     '전체보기',
                                     style: TextStyle(
@@ -132,11 +148,7 @@ class _LivePageState extends State<LivePage> {
                         height: 20,
                       ),
                     ] +
-                    [
-                      RecordBox(
-                        record: records[0],
-                      )
-                    ],
+                    currentRecords(records),
               ),
             ),
             Divider(
@@ -180,8 +192,15 @@ class _LivePageState extends State<LivePage> {
     return result;
   }
 
-  List<Widget> currentRecords() {
+  List<Widget> currentRecords(List<Records> records) {
     List<Widget> result = [];
+    for (int i = 0; i < 5; i++) {
+      result.add(RecordBox(record: records[i]));
+      result.add(Divider(
+        height: 20,
+        color: Colors.transparent,
+      ));
+    }
     return result;
   }
 }

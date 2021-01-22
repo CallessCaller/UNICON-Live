@@ -110,9 +110,7 @@ class _RecordBoxState extends State<RecordBox> {
                 Positioned(
                   top: 34,
                   child: Text(
-                    artist.liveTitle != null && artist.liveTitle != ''
-                        ? '${artist.name}님의 라이브 방송'
-                        : '라이브 방송중',
+                    '${artist.name}님의 지난공연',
                     style: TextStyle(
                       fontSize: widgetFontSize,
                       color: Colors.white,
