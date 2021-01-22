@@ -8,6 +8,7 @@ import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/records.dart';
 import 'package:testing_layout/model/users.dart';
+import 'package:testing_layout/screen/LivePage/screen/record_streaming.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import '../../../components/constant.dart';
 
@@ -68,6 +69,13 @@ class _RecordBoxState extends State<RecordBox> {
         total.add(userDB.id);
 
         recordSanp.reference.update({'total': total});
+
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => RecordStreaming(
+                      record: widget.record,
+                    )));
       },
       child: Row(
         children: [
