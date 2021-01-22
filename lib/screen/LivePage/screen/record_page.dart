@@ -56,7 +56,7 @@ class _RecordPageState extends State<RecordPage> {
 
   List<Widget> currentRecords(List<Records> records) {
     List<Widget> result = [];
-    for (int i = 0; i < records.length; i++) {
+    for (int i = records.length - 1; i > -1; i--) {
       result.add(RecordBox(record: records[i]));
       result.add(Divider(
         height: 20,

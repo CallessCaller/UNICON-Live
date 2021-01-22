@@ -194,7 +194,7 @@ class _LivePageState extends State<LivePage> {
 
   List<Widget> currentRecords(List<Records> records) {
     List<Widget> result = [];
-    for (int i = 0; i < 5; i++) {
+    for (int i = records.length - 1; i > records.length - 6; i--) {
       result.add(RecordBox(record: records[i]));
       result.add(Divider(
         height: 20,
