@@ -94,73 +94,130 @@ class _RecordStreamingState extends State<RecordStreaming> {
                 }),
           ]),
           Positioned(
+              top: MediaQuery.of(context).orientation == Orientation.portrait
+                  ? MediaQuery.of(context).size.height * 0.298 -
+                      (Platform.isAndroid ? 40 : 0)
+                  : MediaQuery.of(context).size.height * 0.915,
+              width: MediaQuery.of(context).orientation == Orientation.portrait
+                  ? MediaQuery.of(context).size.width
+                  : MediaQuery.of(context).size.width * 0.7,
+              left: MediaQuery.of(context).orientation == Orientation.portrait
+                  ? 0
+                  : MediaQuery.of(context).size.width * 0.13,
+              child: !_visible
+                  ? VideoProgressIndicator(
+                      controller,
+                      allowScrubbing: true,
+                    )
+                  : SizedBox()),
+          Positioned(
             top: MediaQuery.of(context).orientation == Orientation.portrait
                 ? MediaQuery.of(context).size.height * 0.3 / 2
                 : MediaQuery.of(context).size.height * 0.5 - 22,
-            left: MediaQuery.of(context).size.width * 0.5 - 44,
+            // left: MediaQuery.of(context).size.width * 0.5 - 88 / 2 * 3,
             child: AnimatedContainer(
-              width: 88,
+              width: MediaQuery.of(context).size.width,
               height: _visible ? 0.0 : 44.0,
               duration: Duration(milliseconds: 200),
               child: AnimatedOpacity(
                 duration: Duration(milliseconds: 200),
                 opacity: _visible ? 0.0 : 1.0,
-                child: FlatButton(
-                  onPressed: () {
-                    setState(() {
-                      if (controller.value.isPlaying) {
-                        controller.pause();
-                      } else {
-                        controller.play();
-                      }
-                    });
-                  },
-                  child: Icon(
-                    controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-                    size: 50,
-                    color: Colors.white,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    FlatButton(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      onPressed: () async {
+                        await controller.seekTo(
+                            await controller.position - Duration(seconds: 10));
+                      },
+                      child: Image.asset(
+                        'assets/10secbackwards.png',
+                        color: Colors.white60,
+                        scale: 20,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          if (controller.value.isPlaying) {
+                            controller.pause();
+                          } else {
+                            controller.play();
+                          }
+                        });
+                      },
+                      child: Icon(
+                        controller.value.isPlaying
+                            ? Icons.pause
+                            : Icons.play_arrow,
+                        size: 50,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    FlatButton(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      onPressed: () async {
+                        await controller.seekTo(
+                            await controller.position + Duration(seconds: 10));
+                      },
+                      child: Image.asset(
+                        'assets/10secforwards.png',
+                        color: Colors.white60,
+                        scale: 20,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
           Positioned(
             bottom: MediaQuery.of(context).orientation == Orientation.portrait
-                ? MediaQuery.of(context).size.height * 0.69
+                ? MediaQuery.of(context).size.height * 0.69 -
+                    (Platform.isAndroid ? 40 : 0)
                 : 0,
             right: MediaQuery.of(context).orientation == Orientation.portrait
                 ? 0
                 : MediaQuery.of(context).size.width * 0.1,
-            child: IconButton(
-                icon: Icon(
-                    MediaQuery.of(context).orientation == Orientation.portrait
+            child: !_visible
+                ? IconButton(
+                    icon: Icon(MediaQuery.of(context).orientation ==
+                            Orientation.portrait
                         ? Icons.fullscreen
                         : Icons.fullscreen_exit),
-                onPressed: () {
-                  if (MediaQuery.of(context).orientation ==
-                      Orientation.landscape) {
-                    SystemChrome.setPreferredOrientations([
-                      DeviceOrientation.portraitUp,
-                    ]);
-                  } else if (MediaQuery.of(context).orientation ==
-                      Orientation.portrait) {
-                    if (Platform.isAndroid) {
-                      SystemChrome.setPreferredOrientations([
-                        DeviceOrientation.landscapeLeft,
-                      ]);
-                    } else {
+                    onPressed: () {
+                      if (MediaQuery.of(context).orientation ==
+                          Orientation.landscape) {
+                        SystemChrome.setPreferredOrientations([
+                          DeviceOrientation.portraitUp,
+                        ]);
+                      } else if (MediaQuery.of(context).orientation ==
+                          Orientation.portrait) {
+                        if (Platform.isAndroid) {
+                          SystemChrome.setPreferredOrientations([
+                            DeviceOrientation.landscapeLeft,
+                          ]);
+                        } else {
+                          SystemChrome.setPreferredOrientations([
+                            DeviceOrientation.landscapeRight,
+                          ]);
+                        }
+                      }
                       SystemChrome.setPreferredOrientations([
                         DeviceOrientation.landscapeRight,
+                        DeviceOrientation.landscapeLeft,
+                        DeviceOrientation.portraitUp,
                       ]);
-                    }
-
-                    SystemChrome.setPreferredOrientations([
-                      DeviceOrientation.landscapeRight,
-                      DeviceOrientation.landscapeLeft,
-                      DeviceOrientation.portraitUp,
-                    ]);
-                  }
-                }),
+                    })
+                : SizedBox(),
           ),
         ],
       ),
