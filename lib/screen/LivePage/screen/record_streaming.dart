@@ -95,7 +95,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
           ]),
           Positioned(
               top: MediaQuery.of(context).orientation == Orientation.portrait
-                  ? MediaQuery.of(context).size.height * 0.298 -
+                  ? MediaQuery.of(context).size.height * 0.2981 -
                       (Platform.isAndroid ? 40 : 0)
                   : MediaQuery.of(context).size.height * 0.915,
               width: MediaQuery.of(context).orientation == Orientation.portrait
