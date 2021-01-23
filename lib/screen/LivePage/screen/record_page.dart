@@ -18,13 +18,7 @@ class _RecordPageState extends State<RecordPage> {
       appBar: AppBar(
         toolbarHeight: 40,
         centerTitle: false,
-        title: Container(
-          height: 40,
-          child: Image.asset(
-            'assets/slogan_02.png',
-            fit: BoxFit.fitHeight,
-          ),
-        ),
+        title: Text('VIDEO', style: headline2),
       ),
       backgroundColor: Colors.black,
       body: RefreshIndicator(
@@ -40,9 +34,9 @@ class _RecordPageState extends State<RecordPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                      Text('VIDEO', style: subtitle1),
+                      Text('', style: subtitle1),
                       SizedBox(
-                        height: 20,
+                        height: 0,
                       ),
                     ] +
                     currentRecords(records),

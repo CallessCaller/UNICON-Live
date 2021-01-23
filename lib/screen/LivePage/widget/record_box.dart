@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_layout/components/constant.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
@@ -58,7 +59,7 @@ class _RecordBoxState extends State<RecordBox> {
   Widget _buildBody(BuildContext context, DocumentSnapshot snapshot) {
     Artist artist = Artist.fromSnapshot(snapshot);
     var userDB = Provider.of<UserDB>(context);
-
+    final DateFormat serverFormat = DateFormat('yyyy-MM-dd');
     return InkWell(
       onTap: () async {
         var recordSanp = await FirebaseFirestore.instance
@@ -118,7 +119,7 @@ class _RecordBoxState extends State<RecordBox> {
                 Positioned(
                   top: 34,
                   child: Text(
-                    '${artist.name}님의 지난공연',
+                    '${artist.name}님의 지난 공연',
                     style: TextStyle(
                       fontSize: widgetFontSize,
                       color: Colors.white,
@@ -126,13 +127,13 @@ class _RecordBoxState extends State<RecordBox> {
                   ),
                 ),
                 Positioned(
-                  top: 53,
-                  left: -4,
+                  top: 56,
+                  left: 0,
                   child: Row(
                     children: [
                       Icon(
-                        UniIcon.profile,
-                        size: 20,
+                        Icons.remove_red_eye_outlined,
+                        size: 15,
                         color: Color(0xffB5B5B5),
                       ),
                       SizedBox(width: 3),
@@ -150,11 +151,8 @@ class _RecordBoxState extends State<RecordBox> {
                           )),
                       SizedBox(width: 5),
                       Text(
-                        (DateTime.now()
-                                    .difference(widget.record.date.toDate())
-                                    .inMinutes)
-                                .toString() +
-                            '분 전',
+                        (serverFormat.format(widget.record.date.toDate()))
+                            .toString(),
                         style: TextStyle(
                           fontSize: widgetFontSize - 1,
                           color: Color(0xffB5B5B5),

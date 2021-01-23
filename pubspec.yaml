@@ -25,6 +25,7 @@ dependencies:
     sdk: flutter
   screen: ^0.0.5
   lottie: ^0.7.0+1
+  intl: ^0.16.1
   
   # Firebase related
   firebase_messaging: "^7.0.3"
