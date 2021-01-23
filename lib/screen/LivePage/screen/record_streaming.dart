@@ -95,8 +95,8 @@ class _RecordStreamingState extends State<RecordStreaming> {
           ]),
           Positioned(
               top: MediaQuery.of(context).orientation == Orientation.portrait
-                  ? MediaQuery.of(context).size.height * 0.2981 -
-                      (Platform.isAndroid ? 40 : 0)
+                  ? MediaQuery.of(context).size.height * 0.347 -
+                      (Platform.isIOS ? 40 : 0)
                   : MediaQuery.of(context).size.height * 0.915,
               width: MediaQuery.of(context).orientation == Orientation.portrait
                   ? MediaQuery.of(context).size.width
@@ -181,9 +181,9 @@ class _RecordStreamingState extends State<RecordStreaming> {
           ),
           Positioned(
             bottom: MediaQuery.of(context).orientation == Orientation.portrait
-                ? MediaQuery.of(context).size.height * 0.69 -
-                    (Platform.isAndroid ? 40 : 0)
-                : 0,
+                ? MediaQuery.of(context).size.height * 0.74 -
+                    (Platform.isIOS ? 40 : 0)
+                : 5,
             right: MediaQuery.of(context).orientation == Orientation.portrait
                 ? 0
                 : MediaQuery.of(context).size.width * 0.1,
