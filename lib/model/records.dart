@@ -6,12 +6,14 @@ class Records {
   List<dynamic> total;
   final int size;
   final DocumentReference reference;
+  List<dynamic> liked;
 
   Records.fromMap(Map<String, dynamic> map, {this.reference})
       : name = map['name'],
         date = map['date'],
         total = map['total'],
-        size = map['size'];
+        size = map['size'],
+        liked = map['liked'];
 
   Records.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data(), reference: snapshot.reference);

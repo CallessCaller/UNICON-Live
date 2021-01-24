@@ -76,6 +76,8 @@ class _RecordBoxState extends State<RecordBox> {
             MaterialPageRoute(
                 builder: (context) => RecordStreaming(
                       record: widget.record,
+                      artist: artist,
+                      userDB: userDB,
                     )));
       },
       child: Row(

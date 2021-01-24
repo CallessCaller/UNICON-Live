@@ -94,6 +94,7 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
 
   @override
   Widget build(BuildContext context) {
+    bool _follow = false;
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
@@ -196,6 +197,9 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
               widget.artist.myPeople.contains(widget.userDB.id)
                   ? FlatButton(
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      onPressed: () {
+                        _onLikePressed();
+                      },
                       child: Text(
                         '팔로잉',
                         style: TextStyle(
@@ -204,9 +208,6 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
                           color: outlineColor,
                         ),
                       ),
-                      onPressed: () {
-                        _onLikePressed();
-                      },
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           color: outlineColor,
@@ -219,13 +220,13 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
                     )
                   : FlatButton(
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      onPressed: () {
+                        _onLikePressed();
+                      },
                       child: Text(
                         '팔로우',
                         style: body3,
                       ),
-                      onPressed: () {
-                        _onLikePressed();
-                      },
                       color: appKeyColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
