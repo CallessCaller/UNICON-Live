@@ -26,6 +26,7 @@ class _RecordBoxState extends State<RecordBox> {
   @override
   void initState() {
     super.initState();
+
     // takeSnapshot();
   }
 
