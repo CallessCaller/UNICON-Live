@@ -11,6 +11,7 @@ import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/records.dart';
 import 'package:testing_layout/model/users.dart';
 import 'package:testing_layout/screen/LivePage/widget/record_box.dart';
+import 'package:testing_layout/screen/LivePage/widget/record_box2.dart';
 import 'package:testing_layout/screen/UnionPage/widget/liked_musician_box.dart';
 import 'package:video_player/video_player.dart';
 
@@ -505,7 +506,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
     List<Widget> result = [];
     for (int i = records.length - 1; i > -1; i--) {
       if (records[i].name != widget.record.name) {
-        result.add(RecordBox(record: records[i]));
+        result.add(RecordBox2(record: records[i]));
         result.add(Divider(
           height: 20,
           color: Colors.transparent,
