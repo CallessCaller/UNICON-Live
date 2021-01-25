@@ -29,6 +29,8 @@ class _RecordStreamingState extends State<RecordStreaming> {
   VideoPlayerController controller;
   Future<void> futureController;
   bool _visible = false;
+  bool liked = false;
+
   @override
   void initState() {
     controller = VideoPlayerController.network(
@@ -315,7 +317,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
                 ? Column(
                     children: [
                       Container(
-                        height: 165,
+                        // height: 165,
                         child: Column(
                           children: [
                             Padding(
@@ -358,7 +360,9 @@ class _RecordStreamingState extends State<RecordStreaming> {
                                       ),
                                     ],
                                   ),
-                                  widget.record.liked.contains(widget.userDB.id)
+                                  widget.record.liked
+                                              .contains(widget.userDB.id) ==
+                                          !liked
                                       ? Container(
                                           child: Column(
                                             children: [
@@ -366,6 +370,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
                                                 onPressed: () {
                                                   setState(() {
                                                     _onLikePressed();
+                                                    liked = !liked;
                                                   });
                                                 },
                                                 icon: Icon(
@@ -388,6 +393,8 @@ class _RecordStreamingState extends State<RecordStreaming> {
                                                 onPressed: () {
                                                   setState(() {
                                                     _onLikePressed();
+
+                                                    liked = !liked;
                                                   });
                                                 },
                                                 icon: Icon(

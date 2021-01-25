@@ -26,7 +26,7 @@ class _RecordBoxState extends State<RecordBox> {
   @override
   void initState() {
     super.initState();
-    takeSnapshot();
+    // takeSnapshot();
   }
 
   Image image;
@@ -46,16 +46,16 @@ class _RecordBoxState extends State<RecordBox> {
     );
   }
 
-  void takeSnapshot() async {
-    Uint8List bytes = await VideoThumbnail.thumbnailData(
-      video:
-          'http://ynw.fastedge.net:1935/vod/_definst_/${widget.record.name}/playlist.m3u8', // Path of that video
-      imageFormat: ImageFormat.PNG,
-      quality: 100,
-      maxHeight: 75,
-    );
-    image = Image.memory(bytes); // Here's your frame
-  }
+  // void takeSnapshot() async {
+  //   Uint8List bytes = await VideoThumbnail.thumbnailData(
+  //     video:
+  //         'http://ynw.fastedge.net:1935/vod/_definst_/${widget.record.name}/playlist.m3u8', // Path of that video
+  //     imageFormat: ImageFormat.PNG,
+  //     quality: 100,
+  //     maxHeight: 75,
+  //   );
+  //   image = Image.memory(bytes); // Here's your frame
+  // }
 
   Widget _buildBody(BuildContext context, DocumentSnapshot snapshot) {
     Artist artist = Artist.fromSnapshot(snapshot);
