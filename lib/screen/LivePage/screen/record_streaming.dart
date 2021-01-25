@@ -10,6 +10,7 @@ import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/records.dart';
 import 'package:testing_layout/model/users.dart';
+import 'package:testing_layout/screen/LivePage/widget/record_box.dart';
 import 'package:testing_layout/screen/UnionPage/widget/liked_musician_box.dart';
 import 'package:video_player/video_player.dart';
 
@@ -107,6 +108,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
   @override
   Widget build(BuildContext context) {
     final DateFormat serverFormat = DateFormat('yyyy-MM-dd');
+    final records = Provider.of<List<Records>>(context);
     // final musicians = Artist.fromSnapshot();
     return SafeArea(
       top: MediaQuery.of(context).orientation == Orientation.portrait
@@ -303,128 +305,179 @@ class _RecordStreamingState extends State<RecordStreaming> {
                 ),
               ],
             ),
+
+            //
+
+            //
+
+            //
             MediaQuery.of(context).orientation == Orientation.portrait
                 ? Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(5, 15, 5, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Container(
+                        height: 165,
+                        child: Column(
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${widget.artist.name}님의 지난 공연',
-                                  style: title3,
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      (widget.record.total.length.toString() +
-                                          ' View' +
-                                          (widget.record.total.length > 1
-                                              ? 's'
-                                              : '')),
-                                      style: body3,
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      (serverFormat.format(
-                                              widget.record.date.toDate()))
-                                          .toString(),
-                                      style: body3,
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(5, 15, 5, 15),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${widget.artist.name}님의 지난 공연',
+                                        style: title3,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            (widget.record.total.length
+                                                    .toString() +
+                                                ' View' +
+                                                (widget.record.total.length > 1
+                                                    ? 's'
+                                                    : '')),
+                                            style: body3,
+                                          ),
+                                          SizedBox(width: 10),
+                                          Text(
+                                            (serverFormat.format(widget
+                                                    .record.date
+                                                    .toDate()))
+                                                .toString(),
+                                            style: body3,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  widget.record.liked.contains(widget.userDB.id)
+                                      ? Container(
+                                          child: Column(
+                                            children: [
+                                              IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _onLikePressed();
+                                                  });
+                                                },
+                                                icon: Icon(
+                                                  UniIcon.like_ena,
+                                                  size: 30,
+                                                  color: appKeyColor,
+                                                ),
+                                              ),
+                                              Text(
+                                                '${widget.record.liked.length}',
+                                                style: body3,
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      : Container(
+                                          child: Column(
+                                            children: [
+                                              IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _onLikePressed();
+                                                  });
+                                                },
+                                                icon: Icon(
+                                                  UniIcon.like_dis,
+                                                  size: 30,
+                                                ),
+                                              ),
+                                              Text(
+                                                '${widget.record.liked.length}',
+                                                style: body3,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                  // IconButton(
+                                  //     icon: widget.record.liked
+                                  //             .contains(widget.userDB.id)
+                                  //         ? Icon(UniIcon.like_ena)
+                                  //         : Icon(
+                                  //             UniIcon.like_dis,
+                                  //             size: 30,
+                                  //           ),
+                                  //     onPressed: () {
+                                  //       setState(() {
+                                  //         _onLikePressed();
+                                  //       });
+                                  //     }),
+                                ],
+                              ),
                             ),
-                            widget.record.liked.contains(widget.userDB.id)
-                                ? Container(
-                                    child: Column(
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              _onLikePressed();
-                                            });
-                                          },
-                                          icon: Icon(
-                                            UniIcon.like_ena,
-                                            size: 30,
-                                            color: appKeyColor,
-                                          ),
-                                        ),
-                                        Text(
-                                          '${widget.record.liked.length}',
-                                          style: body3,
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                : Container(
-                                    child: Column(
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              _onLikePressed();
-                                            });
-                                          },
-                                          icon: Icon(
-                                            UniIcon.like_dis,
-                                            size: 30,
-                                          ),
-                                        ),
-                                        Text(
-                                          '${widget.record.liked.length}',
-                                          style: body3,
-                                        )
-                                      ],
+                            Divider(
+                              height: 0,
+                              color: Colors.white,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: InkWell(
+                                      child: LikedMusicianBox(
+                                          userDB: widget.userDB,
+                                          artist: widget.artist),
                                     ),
                                   ),
-                            // IconButton(
-                            //     icon: widget.record.liked
-                            //             .contains(widget.userDB.id)
-                            //         ? Icon(UniIcon.like_ena)
-                            //         : Icon(
-                            //             UniIcon.like_dis,
-                            //             size: 30,
-                            //           ),
-                            //     onPressed: () {
-                            //       setState(() {
-                            //         _onLikePressed();
-                            //       });
-                            //     }),
-                          ],
-                        ),
-                      ),
-                      Divider(
-                        height: 30,
-                        color: Colors.white,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: InkWell(
-                                child: LikedMusicianBox(
-                                    userDB: widget.userDB,
-                                    artist: widget.artist),
+                                ],
                               ),
                             ),
                           ],
                         ),
                       ),
                       Divider(
-                        height: 30,
+                        height: 0,
                         color: Colors.white,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(5, 0, 5, 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 5),
+                            Text(
+                              'Others',
+                              style: title2,
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: MediaQuery.of(context).size.height -
+                                  ((MediaQuery.of(context).size.width *
+                                          9 /
+                                          16) +
+                                      270),
+                              child: ListView(
+                                padding: EdgeInsets.zero,
+                                children: [
+                                  Column(
+                                      children: [
+                                            Container(height: 0, width: 10),
+                                            SizedBox(
+                                              height: 0,
+                                            ),
+                                          ] +
+                                          currentRecords(records)),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   )
@@ -433,5 +486,19 @@ class _RecordStreamingState extends State<RecordStreaming> {
         ),
       ),
     );
+  }
+
+  List<Widget> currentRecords(List<Records> records) {
+    List<Widget> result = [];
+    for (int i = records.length - 1; i > -1; i--) {
+      if (records[i].name != widget.record.name) {
+        result.add(RecordBox(record: records[i]));
+        result.add(Divider(
+          height: 20,
+          color: Colors.transparent,
+        ));
+      }
+    }
+    return result;
   }
 }
