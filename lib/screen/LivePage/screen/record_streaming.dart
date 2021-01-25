@@ -27,12 +27,14 @@ class RecordStreaming extends StatefulWidget {
 
 class _RecordStreamingState extends State<RecordStreaming> {
   VideoPlayerController controller;
+  int total_liked;
   Future<void> futureController;
   bool _visible = false;
   bool liked = false;
 
   @override
   void initState() {
+    total_liked = widget.record.liked.length;
     controller = VideoPlayerController.network(
         'http://ynw.fastedge.net:1935/vod/_definst_/${widget.record.name}/playlist.m3u8');
     futureController = controller.initialize();
@@ -79,6 +81,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
       // if (_feed) {
       //   await _firebaseMessaging.subscribeToTopic(artist.id + 'Feed');
       // }
+      widget.record.liked.length;
     }
 
     // Unliked
@@ -370,7 +373,9 @@ class _RecordStreamingState extends State<RecordStreaming> {
                                                 onPressed: () {
                                                   setState(() {
                                                     _onLikePressed();
+
                                                     liked = !liked;
+                                                    --total_liked;
                                                   });
                                                 },
                                                 icon: Icon(
@@ -380,7 +385,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
                                                 ),
                                               ),
                                               Text(
-                                                '${widget.record.liked.length}',
+                                                total_liked.toString(),
                                                 style: body3,
                                               )
                                             ],
@@ -395,6 +400,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
                                                     _onLikePressed();
 
                                                     liked = !liked;
+                                                    ++total_liked;
                                                   });
                                                 },
                                                 icon: Icon(
@@ -403,7 +409,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
                                                 ),
                                               ),
                                               Text(
-                                                '${widget.record.liked.length}',
+                                                total_liked.toString(),
                                                 style: body3,
                                               )
                                             ],
