@@ -130,15 +130,21 @@ class _RecordStreamingState extends State<RecordStreaming> {
       child: Scaffold(
         backgroundColor: Colors.black,
         extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.arrow_back_ios)),
-        ),
+        appBar: !_visible
+            ? AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+                actions: [
+                  IconButton(
+                      icon: Icon(Icons.warning_amber_rounded),
+                      onPressed: () {}),
+                ],
+                leading: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.arrow_back_ios)))
+            : PreferredSize(child: Container(), preferredSize: Size(0, 0)),
         body: Column(
           children: [
             Stack(
