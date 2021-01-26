@@ -194,12 +194,22 @@ class _LivePageState extends State<LivePage> {
 
   List<Widget> currentRecords(List<Records> records) {
     List<Widget> result = [];
-    for (int i = records.length - 1; i > records.length - 6; i--) {
-      result.add(RecordBox(record: records[i]));
-      result.add(Divider(
-        height: 20,
-        color: Colors.transparent,
-      ));
+    if (records.length >= 5) {
+      for (int i = records.length - 1; i > records.length - 6; i--) {
+        result.add(RecordBox(record: records[i]));
+        result.add(Divider(
+          height: 20,
+          color: Colors.transparent,
+        ));
+      }
+    } else {
+      for (int i = records.length - 1; i > -1; i--) {
+        result.add(RecordBox(record: records[i]));
+        result.add(Divider(
+          height: 20,
+          color: Colors.transparent,
+        ));
+      }
     }
     return result;
   }
