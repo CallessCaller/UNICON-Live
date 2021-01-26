@@ -54,6 +54,7 @@ class LoadUser {
         'dislikeComment': [],
         'fee': 0,
         'haters': [],
+        'liked_video': []
       });
 
       FirebaseFirestore.instance

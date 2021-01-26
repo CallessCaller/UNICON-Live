@@ -30,6 +30,8 @@ class UserDB {
   final Timestamp createTime;
   final DocumentReference reference;
 
+  final List<dynamic> liked_video;
+
   UserDB.fromMap(Map<String, dynamic> map, {this.reference})
       : name = map['name'],
         email = map['email'],
@@ -57,8 +59,8 @@ class UserDB {
         admin = map['admin'],
         liveTitle = map['liveTitle'],
         liveImage = map['liveImage'],
-        resizedLiveImage = map['resizedLiveImage'];
-
+        resizedLiveImage = map['resizedLiveImage'],
+        liked_video = map['liked_video'];
   UserDB.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data(), reference: snapshot.reference);
 

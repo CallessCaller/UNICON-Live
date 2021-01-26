@@ -70,43 +70,29 @@ class _RecordStreamingState extends State<RecordStreaming> {
     // Add data to CandidatesDB
     if (!record.liked.contains(widget.userDB.id)) {
       record.liked.add(userDB.id);
-      //userDB.liked_video.add(widget.record.name);
-
-      await FirebaseFirestore.instance
-          .collection('Records')
-          .doc(record.name)
-          .update({'liked': record.liked});
-      // await FirebaseFirestore.instance
-      //     .collection('Users')
-      //     .doc(userDB.id)
-      //     .update({'liked_video': userDB.liked_video});
-
-      // if (_live) {
-      //   await _firebaseMessaging.subscribeToTopic(artist.id + 'live');
-      // }
-      // if (_feed) {
-      //   await _firebaseMessaging.subscribeToTopic(artist.id + 'Feed');
-      // }
-      widget.record.liked.length;
+    if (userDB.liked_video == null) {
+      await widget.userDB.reference.set({'liked_video': []});
+      }
+    userDB.liked_video.add(record.name);
+    await FirebaseFirestore.instance
+         .collection('Records')
+         .doc(record.name)
+         .update({'liked': record.liked});
+    await widget.userDB.reference.update({'liked_video': userDB.liked_video});
+    widget.record.liked.length;
     }
 
     // Unliked
     else {
       record.liked.remove(userDB.id);
-      // userDB.liked_video.remove(record.name);
+      userDB.liked_video.remove(record.name);
 
       await FirebaseFirestore.instance
           .collection('Records')
           .doc(record.name)
           .update({'liked': record.liked});
-      // await FirebaseFirestore.instance
-      //     .collection('Users')
-      //     .doc(userDB.id)
-      //     .update({'liked_video': userDB.liked_video});
+      await widget.userDB.reference.update({'liked_video': userDB.liked_video});
 
-      // await _firebaseMessaging.unsubscribeFromTopic(artist.id + 'live');
-
-      // await _firebaseMessaging.unsubscribeFromTopic(artist.id + 'Feed');
     }
   }
 
