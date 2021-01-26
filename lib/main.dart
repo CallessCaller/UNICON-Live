@@ -65,20 +65,25 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     Screen.keepOn(false);
-    return Platform.isAndroid?
-      FutureBuilder(future: Future.delayed(Duration(milliseconds: 3200)), builder: (context,snapshot){
-        if(snapshot.connectionState == ConnectionState.done)
-          return MainPage();
-        else
-          return Container(child: Lottie.asset('assets/unicon_logo_intro_test.json',repeat:false),);
-      }):MainPage();
-    
+    return Platform.isAndroid
+        ? FutureBuilder(
+            future: Future.delayed(Duration(milliseconds: 3200)),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done)
+                return MainPage();
+              else
+                return Container(
+                  child: Lottie.asset('assets/unicon_logo_intro_test.json',
+                      repeat: false),
+                );
+            })
+        : MainPage();
   }
 }
 
 class MainPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         StreamProvider<QuerySnapshot>.value(
