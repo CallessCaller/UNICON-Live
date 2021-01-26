@@ -46,6 +46,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
     controller.setLooping(false);
     controller.setVolume(50.0);
     controller.play();
+
     super.initState();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
@@ -187,6 +188,34 @@ class _RecordStreamingState extends State<RecordStreaming> {
                         }
                       }),
                 ]),
+                !_visible
+                    ? InkWell(
+                        onTap: () {
+                          setState(() {
+                            _visible = !_visible;
+                          });
+                        },
+                        child: MediaQuery.of(context).orientation ==
+                                Orientation.portrait
+                            ? Container(
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.width * 9 / 16,
+                                decoration:
+                                    BoxDecoration(color: Colors.black26),
+                              )
+                            : Center(
+                                child: Container(
+                                  height: MediaQuery.of(context).size.height,
+                                  width: MediaQuery.of(context).size.height *
+                                      16 /
+                                      9,
+                                  decoration:
+                                      BoxDecoration(color: Colors.black26),
+                                ),
+                              ),
+                      )
+                    : SizedBox(),
                 Positioned(
                     top: MediaQuery.of(context).orientation ==
                             Orientation.portrait
