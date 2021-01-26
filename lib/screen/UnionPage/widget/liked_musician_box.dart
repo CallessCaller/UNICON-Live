@@ -27,7 +27,6 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
   SharedPreferences _preferences;
   bool _live = true;
   bool _feed = true;
-  bool followed = false;
 
   void _loadFirst() async {
     // SharedPreferences의 인스턴스를 필드에 저장
@@ -95,7 +94,6 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
 
   @override
   Widget build(BuildContext context) {
-    bool _follow = false;
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
@@ -195,16 +193,11 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
                   ],
                 ),
               ),
-              widget.artist.myPeople.contains(widget.userDB.id) == !followed
+              widget.artist.myPeople.contains(widget.userDB.id)
                   ? FlatButton(
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       onPressed: () {
                         setState(() {
-                          if (!followed) {
-                            followed = !followed;
-                          } else {
-                            followed = !followed;
-                          }
                           _onLikePressed();
                         });
                       },
@@ -230,11 +223,6 @@ class _LikedMusicianBoxState extends State<LikedMusicianBox> {
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       onPressed: () {
                         setState(() {
-                          if (!followed) {
-                            followed = !followed;
-                          } else {
-                            followed = !followed;
-                          }
                           _onLikePressed();
                         });
                       },
