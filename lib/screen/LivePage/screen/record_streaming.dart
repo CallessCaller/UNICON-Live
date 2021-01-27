@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:overlay_dialog/overlay_dialog.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +39,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
   bool _visible = false;
   bool liked = false;
 
-  TextEditingController _controller;
+  final _controller = new TextEditingController();
   @override
   void initState() {
     total_liked = widget.record.liked.length;
@@ -100,6 +101,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
   @override
   void dispose() {
     controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -128,7 +130,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
                       icon: Icon(Icons.warning_amber_rounded),
                       onPressed: () {
                         report_record_Alert(
-                            context, widget.userDB, _controller);
+                            context, widget.userDB, widget.record, _controller);
                       }),
                 ],
                 leading: IconButton(
@@ -788,8 +790,13 @@ class _LikedMusicianBox2State extends State<LikedMusicianBox2> {
   }
 }
 
-void report_record_Alert(BuildContext context, UserDB userDB,
+void report_record_Alert(BuildContext context, UserDB userDB, Records record,
     TextEditingController _controller) async {
+  bool _canGo = true;
+  bool _isLoading = false;
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -952,20 +959,77 @@ void report_record_Alert(BuildContext context, UserDB userDB,
                                           SizedBox(width: 10),
                                           Expanded(
                                               child: FlatButton(
-                                            color: appKeyColor,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      widgetRadius),
-                                            ),
-                                            child: Text(
-                                              '네',
-                                              style: subtitle3,
-                                            ),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ))
+                                                  color: appKeyColor,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            widgetRadius),
+                                                  ),
+                                                  child: Text(
+                                                    '네',
+                                                    style: subtitle3,
+                                                  ),
+                                                  onPressed: () async {
+                                                    if (_controller.text ==
+                                                        '') {
+                                                      Fluttertoast.showToast(
+                                                        msg: "내용을 입력해주세요",
+                                                        toastLength:
+                                                            Toast.LENGTH_SHORT,
+                                                        gravity:
+                                                            ToastGravity.BOTTOM,
+                                                        timeInSecForIosWeb: 1,
+                                                        backgroundColor:
+                                                            dialogColor1,
+                                                        textColor: Colors.white,
+                                                        fontSize: textFontSize,
+                                                      );
+                                                    } else {
+                                                      final _video =
+                                                          await FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'Reports')
+                                                              .add(
+                                                        {
+                                                          'report_time':
+                                                              Timestamp.now(),
+                                                          'content':
+                                                              _controller.text,
+                                                          'type': '다시보기',
+                                                          'id': userDB.id,
+                                                          'report_name': record.name
+                                                        },
+                                                      );
+
+                                                      await FirebaseFirestore
+                                                          .instance
+                                                          .collection('Reports')
+                                                          .doc(_video.id)
+                                                          .update({
+                                                        'report_id': _video.id
+                                                      });
+
+                                                      // await widget.userDB.reference
+                                                      //     .collection('my_issues')
+                                                      //     .doc(issue.id)
+                                                      //     .set({'issue_id': issue.id});
+
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            return AlertDialog(
+                                                              content: Text(
+                                                                  "제출되었습니다."),
+                                                            );
+                                                          });
+                                                    }
+                                                  }
+                                                  // : null,
+                                                  ))
                                         ])
                                       ]),
                                     )),
