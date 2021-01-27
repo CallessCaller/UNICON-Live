@@ -116,6 +116,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
       left: false,
       right: false,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.black,
         extendBodyBehindAppBar: true,
         appBar: !_visible
@@ -850,110 +851,125 @@ void report_record_Alert(BuildContext context, UserDB userDB,
                       onPressed: () async {
                         Navigator.of(context).pop();
                         showDialog(
+                            barrierDismissible: false,
                             context: context,
                             builder: (BuildContext context) {
-                              return AlertDialog(
-                                  contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 15,
-                                    vertical: 10,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(dialogRadius),
-                                  ),
-                                  backgroundColor: dialogColor1,
-                                  title: Center(
-                                    child: Text(
-                                      "신고",
-                                      style: title1,
+                              return GestureDetector(
+                                onTap: () {
+                                  FocusScopeNode currentFocus =
+                                      FocusScope.of(context);
+
+                                  if (!currentFocus.hasPrimaryFocus) {
+                                    currentFocus.unfocus();
+                                  }
+                                },
+                                child: AlertDialog(
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 15,
+                                      vertical: 10,
                                     ),
-                                  ),
-                                  content: Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        8 /
-                                        25,
-                                    width: MediaQuery.of(context).size.width *
-                                        1 /
-                                        2,
-                                    child: Column(children: [
-                                      SizedBox(height: 10),
-                                      TextField(
-                                        controller: _controller,
-                                        maxLines: 7,
-                                        autocorrect: false,
-                                        cursorHeight: 14,
-                                        keyboardType: TextInputType.multiline,
-                                        style: body2,
-                                        decoration: InputDecoration(
-                                          //labelText:'신고 이유',
-                                          // labelStyle: TextStyle(
-                                          //       color: Colors.white,
-                                          //       fontSize: 14,
-                                          //       fontWeight: FontWeight.w600,),
-                                          hintText: '이유를 적어주세요.',
-                                          // hasFloatingPlaceholder: false,
-                                          // counterText: 'gdgdgdg',
-                                          isDense: true,
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(widgetRadius)),
-                                            borderSide: BorderSide(
-                                              color: Colors.white,
-                                              width: 1,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(dialogRadius),
+                                    ),
+                                    backgroundColor: dialogColor1,
+                                    title: Center(
+                                      child: Text(
+                                        "신고",
+                                        style: title1,
+                                      ),
+                                    ),
+                                    content: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              8 /
+                                              25,
+                                      width: MediaQuery.of(context).size.width *
+                                          1 /
+                                          2,
+                                      child: Column(children: [
+                                        SizedBox(height: 10),
+                                        TextField(
+                                          controller: _controller,
+                                          maxLines: 7,
+                                          autocorrect: false,
+                                          cursorHeight: 14,
+                                          keyboardType: TextInputType.multiline,
+                                          style: body2,
+                                          decoration: InputDecoration(
+                                            //labelText:'신고 이유',
+                                            // labelStyle: TextStyle(
+                                            //       color: Colors.white,
+                                            //       fontSize: 14,
+                                            //       fontWeight: FontWeight.w600,),
+                                            hintText: '이유를 적어주세요.',
+                                            // hasFloatingPlaceholder: false,
+                                            // counterText: 'gdgdgdg',
+                                            isDense: true,
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(
+                                                      widgetRadius)),
+                                              borderSide: BorderSide(
+                                                color: Colors.white,
+                                                width: 1,
+                                              ),
                                             ),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(widgetRadius)),
-                                            borderSide: BorderSide(
-                                              color: appKeyColor,
-                                              width: 1,
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(
+                                                      widgetRadius)),
+                                              borderSide: BorderSide(
+                                                color: appKeyColor,
+                                                width: 1,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Row(children: [
-                                        Expanded(
-                                          child: FlatButton(
-                                            color: dialogColor3,
+                                        SizedBox(height: 10),
+                                        Row(children: [
+                                          Expanded(
+                                            child: FlatButton(
+                                              color: dialogColor3,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        widgetRadius),
+                                              ),
+                                              child: Text(
+                                                '취소',
+                                                style: TextStyle(
+                                                  color: dialogColor4,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Expanded(
+                                              child: FlatButton(
+                                            color: appKeyColor,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(
                                                       widgetRadius),
                                             ),
                                             child: Text(
-                                              '취소',
-                                              style: TextStyle(
-                                                color: dialogColor4,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                              ),
+                                              '네',
+                                              style: subtitle3,
                                             ),
                                             onPressed: () {
                                               Navigator.of(context).pop();
                                             },
-                                          ),
-                                        ),
-                                        SizedBox(width: 10),
-                                        Expanded(
-                                            child: FlatButton(
-                                          color: appKeyColor,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                widgetRadius),
-                                          ),
-                                          child: Text(
-                                            '네',
-                                            style: subtitle3,
-                                          ),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ))
-                                      ])
-                                    ]),
-                                  ));
+                                          ))
+                                        ])
+                                      ]),
+                                    )),
+                              );
                             });
 
                         //});
