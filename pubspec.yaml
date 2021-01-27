@@ -70,7 +70,7 @@ dependencies:
   fluttertoast: ^7.1.1
   shimmer: ^1.1.2
 
-
+  overlay_dialog: ^0.0.3
   
 dev_dependencies:
   flutter_test:
