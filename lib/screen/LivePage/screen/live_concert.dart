@@ -598,75 +598,144 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
 //   );
 // }
 void showAlertDialog(BuildContext context) async {
-  String result = await showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        titlePadding: EdgeInsets.symmetric(
-          horizontal: 15,
-          vertical: 15,
-        ),
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 15,
-          //vertical: 20,
-        ),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(dialogRadius))),
-        backgroundColor: dialogColor1,
-        title: Container(
-          child: Row(
+  await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 10,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(dialogRadius),
+          ),
+          backgroundColor: dialogColor1,
+          title: Center(
+            child: Text(
+              "나가기",
+              style: title1,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                  height: 25,
-                  width: 25,
-                  child: Image.network(
-                      'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/exit_image.png?alt=media&token=9f9106c2-7c68-493e-91d1-94723472960c')),
-              SizedBox(
-                width: 10,
+              Text(
+                "라이브 공연을 나가시겠습니까?",
               ),
-              Text('나가기', style: title3),
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: FlatButton(
+                      color: dialogColor3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(widgetRadius),
+                      ),
+                      child: Text(
+                        '아니요',
+                        style: TextStyle(
+                          color: dialogColor4,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: FlatButton(
+                      color: appKeyColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(widgetRadius),
+                      ),
+                      child: Text(
+                        '네',
+                        style: subtitle3,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        Screen.keepOn(false);
+                      },
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
-        ),
-        content: Expanded(
-          child: Text(
-            '라이브 공연을 나가시겠습니까?',
-            textAlign: TextAlign.left,
-            // style: subtitle2,
-          ),
-        ),
-        actions: [
-          FlatButton(
-            child: Text(
-              '취소',
-              style: body4,
-            ),
-            shape: RoundedRectangleBorder(
-                side: BorderSide(
-                    color: appKeyColor, width: 1, style: BorderStyle.solid),
-                borderRadius: BorderRadius.circular(widgetRadius)),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          FlatButton(
-            color: appKeyColor,
-            child: Text(
-              '확인',
-              style: body4,
-            ),
-            shape: RoundedRectangleBorder(
-                side: BorderSide(
-                    color: appKeyColor, width: 1, style: BorderStyle.solid),
-                borderRadius: BorderRadius.circular(widgetRadius)),
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.of(context).pop();
-              Screen.keepOn(false);
-            },
-          ),
-        ],
-      );
-    },
-  );
+        );
+      });
+  //     AlertDialog(
+  //       titlePadding: EdgeInsets.symmetric(
+  //         horizontal: 15,
+  //         vertical: 15,
+  //       ),
+  //       contentPadding: EdgeInsets.symmetric(
+  //         horizontal: 15,
+  //         //vertical: 20,
+  //       ),
+  //       shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.all(Radius.circular(dialogRadius))),
+  //       backgroundColor: dialogColor1,
+  //       title:
+  //        Container(
+  //         child: Row(
+  //           children: [
+  //             SizedBox(
+  //                 height: 25,
+  //                 width: 25,
+  //                 child: Image.network(
+  //                     'https://firebasestorage.googleapis.com/v0/b/testinglayout-7eb1f.appspot.com/o/exit_image.png?alt=media&token=9f9106c2-7c68-493e-91d1-94723472960c')),
+  //             SizedBox(
+  //               width: 10,
+  //             ),
+  //             Text('나가기', style: title3),
+  //           ],
+  //         ),
+  //       ),
+  //       content: Expanded(
+  //         child: Text(
+  //           '라이브 공연을 나가시겠습니까?',
+  //           textAlign: TextAlign.left,
+  //           // style: subtitle2,
+  //         ),
+  //       ),
+  //       actions: [
+  //         FlatButton(
+  //           child: Text(
+  //             '취소',
+  //             style: body4,
+  //           ),
+  //           shape: RoundedRectangleBorder(
+  //               side: BorderSide(
+  //                   color: appKeyColor, width: 1, style: BorderStyle.solid),
+  //               borderRadius: BorderRadius.circular(widgetRadius)),
+  //           onPressed: () {
+  //             Navigator.pop(context);
+  //           },
+  //         ),
+  //         FlatButton(
+  //           color: appKeyColor,
+  //           child: Text(
+  //             '확인',
+  //             style: body4,
+  //           ),
+  //           shape: RoundedRectangleBorder(
+  //               side: BorderSide(
+  //                   color: appKeyColor, width: 1, style: BorderStyle.solid),
+  //               borderRadius: BorderRadius.circular(widgetRadius)),
+  //           onPressed: () {
+  //             Navigator.pop(context);
+  //             Navigator.of(context).pop();
+  //             Screen.keepOn(false);
+  //           },
+  //         ),
+  //       ],
+  //     );
+  //   },
+  // );
 }
