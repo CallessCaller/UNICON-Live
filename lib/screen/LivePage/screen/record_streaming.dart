@@ -10,8 +10,8 @@ import 'package:overlay_dialog/overlay_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/components/constant.dart';
-import 'package:testing_layout/components/uni_icon2_icons.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
+import 'package:testing_layout/components/uni_icon2_icons.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/records.dart';
 import 'package:testing_layout/model/users.dart';
@@ -116,7 +116,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
           ? true
           : false,
       bottom: false,
-      left: false,
+      left: MediaQuery.of(context).orientation == Orientation.portrait?false:true,
       right: false,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -213,8 +213,8 @@ class _RecordStreamingState extends State<RecordStreaming> {
                 Positioned(
                     top: MediaQuery.of(context).orientation ==
                             Orientation.portrait
-                        ? MediaQuery.of(context).size.width * 9 / 16 - 8
-                        : MediaQuery.of(context).size.height * 0.9021,
+                        ? MediaQuery.of(context).size.width * 9 / 16 - 8 -25
+                        : MediaQuery.of(context).size.height * 0.841,
                     width: MediaQuery.of(context).orientation ==
                             Orientation.portrait
                         ? MediaQuery.of(context).size.width
@@ -224,7 +224,57 @@ class _RecordStreamingState extends State<RecordStreaming> {
                         ? 0
                         : MediaQuery.of(context).size.width * 0.13,
                     child: !_visible
-                        ? Column(children: [
+                        ? Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                          
+                            ValueListenableBuilder(
+
+                                valueListenable: controller,
+                                builder: (context, VideoPlayerValue value, child) => Container(padding: EdgeInsets.only(left:10),alignment: Alignment.centerLeft,height: 25,
+                                child:(value.position.toString().split('.')[0])
+                                          .split(":")[0] ==
+                                      "0"?Text((value.position
+                                                .toString()
+                                                .split('.')[0])
+                                            .substring(2) +
+                                        " / " +
+                                        (value.duration
+                                                .toString()
+                                                .split('.')[0])
+                                            .substring(2),style: body4):Text(value.position
+                                            .toString()
+                                            .split('.')[0] +
+                                        " / " +
+                                        value.duration
+                                            .toString()
+                                            .split('.')[0],style: body4))
+                                // builder:
+                                //     (context, VideoPlayerValue value, child) {
+                                      
+                                //   if ((value.position.toString().split('.')[0])
+                                //           .split(":")[0] ==
+                                //       "0") {
+                                //     return Text((value.position
+                                //                 .toString()
+                                //                 .split('.')[0])
+                                //             .substring(2) +
+                                //         " / " +
+                                //         (value.duration
+                                //                 .toString()
+                                //                 .split('.')[0])
+                                //             .substring(2));
+                                //   } else {
+                                //     Text(value.position
+                                //             .toString()
+                                //             .split('.')[0] +
+                                //         " / " +
+                                //         value.duration
+                                //             .toString()
+                                //             .split('.')[0]);
+                                //   }
+                                // }
+                                ),
                             VideoProgressIndicator(
                               controller,
                               allowScrubbing: true,
@@ -319,7 +369,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
                           : MediaQuery.of(context).size.width * 0.1,
                   child: !_visible
                       ? IconButton(
-                          icon: Icon(UniIcon2.spin,),
+                          icon: Icon(UniIcon2.spin),
                           onPressed: () {
                             if (MediaQuery.of(context).orientation ==
                                 Orientation.landscape) {
