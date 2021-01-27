@@ -212,8 +212,8 @@ class _RecordStreamingState extends State<RecordStreaming> {
                 Positioned(
                     top: MediaQuery.of(context).orientation ==
                             Orientation.portrait
-                        ? MediaQuery.of(context).size.width * 9 / 16 - 4
-                        : MediaQuery.of(context).size.height * 0.915,
+                        ? MediaQuery.of(context).size.width * 9 / 16 - 8
+                        : MediaQuery.of(context).size.height * 0.9021,
                     width: MediaQuery.of(context).orientation ==
                             Orientation.portrait
                         ? MediaQuery.of(context).size.width
@@ -223,11 +223,18 @@ class _RecordStreamingState extends State<RecordStreaming> {
                         ? 0
                         : MediaQuery.of(context).size.width * 0.13,
                     child: !_visible
-                        ? VideoProgressIndicator(
-                            controller,
-                            allowScrubbing: true,
-                            padding: EdgeInsets.zero,
-                          )
+                        ? Column(children: [
+                            VideoProgressIndicator(
+                              controller,
+                              allowScrubbing: true,
+                              padding: EdgeInsets.zero,
+                            ),
+                            VideoProgressIndicator(
+                              controller,
+                              allowScrubbing: true,
+                              padding: EdgeInsets.zero,
+                            )
+                          ])
                         : SizedBox()),
                 Positioned(
                   top:
@@ -998,7 +1005,8 @@ void report_record_Alert(BuildContext context, UserDB userDB, Records record,
                                                               _controller.text,
                                                           'type': '다시보기',
                                                           'id': userDB.id,
-                                                          'report_name': record.name
+                                                          'report_name':
+                                                              record.name
                                                         },
                                                       );
 
