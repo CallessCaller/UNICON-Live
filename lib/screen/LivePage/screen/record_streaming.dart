@@ -10,6 +10,7 @@ import 'package:overlay_dialog/overlay_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/components/constant.dart';
+import 'package:testing_layout/components/uni_icon2_icons.dart';
 import 'package:testing_layout/components/uni_icon_icons.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/records.dart';
@@ -318,10 +319,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
                           : MediaQuery.of(context).size.width * 0.1,
                   child: !_visible
                       ? IconButton(
-                          icon: Icon(MediaQuery.of(context).orientation ==
-                                  Orientation.portrait
-                              ? Icons.fullscreen
-                              : Icons.fullscreen_exit),
+                          icon: Icon(UniIcon2.spin,),
                           onPressed: () {
                             if (MediaQuery.of(context).orientation ==
                                 Orientation.landscape) {

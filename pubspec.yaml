@@ -113,7 +113,9 @@ flutter:
     - family: Roboto
       fonts:
         - asset: fonts/Roboto-Medium.ttf
-
+    - family: UniIcon2
+      fonts:
+        - asset: fonts/UniIcon2.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

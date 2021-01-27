@@ -5,10 +5,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:screen/screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_layout/components/constant.dart';
+import 'package:testing_layout/components/uni_icon2_icons.dart';
 import 'package:testing_layout/model/artists.dart';
 import 'package:testing_layout/model/lives.dart';
 import 'package:testing_layout/model/users.dart';
@@ -18,6 +20,7 @@ import 'package:testing_layout/screen/LivePage/screen/widget/web_streaming.dart'
 
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../components/constant.dart';
+import '../../../components/uni_icon2_icons.dart';
 
 bool artistTap = false;
 
@@ -381,8 +384,8 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
                             icon: Icon(
                               MediaQuery.of(context).orientation ==
                                       Orientation.portrait
-                                  ? Icons.fullscreen
-                                  : Icons.close_fullscreen,
+                                  ? UniIcon2.spin
+                                  : UniIcon2.spin,
                               color: Colors.white,
                             ),
                             onPressed: () {
