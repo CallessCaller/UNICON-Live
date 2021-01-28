@@ -75,7 +75,20 @@ class _LivePageState extends State<LivePage> {
         backgroundColor: Colors.white,
         onRefresh: () async {
           await Future.delayed(Duration(seconds: 1));
+<<<<<<< HEAD
           setState(() {});
+=======
+          setState(() {
+            //return LivePage();
+            Navigator.pushReplacement(context,MaterialPageRoute(
+                                        builder: (context) =>
+                                            StreamProvider.value(
+                                                value: StreamOfuser()
+                                                    .getUser(userDB.id),
+                                                child: LivePage()),
+                                      ),);
+          });
+>>>>>>> 6fe68a93721aff34a149f6aa649838bca210780b
         },
         child: ListView(children: [
           Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
