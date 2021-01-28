@@ -116,7 +116,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
           ? true
           : false,
       bottom: false,
-      left: MediaQuery.of(context).orientation == Orientation.portrait?false:true,
+      left: false,
       right: false,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -213,7 +213,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
                 Positioned(
                     top: MediaQuery.of(context).orientation ==
                             Orientation.portrait
-                        ? MediaQuery.of(context).size.width * 9 / 16 - 8 -25
+                        ? MediaQuery.of(context).size.width * 9 / 16 - 8 - 25
                         : MediaQuery.of(context).size.height * 0.841,
                     width: MediaQuery.of(context).orientation ==
                             Orientation.portrait
@@ -225,67 +225,68 @@ class _RecordStreamingState extends State<RecordStreaming> {
                         : MediaQuery.of(context).size.width * 0.13,
                     child: !_visible
                         ? Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                          
-                            ValueListenableBuilder(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                                ValueListenableBuilder(
+                                    valueListenable: controller,
+                                    builder: (context, VideoPlayerValue value, child) => Container(
+                                        padding: EdgeInsets.only(left: 10),
+                                        alignment: Alignment.centerLeft,
+                                        height: 25,
+                                        child: (value.duration.toString().split('.')[0]).split(":")[0] == "0"
+                                            ? Text(
+                                                (value.position.toString().split('.')[0])
+                                                        .substring(2) +
+                                                    " / " +
+                                                    (value.duration
+                                                            .toString()
+                                                            .split('.')[0])
+                                                        .substring(2),
+                                                style: body4)
+                                            : Text(
+                                                value.position.toString().split('.')[0] +
+                                                    " / " +
+                                                    value.duration
+                                                        .toString()
+                                                        .split('.')[0],
+                                                style: body4))
+                                    // builder:
+                                    //     (context, VideoPlayerValue value, child) {
 
-                                valueListenable: controller,
-                                builder: (context, VideoPlayerValue value, child) => Container(padding: EdgeInsets.only(left:10),alignment: Alignment.centerLeft,height: 25,
-                                child:(value.position.toString().split('.')[0])
-                                          .split(":")[0] ==
-                                      "0"?Text((value.position
-                                                .toString()
-                                                .split('.')[0])
-                                            .substring(2) +
-                                        " / " +
-                                        (value.duration
-                                                .toString()
-                                                .split('.')[0])
-                                            .substring(2),style: body4):Text(value.position
-                                            .toString()
-                                            .split('.')[0] +
-                                        " / " +
-                                        value.duration
-                                            .toString()
-                                            .split('.')[0],style: body4))
-                                // builder:
-                                //     (context, VideoPlayerValue value, child) {
-                                      
-                                //   if ((value.position.toString().split('.')[0])
-                                //           .split(":")[0] ==
-                                //       "0") {
-                                //     return Text((value.position
-                                //                 .toString()
-                                //                 .split('.')[0])
-                                //             .substring(2) +
-                                //         " / " +
-                                //         (value.duration
-                                //                 .toString()
-                                //                 .split('.')[0])
-                                //             .substring(2));
-                                //   } else {
-                                //     Text(value.position
-                                //             .toString()
-                                //             .split('.')[0] +
-                                //         " / " +
-                                //         value.duration
-                                //             .toString()
-                                //             .split('.')[0]);
-                                //   }
-                                // }
+                                    //   if ((value.position.toString().split('.')[0])
+                                    //           .split(":")[0] ==
+                                    //       "0") {
+                                    //     return Text((value.position
+                                    //                 .toString()
+                                    //                 .split('.')[0])
+                                    //             .substring(2) +
+                                    //         " / " +
+                                    //         (value.duration
+                                    //                 .toString()
+                                    //                 .split('.')[0])
+                                    //             .substring(2));
+                                    //   } else {
+                                    //     Text(value.position
+                                    //             .toString()
+                                    //             .split('.')[0] +
+                                    //         " / " +
+                                    //         value.duration
+                                    //             .toString()
+                                    //             .split('.')[0]);
+                                    //   }
+                                    // }
+                                    ),
+                                VideoProgressIndicator(
+                                  controller,
+                                  allowScrubbing: true,
+                                  padding: EdgeInsets.zero,
                                 ),
-                            VideoProgressIndicator(
-                              controller,
-                              allowScrubbing: true,
-                              padding: EdgeInsets.zero,
-                            ),
-                            VideoProgressIndicator(
-                              controller,
-                              allowScrubbing: true,
-                              padding: EdgeInsets.zero,
-                            )
-                          ])
+                                VideoProgressIndicator(
+                                  controller,
+                                  allowScrubbing: true,
+                                  padding: EdgeInsets.zero,
+                                )
+                              ])
                         : SizedBox()),
                 Positioned(
                   top:
