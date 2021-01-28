@@ -536,12 +536,13 @@ class _RecordStreamingState extends State<RecordStreaming> {
                               color: Colors.white,
                             ),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Container(
-                                    width: MediaQuery.of(context).size.width,
+                                    width:
+                                        MediaQuery.of(context).size.width - 10,
                                     child: InkWell(
                                       child: LikedMusicianBox2(
                                           userDB: widget.userDB,
@@ -556,10 +557,10 @@ class _RecordStreamingState extends State<RecordStreaming> {
                       ),
                       Divider(
                         height: 0,
-                        color: Colors.white,
+                        color: Colors.white38,
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(5, 0, 5, 20),
+                        padding: EdgeInsets.fromLTRB(15, 15, 15, 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -574,7 +575,7 @@ class _RecordStreamingState extends State<RecordStreaming> {
                                   ((MediaQuery.of(context).size.width *
                                           9 /
                                           16) +
-                                      270),
+                                      285),
                               child: ListView(
                                 padding: EdgeInsets.zero,
                                 children: [
