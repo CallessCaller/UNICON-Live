@@ -19,6 +19,12 @@ class _RecordPageState extends State<RecordPage> {
         toolbarHeight: 40,
         centerTitle: false,
         title: Text('VIDEO', style: headline2),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_rounded),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       backgroundColor: Colors.black,
       body: RefreshIndicator(

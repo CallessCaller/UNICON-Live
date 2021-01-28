@@ -75,9 +75,7 @@ class _LivePageState extends State<LivePage> {
         backgroundColor: Colors.white,
         onRefresh: () async {
           await Future.delayed(Duration(seconds: 1));
-          setState(() {
-            return LivePage();
-          });
+          setState(() {});
         },
         child: ListView(children: [
           Column(crossAxisAlignment: CrossAxisAlignment.center, children: [

@@ -75,15 +75,21 @@ class _RecordStreamingState extends State<RecordStreaming> {
     if (!record.liked.contains(widget.userDB.id)) {
       record.liked.add(userDB.id);
       if (userDB.liked_video == null) {
-        await widget.userDB.reference.set({'liked_video': []});
+        await widget.userDB.reference
+            .set({'liked_video': []}, SetOptions(merge: true));
+        userDB.liked_video.add(record.name);
       }
       userDB.liked_video.add(record.name);
+
       await FirebaseFirestore.instance
           .collection('Records')
           .doc(record.name)
           .update({'liked': record.liked});
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userDB.id)
+          .update({'liked_video': userDB.liked_video});
       await widget.userDB.reference.update({'liked_video': userDB.liked_video});
-      widget.record.liked.length;
     }
 
     // Unliked
@@ -95,6 +101,10 @@ class _RecordStreamingState extends State<RecordStreaming> {
           .collection('Records')
           .doc(record.name)
           .update({'liked': record.liked});
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userDB.id)
+          .update({'liked_video': userDB.liked_video});
       await widget.userDB.reference.update({'liked_video': userDB.liked_video});
     }
   }
@@ -413,7 +423,8 @@ class _RecordStreamingState extends State<RecordStreaming> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 15, 5, 15),
+                              padding:
+                                  const EdgeInsets.fromLTRB(15, 15, 15, 15),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
