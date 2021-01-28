@@ -76,7 +76,14 @@ class _LivePageState extends State<LivePage> {
         onRefresh: () async {
           await Future.delayed(Duration(seconds: 1));
           setState(() {
-            return LivePage();
+            //return LivePage();
+            Navigator.pushReplacement(context,MaterialPageRoute(
+                                        builder: (context) =>
+                                            StreamProvider.value(
+                                                value: StreamOfuser()
+                                                    .getUser(userDB.id),
+                                                child: LivePage()),
+                                      ),);
           });
         },
         child: ListView(children: [
