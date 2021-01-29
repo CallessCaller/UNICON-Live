@@ -19,6 +19,7 @@ class _RecordPageState extends State<RecordPage> {
     final records = Provider.of<List<Records>>(context);
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: 20,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_rounded,
