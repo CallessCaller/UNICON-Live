@@ -22,11 +22,20 @@ class _BroadcastSettingState extends State<BroadcastSetting> {
   bool _canGo = true;
   String _imageURL = '';
   String _resizedURL = '';
+  String _titleText = '';
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
-  TextEditingController titleController = new TextEditingController(text: '');
+  final TextEditingController titleController = TextEditingController();
   TextEditingController feeController = new TextEditingController(text: '');
   FocusNode titleFocus = new FocusNode();
   FocusNode feeFocus = new FocusNode();
+
+  _BroadcastSettingState() {
+    titleController.addListener(() {
+      setState(() {
+        _titleText = titleController.text;
+      });
+    });
+  }
 
   @override
   void initState() {
@@ -117,159 +126,286 @@ class _BroadcastSettingState extends State<BroadcastSetting> {
                 ],
               ),
               Divider(),
-              Container(
-                height: 200,
-                width: MediaQuery.of(context).size.width * 0.9,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(widgetRadius),
-                  image: DecorationImage(
-                    image: _image == null
-                        ? widget.userDB.liveImage == null
-                            ? NetworkImage(widget.userDB.profile)
+              Row(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: (MediaQuery.of(context).size.width * 0.4) / 1.7,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Color(0xff707070), width: 0.5),
+                      borderRadius:
+                          BorderRadius.only(bottomRight: Radius.circular(10)),
+                      image: DecorationImage(
+                        image: widget.userDB.liveImage == null
+                            ? widget.userDB.resizedProfile != null &&
+                                    widget.userDB.resizedProfile != ''
+                                ? NetworkImage(widget.userDB.resizedProfile)
+                                : NetworkImage(widget.userDB.profile)
                             : widget.userDB.resizedLiveImage != null &&
                                     widget.userDB.resizedLiveImage != ''
                                 ? NetworkImage(widget.userDB.resizedLiveImage)
-                                : NetworkImage(widget.userDB.liveImage)
-                        : FileImage(_image),
-                    fit: BoxFit.cover,
+                                : NetworkImage(widget.userDB.liveImage),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 5,
-                      left: 10,
-                      child: Row(
-                        children: [
-                          Icon(
-                            UniIcon.profile,
-                            size: 20,
-                          ),
-                          SizedBox(width: 3),
-                          Text(
-                            '42',
+                  SizedBox(width: 20),
+                  Container(
+                    color: Colors.transparent,
+                    height: (MediaQuery.of(context).size.width * 0.4) / 1.7,
+                    width:
+                        MediaQuery.of(context).size.width * 0.6 - 22 - 20 - 20,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 9,
+                          child: Text(
+                            _titleText == '' ? widget.userDB.name : _titleText,
                             style: TextStyle(
-                                fontSize: widgetFontSize, color: Colors.white),
+                              fontSize: textFontSize,
+                              color: Colors.white,
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 5,
-                      left: 5,
-                      width: MediaQuery.of(context).size.width * 0.9 - 12,
-                      height: 55,
-                      child: ClipRRect(
-                        borderRadius:
-                            BorderRadius.only(bottomLeft: Radius.circular(6)),
-                        clipBehavior: Clip.antiAlias,
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                          child: Container(
-                            color: Colors.black.withOpacity(0),
+                          // child: Text(
+                          //   widget.userDB.liveTitle != null &&
+                          //           widget.userDB.liveTitle != ''
+                          //       ? widget.userDB.liveTitle
+                          //       : widget.userDB.name,
+                          //   style: subtitle3,
+                          // ),
+                        ),
+                        Positioned(
+                          top: 34,
+                          child: Text(
+                            widget.userDB.liveTitle != null &&
+                                    widget.userDB.liveTitle != ''
+                                ? '${widget.userDB.name}님의 라이브 방송'
+                                : '라이브 방송중',
+                            style: TextStyle(
+                              fontSize: widgetFontSize,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      child: Column(
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(6)),
-                              color: Colors.black.withOpacity(0.3),
-                            ),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 10,
+                        Positioned(
+                          top: 53,
+                          left: -4,
+                          child: Row(
+                            children: [
+                              Icon(
+                                UniIcon.profile,
+                                size: 20,
+                                color: Color(0xffB5B5B5),
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                ('0명'),
+                                style: TextStyle(
+                                  fontSize: widgetFontSize,
+                                  color: Color(0xffB5B5B5),
                                 ),
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundImage:
-                                      NetworkImage(widget.userDB.profile),
-                                ),
-                                VerticalDivider(
-                                  width: 10,
-                                  color: Colors.transparent,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        titleController.text == ''
-                                            ? widget.userDB.name
-                                            : titleController.text,
-                                        style: TextStyle(
-                                          fontSize: textFontSize,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      Text(
-                                        titleController.text == ''
-                                            ? '라이브 방송중'
-                                            : '${widget.userDB.name}님의 라이브 방송',
-                                        style: TextStyle(
-                                          fontSize: textFontSize - 2,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    feeController.text == '' || feeController.text == '0'
-                        ? SizedBox()
-                        : Positioned(
-                            top: 5,
-                            right: 10,
-                            child: Row(
-                              children: [
-                                Icon(
-                                  UniIcon.unicoin,
-                                  color: appKeyColor,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  feeController.text.toString(),
+                              ),
+                              SizedBox(width: 5),
+                              Text('∙',
                                   style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: textFontSize,
-                                      fontWeight: FontWeight.w600),
+                                    color: Color(0xffB5B5B5),
+                                  )),
+                              SizedBox(width: 5),
+                              Text(
+                                '0분 전',
+                                style: TextStyle(
+                                  fontSize: widgetFontSize - 1,
+                                  color: Color(0xffB5B5B5),
                                 ),
-                              ],
-                            ),
+                              ),
+                              SizedBox(width: 5),
+                              widget.userDB.fee != 0
+                                  ? Row(
+                                      children: [
+                                        Text('∙',
+                                            style: TextStyle(
+                                              color: Color(0xffB5B5B5),
+                                            )),
+                                        SizedBox(width: 5),
+                                        Icon(
+                                          UniIcon.unicoin,
+                                          color: appKeyColor,
+                                          size: 20,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          widget.userDB.fee.toString(),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: textFontSize,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ],
+                                    )
+                                  : SizedBox(),
+                            ],
                           ),
-                    Positioned(
-                      bottom: 10,
-                      right: 5,
-                      child: Text(
-                        '##분 전',
-                        style: TextStyle(
-                          fontSize: textFontSize - 2,
-                          color: Colors.white,
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+              // Container(
+              //   height: 200,
+              //   width: MediaQuery.of(context).size.width * 0.9,
+              //   decoration: BoxDecoration(
+              //     border: Border.all(color: Colors.black),
+              //     borderRadius: BorderRadius.circular(widgetRadius),
+              //     image: DecorationImage(
+              //       image: _image == null
+              //           ? widget.userDB.liveImage == null
+              //               ? NetworkImage(widget.userDB.profile)
+              //               : widget.userDB.resizedLiveImage != null &&
+              //                       widget.userDB.resizedLiveImage != ''
+              //                   ? NetworkImage(widget.userDB.resizedLiveImage)
+              //                   : NetworkImage(widget.userDB.liveImage)
+              //           : FileImage(_image),
+              //       fit: BoxFit.cover,
+              //     ),
+              //   ),
+              //   child: Stack(
+              //     children: [
+              //       Positioned(
+              //         top: 5,
+              //         left: 10,
+              //         child: Row(
+              //           children: [
+              //             Icon(
+              //               UniIcon.profile,
+              //               size: 20,
+              //             ),
+              //             SizedBox(width: 3),
+              //             Text(
+              //               '42',
+              //               style: TextStyle(
+              //                   fontSize: widgetFontSize, color: Colors.white),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //       Positioned(
+              //         bottom: 5,
+              //         left: 5,
+              //         width: MediaQuery.of(context).size.width * 0.9 - 12,
+              //         height: 55,
+              //         child: ClipRRect(
+              //           borderRadius:
+              //               BorderRadius.only(bottomLeft: Radius.circular(6)),
+              //           clipBehavior: Clip.antiAlias,
+              //           child: BackdropFilter(
+              //             filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+              //             child: Container(
+              //               color: Colors.black.withOpacity(0),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //       Positioned(
+              //         bottom: 0,
+              //         left: 0,
+              //         child: Column(
+              //           children: [
+              //             Container(
+              //               width: MediaQuery.of(context).size.width * 0.9,
+              //               height: 60,
+              //               decoration: BoxDecoration(
+              //                 borderRadius: BorderRadius.only(
+              //                     bottomLeft: Radius.circular(6)),
+              //                 color: Colors.black.withOpacity(0.3),
+              //               ),
+              //               child: Row(
+              //                 children: [
+              //                   SizedBox(
+              //                     width: 10,
+              //                   ),
+              //                   CircleAvatar(
+              //                     radius: 20,
+              //                     backgroundImage:
+              //                         NetworkImage(widget.userDB.profile),
+              //                   ),
+              //                   VerticalDivider(
+              //                     width: 10,
+              //                     color: Colors.transparent,
+              //                   ),
+              //                   Expanded(
+              //                     child: Column(
+              //                       mainAxisAlignment: MainAxisAlignment.center,
+              //                       crossAxisAlignment:
+              //                           CrossAxisAlignment.start,
+              //                       children: [
+              //                         Text(
+              //                           titleController.text == ''
+              //                               ? widget.userDB.name
+              //                               : titleController.text,
+              //                           style: TextStyle(
+              //                             fontSize: textFontSize,
+              //                             color: Colors.white,
+              //                           ),
+              //                         ),
+              //                         Text(
+              //                           titleController.text == ''
+              //                               ? '라이브 방송중'
+              //                               : '${widget.userDB.name}님의 라이브 방송',
+              //                           style: TextStyle(
+              //                             fontSize: textFontSize - 2,
+              //                             color: Colors.white,
+              //                           ),
+              //                         ),
+              //                       ],
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //             )
+              //           ],
+              //         ),
+              //       ),
+              //       feeController.text == '' || feeController.text == '0'
+              //           ? SizedBox()
+              //           : Positioned(
+              //               top: 5,
+              //               right: 10,
+              //               child: Row(
+              //                 children: [
+              //                   Icon(
+              //                     UniIcon.unicoin,
+              //                     color: appKeyColor,
+              //                   ),
+              //                   SizedBox(
+              //                     width: 5,
+              //                   ),
+              //                   Text(
+              //                     feeController.text.toString(),
+              //                     style: TextStyle(
+              //                         color: Colors.white,
+              //                         fontSize: textFontSize,
+              //                         fontWeight: FontWeight.w600),
+              //                   ),
+              //                 ],
+              //               ),
+              //             ),
+              //       Positioned(
+              //         bottom: 10,
+              //         right: 5,
+              //         child: Text(
+              //           '##분 전',
+              //           style: TextStyle(
+              //             fontSize: textFontSize - 2,
+              //             color: Colors.white,
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               Divider(
                 height: 30,
                 color: Colors.white,

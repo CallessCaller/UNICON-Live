@@ -20,23 +20,17 @@ class _RecordPageState extends State<RecordPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios_rounded,
-                  //size: 30,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-        toolbarHeight: 40,
-        centerTitle: false,
-        title: Text('VIDEO', style: headline2),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_rounded),
+          icon: Icon(
+            Icons.arrow_back_ios_rounded,
+            //size: 30,
+          ),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
+        toolbarHeight: 40,
+        centerTitle: false,
+        title: Text('VIDEO', style: headline2),
       ),
       backgroundColor: Colors.black,
       body: RefreshIndicator(
@@ -46,15 +40,13 @@ class _RecordPageState extends State<RecordPage> {
           setState(() {
             //Navigator.of(context).pushReplacement(child:RecordPage());
             Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            StreamProvider.value(
-                                                value: StreamOfuser()
-                                                    .getUser(userDB.id),
-                                                child: RecordPage()),
-                                      ),
-                                    );
+              context,
+              MaterialPageRoute(
+                builder: (context) => StreamProvider.value(
+                    value: StreamOfuser().getUser(userDB.id),
+                    child: RecordPage()),
+              ),
+            );
           });
         },
         child: ListView(children: [
