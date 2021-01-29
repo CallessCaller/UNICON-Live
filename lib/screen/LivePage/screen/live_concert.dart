@@ -203,30 +203,46 @@ class _LiveConcertState extends State<LiveConcert> with WidgetsBindingObserver {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.transparent,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 10,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(dialogRadius),
+          ),
+          backgroundColor: dialogColor1,
           title: Center(
             child: new Text(
-              '라이브가 곧 종료됩니다.',
+              '라이브가 종료되었습니다.',
               style: TextStyle(
                   fontSize: subtitleFontSize, fontWeight: FontWeight.bold),
             ),
           ),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text(
-                "나가기",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: textFontSize,
-                    fontWeight: FontWeight.w600),
+          content: Row(
+            children: [
+              Expanded(
+                child: SizedBox(),
               ),
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-                Screen.keepOn(false);
-              },
-            ),
-          ],
+              SizedBox(width: 10),
+              Expanded(
+                child: FlatButton(
+                  color: appKeyColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(widgetRadius),
+                  ),
+                  child: Text(
+                    '네',
+                    style: subtitle3,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    Screen.keepOn(false);
+                  },
+                ),
+              ),
+            ],
+          ),
         );
       },
     );

@@ -203,136 +203,180 @@ void showAlertDialog(
     barrierDismissible: true, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
-        content: Text(
-          '입장료 ${artist.fee}코인이 차감됩니다.',
-          style: TextStyle(
-              fontSize: textFontSize,
-              fontWeight: FontWeight.w600,
-              color: Colors.white),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 15,
+          vertical: 10,
         ),
-        backgroundColor: Colors.transparent,
-        actions: [
-          FlatButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => MyUnicoinPage(userDB: userDB)));
-            },
-            child: Text('충전'),
-          ),
-          FlatButton(
-            onPressed: () async {
-              int total = 0;
-              if (live.payList == null) {
-                live.payList = [];
-              }
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(dialogRadius),
+        ),
+        backgroundColor: dialogColor1,
+        title: Center(
+          child: Text('입장료 ${artist.fee}코인이 차감됩니다.', style: title2),
+        ),
+        // content: Container(
+        //   height: MediaQuery.of(context).size.height * 8 / 25,
+        //   width: MediaQuery.of(context).size.width * 1 / 2,
+        //   child: Center(
+        //     child: Text(
+        //       '입장료 ${artist.fee}코인이 차감됩니다.',
+        //       style: TextStyle(
+        //           fontSize: textFontSize,
+        //           fontWeight: FontWeight.w600,
+        //           color: Colors.white),
+        //     ),
+        //   ),
+        // ),
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Expanded(
+              child: FlatButton(
+                color: dialogColor3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(widgetRadius),
+                ),
+                child: Text(
+                  '충전',
+                  style: TextStyle(
+                    color: dialogColor4,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => MyUnicoinPage(
+                        userDB: userDB,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(width: 10),
+            Expanded(
+              child: FlatButton(
+                color: appKeyColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(widgetRadius)),
+                onPressed: () async {
+                  int total = 0;
+                  if (live.payList == null) {
+                    live.payList = [];
+                  }
 
-              if (userDB.points >= artist.fee) {
-                var currentTime = Timestamp.now();
-                userDB.points = userDB.points - artist.fee;
+                  if (userDB.points >= artist.fee) {
+                    var currentTime = Timestamp.now();
+                    userDB.points = userDB.points - artist.fee;
 
-                await FirebaseFirestore.instance
-                    .collection('Users')
-                    .doc(userDB.id)
-                    .update({'points': userDB.points});
+                    await FirebaseFirestore.instance
+                        .collection('Users')
+                        .doc(userDB.id)
+                        .update({'points': userDB.points});
 
-                await FirebaseFirestore.instance
-                    .collection('Users')
-                    .doc(artist.id)
-                    .get()
-                    .then((value) {
-                  total = value.data()['points'];
-                }).whenComplete(() async {
-                  await FirebaseFirestore.instance
-                      .collection('Users')
-                      .doc(artist.id)
-                      .update({'points': total + artist.fee});
+                    await FirebaseFirestore.instance
+                        .collection('Users')
+                        .doc(artist.id)
+                        .get()
+                        .then((value) {
+                      total = value.data()['points'];
+                    }).whenComplete(() async {
+                      await FirebaseFirestore.instance
+                          .collection('Users')
+                          .doc(artist.id)
+                          .update({'points': total + artist.fee});
 
-                  // Donation
-                  // User -> Union
-                  // type: { 0 : event , 1 : charge , 2 : donated , 3 : donate }
-                  await FirebaseFirestore.instance
-                      .collection('Users')
-                      .doc(userDB.id)
-                      .collection('unicoin_history')
-                      .add({
-                    'type': 3,
-                    'who': artist.name,
-                    'whoseID': artist.id,
-                    'amount': artist.fee,
-                    'time': currentTime.toDate(),
-                  });
-                  // Union <- User
-                  await FirebaseFirestore.instance
-                      .collection('Users')
-                      .doc(artist.id)
-                      .collection('unicoin_history')
-                      .add({
-                    'type': 2,
-                    'who': userDB.name,
-                    'whoseID': userDB.id,
-                    'amount': artist.fee,
-                    'time': currentTime.toDate(),
-                  });
-                });
+                      // Donation
+                      // User -> Union
+                      // type: { 0 : event , 1 : charge , 2 : donated , 3 : donate }
+                      await FirebaseFirestore.instance
+                          .collection('Users')
+                          .doc(userDB.id)
+                          .collection('unicoin_history')
+                          .add({
+                        'type': 3,
+                        'who': artist.name,
+                        'whoseID': artist.id,
+                        'amount': artist.fee,
+                        'time': currentTime.toDate(),
+                      });
+                      // Union <- User
+                      await FirebaseFirestore.instance
+                          .collection('Users')
+                          .doc(artist.id)
+                          .collection('unicoin_history')
+                          .add({
+                        'type': 2,
+                        'who': userDB.name,
+                        'whoseID': userDB.id,
+                        'amount': artist.fee,
+                        'time': currentTime.toDate(),
+                      });
+                    });
 
-                DocumentSnapshot liveDoc = await FirebaseFirestore.instance
-                    .collection('LiveTmp')
-                    .doc(artist.id)
-                    .get();
-                List<dynamic> payList = liveDoc.data()['pay_list'];
-                List<dynamic> viewers = liveDoc.data()['viewers2'];
-                List<dynamic> viewersTmp = liveDoc.data()['viewers3'];
+                    DocumentSnapshot liveDoc = await FirebaseFirestore.instance
+                        .collection('LiveTmp')
+                        .doc(artist.id)
+                        .get();
+                    List<dynamic> payList = liveDoc.data()['pay_list'];
+                    List<dynamic> viewers = liveDoc.data()['viewers2'];
+                    List<dynamic> viewersTmp = liveDoc.data()['viewers3'];
 
-                if (!viewers.contains(userDB.id)) {
-                  viewers.add(userDB.id);
-                  await FirebaseFirestore.instance
-                      .collection('LiveTmp')
-                      .doc(artist.id)
-                      .update({'viewers2': viewers});
-                }
-                if (!viewersTmp.contains(userDB.id)) {
-                  viewersTmp.add(userDB.id);
-                  await FirebaseFirestore.instance
-                      .collection('LiveTmp')
-                      .doc(artist.id)
-                      .update({'viewers3': viewersTmp});
-                }
-                if (!payList.contains(userDB.id)) {
-                  payList.add(userDB.id);
-                  await FirebaseFirestore.instance
-                      .collection('LiveTmp')
-                      .doc(artist.id)
-                      .update({'pay_list': payList});
-                }
+                    if (!viewers.contains(userDB.id)) {
+                      viewers.add(userDB.id);
+                      await FirebaseFirestore.instance
+                          .collection('LiveTmp')
+                          .doc(artist.id)
+                          .update({'viewers2': viewers});
+                    }
+                    if (!viewersTmp.contains(userDB.id)) {
+                      viewersTmp.add(userDB.id);
+                      await FirebaseFirestore.instance
+                          .collection('LiveTmp')
+                          .doc(artist.id)
+                          .update({'viewers3': viewersTmp});
+                    }
+                    if (!payList.contains(userDB.id)) {
+                      payList.add(userDB.id);
+                      await FirebaseFirestore.instance
+                          .collection('LiveTmp')
+                          .doc(artist.id)
+                          .update({'pay_list': payList});
+                    }
 
-                if (userDB.id == artist.id) {
-                  Navigator.pop(context);
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => OnlyChat(
-                            live: live,
-                          )));
-                } else {
-                  Navigator.pop(context);
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => LiveConcert(
-                            live: live,
-                            artist: artist,
-                            userDB: userDB,
-                          )));
-                }
-              } else {
-                Fluttertoast.showToast(
-                  msg: '코인이 모자랍니다.',
-                  backgroundColor: Colors.black,
-                  fontSize: textFontSize,
-                  gravity: ToastGravity.BOTTOM,
-                  toastLength: Toast.LENGTH_SHORT,
-                );
-              }
-            },
-            child: Text('입장'),
-          ),
-        ],
+                    if (userDB.id == artist.id) {
+                      Navigator.pop(context);
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => OnlyChat(
+                                live: live,
+                              )));
+                    } else {
+                      Navigator.pop(context);
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => LiveConcert(
+                                live: live,
+                                artist: artist,
+                                userDB: userDB,
+                              )));
+                    }
+                  } else {
+                    Fluttertoast.showToast(
+                      msg: '코인이 모자랍니다.',
+                      backgroundColor: Colors.black,
+                      fontSize: textFontSize,
+                      gravity: ToastGravity.BOTTOM,
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
+                  }
+                },
+                child: Text('입장'),
+              ),
+            ),
+          ],
+        ),
       );
     },
   );
