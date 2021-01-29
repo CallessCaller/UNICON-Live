@@ -41,10 +41,12 @@ class _RecordPageState extends State<RecordPage> {
             //Navigator.of(context).pushReplacement(child:RecordPage());
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(
-                builder: (context) => StreamProvider.value(
-                    value: StreamOfuser().getUser(userDB.id),
-                    child: RecordPage()),
+              PageRouteBuilder(
+                pageBuilder: (context, animation1, animation2) =>
+                    StreamProvider.value(
+                        value: StreamOfuser().getUser(userDB.id),
+                        child: RecordPage()),
+                transitionDuration: Duration(seconds: 0),
               ),
             );
           });

@@ -80,10 +80,12 @@ class _LivePageState extends State<LivePage> {
             //return LivePage();
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(
-                builder: (context) => StreamProvider.value(
-                    value: StreamOfuser().getUser(userDB.id),
-                    child: LivePage()),
+              PageRouteBuilder(
+                pageBuilder: (context, animation1, anigmation2) =>
+                    StreamProvider.value(
+                        value: StreamOfuser().getUser(userDB.id),
+                        child: LivePage()),
+                transitionDuration: Duration(seconds: 0),
               ),
             );
           });
