@@ -15,6 +15,8 @@ import 'package:testing_layout/screen/LivePage/widget/live_header.dart';
 import 'package:testing_layout/screen/LivePage/widget/recommendation_sliders.dart';
 import 'package:testing_layout/screen/LivePage/widget/record_box.dart';
 
+import '../tab_page.dart';
+
 class LivePage extends StatefulWidget {
   LivePage({
     Key key,
@@ -81,11 +83,11 @@ class _LivePageState extends State<LivePage> {
             Navigator.pushReplacement(
               context,
               PageRouteBuilder(
-                pageBuilder: (context, animation1, anigmation2) =>
-                    StreamProvider.value(
-                        value: StreamOfuser().getUser(userDB.id),
-                        child: LivePage()),
-                transitionDuration: Duration(seconds: 0),
+                pageBuilder: (context, animation1, anigmation2) { return TabPage();}
+                //     StreamProvider.value(
+                //         value: StreamOfuser().getUser(userDB.id),
+                //         child: LivePage()),
+                // transitionDuration: Duration(seconds: 0),
               ),
             );
           });

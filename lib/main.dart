@@ -67,17 +67,12 @@ class _MyAppState extends State<MyApp> {
     Screen.keepOn(false);
     return Platform.isAndroid
         ? FutureBuilder(
-            future: Future.delayed(Duration(milliseconds: 4000)),
+            future: Future.delayed(Duration(milliseconds: 4634)),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done)
                 return MainPage();
               else
-                return Container(
-                  // width: MediaQuery.of(context).size.width,
-                  child: Lottie.asset('assets/intro_logomotion_final.json',
-                      repeat: false,
-                      ),
-                );
+                return Lottie.network('https://assets4.lottiefiles.com/packages/lf20_fcormoxr.json',repeat:false);   
             })
         : MainPage();
   }
