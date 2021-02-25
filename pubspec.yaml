@@ -37,7 +37,7 @@ dependencies:
   cloud_functions: "^0.7.0-dev.2"
   sign_in_with_apple: ^2.5.2
   crypto: ^2.1.5
-
+  auto_orientation: ^1.0.6
   # Backend support
   webview_flutter: ^1.0.1
   assets_audio_player: ^2.0.13+1
@@ -46,11 +46,11 @@ dependencies:
   kakao_flutter_sdk: ^0.5.2
   image: ^2.1.18
   in_app_purchase: ^0.3.4+16
-  video_player: 
-    git:
-      url: https://github.com/iwanglian/plugins.git
-      path: packages/video_player/video_player
-
+  video_player: ^1.0.1
+  # video_player: 
+  #   git:
+  #     url: https://github.com/thanhit93/plugins.git
+  #     path: packages/video_player/video_player
   # Data-accessing support
   shared_preferences: ^0.5.10
   image_picker: ^0.6.7+9

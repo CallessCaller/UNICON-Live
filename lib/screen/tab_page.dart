@@ -145,9 +145,12 @@ class _TabPageState extends State<TabPage> {
             ],
           ),
         ),
-        body: IndexedStack(
-          children: _pages,
-          index: _selectedIndex,
+        body: Column(
+            children:[ IndexedStack(
+              children: _pages,
+              index: _selectedIndex,
+          ),Container(child: Text('hi'))
+          ]
         ),
       ),
     );

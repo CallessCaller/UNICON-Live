@@ -111,6 +111,8 @@ class _RecordStreamingState extends State<RecordStreaming> {
 
   @override
   void dispose() {
+    // SystemChrome.setPreferredOrientations([
+    //                             DeviceOrientation.portraitUp,]);
     controller.dispose();
     _controller.dispose();
     super.dispose();
@@ -381,25 +383,25 @@ class _RecordStreamingState extends State<RecordStreaming> {
                   child: !_visible
                       ? IconButton(
                           icon: Icon(UniIcon2.spin),
-                          onPressed: () {
+                          onPressed: () async {
                             if (MediaQuery.of(context).orientation ==
                                 Orientation.landscape) {
-                              SystemChrome.setPreferredOrientations([
+                              await SystemChrome.setPreferredOrientations([
                                 DeviceOrientation.portraitUp,
                               ]);
                             } else if (MediaQuery.of(context).orientation ==
                                 Orientation.portrait) {
                               if (Platform.isAndroid) {
-                                SystemChrome.setPreferredOrientations([
+                                await SystemChrome.setPreferredOrientations([
                                   DeviceOrientation.landscapeLeft,
                                 ]);
                               } else {
-                                SystemChrome.setPreferredOrientations([
+                                await SystemChrome.setPreferredOrientations([
                                   DeviceOrientation.landscapeRight,
                                 ]);
                               }
                             }
-                            SystemChrome.setPreferredOrientations([
+                             SystemChrome.setPreferredOrientations([
                               DeviceOrientation.landscapeRight,
                               DeviceOrientation.landscapeLeft,
                               DeviceOrientation.portraitUp,
